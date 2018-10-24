@@ -1,5 +1,6 @@
-generate_fcl --description flatpigammaMix --dsconf MDC2018a --dsowner mu2e --include JobConfig/mixing/flatpigammaMix.fcl \
---run-number 1002 --events-per-job 1000000 --njobs 1000 --max-engines 30 \
+# Note: the jobs created by this script need at least 8GBytes of memory
+generate_fcl --description DS-cosmicMix --dsconf MDC2018d --dsowner mu2e --include JobConfig/mixing/DS-cosmicMix.fcl \
+--inputs=DS-cosmic.txt --merge-factor 10 --max-engines 30 \
 --auxinput=15:physics.filters.ootMixerCRV.fileNames:oot-CRV-cat.txt \
 --auxinput=1:physics.filters.neutronMixerCRV.fileNames:neutron-CRV-cat.txt \
 --auxinput=1:physics.filters.dioMixerCRV.fileNames:dio-CRV-cat.txt \
@@ -14,5 +15,5 @@ generate_fcl --description flatpigammaMix --dsconf MDC2018a --dsowner mu2e --inc
 --auxinput=10:physics.filters.flashMixerTrkCal.fileNames:DS-flash-TrkCal-cut.txt \
 --auxinput=1:physics.filters.protonMixerTrkCal.fileNames:proton-TrkCal.txt \
 --auxinput=1:physics.filters.deuteronMixerTrkCal.fileNames:deuteron-TrkCal.txt 
-rm -rf flatpigammaMix
-mv 000 flatpigammaMix
+rm -rf DS-cosmicMix
+mv 000 DS-cosmicMix
