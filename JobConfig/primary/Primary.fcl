@@ -22,9 +22,9 @@ physics : {
     @table::Primary.filters 
   }
   analyzers : { @table::Primary.analyzers }
-  TriggerPath : [ @sequence::Common.generateSequence, @sequence::Common.g4Sequence,  @sequence::Primary.PrimarySequence]
+  PrimaryPath : [ @sequence::Common.generateSequence, @sequence::Common.g4Sequence,  @sequence::Primary.PrimarySequence]
   EndPath : @local::Primary.EndPath
-  trigger_paths : [ TriggerPath ]
+  trigger_paths : [ PrimaryPath ]
   end_paths : [ EndPath ]
 }
 outputs : { Output :@local::Primary.Output }

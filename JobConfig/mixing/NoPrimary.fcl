@@ -11,16 +11,13 @@ source: { module_type : EmptyEvent }
 #
 #include "JobConfig/mixing/epilog.fcl"
 #patches since there are no primaries
-physics.producers.compressDigiMCs.extraStepPointMCTags : [ ]
+physics.producers.compressDigiMCs.simParticleTags : [mustopMixer, BeamFlashMixer, NeutralsFlashMixer]
+physics.producers.compressDigiMCs.caloShowerStepTags : [mustopMixer, BeamFlashMixer, NeutralsFlashMixer]
+physics.producers.CrvPhotons.crvStepModuleLabels : [ mustopMixer, BeamFlashMixer, NeutralsFlashMixer ]
+physics.producers.CaloShowerROMaker.caloShowerStepCollection : [mustopMixer, BeamFlashMixer, NeutralsFlashMixer ]
+physics.producers.compressDigiMCs.extraStepPointMCTags : [ "", "", ""]
 physics.producers.compressDigiMCs.mcTrajectoryTag : ""
-physics.producers.compressDigiMCs.simParticleTags : ["mustopMixer"]
-physics.producers.compressDigiMCs.caloShowerStepTags : ["mustopMixer"]
 physics.producers.compressDigiMCs.primaryParticleTag : ""
-physics.producers.makeSD.StrawGasStepModule : "mustopMixer"
-physics.producers.CrvPhotons.crvStepModuleLabels : [ "mustopMixer" ]
-physics.producers.CrvPhotons.crvStepProcessNames : [ "" ]
-physics.producers.CaloShowerROMaker.caloShowerStepCollection : ["mustopMixer" ]
 physics.producers.FindMCPrimary : @erase
-
 # customize the output
 physics.end_paths : [ EndPath ] # needed for generate_fcl

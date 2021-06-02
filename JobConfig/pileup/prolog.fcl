@@ -34,7 +34,7 @@ Pileup: {
 
   Output : {
      module_type : RootOutput
-     SelectEvents : [ TriggerPath ]
+     SelectEvents : [ PileupPath ]
      fileName    : @nil
      # drop StepPoints from calorimeter
   }
