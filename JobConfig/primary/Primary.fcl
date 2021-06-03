@@ -31,10 +31,5 @@ outputs : { Output :@local::Primary.Output }
 #
 # final configuration
 #
+#include "JobConfig/common/epilog.fcl"
 #include "JobConfig/primary/epilog.fcl"
-# no histogram output
-services.TFileService.fileName : "/dev/null"
-# test values; these get overwritten by generate_fcl
-services.SeedService.baseSeed         :  773651
-services.SeedService.maxUniqueEngines :  2
-
