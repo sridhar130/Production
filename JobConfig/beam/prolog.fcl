@@ -196,7 +196,6 @@ Beam: {
 
       EarlyPrescaleFilter : {
         module_type : PrescaleEvent
-	nPrescale         : 100 
 	triggerPath        : "earlyFlashPath"
 	triggerFlag   : ["PrescaleRandom"]      
       }

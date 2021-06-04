@@ -39,7 +39,10 @@ physics: {
   filters : {
     @table::Common.filters
     @table::Primary.filters
-    EarlyPrescaleFilter : @local::Beam.filters.EarlyPrescaleFilter
+    EarlyPrescaleFilter : {
+      @table::Beam.filters.EarlyPrescaleFilter
+      nPrescale         : 500
+    }
     beamResampler       : @local::Beam.filters.beamResampler
     TargetStopFilter    : @local::Beam.filters.TargetStopFilter
     IPAStopFilter       : @local::Beam.filters.IPAStopFilter
