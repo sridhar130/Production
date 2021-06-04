@@ -20,7 +20,7 @@ physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 
 physics.filters.cosmicResample.mu2e.writeEventIDs : true
 
-physics.TriggerPath: [cosmicResample, @sequence::Primary.TriggerSequence]
+physics.TriggerPath: [cosmicResample, @sequence::Primary.PrimarySequence]
 outputs.Output.fileName        : "dts.owner.Cosmic.version.sequencer.art"
 outputs.Output.outputCommands : [@sequence::Primary.KeptProducts, "keep art::EventIDs_*_*_*"]
 

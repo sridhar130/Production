@@ -57,7 +57,7 @@ Digitize: {
     digiCompressionCheck : @local::DigiCompression.Check
   }
 
-  TriggerSequence : [
+  DigitizeSequence : [
     @sequence::CommonMC.DigiSim,
     @sequence::TrackerMC.DigiSim,
     @sequence::CaloMC.DigiSim,
@@ -73,7 +73,7 @@ Digitize: {
     "keep mu2e::CaloClusters_CaloClusterFast_*_*"
   ]
 
-  KeptProducts : [  
+  DigiProducts : [  
 		    "keep mu2e::StrawDigis_*_*_*",
                     "keep mu2e::StrawDigiADCWaveforms_*_*_*",
 		    "keep mu2e::CaloDigis_*_*_*",
@@ -97,10 +97,10 @@ Digitize: {
 Digitize.EndPath : [ @sequence::Digitize.EndSequence, Output ]
 # override the Trigger sequence to prepare digis
 Trigger.PrepareDigis: [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
-Digitize.TriggerPath : [ PBISim, @sequence::Digitize.TriggerSequence ]
+Digitize.DigitizePath : [ PBISim, @sequence::Digitize.DigitizeSequence ]
 
 Digitize.Output.outputCommands : [ "drop *_*_*_*",
-		       @sequence::Digitize.KeptProducts,
+		       @sequence::Digitize.DigiProducts,
 		       @sequence::Digitize.TriggerProducts ]
 
 #outputs.Output.SelectEvents : # add output stream of 'good' events that fail the trigger; this requiers a new verison of art FIXME!

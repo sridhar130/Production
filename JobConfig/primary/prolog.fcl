@@ -84,7 +84,7 @@ Primary: {
 
   Output : {
      module_type : RootOutput
-     SelectEvents : [ TriggerPath ]
+     SelectEvents : [ PrimaryPath ]
      fileName    : @nil
 
      # drop StepPoints from calorimeter

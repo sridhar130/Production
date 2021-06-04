@@ -22,19 +22,14 @@ physics : {
     @table::Primary.filters 
   }
   analyzers : { @table::Primary.analyzers }
-  TriggerPath : [ @sequence::Common.generateSequence, @sequence::Common.g4Sequence,  @sequence::Primary.PrimarySequence]
+  PrimaryPath : [ @sequence::Common.generateSequence, @sequence::Common.g4Sequence,  @sequence::Primary.PrimarySequence]
   EndPath : @local::Primary.EndPath
-  trigger_paths : [ TriggerPath ]
+  trigger_paths : [ PrimaryPath ]
   end_paths : [ EndPath ]
 }
 outputs : { Output :@local::Primary.Output }
 #
 # final configuration
 #
+#include "JobConfig/common/epilog.fcl"
 #include "JobConfig/primary/epilog.fcl"
-# no histogram output
-services.TFileService.fileName : "/dev/null"
-# test values; these get overwritten by generate_fcl
-services.SeedService.baseSeed         :  773651
-services.SeedService.maxUniqueEngines :  2
-

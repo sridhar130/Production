@@ -11,41 +11,45 @@
 
 BEGIN_PROLOG
 
-# mixing configuration
+# mixer configuration
 Mixing : {
-  EventsPerMustop : 0.0194018666666667
-  filters : {
-# target stop muon mixer
-    mustopMixer: {
-      module_type         : MixBackgroundFrames
-      fileNames           : @nil
-      readMode            : sequential
-      wrapFiles           : true
-      mu2e: {
-        protonBunchIntensityTag: "PBISim"
-	meanEventsPerProton: @nil
-	simStageEfficiencyTags: @nil
-	products: @nil
-	products: {
-	  genParticleMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
-	  simParticleMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
-	  strawGasStepMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
-	  caloShowerStepMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
-	  crvStepMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
-        }
+# DetectorStep mixer
+  DetStepMixer: {
+    module_type         : MixBackgroundFrames
+    fileNames           : @nil
+    readMode            : sequential
+    wrapFiles           : true
+    mu2e: {
+      protonBunchIntensityTag: "PBISim"
+      meanEventsPerProton: @nil
+      simStageEfficiencyTags: @nil
+      products: {
+        genParticleMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
+        simParticleMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
+        strawGasStepMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
+        caloShowerStepMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
+        crvStepMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
       }
+# skip a random number of mixin events between 0 and this factor times the number corresponding to the nominal pulse.
+      skipFactor : 1
     }
   }
-  # input time maps from cut flash 
-  flashTimeMaps : [ "flashMixer:protonTimeMap"]
-# sequences: add flash and OOT mixers TODO
-  TriggerSequence : [
-    PBISim,   mustopMixer
-  ]
 }
-# override the Trigger 'PrepareDigis' sequence; the mixers must preceed the digi making
-Trigger.PrepareDigis: [ @sequence::Mixing.TriggerSequence, @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
-# override the proton bunch intensity.  Specific values must be provided based on physics conditions
+Mixing : {
+  EventsPerMustop : 1.0194 # should come from bookkeeping TODO
+  filters : {
+# mixers for muon stop, beamflash pileup, and neutrals flash pileup
+    mustopMixer : @local::Mixing.DetStepMixer 
+    BeamFlashMixer : @local::Mixing.DetStepMixer 
+    NeutralsFlashMixer : @local::Mixing.DetStepMixer 
+  }
+  
+# sequences: add flash and OOT mixers TODO
+  PileupMixSequence : [ PBISim, mustopMixer, BeamFlashMixer, NeutralsFlashMixer ]
+}
+# override the Trigger 'PrepareDigis' sequence; the mixers must preceed the digi making.  Note CRV doesn't participate in trigger, so isn't included
+Trigger.PrepareDigis: [ @sequence::Mixing.PileupMixSequence, @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
+# LogNormal proton bunch intensity.  Specific values must be provided based on physics conditions
 Digitize.producers.PBISim : {  
   module_type: ProtonBunchIntensityLogNormal
   sigma: @nil

@@ -32,10 +32,18 @@ physics: {
   }
   filters : {
     @table::Common.filters
-    EarlyPrescaleFilter : @local::Beam.filters.EarlyPrescaleFilter
+    EarlyPrescaleFilter : {
+      @table::Beam.filters.EarlyPrescaleFilter
+      nPrescale         : 10
+    }
     neutralsResampler    : @local::Beam.filters.neutralsResampler
-# Time cuts are ineffective against neutrals; don't apply them
     DetStepFilter : {
+      @table::Primary.filters.DetStepFilter 
+      @table::Pileup.filters.DetStepFilter 
+      @table::Beam.filters.DetStepFilter 
+    }
+# instance to select flash without time cuts (prescaled)
+    EarlyDetStepFilter : {
       @table::Primary.filters.DetStepFilter 
       @table::Pileup.filters.DetStepFilter 
     }
@@ -45,8 +53,10 @@ physics: {
   }
   # setup paths
   flashPath : [ @sequence::Beam.neutralsResamplerSequence, @sequence::Common.g4Sequence, @sequence::Primary.DetStepSequence, DetStepFilter, compressDetStepMCs ]
-  trigger_paths: [ flashPath ]
-  outPath : [ FlashOutput ]
+  earlyFlashPath : [ @sequence::Beam.neutralsResamplerSequence, @sequence::Common.g4Sequence, EarlyPrescaleFilter,
+              @sequence::Primary.DetStepSequence, EarlyDetStepFilter, compressDetStepMCs ]
+  trigger_paths: [ flashPath , earlyFlashPath ]
+  outPath : [ FlashOutput, EarlyFlashOutput ]
   end_paths: [outPath]
 }
 outputs: {
@@ -58,6 +68,16 @@ outputs: {
     ]
     SelectEvents: [flashPath]
     fileName: "dts.owner.NeutralsFlash.version.sequencer.art"
+  }
+
+  EarlyFlashOutput : {
+    module_type: RootOutput
+    outputCommands:   [ "drop *_*_*_*",
+      @sequence::Beam.DtsKeptProducts,
+      @sequence::Pileup.KeptProducts
+    ]
+    SelectEvents: [earlyFlashPath]
+    fileName : "dts.owner.EarlyNeutralsFlash.version.sequencer.art"
   }
 }
 
@@ -86,5 +106,3 @@ physics.producers.g4run.Mu2eG4CommonCut:{
 #include "JobConfig/common/epilog.fcl"
 #include "JobConfig/pileup/epilog.fcl"
 #include "JobConfig/beam/epilog.fcl"
-# test
-physics.filters.neutralsResampler.fileNames: [ "sim.owner.Neutrals.version.sequencer.art" ]

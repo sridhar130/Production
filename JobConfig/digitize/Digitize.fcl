@@ -18,7 +18,7 @@ physics : {
   }
   # setup 'trigger reject' stream after RejectEvents is implemented TODO!
   analyzers: { @table::Digitize.analyzers }
-  TriggerPath : @local::Digitize.TriggerPath
+  DigitizePath : @local::Digitize.DigitizePath
   EndPath : @local::Digitize.EndPath
 }
 #
