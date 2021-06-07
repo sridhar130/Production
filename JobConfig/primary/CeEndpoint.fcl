@@ -8,7 +8,7 @@ physics.producers.generate : {
   module_type : CeEndpoint
   inputSimParticles: TargetStopResampler
   stoppingTargetMaterial : "Al"
-  verbosity : 2
+  verbosity : 0
 }
 # limit # events in each subrun so that there's a good match to downstream mixing
 source.numberEventsInSubRun : 200

@@ -1,0 +1,34 @@
+#
+# filter Muminus stops from combined stops and write them to a file
+#
+#include "fcl/minimalMessageService.fcl"
+
+process_name: MuMinusFilter
+source: { module_type: RootInput }
+services: { message: @local::default_message }
+physics: { 
+  filters : {
+    muminusFinder: {
+         module_type: "StoppedParticlesFinder"
+         particleInput: "TargetStopFilter"
+         particleTypes: [ 13 ]
+         physVolInfoInput: "compressPVTargetStops"
+         useEventLevelVolumeInfo: false
+         stoppingMaterial: "StoppingTarget_Al"
+         verbosityLevel: 10
+      }
+  }
+  selectMuminus : [muminusFinder]
+  trigger_paths : [ selectMuminus ]
+  outpath: [muminusout]
+  end_paths: [outpath] 
+}
+outputs: {
+  muminusout: {
+    module_type: RootOutput
+    fileName: @nil
+    outputCommands:   [ "keep *_*_*_*" ]
+    SelectEvents: [selectMuminus]
+  }
+}
+

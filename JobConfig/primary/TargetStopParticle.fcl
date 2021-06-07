@@ -44,4 +44,5 @@ physics.producers.g4run.inputs: {
       outInstance: "eventlevel"
    }
 }
-
+# use reduced BField for these jobs
+services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_no_tsu_ps.txt"
