@@ -58,6 +58,8 @@ Primary: {
 
     TargetStopResampler : {
       module_type: ResamplingMixer
+      readMode            : sequential
+      wrapFiles           : true
       fileNames: @nil
       mu2e: {
          products: {
