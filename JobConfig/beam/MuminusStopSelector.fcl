@@ -3,22 +3,19 @@
 #
 #include "fcl/minimalMessageService.fcl"
 
-process_name: MuMinusFilter
+process_name: MuminusStopSelector
 source: { module_type: RootInput }
 services: { message: @local::default_message }
 physics: { 
   filters : {
-    muminusFinder: {
-         module_type: "StoppedParticlesFinder"
-         particleInput: "TargetStopFilter"
-         particleTypes: [ 13 ]
-         physVolInfoInput: "compressPVTargetStops"
-         useEventLevelVolumeInfo: false
-         stoppingMaterial: "StoppingTarget_Al"
-         verbosityLevel: 10
-      }
+    muminusSelector: {
+      module_type: ParticleCodeFilter
+      SimParticles : TargetStopFilter
+      ParticleCodes : [ [13,56,32 ] ] # mu-, mu2ePrimary, muMinusCaptureAtRest
+      PrintLevel : 0
+    }
   }
-  selectMuminus : [muminusFinder]
+  selectMuminus : [muminusSelector]
   trigger_paths : [ selectMuminus ]
   outpath: [muminusout]
   end_paths: [outpath] 
@@ -26,7 +23,7 @@ physics: {
 outputs: {
   muminusout: {
     module_type: RootOutput
-    fileName: @nil
+    fileName : "sim.owner.MuminusStops.version.sequencer.art"
     outputCommands:   [ "keep *_*_*_*" ]
     SelectEvents: [selectMuminus]
   }

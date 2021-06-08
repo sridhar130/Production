@@ -1,0 +1,31 @@
+#
+# filter Muplus stops from combined stops and write them to a file
+#
+#include "fcl/minimalMessageService.fcl"
+
+process_name: MuplusStopSelector
+source: { module_type: RootInput }
+services: { message: @local::default_message }
+physics: { 
+  filters : {
+    muplusSelector: {
+      module_type: ParticleCodeFilter
+      SimParticles : TargetStopFilter
+      ParticleCodes : [ [-13,56,32 ] ] # mu+, mu2ePrimary, muMinusCaptureAtRest
+      PrintLevel : 0
+    }
+  }
+  selectMuplus : [muplusSelector]
+  trigger_paths : [ selectMuplus ]
+  outpath: [muplusout]
+  end_paths: [outpath] 
+}
+outputs: {
+  muplusout: {
+    module_type: RootOutput
+    fileName : "sim.owner.MuplusStops.version.sequencer.art"
+    outputCommands:   [ "keep *_*_*_*" ]
+    SelectEvents: [selectMuplus]
+  }
+}
+
