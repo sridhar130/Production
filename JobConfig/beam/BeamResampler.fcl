@@ -41,7 +41,7 @@ physics: {
     @table::Primary.filters
     EarlyPrescaleFilter : {
       @table::Beam.filters.EarlyPrescaleFilter
-      nPrescale         : 500
+      nPrescale         : 200
     }
     beamResampler       : @local::Beam.filters.beamResampler
     TargetStopFilter    : @local::Beam.filters.TargetStopFilter

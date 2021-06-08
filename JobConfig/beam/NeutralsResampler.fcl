@@ -34,7 +34,7 @@ physics: {
     @table::Common.filters
     EarlyPrescaleFilter : {
       @table::Beam.filters.EarlyPrescaleFilter
-      nPrescale         : 10
+      nPrescale         : 20
     }
     neutralsResampler    : @local::Beam.filters.neutralsResampler
     DetStepFilter : {
