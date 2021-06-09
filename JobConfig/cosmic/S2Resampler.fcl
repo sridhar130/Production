@@ -1,6 +1,6 @@
 // Re-sample cosmics from stage-1
 // Yuri Oksuzian, 2020
-
+#include "JobConfig/cosmic/prolog.fcl"
 #include "JobConfig/primary/Primary.fcl"
 
 // Bring in info from the previous stage
@@ -20,8 +20,8 @@ physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 
 physics.filters.cosmicResample.mu2e.writeEventIDs : true
 
-physics.TriggerPath: [cosmicResample, @sequence::Primary.PrimarySequence]
+physics.PrimaryPath: [cosmicResample, @sequence::Primary.PrimarySequence]
 outputs.Output.fileName        : "dts.owner.Cosmic.version.sequencer.art"
 outputs.Output.outputCommands : [@sequence::Primary.KeptProducts, "keep art::EventIDs_*_*_*"]
 
-//physics.filters.cosmicResample.fileNames: ["/pnfs/mu2e/persistent/users/srsoleti/cosmic/sim.srsoleti.CosmicDSStops.20210512.1.art"]
+physics.filters.cosmicResample.fileNames: ["/mu2e/app/users/srsoleti/workDir/Production/sim.owner.CosmicDSStopsCRY.version.sequencer.ar"]

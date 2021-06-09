@@ -3,6 +3,7 @@
 //
 // Yuri Oksuzian, 2021
 #include "fcl/standardServices.fcl"
+#include "CommonMC/fcl/prolog.fcl"
 #include "JobConfig/common/prolog.fcl"
 #include "JobConfig/primary/prolog.fcl"
 #include "JobConfig/cosmic/prolog.fcl"
@@ -15,6 +16,7 @@ physics: {
   producers : {
     compressPV: @local::Cosmic.compressPV
     @table::Common.producers
+    cosmicTimeOffset: @local::CommonMC.producers.cosmicTimeOffset
   }
 
   filters : {
@@ -27,12 +29,12 @@ physics: {
     genCountLogger: { module_type: GenEventCountReader makeHistograms: false }
   }
 
-  PrimaryPath :  [@sequence::Common.generateSequence, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, compressPV]
+  PrimaryPath :  [@sequence::Common.generateSequence, cosmicTimeOffset, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, compressPV]
   EndPath : @local::Primary.EndPath
 
 }
 
-outputs : { Output :@local::Primary.Output }
+outputs : { Output : @local::Primary.Output }
 
 outputs.Output.fileName : "sim.owner.CosmicDSStops.version.sequencer.art"
 outputs.Output.outputCommands : [@sequence::Primary.KeptProducts, "keep *_compressPV_*_*", "keep mu2e::GenParticles_*_*_*", "keep *_cosmicFilter_*_*"]
@@ -50,7 +52,7 @@ physics.end_paths : [ EndPath ]
 # no histogram output
 services.TFileService.fileName : "/dev/null"
 services.SeedService.baseSeed         :  773651
-services.SeedService.maxUniqueEngines :  2
+services.SeedService.maxUniqueEngines :  3
 
 // Need this to increase the world volume.
 services.GeometryService.inputFile: "JobConfig/cosmic/geom_cosmic_current.txt"
