@@ -1,5 +1,6 @@
 // Re-sample cosmics from stage-1
 // Yuri Oksuzian, 2020
+#include "CommonMC/fcl/prolog.fcl"
 #include "JobConfig/cosmic/prolog.fcl"
 #include "JobConfig/primary/Primary.fcl"
 
@@ -7,6 +8,8 @@
 physics.filters.cosmicResample: @local::Cosmic.cosmicResample
 // Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: @local::Cosmic.MultiStageParametersCosmicS2
+
+physics.producers.cosmicTimeOffset: @local::CommonMC.producers.cosmicTimeOffset
 
 physics.producers.g4run.inputs.simStageOverride: 1
 physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "cosmicResample"
@@ -20,8 +23,8 @@ physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 
 physics.filters.cosmicResample.mu2e.writeEventIDs : true
 
-physics.PrimaryPath: [cosmicResample, @sequence::Primary.PrimarySequence]
+physics.PrimaryPath: [genCounter, cosmicTimeOffset, cosmicResample, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence]
 outputs.Output.fileName        : "dts.owner.Cosmic.version.sequencer.art"
 outputs.Output.outputCommands : [@sequence::Primary.KeptProducts, "keep art::EventIDs_*_*_*"]
 
-physics.filters.cosmicResample.fileNames: ["/mu2e/app/users/srsoleti/workDir/Production/sim.owner.CosmicDSStopsCRY.version.sequencer.ar"]
+physics.filters.cosmicResample.fileNames: ["/mu2e/app/users/srsoleti/workDir/Production/sim.owner.CosmicDSStopsCRY.version.sequencer.art"]

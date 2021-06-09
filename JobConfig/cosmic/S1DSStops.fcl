@@ -3,7 +3,6 @@
 //
 // Yuri Oksuzian, 2021
 #include "fcl/standardServices.fcl"
-#include "CommonMC/fcl/prolog.fcl"
 #include "JobConfig/common/prolog.fcl"
 #include "JobConfig/primary/prolog.fcl"
 #include "JobConfig/cosmic/prolog.fcl"
@@ -16,7 +15,6 @@ physics: {
   producers : {
     compressPV: @local::Cosmic.compressPV
     @table::Common.producers
-    cosmicTimeOffset: @local::CommonMC.producers.cosmicTimeOffset
   }
 
   filters : {
@@ -29,7 +27,7 @@ physics: {
     genCountLogger: { module_type: GenEventCountReader makeHistograms: false }
   }
 
-  PrimaryPath :  [@sequence::Common.generateSequence, cosmicTimeOffset, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, compressPV]
+  PrimaryPath :  [@sequence::Common.generateSequence, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, compressPV]
   EndPath : @local::Primary.EndPath
 
 }
