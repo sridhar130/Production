@@ -32,7 +32,7 @@ physics: {
 
 }
 
-outputs : { Output :@local::Primary.Output }
+outputs : { Output : @local::Primary.Output }
 
 outputs.Output.fileName : "sim.owner.CosmicDSStops.version.sequencer.art"
 outputs.Output.outputCommands : [@sequence::Primary.KeptProducts, "keep *_compressPV_*_*", "keep mu2e::GenParticles_*_*_*", "keep *_cosmicFilter_*_*"]
@@ -50,7 +50,7 @@ physics.end_paths : [ EndPath ]
 # no histogram output
 services.TFileService.fileName : "/dev/null"
 services.SeedService.baseSeed         :  773651
-services.SeedService.maxUniqueEngines :  2
+services.SeedService.maxUniqueEngines :  3
 
 // Need this to increase the world volume.
 services.GeometryService.inputFile: "JobConfig/cosmic/geom_cosmic_current.txt"
