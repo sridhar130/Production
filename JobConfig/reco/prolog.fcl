@@ -126,7 +126,7 @@ Reconstruction : {
        SaveEnergySteps : false
        SaveUnusedDigiMCs : true
        SaveAllUnusedDigiMCs : false
-       TimeOffsets : [ @sequence::DigiCompression.TimeMaps ]
+       TimeOffsets : []
        PrimaryParticle : "compressDigiMCs"
        StrawDigiCollection : "makeSD"
        StrawHitFlagCollection : "FlagBkgHits:StrawHits" 
@@ -150,7 +150,7 @@ Reconstruction : {
       crvDigiMCTag : "compressDigiMCs"
       simParticleTags : [ "compressDigiMCs" ]
       extraStepPointMCTags : [ "compressDigiMCs:virtualdetector", "compressDigiMCs:protonabsorber" ]
-      timeMapTags : [ @sequence::DigiCompression.TimeMaps ]
+      timeMapTags : [ ]
       caloShowerStepTags : [ ]
       caloShowerSimTag : ""
       caloShowerROTag : ""

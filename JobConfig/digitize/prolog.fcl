@@ -33,7 +33,7 @@ Digitize: {
 	simParticleTags : [ @local::DigiCompressionTags.primarySimParticleTag ] 
 	mcTrajectoryTag : @local::DigiCompressionTags.primarySimParticleTag
 	extraStepPointMCTags : @local::DigiCompressionTags.commonExtraStepPointMCTags
-	timeMapTags : [ @sequence::CommonMC.TimeMaps ]
+	timeMapTags : [ ]
 	caloShowerStepTags : @local::DigiCompressionTags.primaryCaloShowerStepTags
 	caloShowerSimTag : @local::DigiCompressionTags.commonCaloShowerSimTag
 	caloShowerROTag : @local::DigiCompressionTags.commonCaloShowerROTag
