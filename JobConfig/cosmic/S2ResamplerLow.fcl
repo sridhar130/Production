@@ -2,5 +2,11 @@
 // Yuri Oksuzian, 2020
 
 #include "JobConfig/cosmic/S2Resampler.fcl"
-outputs.Output.fileName        : "dts.owner.CosmicLow.version.sequencer.art"
+physics.filters.filterS1: {
+         module_type: FilterCosmicsStage1
+         inputs : [ "cosmicResample:CRV" ]
+         cutEDepMax: 16  // Filter events that deposit lower than 16 MeV in CRV
+}
+physics.PrimaryPath: [genCounter, cosmicTimeOffset, cosmicResample, filterS1, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence]
 physics.filters.DetStepFilter.MaximumPartMom: 500
+outputs.Output.fileName        : "dts.owner.CosmicLow.version.sequencer.art"

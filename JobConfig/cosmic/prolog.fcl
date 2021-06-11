@@ -125,6 +125,7 @@ Cosmic: {
                evtOutInstanceName: "eventlevel"
                srInput: "compressPV"
             }
+            simTimeOffset : "cosmicTimeOffset"
          }
       }
    }
