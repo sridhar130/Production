@@ -55,6 +55,27 @@ Primary: {
       MinimumTrkSteps : 10 # primary must produce at least this many TrkSteps
       MinimumSumCaloStepE : 50.0 # or at least this much calo energy
     }
+
+    TargetStopResampler : {
+      module_type: ResamplingMixer
+      readMode            : sequential
+      wrapFiles           : true
+      fileNames: @nil
+      mu2e: {
+         products: {
+            genParticleMixer: { mixingMap: [ [ "beamResampler", "" ] ] }
+            simParticleMixer: { mixingMap: [ [ "TargetStopFilter", "" ] ] }
+            stepPointMCMixer: { mixingMap: [
+                  [ "TargetStopFilter:virtualdetector", ":" ]
+               ] }
+            volumeInfoMixer: {
+               srInput: "compressPVTargetStops"
+               evtOutInstanceName: "eventlevel"
+            }
+         }
+      }
+    }
+
   }
   DetStepSequence : [
     @sequence::TrackerMC.StepSim,

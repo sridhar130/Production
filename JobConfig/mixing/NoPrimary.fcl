@@ -3,8 +3,7 @@
 #
 # original author: Dave Brown, LBNL
 #
-#include "JobConfig/mixing/Run1.fcl"
-
+#include "JobConfig/mixing/Mix.fcl"
 source: { module_type : EmptyEvent }
 #
 # final configuration

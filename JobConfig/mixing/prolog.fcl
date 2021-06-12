@@ -36,15 +36,12 @@ Mixing : {
   }
 }
 Mixing : {
-  EventsPerMustop : 1.0194 # should come from bookkeeping TODO
   filters : {
 # mixers for muon stop, beamflash pileup, and neutrals flash pileup
     mustopMixer : @local::Mixing.DetStepMixer 
     BeamFlashMixer : @local::Mixing.DetStepMixer 
     NeutralsFlashMixer : @local::Mixing.DetStepMixer 
   }
-  
-# sequences: add flash and OOT mixers TODO
   PileupMixSequence : [ PBISim, mustopMixer, BeamFlashMixer, NeutralsFlashMixer ]
 }
 # override the Trigger 'PrepareDigis' sequence; the mixers must preceed the digi making.  Note CRV doesn't participate in trigger, so isn't included

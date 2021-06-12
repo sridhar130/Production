@@ -34,7 +34,7 @@ physics: {
     @table::Common.filters
     EarlyPrescaleFilter : {
       @table::Beam.filters.EarlyPrescaleFilter
-      nPrescale         : 10
+      nPrescale         : 20
     }
     neutralsResampler    : @local::Beam.filters.neutralsResampler
     DetStepFilter : {
@@ -106,3 +106,4 @@ physics.producers.g4run.Mu2eG4CommonCut:{
 #include "JobConfig/common/epilog.fcl"
 #include "JobConfig/pileup/epilog.fcl"
 #include "JobConfig/beam/epilog.fcl"
+services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_no_tsu_ps.txt"
