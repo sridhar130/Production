@@ -10,7 +10,4 @@ physics.producers.generate : {
   stoppingTargetMaterial : "Al"
   verbosity : 0
 }
-# limit # events in each subrun so that there's a good match to downstream mixing
-source.numberEventsInSubRun : 200
-source.firstSubRun : 0 
 outputs.Output.fileName: "dts.owner.CeEndpoint.version.sequencer.art"
