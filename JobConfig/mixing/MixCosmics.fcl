@@ -1,0 +1,15 @@
+#
+#  Filter cosmics before mixing to select particles capable of triggering.
+#
+#include "JobConfig/primary/prolog.fcl"
+#include "JobConfig/mixing/MixPrimary.fcl"
+# add a primary filter before mixing to avoid wasting time on events that aren't signal-like
+physics.filters.CosmicBackgroundFilter : {
+  @table::Primary.filters.DetStepFilter
+  CaloShowerSteps: []
+  StrawGasSteps: [ compressDetStepMCs ]
+  MinimumPartMom : 50.0 # MeV/c
+  MaximumPartMom : 250.0 # MeV/c
+  MinimumTrkSteps : 12 # primary must produce at least this many StrawGasSteps
+}
+physics.MixPath : [ CosmicBackgroundFilter, @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence ]
