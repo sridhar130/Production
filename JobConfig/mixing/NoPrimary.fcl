@@ -3,20 +3,21 @@
 #
 # original author: Dave Brown, LBNL
 #
-#include "JobConfig/mixing/Mix.fcl"
+#include "JobConfig/mixing/MixPrimary.fcl"
+#
+# empty source sinc there is no primary
+#
 source: { module_type : EmptyEvent }
 #
-# final configuration
-#
 #patches since there are no primaries
-physics.producers.compressDigiMCs.simParticleTags : [mustopMixer, BeamFlashMixer, NeutralsFlashMixer]
-physics.producers.compressDigiMCs.caloShowerStepTags : [mustopMixer, BeamFlashMixer, NeutralsFlashMixer]
-physics.producers.CrvPhotons.crvStepModuleLabels : [ mustopMixer, BeamFlashMixer, NeutralsFlashMixer ]
-physics.producers.CaloShowerROMaker.caloShowerStepCollection : [mustopMixer, BeamFlashMixer, NeutralsFlashMixer ]
+physics.producers.compressDigiMCs.simParticleTags : [MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer]
+physics.producers.compressDigiMCs.caloShowerStepTags : [MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer]
+physics.producers.CrvPhotons.crvStepModuleLabels : [ MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
+physics.producers.CaloShowerROMaker.caloShowerStepCollection : [MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
 physics.producers.CrvPhotons.crvStepProcessNames : [ "","","" ]
 physics.producers.compressDigiMCs.extraStepPointMCTags : []
 physics.producers.compressDigiMCs.mcTrajectoryTag : ""
 physics.producers.compressDigiMCs.primaryParticleTag : ""
 physics.producers.FindMCPrimary : @erase
-# customize the output
-physics.end_paths : [ EndPath ] # needed for generate_fcl
+# make descrxiption specific since there is no input file 
+outputs.Output.fileName: "dig.owner.NoPrimary.version.sequencer.art"

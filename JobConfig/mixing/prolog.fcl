@@ -37,12 +37,12 @@ Mixing : {
 }
 Mixing : {
   filters : {
-# mixers for muon stop, beamflash pileup, and neutrals flash pileup
-    mustopMixer : @local::Mixing.DetStepMixer 
+# mixers for muon stop pileup, beamflash pileup, and neutrals flash pileup
+    MuStopPileupMixer : @local::Mixing.DetStepMixer 
     BeamFlashMixer : @local::Mixing.DetStepMixer 
     NeutralsFlashMixer : @local::Mixing.DetStepMixer 
   }
-  PileupMixSequence : [ PBISim, mustopMixer, BeamFlashMixer, NeutralsFlashMixer ]
+  PileupMixSequence : [ PBISim, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
 }
 # override the Trigger 'PrepareDigis' sequence; the mixers must preceed the digi making.  Note CRV doesn't participate in trigger, so isn't included
 Trigger.PrepareDigis: [ @sequence::Mixing.PileupMixSequence, @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]

@@ -1,9 +1,9 @@
 #
-#  Mixing configuration: this is a form of OnSpill digitization
+#  Mix pileup on top of a primary particle.  This is a form of OnSpill digitization
 #
 #include "JobConfig/digitize/prolog.fcl"
 #include "JobConfig/mixing/prolog.fcl"
-process_name: Digitize
+process_name: MixPrimary
 source : { module_type : RootInput }
 services : @local::Services.SimAndReco # reco is needed for the trigger
 physics : { 
@@ -36,13 +36,15 @@ outputs : {
 physics.producers.EWMProducer.SpillType : 1
 # add primary and mixers to the list of step producers.  Note the StrawDigi maker uses a general selector if no module is specified
 physics.producers.makeSD.StrawGasStepModule : ""
-physics.producers.compressDigiMCs.simParticleTags : [compressDetStepMCs, mustopMixer, BeamFlashMixer, NeutralsFlashMixer]
-physics.producers.compressDigiMCs.caloShowerStepTags : [compressDetStepMCs, mustopMixer, BeamFlashMixer, NeutralsFlashMixer]
-physics.producers.CaloShowerROMaker.caloShowerStepCollection : [compressDetStepMCs, mustopMixer, BeamFlashMixer, NeutralsFlashMixer ]
-physics.producers.CrvPhotons.crvStepModuleLabels : [ compressDetStepMCs, mustopMixer, BeamFlashMixer, NeutralsFlashMixer ]
+physics.producers.compressDigiMCs.simParticleTags : [compressDetStepMCs, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer]
+physics.producers.compressDigiMCs.caloShowerStepTags : [compressDetStepMCs, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer]
+physics.producers.CaloShowerROMaker.caloShowerStepCollection : [compressDetStepMCs, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
+physics.producers.CrvPhotons.crvStepModuleLabels : [ compressDetStepMCs, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
 physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","" ]
 #
 #physics.trigger_paths : [ MixPath ] incompatible with current trigger paths TODO
 physics.end_paths : [ EndPath ]
+# partial BField map
+services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_no_tsu_ps.txt"
 # generic output: this is overwritten by generate_fcl
 outputs.Output.fileName: "dig.owner.description.version.sequencer.art"
