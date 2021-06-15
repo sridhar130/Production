@@ -21,7 +21,8 @@ physics : {
     @table::Primary.filters 
   }
   analyzers : { @table::Primary.analyzers }
-  PrimaryPath : [ TargetStopResampler, @sequence::Common.generateSequence, @sequence::Common.g4Sequence,  @sequence::Primary.PrimarySequence]
+  PrimaryPath : [ TargetStopResampler, @sequence::Common.generateSequence, @sequence::Common.g4Sequence,  
+	      @sequence::Primary.DetStepSequence, FindMCPrimary]
   EndPath : @local::Primary.EndPath
   trigger_paths : [ PrimaryPath ]
   end_paths : [ EndPath ]

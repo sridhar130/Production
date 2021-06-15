@@ -1,0 +1,124 @@
+#
+# generate and produce Detector Steps from generic muon target stops
+# Uses the Pileup 'generator' from A. Gaponenko
+#
+# original author: Dave Brown, LBNL
+#
+#include "fcl/standardServices.fcl"
+#include "EventGenerator/fcl/prolog.fcl"
+#include "JobConfig/common/prolog.fcl"
+#include "JobConfig/beam/prolog.fcl"
+#include "JobConfig/primary/prolog.fcl"
+#include "JobConfig/pileup/prolog.fcl"
+process_name: MuStopPileup
+source: { module_type : EmptyEvent }
+services : @local::Services.Sim
+physics : { 
+  producers : { 
+    @table::Common.producers 
+    @table::Primary.producers 
+    compressDetStepMCs : {
+      @table::Primary.producers.compressDetStepMCs
+      @table::Pileup.producers.compressDetStepMCs
+    }
+    # resampling generator
+    generate : {
+      module_type: Pileup
+      inputSimParticles: TargetStopResampler
+      stoppingTargetMaterial : "Al"
+      verbosity: 0
+      captureProducts: [
+       {
+          spectrum: {
+             nbins: 1000
+             spectrumShape: "ejectedProtons"
+          }
+          spectrumVariable: "kineticEnergy"
+          tool_type: "MuCapProtonGenerator"
+       },
+       {
+          spectrum: {
+             nbins: 1000
+             spectrumShape: "ejectedProtons"
+          }
+          spectrumVariable: "kineticEnergy"
+          tool_type: "MuCapDeuteronGenerator"
+       },
+       {
+          spectrum: {
+             spectrumFileName: "ConditionsService/data/neutronSpectrum.txt"
+             spectrumShape: "tabulated"
+          }
+          spectrumVariable: "kineticEnergy"
+          tool_type: "MuCapNeutronGenerator"
+       },
+       {
+          spectrum: {
+             ehi: 7
+             elow: 0
+             spectrumShape: "flat"
+          }
+          tool_type: "MuCapPhotonGenerator"
+       }
+      ]
+      decayProducts: [
+       {
+          spectrum: {
+             elow: 1
+             pdgId: 11
+             spectrumResolution: 1e-1
+             spectrumShape: "Czarnecki"
+          }
+          tool_type: "DIOGenerator"
+       }
+      ]
+    }
+  }
+  filters : { 
+    @table::Common.filters 
+    @table::Primary.filters 
+  # override step filter to select any detectable signal from any particle
+    DetStepFilter : {
+      @table::Primary.filters.DetStepFilter 
+      @table::Pileup.filters.DetStepFilter 
+      @table::Beam.filters.DetStepFilter 
+# do I want an early MuStopPileup stream? TODO
+    }
+  }
+  analyzers : { @table::Primary.analyzers }
+  PileupPath : [ TargetStopResampler, @sequence::Common.generateSequence, @sequence::Common.g4Sequence,  
+	      @sequence::Primary.DetStepSequence]
+  EndPath : @local::Primary.EndPath
+  trigger_paths : [ PileupPath ]
+  end_paths : [ EndPath ]
+}
+outputs : { Output : {
+  @table::Pileup.Output
+  fileName: "dts.owner.MuStopPileup.version.sequencer.art"
+  outputCommands : [ "drop *_*_*_*",
+		 "keep art::EventIDs_*_*_*",
+		 "keep mu2e::GenEventCount_*_*_*",
+		 "keep mu2e::StatusG4_*_*_*",
+		 @sequence::Pileup.KeptProducts ]
+ }
+ # some consolidation is needed TODO
+}
+#include "JobConfig/common/epilog.fcl"
+#include "JobConfig/primary/epilog.fcl"
+#include "JobConfig/pileup/epilog.fcl"
+#
+
+# resampling configuration; this should be somewhere common TODO
+physics.producers.g4run.inputs: {
+   primaryType: StageParticles
+   primaryTag: "generate"
+   inputMCTrajectories: ""
+   simStageOverride: 2
+   inputPhysVolumeMultiInfo: "TargetStopResampler"
+   updateEventLevelVolumeInfos: {
+      input: "TargetStopResampler:eventlevel"
+      outInstance: "eventlevel"
+   }
+}
+# use reduced BField for these jobs
+services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_no_tsu_ps.txt"

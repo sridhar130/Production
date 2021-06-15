@@ -241,7 +241,8 @@ Reconstruction : {
 	    "keep mu2e::KalSeeds_K*_*_*",
 	    "keep mu2e::HelixSeeds_MH*_*_*",
 	    "keep mu2e::TimeClusters_MH*_*_*",
-	    "keep mu2e::CaloClusters_CaloClusterMaker_*_*",
+	    "keep mu2e::CaloClusters_*_*_*",
+	    "keep mu2e::CaloHits_*_*_*",
 	    "keep mu2e::EventWindowMarker_*_*_*",
 	    "keep mu2e::ProtonBunchTime_*_*_*",
 	    "keep *_SelectRecoMC_*_*"
