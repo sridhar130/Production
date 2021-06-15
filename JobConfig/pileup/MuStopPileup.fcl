@@ -26,7 +26,7 @@ physics : {
       module_type: Pileup
       inputSimParticles: TargetStopResampler
       stoppingTargetMaterial : "Al"
-      verbosity: 99
+      verbosity: 0
       captureProducts: [
        {
           spectrum: {
