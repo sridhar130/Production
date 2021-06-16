@@ -58,7 +58,7 @@ Mixing : {
   PileupMixSequence : [ PBISim, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
 }
 # override the Trigger 'PrepareDigis' sequence; the mixers must preceed the digi making.  Note CRV doesn't participate in trigger, so isn't included
-Trigger.PrepareDigis: [ @sequence::Mixing.PileupMixSequence, @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
+Trigger.PrepareDigis: [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
 # LogNormal proton bunch intensity.  Specific values must be provided based on physics conditions
 Digitize.producers.PBISim : {  
   module_type: ProtonBunchIntensityLogNormal

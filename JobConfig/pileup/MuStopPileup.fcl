@@ -86,8 +86,7 @@ physics : {
     }
   }
   analyzers : { @table::Primary.analyzers }
-  PileupPath : [ TargetStopResampler, @sequence::Common.generateSequence, @sequence::Common.g4Sequence,  
-	      @sequence::Primary.DetStepSequence]
+  PileupPath : [ TargetStopResampler, @sequence::Common.generateSequence, @sequence::Common.g4Sequence, @sequence::Primary.DetStepSequence, @sequence::Primary.DetStepFilterSequence ]
   EndPath : @local::Primary.EndPath
   trigger_paths : [ PileupPath ]
   end_paths : [ EndPath ]
