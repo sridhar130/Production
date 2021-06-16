@@ -45,6 +45,6 @@ physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","" ]
 #physics.trigger_paths : [ MixPath ] incompatible with current trigger paths TODO
 physics.end_paths : [ EndPath ]
 # partial BField map
-services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_no_tsu_ps.txt"
+services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_reco.txt"
 # generic output: this is overwritten by generate_fcl
 outputs.Output.fileName: "dig.owner.description.version.sequencer.art"
