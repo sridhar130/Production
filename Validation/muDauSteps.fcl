@@ -1,7 +1,5 @@
-#include "JobConfig/pileup/mustop.fcl"
+#include "JobConfig/pileup/MuStopPileup.fcl"
 
-source.firstRun: 1000
-source.maxEvents: 2000
 
 services.scheduler.wantSummary: true
 services.TimeTracker.printSummary: true
@@ -12,4 +10,7 @@ services.SeedService.maxUniqueEngines: 20
 services.GeometryService.inputFile : "Mu2eG4/geom/geom_common_current.txt"
 
 outputs.Output.fileName : "dts.owner.muDauSteps.dsconf.seq.art"
+physics.filters.TargetStopResampler.fileNames : [
+  "/cvmfs/mu2e.opensciencegrid.org/DataFiles/Validation/sim.brownd.TargetStops.MDC2020d.001202_00000000.art"
+]
 
