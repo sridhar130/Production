@@ -10,6 +10,7 @@
 source: { module_type : EmptyEvent }
 #
 #patches since there are no primaries
+physics.MixPath : [ @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence ]
 physics.producers.compressDigiMCs.simParticleTags : [MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer]
 physics.producers.compressDigiMCs.caloShowerStepTags : [MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer]
 physics.producers.CrvPhotons.crvStepModuleLabels : [ MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]

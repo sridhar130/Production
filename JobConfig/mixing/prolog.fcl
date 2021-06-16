@@ -55,7 +55,7 @@ Mixing : {
       # add a calo selection for primaries that produce only neutrals (for calibration)
     }
   }
-  PileupMixSequence : [ SignalFilter, PBISim, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
+  PileupMixSequence : [ PBISim, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
 }
 # override the Trigger 'PrepareDigis' sequence; the mixers must preceed the digi making.  Note CRV doesn't participate in trigger, so isn't included
 Trigger.PrepareDigis: [ @sequence::Mixing.PileupMixSequence, @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
