@@ -133,8 +133,6 @@ physics.producers.g4run.inputs: {
 }
 # muon stops file from MDC2020 validation
 physics.filters.TargetStopResampler.fileNames : [
-"/pnfs/mu2e/persistent/users/brownd/MDC2020Val/sim.brownd.TargetStops.MDC2020d.001202_00.art"
+  "/cvmfs/mu2e.opensciencegrid.org/DataFiles/Validation/sim.brownd.TargetStops.MDC2020d.001202_00000000.art"
 ]
-# use reduced BField for these jobs
-services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_no_tsu_ps.txt"
-
+services.GeometryService.inputFile : "Mu2eG4/geom/geom_common_current.txt"
