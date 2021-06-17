@@ -11,7 +11,7 @@ physics: {
     muplusSelector: {
       module_type: ParticleCodeFilter
       SimParticles : TargetStopFilter
-      ParticleCodes : [ [-13,56,32 ] ] # mu+, mu2ePrimary, muMinusCaptureAtRest
+      ParticleCodes : [ [-13,56, 14 ] ] # mu+, mu2ePrimary, Decay
       PrintLevel : 0
     }
   }

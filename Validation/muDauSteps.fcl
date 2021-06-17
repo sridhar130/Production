@@ -13,4 +13,5 @@ outputs.Output.fileName : "dts.owner.muDauSteps.dsconf.seq.art"
 physics.filters.TargetStopResampler.fileNames : [
   "/cvmfs/mu2e.opensciencegrid.org/DataFiles/Validation/sim.brownd.MuminusStops.MDC2020d.001202_00000000.art"
 ]
+physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip: 1850
 

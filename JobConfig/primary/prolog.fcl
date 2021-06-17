@@ -62,20 +62,20 @@ Primary: {
       wrapFiles           : true
       fileNames: @nil
       mu2e: {
-         products: {
-            genParticleMixer: { mixingMap: [ [ "beamResampler", "" ] ] }
-            simParticleMixer: { mixingMap: [ [ "TargetStopFilter", "" ] ] }
-            stepPointMCMixer: { mixingMap: [
-                  [ "TargetStopFilter:virtualdetector", ":" ]
-               ] }
-            volumeInfoMixer: {
-               srInput: "compressPVTargetStops"
-               evtOutInstanceName: "eventlevel"
-            }
-         }
+	writeEventIDs : true
+        MaxEventsToSkip: 1863000  # based on MDC2020, file of 2e8 Beam Resamples 
+	debugLevel : 1
+        products: {
+          genParticleMixer: { mixingMap: [ [ "beamResampler", "" ] ] }
+          simParticleMixer: { mixingMap: [ [ "TargetStopFilter", "" ] ] }
+          stepPointMCMixer: { mixingMap: [ [ "TargetStopFilter:virtualdetector", ":" ] ] }
+          volumeInfoMixer: {
+            srInput: "compressPVTargetStops"
+            evtOutInstanceName: "eventlevel"
+          }
+        }
       }
     }
-
   }
   DetStepSequence : [
     @sequence::TrackerMC.StepSim,

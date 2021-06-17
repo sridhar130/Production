@@ -156,6 +156,8 @@ Beam: {
          wrapFiles: true
          mu2e: {
             writeEventIDs : true
+            MaxEventsToSkip: 350000  # Based on MDC2020 2e6 POT
+	    debugLevel : 1
             products: {
                genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
                simParticleMixer: { mixingMap: [ [ "BeamFilter", "" ] ] }
@@ -179,6 +181,8 @@ Beam: {
          wrapFiles: true
          mu2e: {
             writeEventIDs : true
+            MaxEventsToSkip: 1330900  # Based on MDC2020 2e6 POT
+	    debugLevel : 1
             products: {
                genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
                simParticleMixer: { mixingMap: [ [ "NeutralsFilter", "" ] ] }

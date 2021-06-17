@@ -4,7 +4,7 @@
 # original author: Dave Brown, LBNL
 #
 #physics.filters.MuStopPileupMixer.mu2e.simStageEfficiencyTags : [ muHitPerMuStop, muStopPerMuBeamEnterDS, muBeamEnterDSPerPOT ]
-physics.filters.MuStopPileupMixer.mu2e.meanEventsPerProton : 3.6647e-5 # from hand calculations: will come from simStageEfficiency once we have the full chain TODO
+physics.filters.MuStopPileupMixer.mu2e.meanEventsPerProton :   0.00003592456 # from hand calculations: will come from simStageEfficiency once we have the full chain TODO
 physics.filters.MuStopPileupMixer.mu2e.simStageEfficiencyTags: []
 #
 physics.filters.BeamFlashMixer.mu2e.meanEventsPerProton : 0.0000511194 # from hand calculations: will come from simStageEfficiency once we have the full chain TODO
