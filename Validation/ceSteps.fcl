@@ -9,7 +9,7 @@ services.SeedService.baseSeed: 8
 services.SeedService.maxUniqueEngines: 20
 # muon stops file from MDC2020 validation
 physics.filters.TargetStopResampler.fileNames : [
-  "/cvmfs/mu2e.opensciencegrid.org/DataFiles/Validation/sim.brownd.TargetStops.MDC2020d.001202_00000000.art"
+  "/cvmfs/mu2e.opensciencegrid.org/DataFiles/Validation/sim.brownd.MuminusStops.MDC2020d.001202_00000000.art"
 ]
 services.GeometryService.inputFile : "Mu2eG4/geom/geom_common_current.txt"
 outputs.Output.fileName : "dts.owner.ceSteps.dsconf.seq.art"
