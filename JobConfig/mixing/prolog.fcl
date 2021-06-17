@@ -23,6 +23,7 @@ Mixing : {
       protonBunchIntensityTag: "PBISim"
       meanEventsPerProton: @nil
       simStageEfficiencyTags: @nil
+      writeEventIDs : true
       products: {
         genParticleMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
         simParticleMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
@@ -56,6 +57,10 @@ Mixing : {
     }
   }
   PileupMixSequence : [ PBISim, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
+  MixingProducts : [
+    "keep art::EventIDs_*_*_*"
+  ]
+
 }
 # override the Trigger 'PrepareDigis' sequence; the mixers must preceed the digi making.  Note CRV doesn't participate in trigger, so isn't included
 Trigger.PrepareDigis: [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]

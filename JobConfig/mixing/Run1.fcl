@@ -15,5 +15,4 @@ physics.filters.NeutralsFlashMixer.mu2e.simStageEfficiencyTags: []
 #
 physics.producers.PBISim.sigma: 0.7147 # =sqrt(-ln(0.6)) SDF=0.6
 physics.producers.PBISim.extendedMean: 1.58e7 # mean of the uncut distribution
-physics.producers.PBISim.cutMax: 1.58e8  # cut the tail at 10 times the mean
-Mixing.EventsPerMustop : 1.0194 # should come from bookkeeping TODO
+physics.producers.PBISim.cutMax: 9.48e7  # truncate the tail at 6 times the mean

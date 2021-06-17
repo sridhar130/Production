@@ -23,7 +23,14 @@ physics : {
 }
 #
 outputs : { 
-  Output :@local::Digitize.Output
+  Output : {
+    @table::Digitize.Output
+      outputCommands : [ "drop *_*_*_*",
+		       @sequence::Mixing.MixingProducts,
+		       @sequence::Digitize.DigiProducts,
+		       @sequence::Digitize.TriggerProducts ]
+
+  }
 }
 #
 # Final configuration
