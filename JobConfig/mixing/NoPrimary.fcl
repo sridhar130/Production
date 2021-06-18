@@ -9,6 +9,9 @@
 #
 source: { module_type : EmptyEvent }
 #
+# no trigger selection
+outputs.Output.SelectEvents: [ ]
+#
 #patches since there are no primaries
 physics.MixPath : [ @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence ]
 physics.producers.compressDigiMCs.simParticleTags : [MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer]
