@@ -153,8 +153,8 @@ digraph SimWorkflow {
 	       <tr><td align="left"><font color="black">Fail G4Consistent</font></td></tr>
 	       </table>>];
 
-    POT -> Neutrals [ label="concatenate x10"];
-    POT ->  Beam [ label="concatenate x10"];
+    POT -> Neutrals [ label="concatenate x1000"];
+    POT ->  Beam [ label="concatenate x1000"];
 
     POT_ExtMon ->  ExtMon
     POT_ExtMon ->  ExtMonRegion
@@ -178,25 +178,39 @@ digraph SimWorkflow {
 		     <tr><td align="left"><font color="darkgreen">beam/BeamResampler.fcl</font></td></tr>
 		     </table>>];
 
-    Beam -> BeamResampling [ label=<resample 10<sup>+4</sup>?> ];
-    Neutrals -> NeutralsResampling [ label=<resample 10<sup>+4</sup>?> ];
+    Beam -> BeamResampling [ label=<resample 10<sup>+3</sup>> ];
+    Neutrals -> NeutralsResampling [ label=<resample 10<sup>+3</sup>?> ];
 
 
     TargetStops [shape=oval, color=lightblue,
 		label=<<table border="0" cellborder="0" cellspacing="1">
 		  <tr><td align="center"><b>Target Stops</b></td></tr>
-		  <tr><td align="left"><font color="red">sim.mu2e.MuTargetStops.art</font></td></tr>
-		  <tr><td align="left"><font color="fuchsia">sim.mu2e.PiTargetStops.art</font></td></tr>
+		  <tr><td align="left"><font color="red">sim.mu2e.TargetStops.art</font></td></tr>
 		  </table>>];
 
     IPAStops [shape=oval, color=lightblue,
 	     label=<<table border="0" cellborder="0" cellspacing="1">
 	       <tr><td align="center"><b>IPA Stops</b></td></tr>
-	       <tr><td align="left"><font color="red">sim.mu2e.MuIPAStops.art</font></td></tr>
+	       <tr><td align="left"><font color="red">sim.mu2e.IPAStops.art</font></td></tr>
 	       </table>>];
 
     BeamResampling -> TargetStops;
     BeamResampling -> IPAStops;
+
+    MuminusTargetStops [shape=oval, color=lightblue,
+		label=<<table border="0" cellborder="0" cellspacing="1">
+		  <tr><td align="center"><b>Mu- Target Stops</b></td></tr>
+		  <tr><td align="left"><font color="red">sim.mu2e.MuminusTargetStops.art</font></td></tr>
+		  </table>>];
+
+    MuplusTargetStops [shape=oval, color=lightblue,
+		label=<<table border="0" cellborder="0" cellspacing="1">
+		  <tr><td align="center"><b>Mu+ Target Stops</b></td></tr>
+		  <tr><td align="left"><font color="red">sim.mu2e.MuplusTargetStops.art</font></td></tr>
+		  </table>>];
+
+    TargetStops -> MuminusTargetStops [ label="filter and concatenate x10"];
+    TargetStops -> MuplusTargetStops [ label="filter and concatenate x10"];
 
     BeamFlashPileup [shape=oval, color=lightblue,
 		    label=<<table border="0" cellborder="0" cellspacing="1">
@@ -210,8 +224,8 @@ digraph SimWorkflow {
 			  <tr><td align="center"><b>NeutralsFlash Pileup</b></td></tr>
 			  <tr><td align="left"><font color="red">dts.mu2e.NeutralsFlash.art</font> </td></tr>
 			  </table>>];
-    NeutralsResampling -> NeutralsFlashPileup [ label=<concatenate 10<sup>+4</sup>?> ];
-    BeamResampling -> BeamFlashPileup [ label=<concatenate 10<sup>+4</sup>?> ];
+    NeutralsResampling -> NeutralsFlashPileup [ label="concatenate 1000" ];
+    BeamResampling -> BeamFlashPileup [ label="concatenate 1000" ];
 
   }
 
@@ -232,7 +246,7 @@ digraph SimWorkflow {
 		  </table>>];
 
 
-    TargetStops -> PrimaryMuonTerm [ label=<resample 10<sup>+3</sup>?> ];
+    MuminusTargetStops -> PrimaryMuonTerm [ label=<resample 10<sup>+3</sup>?> ];
 
     IPAStops -> IPAMuonTerm [ label=<resample 10<sup>+5</sup>?> ];
 
@@ -271,7 +285,7 @@ digraph SimWorkflow {
 
     PileupMuonTerm -> TargetMuonPileup [ label=<concatenate 10<sup>+4</sup>?> ];
     /*    {rank=same TargetMuonPileup BeamFlashPileup NeutralsFlashPileup }; */
-    TargetStops -> PileupMuonTerm [ label=<resample 10<sup>+3</sup>?> ];
+    MuminusTargetStops -> PileupMuonTerm [ label=<resample 10<sup>+3</sup>?> ];
 
   }
 
