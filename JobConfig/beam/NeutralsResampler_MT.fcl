@@ -1,5 +1,5 @@
-# MT version of ProtonsOnTarget
-#include "JobConfig/beam/POT.fcl"
+# MT version of NeutralsResampler
+#include "JobConfig/beam/NeutralsResampler.fcl"
 
 physics.producers.g4run.module_type : "Mu2eG4MT"
 services.scheduler.num_schedules : 2
