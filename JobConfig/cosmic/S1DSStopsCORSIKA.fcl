@@ -13,7 +13,7 @@ targetParams: {
 source: {
     module_type: FromCorsikaBinary
     fileNames: ["/pnfs/mu2e/persistent/users/srsoleti/corsika/sim.srsoleti.corsika.v1.30001.csk"]
-    runNumber          : 1
+    runNumber          : 1205
     showerAreaExtension  : 10000
     @table::targetParams
     fluxConstant: 1.8e4
