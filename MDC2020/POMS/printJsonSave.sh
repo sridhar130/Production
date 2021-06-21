@@ -1,5 +1,6 @@
 OLDIFS=${IFS}
-printJson ${1} --no-parents > ${1}.json
+samweb file-lineage parents ${1} > parents.txt
+printJson ${1} --parents=parents.txt > ${1}.json
 truncate -s-3 ${1}.json
 echo "," >> ${1}.json
 CHECKSUMS=`ifdh checksum ${1}`
