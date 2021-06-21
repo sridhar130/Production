@@ -1,7 +1,7 @@
 /* Flowchart showing the simulation workflow for Mu2e.
  * To compile:
  *
- *     dot -T(suf) SimulationWorkflow.dot -o SimulationWorkflow.(suf), suf=tiff, jpg, pdf, ... 
+ *     dot -T(suf) SimulationWorkflow.dot -o SimulationWorkflow.(suf), suf=tiff, jpg, pdf, ...
  *    See https://graphviz.gitlab.io/documentation/ for more details
  *
  */
@@ -185,17 +185,17 @@ digraph SimWorkflow {
     TargetStops [shape=oval, color=lightblue,
 		label=<<table border="0" cellborder="0" cellspacing="1">
 		  <tr><td align="center"><b>Target Stops</b></td></tr>
-		  <tr><td align="left"><font color="red">sim.mu2e.TargetStops.art</font></td></tr>
+		  <tr><td align="left"><font color="red">sim.mu2e.TargetStopsCat.art</font></td></tr>
 		  </table>>];
 
     IPAStops [shape=oval, color=lightblue,
 	     label=<<table border="0" cellborder="0" cellspacing="1">
 	       <tr><td align="center"><b>IPA Stops</b></td></tr>
-	       <tr><td align="left"><font color="red">sim.mu2e.IPAStops.art</font></td></tr>
+	       <tr><td align="left"><font color="red">sim.mu2e.IPAStopsCat.art</font></td></tr>
 	       </table>>];
 
     BeamResampling -> TargetStops;
-    BeamResampling -> IPAStops;
+    BeamResampling -> IPAStops [ label="concatenate 500" ];
 
     MuminusTargetStops [shape=oval, color=lightblue,
 		label=<<table border="0" cellborder="0" cellspacing="1">
@@ -215,17 +215,18 @@ digraph SimWorkflow {
     BeamFlashPileup [shape=oval, color=lightblue,
 		    label=<<table border="0" cellborder="0" cellspacing="1">
 		      <tr><td align="center"><b>BeamFlash Pileup</b></td></tr>
-		      <tr><td align="left"><font color="red">dts.mu2e.BeamFlash.art</font> <font color="black">t &gt; 350 ns || t &lt; 10 ns</font></td></tr>
-		      <tr><td align="left"><font color="fuchsia">dts.mu2e.EarlyBeamFlash.art</font><font color="black"> prescale 10<sup>-3</sup></font></td></tr>
+		      <tr><td align="left"><font color="red">dts.mu2e.BeamFlashCat.art</font> <font color="black">t &gt; 350 ns || t &lt; 10 ns</font></td></tr>
+		      <tr><td align="left"><font color="fuchsia">dts.mu2e.EarlyBeamFlashCat.art</font><font color="black"> prescale 10<sup>-3</sup></font></td></tr>
 		      </table>>];
 
     NeutralsFlashPileup [shape=oval, color=lightblue,
 			label=<<table border="0" cellborder="0" cellspacing="1">
 			  <tr><td align="center"><b>NeutralsFlash Pileup</b></td></tr>
-			  <tr><td align="left"><font color="red">dts.mu2e.NeutralsFlash.art</font> </td></tr>
+			  <tr><td align="left"><font color="red">dts.mu2e.NeutralsFlashCat.art</font> </td></tr>
+		      <tr><td align="left"><font color="fuchsia">dts.mu2e.EarlyNeutralsFlashCat.art</font><font color="black"> prescale 10<sup>-3</sup></font></td></tr>
 			  </table>>];
-    NeutralsResampling -> NeutralsFlashPileup [ label="concatenate 1000" ];
-    BeamResampling -> BeamFlashPileup [ label="concatenate 1000" ];
+    NeutralsResampling -> NeutralsFlashPileup [ label="concatenate 500" ];
+    BeamResampling -> BeamFlashPileup [ label="concatenate 500" ];
 
   }
 
