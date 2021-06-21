@@ -73,7 +73,7 @@ Beam: {
          particleInput : "g4run"
          useEventLevelVolumeInfo: true
          physVolInfoInput: "g4run:eventlevel"
-         stoppingMaterial : "IPAPolyethyelene"
+         stoppingMaterial : "IPAPolyethylene"
          particleTypes : [ 13, -13 ]
          verbosityLevel: 1
       }
