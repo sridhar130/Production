@@ -200,13 +200,13 @@ digraph SimWorkflow {
     MuminusTargetStops [shape=oval, color=lightblue,
 		label=<<table border="0" cellborder="0" cellspacing="1">
 		  <tr><td align="center"><b>Mu- Target Stops</b></td></tr>
-		  <tr><td align="left"><font color="red">sim.mu2e.MuminusTargetStops.art</font></td></tr>
+		  <tr><td align="left"><font color="red">sim.mu2e.MuminusTargetStopsCat.art</font></td></tr>
 		  </table>>];
 
     MuplusTargetStops [shape=oval, color=lightblue,
 		label=<<table border="0" cellborder="0" cellspacing="1">
 		  <tr><td align="center"><b>Mu+ Target Stops</b></td></tr>
-		  <tr><td align="left"><font color="red">sim.mu2e.MuplusTargetStops.art</font></td></tr>
+		  <tr><td align="left"><font color="red">sim.mu2e.MuplusTargetStopsCat.art</font></td></tr>
 		  </table>>];
 
     TargetStops -> MuminusTargetStops [ label="filter and concatenate x10"];
