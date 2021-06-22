@@ -11,13 +11,13 @@ physics: {
     muminusSelector: {
       module_type: ParticleCodeFilter
       SimParticles : TargetStopFilter
-      ParticleCodes : [ [13,-1,32 ] ] # mu-, * , muMinusCaptureAtRest
+      ParticleCodes : [ [13, 0, 32 ] ] # mu-, * , muMinusCaptureAtRest
       PrintLevel : 0
     }
     muplusSelector: {
       module_type: ParticleCodeFilter
       SimParticles : TargetStopFilter
-      ParticleCodes : [ [-13,-1, -1 ] ] # mu+, *, *
+      ParticleCodes : [ [-13, 0, 0 ] ] # mu+, *, *
       PrintLevel : 0
     }
   }
