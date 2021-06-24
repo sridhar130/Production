@@ -31,10 +31,8 @@ Primary: {
     }
     FindMCPrimary : {
       module_type : FindMCPrimary
-      SinglePrimary : true
-      GenParticles : "compressDetStepMCs"
       SimParticles : "compressDetStepMCs"
-      PrimaryGenIds : [] # this is intentionally empty: there should only be 1 GenParticle in primary production
+      PrimaryProcess :"mu2eCeMinusEndpoint"
     }
   }
 

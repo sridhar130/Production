@@ -10,4 +10,5 @@ physics.producers.generate : {
   stoppingTargetMaterial : "Al"
   verbosity : 0
 }
+physics.producers.findMCPrimary.PrimaryProcess : "mu2eCeMinusEndpoint"
 outputs.Output.fileName: "dts.owner.CeEndpoint.version.sequencer.art"
