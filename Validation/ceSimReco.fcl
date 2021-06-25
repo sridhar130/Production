@@ -118,7 +118,6 @@ source.maxEvents: 5000
 
 # Initialze seeding of random engines
 services.SeedService.baseSeed         :  8
-services.SeedService.maxUniqueEngines :  20
 # setup the resampler g4 config.  for questions, ask A. Gaponenko
 physics.producers.g4run.inputs: {
    primaryType: StageParticles

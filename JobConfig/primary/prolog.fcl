@@ -32,7 +32,6 @@ Primary: {
     FindMCPrimary : {
       module_type : FindMCPrimary
       SimParticles : "compressDetStepMCs"
-      PrimaryProcess :"mu2eCeMinusEndpoint"
     }
   }
 
