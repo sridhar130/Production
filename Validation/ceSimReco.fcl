@@ -134,6 +134,7 @@ physics.producers.g4run.inputs: {
 physics.filters.TargetStopResampler.fileNames : [
   "/cvmfs/mu2e.opensciencegrid.org/DataFiles/Validation/sim.brownd.MuminusStops.MDC2020d.001202_00000000.art"
 ]
-physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip: 1850
+physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip: 0
+physics.producers.FindMCPrimary.PrimaryProcess : "mu2eCeMinusEndpoint"
 
 services.GeometryService.inputFile : "Mu2eG4/geom/geom_common_current.txt"
