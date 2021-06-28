@@ -127,13 +127,13 @@ digraph SimWorkflow {
     Beam [shape=oval,color=lightblue,
 	 label=<<table border="0" cellborder="0" cellspacing="1">
 	   <tr><td align="center"><b>Beam</b></td></tr>
-	   <tr><td align="left"><font color="red">sim.mu2e.Beam.art</font></td></tr>
+	   <tr><td align="left"><font color="red">sim.mu2e.BeamCat.art</font></td></tr>
 	   <tr><td align="left"><font color="black">Charged, at DS2</font></td></tr>
 	   </table>>];
     Neutrals [shape=oval, color=lightblue,
 	     label=<<table border="0" cellborder="0" cellspacing="1">
 	       <tr><td align="center"><b>Neutrals</b></td></tr>
-	       <tr><td align="left"><font color="red">sim.mu2e.Neutrals.art</font></td></tr>
+	       <tr><td align="left"><font color="red">sim.mu2e.NeutralsCat.art</font></td></tr>
 	       <tr><td align="left"><font color="black">Exiting PS, TS</font></td></tr>
 	       </table>>];
     ExtMon [shape=oval,color=lightblue,
@@ -153,8 +153,8 @@ digraph SimWorkflow {
 	       <tr><td align="left"><font color="black">Fail G4Consistent</font></td></tr>
 	       </table>>];
 
-    POT -> Neutrals [ label="concatenate x1000"];
-    POT ->  Beam [ label="concatenate x1000"];
+    POT -> Neutrals [ label="concatenate x1000 (x500 MT)"];
+    POT ->  Beam [ label="concatenate x1000 (x500 MT)"];
 
     POT_ExtMon ->  ExtMon
     POT_ExtMon ->  ExtMonRegion
@@ -170,12 +170,14 @@ digraph SimWorkflow {
 		       label=<<table border="0" cellborder="0" cellspacing="1">
 			 <tr><td align="center"><b>Neutrals Resampling</b></td></tr>
 			 <tr><td align="left"><font color="darkgreen">beam/NeutralsResampler.fcl</font></td></tr>
+			 <tr><td align="left"><font color="lightgreen">beam/NeutralsResampler_MT.fcl</font></td></tr>
 			 </table>>];
 
     BeamResampling [shape=box,color=blue,
 		   label=<<table border="0" cellborder="0" cellspacing="1">
 		     <tr><td align="center"><b>Beam Resampling</b></td></tr>
 		     <tr><td align="left"><font color="darkgreen">beam/BeamResampler.fcl</font></td></tr>
+			 <tr><td align="left"><font color="lightgreen">beam/BeamResampler_MT.fcl</font></td></tr>
 		     </table>>];
 
     Beam -> BeamResampling [ label=<resample 10<sup>+3</sup>> ];
@@ -195,7 +197,7 @@ digraph SimWorkflow {
 	       </table>>];
 
     BeamResampling -> TargetStops;
-    BeamResampling -> IPAStops [ label="concatenate 500" ];
+    BeamResampling -> IPAStops [ label="concatenate x1000 (x500 MT)" ];
 
     MuminusTargetStops [shape=oval, color=lightblue,
 		label=<<table border="0" cellborder="0" cellspacing="1">
@@ -225,8 +227,8 @@ digraph SimWorkflow {
 			  <tr><td align="left"><font color="red">dts.mu2e.NeutralsFlashCat.art</font> </td></tr>
 		      <tr><td align="left"><font color="fuchsia">dts.mu2e.EarlyNeutralsFlashCat.art</font><font color="black"> prescale 10<sup>-3</sup></font></td></tr>
 			  </table>>];
-    NeutralsResampling -> NeutralsFlashPileup [ label="concatenate 500" ];
-    BeamResampling -> BeamFlashPileup [ label="concatenate 500" ];
+    NeutralsResampling -> NeutralsFlashPileup [ label="concatenate x1000 (x500 MT)" ];
+    BeamResampling -> BeamFlashPileup [ label="concatenate x1000 (x500 MT)" ];
 
   }
 
