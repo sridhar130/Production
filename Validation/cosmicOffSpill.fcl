@@ -1,0 +1,10 @@
+#include "JobConfig/digitize/OffSpill.fcl"
+
+services.scheduler.wantSummary: true
+services.SeedService.baseSeed: 8
+
+source.maxEvents: 20
+source.fileNames : [
+"/pnfs/mu2e/scratch/datasets/phy-sim/dts/mu2e/Cosmic/CORSIKA-20210611v2/art/aa/af/dts.mu2e.Cosmic.CORSIKA-20210611v2.000001_00000000.art"
+]
+outputs.Output.fileName : "dig.owner.cosmicOffSpill.seq.art"
