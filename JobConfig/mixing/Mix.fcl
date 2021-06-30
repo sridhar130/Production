@@ -3,7 +3,7 @@
 #
 #include "JobConfig/digitize/prolog.fcl"
 #include "JobConfig/mixing/prolog.fcl"
-process_name: MixPrimary
+process_name: Mix
 source : { module_type : RootInput }
 services : @local::Services.SimAndReco # reco is needed for the trigger
 physics : { 
@@ -49,7 +49,7 @@ physics.producers.CaloShowerROMaker.caloShowerStepCollection : [compressDetStepM
 physics.producers.CrvPhotons.crvStepModuleLabels : [ compressDetStepMCs, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
 physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","" ]
 #
-#physics.trigger_paths : [ MixPath ] incompatible with current trigger paths TODO
+physics.trigger_paths[0] : MixPath 
 physics.end_paths : [ EndPath ]
 # partial BField map
 services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_reco.txt"
