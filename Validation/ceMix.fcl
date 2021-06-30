@@ -1,7 +1,7 @@
 #
 #  Simple mixing test, piggy-backing on the primary and mudau production
 #
-#include "JobConfig/mixing/MixPrimary.fcl"
+#include "JobConfig/mixing/Mix.fcl"
 services.SeedService.baseSeed         :  8
 source.fileNames : [ "dts.owner.ceSteps.dsconf.seq.art" ]
 physics.filters.MuStopPileupMixer.mu2e.simStageEfficiencyTags: []
