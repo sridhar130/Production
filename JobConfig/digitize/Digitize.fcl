@@ -30,6 +30,7 @@ outputs : {
 #include "JobConfig/common/epilog.fcl"
 #include "JobConfig/digitize/epilog.fcl"
 #
-physics.end_paths : [ EndPath ] # needed for generate_fcl
+physics.trigger_paths[0] : DigitizePath
+physics.end_paths : [ EndPath ]
 # generic output: this is overwritten by generate_fcl
 outputs.Output.fileName: "dig.owner.description.version.sequencer.art"
