@@ -1,4 +1,5 @@
-generate_fcl --dsconf="MDC2020$2" --dsowner=brownd --override-outputs --auto-description=Mix --include JobConfig/mixing/MixRun1.fcl \
+#generate_fcl --dsconf="MDC2020$2" --dsowner=brownd --override-outputs --auto-description=Mix --include JobConfig/mixing/MixRun1.fcl \
+generate_fcl --dsconf="MDC2020$2" --dsowner=brownd --auto-description=Mix -include JobConfig/mixing/MixRun1.fcl \
 --inputs="$1$2.txt" --merge-factor=1 \
 --auxinput=1:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat.txt \
 --auxinput=1:physics.filters.BeamFlashMixer.fileNames:BeamFlashCat.txt \

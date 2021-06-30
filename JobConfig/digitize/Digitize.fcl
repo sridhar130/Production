@@ -15,14 +15,15 @@ physics : {
     @table::Digitize.filters 
     @table::Trigger.filters
   }
-  # setup 'trigger reject' stream after RejectEvents is implemented TODO!
   analyzers: { @table::Digitize.analyzers }
   DigitizePath : @local::Digitize.DigitizePath
+  Signallike : [ @sequence::Digitize.DigitizePath, trackable ]
   EndPath : @local::Digitize.EndPath
 }
 #
 outputs : { 
-  Output :@local::Digitize.Output
+  TriggeredOutput : @local::Digitize.TriggeredOutput
+  UntriggeredOutput : @local::Digitize.UntriggeredOutput
 }
 #
 # Final configuration
@@ -31,6 +32,8 @@ outputs : {
 #include "JobConfig/digitize/epilog.fcl"
 #
 physics.trigger_paths[0] : DigitizePath
+physics.trigger_paths[1] : Signallike
 physics.end_paths : [ EndPath ]
 # generic output: this is overwritten by generate_fcl
-outputs.Output.fileName: "dig.owner.description.version.sequencer.art"
+outputs.TriggeredOutput.fileName: "dig.owner.DigiTriggered.version.sequencer.art"
+outputs.UntriggeredOutput.fileName: "dig.owner.DigiUntriggered.version.sequencer.art"
