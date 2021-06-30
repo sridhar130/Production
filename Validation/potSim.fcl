@@ -2,6 +2,24 @@
 # generate protons on target and simulate through the detector
 #
 #include "JobConfig/beam/POT_validation.fcl"
+
+outputs: {
+   fullOutput: {
+      module_type: "RootOutput"
+      outputCommands: [
+         "drop *_*_*_*",
+         "keep art::EventIDs_*_*_*",
+         "keep mu2e::GenParticles_*_*_*",
+         "keep mu2e::GenEventCount_*_*_*",
+         "keep mu2e::StatusG4_*_*_*",
+         "keep *_*Filter_*_*",
+         "keep *_compressPV*_*_*"
+      ]
+   }
+}
+physics.OutputPath: [ "fullOutput" ]
+
+
 # print summaries
 services.scheduler.wantSummary: true
 services.TimeTracker.printSummary: true
@@ -11,3 +29,5 @@ outputs.fullOutput.fileName: "sim.owner.val-potSim.dsconf.seq.art"
 source.maxEvents: 500
 # Initialze seeding of random engines
 services.SeedService.baseSeed         :  8
+# latest geometry
+services.GeometryService.inputFile : "Mu2eG4/geom/geom_common_current.txt"
