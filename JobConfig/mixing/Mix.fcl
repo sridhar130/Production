@@ -16,15 +16,23 @@ physics : {
     @table::Trigger.filters
     @table::Mixing.filters
   }
-  # setup 'trigger reject' stream after RejectEvents is implemented TODO!
   analyzers: { @table::Digitize.analyzers }
   MixPath : [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence ]
+  Signallike : [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence , trackable ]
   EndPath : @local::Digitize.EndPath
 }
 #
 outputs : { 
-  Output : {
-    @table::Digitize.Output
+  TriggeredOutput : {
+    @table::Digitize.TriggeredOutput
+      outputCommands : [ "drop *_*_*_*",
+		       @sequence::Mixing.MixingProducts,
+		       @sequence::Digitize.DigiProducts,
+		       @sequence::Digitize.TriggerProducts ]
+
+  }
+  UntriggeredOutput : {
+    @table::Digitize.UntriggeredOutput
       outputCommands : [ "drop *_*_*_*",
 		       @sequence::Mixing.MixingProducts,
 		       @sequence::Digitize.DigiProducts,
@@ -50,8 +58,10 @@ physics.producers.CrvPhotons.crvStepModuleLabels : [ compressDetStepMCs, MuStopP
 physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","" ]
 #
 physics.trigger_paths[0] : MixPath 
+physics.trigger_paths[1] : Signallike
 physics.end_paths : [ EndPath ]
 # partial BField map
 services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_reco.txt"
 # generic output: this is overwritten by generate_fcl
-outputs.Output.fileName: "dig.owner.description.version.sequencer.art"
+outputs.TriggeredOutput.fileName: "dig.owner.MixTriggered.version.sequencer.art"
+outputs.UntriggeredOutput.fileName: "dig.owner.MixUntriggered.version.sequencer.art"
