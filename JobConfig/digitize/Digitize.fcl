@@ -37,3 +37,4 @@ physics.end_paths : [ EndPath ]
 # generic output: this is overwritten by generate_fcl
 outputs.TriggeredOutput.fileName: "dig.owner.DigiTriggered.version.sequencer.art"
 outputs.UntriggeredOutput.fileName: "dig.owner.DigiUntriggered.version.sequencer.art"
+services.SeedService.baseSeed         :  8
