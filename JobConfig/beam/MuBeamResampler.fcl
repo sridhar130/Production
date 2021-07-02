@@ -40,8 +40,14 @@ physics: {
     @table::Common.filters
     @table::Primary.filters
     EarlyPrescaleFilter : {
-      @table::Beam.filters.EarlyPrescaleFilter
+      @table::Beam.filters.PrescaleFilter
+      triggerPath        : "earlyFlashPath"
       nPrescale         : 50
+    }
+    TargetStopPrescaleFilter: {
+      @table::Beam.filters.PrescaleFilter
+      triggerPath        : "targetStopPath"
+      nPrescale         : 1000 # this depends on the resampling factor
     }
     beamResampler       : @local::Beam.filters.beamResampler
     TargetStopFilter    : @local::Beam.filters.TargetStopFilter
@@ -62,7 +68,7 @@ physics: {
     @table::Common.analyzers
   }
   # setup paths
-  targetStopPath : [ @sequence::Beam.beamResamplerSequence, @sequence::Common.g4Sequence, TargetMuonFinder, TargetStopFilter, compressPVTargetStops]
+  targetStopPath : [ @sequence::Beam.beamResamplerSequence, @sequence::Common.g4Sequence, TargetMuonFinder, TargetStopFilter, TargetStopPrescaleFilter, compressPVTargetStops]
   IPAStopPath : [ @sequence::Beam.beamResamplerSequence, @sequence::Common.g4Sequence, IPAMuonFinder, IPAStopFilter, compressPVIPAStops]
   flashPath : [ @sequence::Beam.beamResamplerSequence, @sequence::Common.g4Sequence, TargetMuonFinder, stoppedMuonDaughters, FlashFilter,
               @sequence::Primary.DetStepSequence, DetStepFilter, compressDetStepMCs ]
