@@ -36,7 +36,7 @@ physics: {
     @table::Primary.filters
     EarlyPrescaleFilter : {
       @table::Beam.filters.PrescaleFilter
-      nPrescale         : 200
+      nPrescale         : 1000
     }
     beamResampler       : @local::Beam.filters.beamResampler
     DetStepFilter : {
@@ -70,7 +70,7 @@ outputs: {
       @sequence::Pileup.KeptProducts
     ]
     SelectEvents: [flashPath]
-    fileName : "dts.owner.eBeamFlash.version.sequencer.art"
+    fileName : "dts.owner.EleBeamFlash.version.sequencer.art"
   }
 
   EarlyFlashOutput : {
@@ -80,7 +80,7 @@ outputs: {
       @sequence::Pileup.KeptProducts
     ]
     SelectEvents: [earlyFlashPath]
-    fileName : "dts.owner.EarlyeBeamFlash.version.sequencer.art"
+    fileName : "dts.owner.EarlyEleBeamFlash.version.sequencer.art"
   }
 }
 
