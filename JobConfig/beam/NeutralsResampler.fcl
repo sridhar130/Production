@@ -33,7 +33,8 @@ physics: {
   filters : {
     @table::Common.filters
     EarlyPrescaleFilter : {
-      @table::Beam.filters.EarlyPrescaleFilter
+      @table::Beam.filters.PrescaleFilter
+      triggerPath        : "earlyFlashPath"
       nPrescale         : 20
     }
     neutralsResampler    : @local::Beam.filters.neutralsResampler

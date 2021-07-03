@@ -13,7 +13,7 @@
 #include "JobConfig/primary/prolog.fcl"
 #include "JobConfig/pileup/prolog.fcl"
 
-process_name: BeamResampler
+process_name: EleBeamResampler
 
 source : {
    module_type : EmptyEvent
@@ -35,8 +35,8 @@ physics: {
     @table::Common.filters
     @table::Primary.filters
     EarlyPrescaleFilter : {
-      @table::Beam.filters.EarlyPrescaleFilter
-      nPrescale         : 200
+      @table::Beam.filters.PrescaleFilter
+      nPrescale         : 1000
     }
     beamResampler       : @local::Beam.filters.beamResampler
     DetStepFilter : {
@@ -70,7 +70,7 @@ outputs: {
       @sequence::Pileup.KeptProducts
     ]
     SelectEvents: [flashPath]
-    fileName : "dts.owner.eBeamFlash.version.sequencer.art"
+    fileName : "dts.owner.EleBeamFlash.version.sequencer.art"
   }
 
   EarlyFlashOutput : {
@@ -80,7 +80,7 @@ outputs: {
       @sequence::Pileup.KeptProducts
     ]
     SelectEvents: [earlyFlashPath]
-    fileName : "dts.owner.EarlyeBeamFlash.version.sequencer.art"
+    fileName : "dts.owner.EarlyEleBeamFlash.version.sequencer.art"
   }
 }
 
