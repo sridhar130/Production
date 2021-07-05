@@ -40,7 +40,7 @@ physics: {
     @table::Common.filters
     @table::Primary.filters
     EarlyPrescaleFilter : {
-      @table::Beam.filters.EarlyPrescaleFilter
+      @table::Beam.filters.PrescaleFilter
       nPrescale         : 200
     }
     beamResampler       : @local::Beam.filters.beamResampler

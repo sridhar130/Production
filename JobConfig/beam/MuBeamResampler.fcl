@@ -41,12 +41,10 @@ physics: {
     @table::Primary.filters
     EarlyPrescaleFilter : {
       @table::Beam.filters.PrescaleFilter
-      triggerPath        : "earlyFlashPath"
       nPrescale         : 30
     }
     TargetStopPrescaleFilter: {
       @table::Beam.filters.PrescaleFilter
-      triggerPath        : "targetStopPath"
       nPrescale         : 1000 # this depends on the resampling factor
     }
     beamResampler       : @local::Beam.filters.beamResampler

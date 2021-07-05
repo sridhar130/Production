@@ -199,8 +199,7 @@ Beam: {
       }
 
       PrescaleFilter : {
-        module_type : PrescaleEvent
-	triggerFlag   : ["PrescaleRandom"]      
+        module_type : RandomPrescaleFilter
       }
    }
 
