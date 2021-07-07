@@ -3,7 +3,7 @@
 #
 # original author: Dave Brown, LBNL
 #
-#include "JobConfig/mixing/Mix.fcl"
+#include "Production/JobConfig/mixing/Mix.fcl"
 #
 # empty source sinc there is no primary
 #

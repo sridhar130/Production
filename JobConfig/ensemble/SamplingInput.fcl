@@ -1,4 +1,4 @@
-#include "JobConfig/ensemble/prolog.fcl"
+#include "Production/JobConfig/ensemble/prolog.fcl"
 
 ${comments}
 

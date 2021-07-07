@@ -1,5 +1,5 @@
 # flat range of eminus near the DIO endpoint
-#include "JobConfig/primary/flatE.fcl"
+#include "Production/JobConfig/primary/flatE.fcl"
 process_name: flateminus
 physics.producers.generate.physics.genId : dioTail
 physics.producers.generate.physics.pdgId : 11

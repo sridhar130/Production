@@ -1,15 +1,15 @@
 #
 # Prolog for digitizing detector steps.  These scripts can be run as-is, or in conjunction with mixing
 #
-#include "fcl/TrkCaloDt.fcl"
-#include "fcl/standardServices.fcl"
-#include "CommonMC/fcl/prolog.fcl"
-#include "TrackerMC/fcl/prolog.fcl"
-#include "CaloMC/fcl/prolog.fcl"
-#include "CRVResponse/fcl/prolog.fcl"
-#include "Filters/fcl/prolog.fcl"
-#include "Compression/fcl/prolog.fcl"
-#include "Trigger/fcl/prolog_trigger.fcl"
+#include "Offline/fcl/TrkCaloDt.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/CommonMC/fcl/prolog.fcl"
+#include "Offline/TrackerMC/fcl/prolog.fcl"
+#include "Offline/CaloMC/fcl/prolog.fcl"
+#include "Offline/CRVResponse/fcl/prolog.fcl"
+#include "Offline/Filters/fcl/prolog.fcl"
+#include "Offline/Compression/fcl/prolog.fcl"
+#include "Offline/Trigger/fcl/prolog_trigger.fcl"
 #
 BEGIN_PROLOG
 

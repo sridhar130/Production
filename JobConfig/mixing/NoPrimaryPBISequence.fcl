@@ -8,7 +8,7 @@
 #
 # Original Author:  Rob Kutschke 2020
 
-#include "JobConfig/mixing/NoPrimary.fcl"
+#include "Production/JobConfig/mixing/NoPrimary.fcl"
 
 
 # Read events from an input file rather than using EmptyEvent

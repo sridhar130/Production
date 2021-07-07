@@ -1,5 +1,5 @@
 # MT version of S2Resampler
-#include "JobConfig/beam/S2Resampler.fcl"
+#include "Production/JobConfig/beam/S2Resampler.fcl"
 
 physics.producers.g4run.module_type : "Mu2eG4MT"
 services.scheduler.num_schedules : 2

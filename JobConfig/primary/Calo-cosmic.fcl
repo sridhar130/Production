@@ -4,11 +4,11 @@
 # original author: Ralf Ehrlich, UVA 
 # (based on Dave Brown's CeEndpoint)
 #
-#include "JobConfig/primary/Primary.fcl"
+#include "Production/JobConfig/primary/Primary.fcl"
 # set the generator
 physics.producers.generate : {
    module_type : EventGenerator
-   inputfile   : "JobConfig/primary/genconfig_Calo-cosmic.txt"
+   inputfile   : "Production/JobConfig/primary/genconfig_Calo-cosmic.txt"
 }
 # update the maximum # of particles
 physics.producers.g4run.ResourceLimits.maxSimParticleCollectionSize: 1000000

@@ -1,4 +1,4 @@
-#include "JobConfig/pileup/MuStopPileup.fcl"
+#include "Production/JobConfig/pileup/MuStopPileup.fcl"
 source.maxEvents : 1000
 
 services.scheduler.wantSummary: true
@@ -6,7 +6,7 @@ services.TimeTracker.printSummary: true
 
 services.SeedService.baseSeed: 8
 
-services.GeometryService.inputFile : "Mu2eG4/geom/geom_common_current.txt"
+services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_current.txt"
 
 outputs.Output.fileName : "dts.owner.muDauSteps.dsconf.seq.art"
 physics.filters.TargetStopResampler.fileNames : [

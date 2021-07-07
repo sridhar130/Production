@@ -5,9 +5,9 @@
 #     randomReplace -- random with replacement
 #     randomLimReplace -- events unique within a primary event
 #     randomNoReplace -- events guaranteed to be used once only.
-#include "CommonMC/fcl/prolog.fcl"
-#include "TrackerMC/fcl/prolog.fcl"
-#include "CaloMC/fcl/prolog.fcl"
+#include "Offline/CommonMC/fcl/prolog.fcl"
+#include "Offline/TrackerMC/fcl/prolog.fcl"
+#include "Offline/CaloMC/fcl/prolog.fcl"
 
 BEGIN_PROLOG
 

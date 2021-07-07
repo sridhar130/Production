@@ -7,13 +7,13 @@
 # Write alignment (mille) data to file. This file can be fed then to Millepede.
 
 
-#include "fcl/minimalMessageService.fcl"
-#include "fcl/standardProducers.fcl"
-#include "fcl/standardServices.fcl"
-#include "JobConfig/reco/prolog.fcl"
-#include "CosmicReco/fcl/prolog.fcl"
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardProducers.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Production/JobConfig/reco/prolog.fcl"
+#include "Offline/CosmicReco/fcl/prolog.fcl"
 #include "TrackerAlignment/fcl/prolog.fcl"
-#include "Trigger/fcl/prolog_trigger.fcl"
+#include "Offline/Trigger/fcl/prolog_trigger.fcl"
 
 process_name : CosmicTimeFit
 
@@ -52,10 +52,10 @@ outputs : {
 
 
 # My epilog
-#include "JobConfig/reco/epilog.fcl"
-#include "JobConfig/reco/NoCosmicTimeMap_epilog.fcl"
+#include "Production/JobConfig/reco/epilog.fcl"
+#include "Production/JobConfig/reco/NoCosmicTimeMap_epilog.fcl"
 # trigger epilog
-#include "gen/fcl/Trigger/OffSpillTrigMenu/OnSpillTrigMenu.fcl"
+#include "Offline/gen/fcl/Trigger/OffSpillTrigMenu/OnSpillTrigMenu.fcl"
 outputs.Output.SelectEvents : [ "RecoPath" ]
 #
 # the following need to be overwritten for the specific channel
@@ -79,7 +79,7 @@ physics.producers.makePH.TestFlag : false
 
 
 # Ensure the job applies our in-going alignment constants.
-#include "JobConfig/reco/misalign_epilog.fcl"
+#include "Production/JobConfig/reco/misalign_epilog.fcl"
 
 services.ProditionsService.alignedTracker.useDb: true
 services.ProditionsService.alignedTracker.verbose: 2

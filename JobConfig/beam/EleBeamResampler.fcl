@@ -6,12 +6,12 @@
 # original author: Yuri Oksuzian, 2019
 # Updated for MDC2020 (DetectorSteps): D. Brown
 
-#include "fcl/standardServices.fcl"
-#include "CommonMC/fcl/prolog.fcl"
-#include "JobConfig/common/prolog.fcl"
-#include "JobConfig/beam/prolog.fcl"
-#include "JobConfig/primary/prolog.fcl"
-#include "JobConfig/pileup/prolog.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/CommonMC/fcl/prolog.fcl"
+#include "Production/JobConfig/common/prolog.fcl"
+#include "Production/JobConfig/beam/prolog.fcl"
+#include "Production/JobConfig/primary/prolog.fcl"
+#include "Production/JobConfig/pileup/prolog.fcl"
 
 process_name: EleBeamResampler
 
@@ -109,7 +109,7 @@ physics.producers.g4run.Mu2eG4CommonCut:{
       {type: inVolume pars: [ TS2Vacuum, TS3Vacuum, TS4Vacuum, TS5Vacuum, DS2Vacuum, HallAir ]}
    ]
 }
-#include "JobConfig/common/epilog.fcl"
-#include "JobConfig/pileup/epilog.fcl"
-#include "JobConfig/beam/epilog.fcl"
-services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_no_tsu_ps.txt"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/pileup/epilog.fcl"
+#include "Production/JobConfig/beam/epilog.fcl"
+services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_tsu_ps.txt"

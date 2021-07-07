@@ -1,9 +1,9 @@
 // Lisa Goodenough, June 2019
 //fcl file for running PrimaryProtonGun as a Replicated module
 
-#include "fcl/minimalMessageService.fcl"
-#include "fcl/standardProducers.fcl"
-#include "fcl/standardServices.fcl"
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardProducers.fcl"
+#include "Offline/fcl/standardServices.fcl"
 
 
 # Give this job a name.
@@ -18,8 +18,8 @@ services : {
 
    message                : @local::default_message
 //   TFileService           : { fileName : "beam_test_4_replicated.root" }
-   GeometryService        : { inputFile      : "JobConfig/common/geom_baseline.txt" }
-   GlobalConstantsService : { inputFile      : "GlobalConstantsService/data/globalConstants_01.txt" }
+   GeometryService        : { inputFile      : "Production/JobConfig/common/geom_baseline.txt" }
+   GlobalConstantsService : { inputFile      : "Offline/GlobalConstantsService/data/globalConstants_01.txt" }
    SeedService            : @local::automaticSeeds
    RandomNumberGenerator : {defaultEngineKind: "MixMaxRng" }
 }

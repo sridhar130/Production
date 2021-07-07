@@ -2,9 +2,9 @@
 # Reconstruct from digis, including MC information
 # original author: David Brown (LBNL) 1 Feb 2020
 #
-#include "fcl/minimalMessageService.fcl"
-#include "fcl/standardServices.fcl"
-#include "JobConfig/reco/prolog.fcl"
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Production/JobConfig/reco/prolog.fcl"
 #
 # name all processes the same, to mask any provenance in ensemble creation
 process_name: Reconstruct
@@ -25,8 +25,8 @@ outputs : {
   }
 }
 # final config
-#include "JobConfig/common/epilog.fcl"
-#include "JobConfig/reco/epilog.fcl"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/reco/epilog.fcl"
 physics.end_paths : [ EndPath ] # needed for generate_fcl
 # the fileds below will get filled in by generate_fcl
 outputs.Output.fileName: "mcs.owner.description.version.sequencer.art"

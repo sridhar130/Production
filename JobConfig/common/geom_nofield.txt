@@ -1,7 +1,7 @@
 //
 //  '0-current' DS field configuration
 //
-#include "JobConfig/common/geom_baseline.txt"
+#include "Production/JobConfig/common/geom_baseline.txt"
 vector<string> bfield.innerMaps = {
   "BFieldMaps/Mau13/DS-nofield.txt",
   "BFieldMaps/Mau13/PSMap.header",

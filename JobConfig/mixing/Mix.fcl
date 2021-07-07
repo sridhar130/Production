@@ -1,8 +1,8 @@
 #
 #  Mix pileup on top of a primary particle.  This is a form of OnSpill digitization
 #
-#include "JobConfig/digitize/prolog.fcl"
-#include "JobConfig/mixing/prolog.fcl"
+#include "Production/JobConfig/digitize/prolog.fcl"
+#include "Production/JobConfig/mixing/prolog.fcl"
 process_name: Mix
 source : { module_type : RootInput }
 services : @local::Services.SimAndReco # reco is needed for the trigger
@@ -43,10 +43,10 @@ outputs : {
 #
 # Final configuration
 #
-#include "JobConfig/common/epilog.fcl"
-#include "JobConfig/digitize/epilog.fcl"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/digitize/epilog.fcl"
 # add trigger paths
-#include "gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 # set the event timing for Onspill
 physics.producers.EWMProducer.SpillType : 1
 # add primary and mixers to the list of step producers.  Note the StrawDigi maker uses a general selector if no module is specified
@@ -61,7 +61,7 @@ physics.trigger_paths[0] : MixPath
 physics.trigger_paths[1] : Signallike
 physics.end_paths : [ EndPath ]
 # partial BField map
-services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_reco.txt"
+services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
 # generic output: this is overwritten by generate_fcl
 outputs.TriggeredOutput.fileName: "dig.owner.MixTriggered.version.sequencer.art"
 outputs.UntriggeredOutput.fileName: "dig.owner.MixUntriggered.version.sequencer.art"
