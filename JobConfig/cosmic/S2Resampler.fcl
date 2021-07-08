@@ -11,7 +11,7 @@ physics.producers.g4run.inputs: @local::Cosmic.MultiStageParametersCosmicS2
 
 physics.producers.cosmicTimeOffset: @local::CommonMC.producers.cosmicTimeOffset
 physics.producers.cosmicTimeOffset.intervalStart: 0
-physics.producers.cosmicTimeOffset.intervalEnd: 100000
+physics.producers.cosmicTimeOffset.intervalEnd: 100005
 
 physics.producers.g4run.inputs.simStageOverride: 1
 physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "cosmicResample"
