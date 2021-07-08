@@ -4,13 +4,16 @@
 # original author: Dave Brown, LBNL
 #
 #physics.filters.MuStopPileupMixer.mu2e.simStageEfficiencyTags : [ muHitPerMuStop, muStopPerMuBeamEnterDS, muBeamEnterDSPerPOT ]
-physics.filters.MuStopPileupMixer.mu2e.meanEventsPerProton :   0.00003592456 # from hand calculations: will come from simStageEfficiency once we have the full chain TODO
-physics.filters.MuStopPileupMixer.mu2e.simStageEfficiencyTags: []
+physics.filters.MuStopPileupMixer.mu2e.meanEventsPerProton :   3.59E-05 # from hand calculations
+physics.filters.MuStopPileupMixer.mu2e.simStageEfficiencyTags: []  # use simStageEfficiency once we have the full chain TODO
 #
-physics.filters.BeamFlashMixer.mu2e.meanEventsPerProton : 0.0000511194 # from hand calculations: will come from simStageEfficiency once we have the full chain TODO
-physics.filters.BeamFlashMixer.mu2e.simStageEfficiencyTags: []
+physics.filters.EleBeamFlashMixer.mu2e.meanEventsPerProton : 2.50E-05 # from hand calculations
+physics.filters.EleBeamFlashMixer.mu2e.simStageEfficiencyTags: []
 #
-physics.filters.NeutralsFlashMixer.mu2e.meanEventsPerProton : 0.000137386 # from hand calculations: will come from simStageEfficiency once we have the full chain TODO
+physics.filters.MuBeamFlashMixer.mu2e.meanEventsPerProton : 2.78E-05 # from hand calculations
+physics.filters.MuBeamFlashMixer.mu2e.simStageEfficiencyTags: []
+#
+physics.filters.NeutralsFlashMixer.mu2e.meanEventsPerProton : 1.51E-04 # from hand calculations
 physics.filters.NeutralsFlashMixer.mu2e.simStageEfficiencyTags: []
 #
 physics.producers.PBISim.sigma: 0.7147 # =sqrt(-ln(0.6)) SDF=0.6

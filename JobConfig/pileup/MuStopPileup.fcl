@@ -7,7 +7,6 @@
 #include "fcl/standardServices.fcl"
 #include "EventGenerator/fcl/prolog.fcl"
 #include "JobConfig/common/prolog.fcl"
-#include "JobConfig/beam/prolog.fcl"
 #include "JobConfig/primary/prolog.fcl"
 #include "JobConfig/pileup/prolog.fcl"
 process_name: MuStopPileup
@@ -81,8 +80,7 @@ physics : {
     DetStepFilter : {
       @table::Primary.filters.DetStepFilter 
       @table::Pileup.filters.DetStepFilter 
-      @table::Beam.filters.DetStepFilter 
-# do I want an early MuStopPileup stream? TODO
+      # No need for a timing cut: the muon stop products are already late compared to that
     }
   }
   analyzers : { @table::Primary.analyzers }
