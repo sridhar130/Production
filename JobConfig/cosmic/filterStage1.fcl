@@ -4,10 +4,10 @@
 // mu2e -c JobConfig/cosmic/filterStage1.fcl -s /pnfs/mu2e/tape/phy-sim/sim/mu2e/cosmic-g4s1s2-cryresample/cry-rs1-1019/art/34/bd/sim.mu2e.cosmic-g4s1s2-cryresample.cry-rs1-1019.002701_00022997.art
 // Select cosmics with low energy depostion and/or cosmics entering through user specified CRV regions 
 
-#include "fcl/minimalMessageService.fcl"
-#include "fcl/standardProducers.fcl"
-#include "fcl/standardServices.fcl"
-#include "Mu2eG4/fcl/prolog.fcl"
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardProducers.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/Mu2eG4/fcl/prolog.fcl"
 
 # Give this job a name.
 process_name : filterS1
@@ -20,9 +20,9 @@ services : {
    message               : @local::default_message
    TFileService          : { fileName : "nts.owner.filtered-s1.version.sequencer.root" }
    RandomNumberGenerator : {defaultEngineKind: "MixMaxRng" }
-   GeometryService        : { inputFile      : "Mu2eG4/geom/geom_common_crv_v07.txt" }
-   ConditionsService      : { conditionsfile : "ConditionsService/data/conditions_01.txt"      }
-   GlobalConstantsService : { inputFile      : "GlobalConstantsService/data/globalConstants_01.txt" }
+   GeometryService        : { inputFile      : "Offline/Mu2eG4/geom/geom_common_crv_v07.txt" }
+   ConditionsService      : { conditionsfile : "Offline/ConditionsService/data/conditions_01.txt"      }
+   GlobalConstantsService : { inputFile      : "Offline/GlobalConstantsService/data/globalConstants_01.txt" }
    Mu2eG4Helper           : { }
    SeedService            : @local::automaticSeeds
 }

@@ -1,8 +1,8 @@
 // Re-sample cosmics from stage-1
 // Yuri Oksuzian, 2020
-#include "CommonMC/fcl/prolog.fcl"
-#include "JobConfig/cosmic/prolog.fcl"
-#include "JobConfig/primary/Primary.fcl"
+#include "Offline/CommonMC/fcl/prolog.fcl"
+#include "Production/JobConfig/cosmic/prolog.fcl"
+#include "Production/JobConfig/primary/Primary.fcl"
 
 // Bring in info from the previous stage
 physics.filters.cosmicResample: @local::Cosmic.cosmicResample

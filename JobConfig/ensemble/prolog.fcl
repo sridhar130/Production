@@ -1,8 +1,8 @@
 # common parts used in all mixing jobs
 
-#include "JobConfig/beam/prolog.fcl"
-#include "JobConfig/primary/prolog.fcl"
-#include "JobConfig/mixing/prolog.fcl"
+#include "Production/JobConfig/beam/prolog.fcl"
+#include "Production/JobConfig/primary/prolog.fcl"
+#include "Production/JobConfig/mixing/prolog.fcl"
 
 BEGIN_PROLOG
 

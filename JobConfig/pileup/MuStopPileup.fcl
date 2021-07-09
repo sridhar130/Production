@@ -4,6 +4,11 @@
 #
 # original author: Dave Brown, LBNL
 #
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/EventGenerator/fcl/prolog.fcl"
+#include "Production/JobConfig/common/prolog.fcl"
+#include "Production/JobConfig/primary/prolog.fcl"
+#include "Production/JobConfig/pileup/prolog.fcl"
 #include "fcl/standardServices.fcl"
 #include "EventGenerator/fcl/prolog.fcl"
 #include "JobConfig/common/prolog.fcl"
@@ -45,7 +50,7 @@ physics : {
        },
        {
           spectrum: {
-             spectrumFileName: "ConditionsService/data/neutronSpectrum.txt"
+             spectrumFileName: "Offline/ConditionsService/data/neutronSpectrum.txt"
              spectrumShape: "tabulated"
           }
           spectrumVariable: "kineticEnergy"
@@ -100,9 +105,9 @@ outputs : { Output : {
  }
  # some consolidation is needed TODO
 }
-#include "JobConfig/common/epilog.fcl"
-#include "JobConfig/primary/epilog.fcl"
-#include "JobConfig/pileup/epilog.fcl"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/primary/epilog.fcl"
+#include "Production/JobConfig/pileup/epilog.fcl"
 #
 
 # resampling configuration; this should be somewhere common TODO
@@ -118,4 +123,4 @@ physics.producers.g4run.inputs: {
    }
 }
 # use reduced BField for these jobs
-services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_no_tsu_ps.txt"
+services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_tsu_ps.txt"

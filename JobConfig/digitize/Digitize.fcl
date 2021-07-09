@@ -1,7 +1,7 @@
 #
 #  Digitization simulations
 #
-#include "JobConfig/digitize/prolog.fcl"
+#include "Production/JobConfig/digitize/prolog.fcl"
 # name all processes the same, to mask any provenance in ensemble creation
 process_name: Digitize
 source : { module_type : RootInput }
@@ -28,8 +28,8 @@ outputs : {
 #
 # Final configuration
 #
-#include "JobConfig/common/epilog.fcl"
-#include "JobConfig/digitize/epilog.fcl"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/digitize/epilog.fcl"
 #
 physics.trigger_paths[0] : DigitizePath
 physics.trigger_paths[1] : Signallike

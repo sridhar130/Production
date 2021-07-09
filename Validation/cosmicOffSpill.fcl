@@ -1,4 +1,4 @@
-#include "JobConfig/digitize/OffSpill.fcl"
+#include "Production/JobConfig/digitize/OffSpill.fcl"
 
 services.scheduler.wantSummary: true
 services.SeedService.baseSeed: 8

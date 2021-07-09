@@ -1,8 +1,8 @@
 #
 # pure background frames with full (digi + mc) and detector (digi only) output streams
 #
-#include "JobConfig/digitize/prolog.fcl"
-#include "JobConfig/mixing/prolog.fcl"
+#include "Production/JobConfig/digitize/prolog.fcl"
+#include "Production/JobConfig/mixing/prolog.fcl"
 process_name: NoPrimary
 source: { module_type : EmptyEvent }
 services : @local::Services.SimAndReco # reco is needed for the trigger

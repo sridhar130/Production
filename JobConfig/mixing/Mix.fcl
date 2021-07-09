@@ -1,8 +1,8 @@
 #
 #  Mix pileup.  This is a form of OnSpill digitization
 #
-#include "JobConfig/digitize/prolog.fcl"
-#include "JobConfig/mixing/prolog.fcl"
+#include "Production/JobConfig/digitize/prolog.fcl"
+#include "Production/JobConfig/mixing/prolog.fcl"
 process_name: Mix
 source : { module_type : RootInput }
 services : @local::Services.SimAndReco # reco is needed for the trigger
@@ -30,10 +30,10 @@ outputs : {
 #
 # Final configuration
 #
-#include "JobConfig/common/epilog.fcl"
-#include "JobConfig/digitize/epilog.fcl"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/digitize/epilog.fcl"
 # add trigger paths
-#include "gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 # set the event timing for Onspill
 physics.producers.EWMProducer.SpillType : 1
 # minimal BField map

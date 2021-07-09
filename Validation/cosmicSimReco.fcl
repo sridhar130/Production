@@ -2,10 +2,10 @@
 # generate and simulate cosmics and reconstruct in the CRV
 #
 
-#include "fcl/minimalMessageService.fcl"
-#include "fcl/standardServices.fcl"
-#include "fcl/standardProducers.fcl"
-#include "CRVResponse/fcl/prolog.fcl"
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/fcl/standardProducers.fcl"
+#include "Offline/CRVResponse/fcl/prolog.fcl"
 
 
 BEGIN_PROLOG
@@ -53,7 +53,7 @@ physics : {
    producers: {
       generate: {
          module_type          : EventGenerator
-         inputfile            : "JobConfig/cosmic/genconfig_cosmic_general.txt"
+         inputfile            : "Production/JobConfig/cosmic/genconfig_cosmic_general.txt"
       }
       @table::Mu2eG4.producers
       CrvSteps : @local::CrvSteps
@@ -158,5 +158,5 @@ services.SeedService.baseSeed         :  8
 services.SeedService.maxUniqueEngines :  20
 
 // use the geometry on the head
-services.GeometryService.inputFile : "Mu2eG4/geom/geom_common_current.txt"
+services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_current.txt"
 
