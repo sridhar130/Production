@@ -2,7 +2,7 @@ OLDIFS=${IFS}
 if [ -f parents.txt ]; then
     printJson ${1} --parents=parents.txt > ${1}.json
 else
-    printJson ${1} > ${1}.json
+    printJson ${1} --no-parents > ${1}.json
 fi
 truncate -s-3 ${1}.json
 echo "," >> ${1}.json
