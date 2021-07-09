@@ -1,5 +1,5 @@
 #
-#  Mix pileup on top of a primary particle.  This is a form of OnSpill digitization
+#  Mix pileup.  This is a form of OnSpill digitization
 #
 #include "Production/JobConfig/digitize/prolog.fcl"
 #include "Production/JobConfig/mixing/prolog.fcl"
@@ -10,6 +10,7 @@ physics : {
   producers : {
     @table::Digitize.producers
     @table::Trigger.producers 
+    @table::Mixing.producers
   }
   filters: { 
     @table::Digitize.filters 
@@ -17,28 +18,14 @@ physics : {
     @table::Mixing.filters
   }
   analyzers: { @table::Digitize.analyzers }
-  MixPath : [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence ]
-  Signallike : [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence , trackable ]
+  Triggered : [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence ]
+  Untriggered : [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence , trackable ]
   EndPath : @local::Digitize.EndPath
 }
 #
 outputs : { 
-  TriggeredOutput : {
-    @table::Digitize.TriggeredOutput
-      outputCommands : [ "drop *_*_*_*",
-		       @sequence::Mixing.MixingProducts,
-		       @sequence::Digitize.DigiProducts,
-		       @sequence::Digitize.TriggerProducts ]
-
-  }
-  UntriggeredOutput : {
-    @table::Digitize.UntriggeredOutput
-      outputCommands : [ "drop *_*_*_*",
-		       @sequence::Mixing.MixingProducts,
-		       @sequence::Digitize.DigiProducts,
-		       @sequence::Digitize.TriggerProducts ]
-
-  }
+  TriggeredOutput : @local::Mixing.TriggeredOutput
+  UntriggeredOutput : @local::Mixing.UntriggeredOutput
 }
 #
 # Final configuration
@@ -49,19 +36,19 @@ outputs : {
 #include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 # set the event timing for Onspill
 physics.producers.EWMProducer.SpillType : 1
+# minimal BField map
+services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_reco.txt"
 # add primary and mixers to the list of step producers.  Note the StrawDigi maker uses a general selector if no module is specified
 physics.producers.makeSD.StrawGasStepModule : ""
-physics.producers.compressDigiMCs.simParticleTags : [compressDetStepMCs, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer]
-physics.producers.compressDigiMCs.caloShowerStepTags : [compressDetStepMCs, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer]
-physics.producers.CaloShowerROMaker.caloShowerStepCollection : [compressDetStepMCs, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
-physics.producers.CrvPhotons.crvStepModuleLabels : [ compressDetStepMCs, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
-physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","" ]
+physics.producers.compressDigiMCs.simParticleTags : [compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
+physics.producers.compressDigiMCs.caloShowerStepTags : [compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
+physics.producers.CaloShowerROMaker.caloShowerStepCollection : [compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
+physics.producers.CrvPhotons.crvStepModuleLabels : [ compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
+physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","","" ]
 #
-physics.trigger_paths[0] : MixPath 
-physics.trigger_paths[1] : Signallike
+physics.trigger_paths[0] : Triggered
+physics.trigger_paths[1] : Untriggered
 physics.end_paths : [ EndPath ]
-# partial BField map
-services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
-# generic output: this is overwritten by generate_fcl
-outputs.TriggeredOutput.fileName: "dig.owner.MixTriggered.version.sequencer.art"
-outputs.UntriggeredOutput.fileName: "dig.owner.MixUntriggered.version.sequencer.art"
+# generic output: this is overwritten by generate_fcl, and also by the gen_Mix.sh script
+outputs.TriggeredOutput.fileName: "dig.owner.description-Triggered.version.sequencer.art"
+outputs.UntriggeredOutput.fileName: "dig.owner.description-Untriggered.version.sequencer.art"

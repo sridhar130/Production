@@ -35,12 +35,24 @@ Mixing : {
       skipFactor : 1
     }
   }
+  MixingProducts : [
+    "keep mu2e::ProtonBunchIntensity*_*_*_*"
+  ]
 }
 Mixing : {
+  producers : {
+    PBISim : {  
+      module_type: ProtonBunchIntensityLogNormal
+      sigma: @nil
+      extendedMean: @nil
+      cutMax:@nil
+    }
+  }
   filters : {
 # mixers for muon stop pileup, beamflash pileup, and neutrals flash pileup
     MuStopPileupMixer : @local::Mixing.DetStepMixer 
-    BeamFlashMixer : @local::Mixing.DetStepMixer 
+    EleBeamFlashMixer : @local::Mixing.DetStepMixer 
+    MuBeamFlashMixer : @local::Mixing.DetStepMixer 
     NeutralsFlashMixer : @local::Mixing.DetStepMixer 
 # filter for signal or calibration-like particles that can pass the trigger.  This is mainly for cosmics
     SignalFilter : {
@@ -56,20 +68,27 @@ Mixing : {
       # add a calo selection for primaries that produce only neutrals (for calibration)
     }
   }
-  PileupMixSequence : [ PBISim, MuStopPileupMixer, BeamFlashMixer, NeutralsFlashMixer ]
-  MixingProducts : [
-    "keep art::EventIDs_*_*_*"
-  ]
+  TriggeredOutput : {
+    @table::Digitize.TriggeredOutput
+      outputCommands : [ "drop *_*_*_*",
+		       @sequence::Mixing.MixingProducts,
+		       @sequence::Digitize.DigiProducts,
+		       @sequence::Digitize.TriggerProducts ]
 
+  }
+  UntriggeredOutput : {
+    @table::Digitize.UntriggeredOutput
+      outputCommands : [ "drop *_*_*_*",
+		       @sequence::Mixing.MixingProducts,
+		       @sequence::Digitize.DigiProducts,
+		       @sequence::Digitize.TriggerProducts ]
+    SelectEvents : [ Untriggered ]
+  }
+
+  StepMixSequence : [ MuStopPileupMixer, EleBeamFlashMixer, MuBeamFlashMixer, NeutralsFlashMixer ]
 }
+Mixing.PileupMixSequence : [ PBISim, @sequence::Mixing.StepMixSequence ] 
 # override the Trigger 'PrepareDigis' sequence; the mixers must preceed the digi making.  Note CRV doesn't participate in trigger, so isn't included
-Trigger.PrepareDigis: [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
-# LogNormal proton bunch intensity.  Specific values must be provided based on physics conditions
-Digitize.producers.PBISim : {  
-  module_type: ProtonBunchIntensityLogNormal
-  sigma: @nil
-  extendedMean: @nil
-  cutMax:@nil
-}
+Trigger.PrepareDigis: [ @sequence::Mixing.PileupMixSequence, @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
 
 END_PROLOG

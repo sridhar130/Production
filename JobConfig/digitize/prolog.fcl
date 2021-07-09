@@ -3,7 +3,6 @@
 #
 #include "Offline/fcl/TrkCaloDt.fcl"
 #include "Offline/fcl/standardServices.fcl"
-#include "Offline/CommonMC/fcl/prolog.fcl"
 #include "Offline/TrackerMC/fcl/prolog.fcl"
 #include "Offline/CaloMC/fcl/prolog.fcl"
 #include "Offline/CRVResponse/fcl/prolog.fcl"
@@ -19,12 +18,6 @@ Digitize: {
     @table::TrackerMC.DigiProducers
     @table::CaloMC.DigiProducers
     @table::CrvDAQPackage.producers
-    # default PBI with no intensity; this must be overridden when mixing
-    PBISim : {
-      module_type: ProtonBunchIntensityFlat
-      mean: 0.0 # No PBI possible for pure signal! 
-      halfWidth : 1.0
-    }
 
     compressDigiMCs : {
 	module_type : CompressDigiMCs
@@ -94,7 +87,6 @@ Digitize: {
 		    "keep mu2e::ProtonBunchTimeMC_*_*_*",
 		    "keep mu2e::ProtonBunchTime_*_*_*",
 		    "keep mu2e::EventWeight_*_*_*",
-		    "keep mu2e::ProtonBunchIntensity*_*_*_*",
 		    "keep *_compressDigiMCs_*_*" ]
 
   TriggeredOutput : {
@@ -104,7 +96,6 @@ Digitize: {
   }
   UntriggeredOutput : {
      module_type : RootOutput
-     SelectEvents : [ Signallike ] # require 'signal-like' data
      RejectEvents : [ "*_trigger" ] # reject events passing any trigger
      fileName    : @nil
   }
@@ -113,7 +104,7 @@ Digitize: {
 Digitize.EndPath : [ @sequence::Digitize.EndSequence, TriggeredOutput, UntriggeredOutput ]
 # override the Trigger sequence to prepare digis
 Trigger.PrepareDigis: [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
-Digitize.DigitizePath : [ PBISim, @sequence::Digitize.DigitizeSequence ]
+Digitize.DigitizePath : [ @sequence::Digitize.DigitizeSequence ]
 
 Digitize.TriggeredOutput.outputCommands : [ "drop *_*_*_*",
 		       @sequence::Digitize.DigiProducts,
