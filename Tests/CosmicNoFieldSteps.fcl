@@ -1,0 +1,6 @@
+#include "Production/JobConfig/cosmic/S2ResamplerNoField.fcl"
+source.firstRun: 502
+physics.filters.cosmicResample.fileNames : [ 
+  "/pnfs/mu2e/scratch/datasets/phy-sim/sim/mu2e/CosmicDSStopsCORSIKA/MDC2020g/art/22/dc/sim.mu2e.CosmicDSStopsCORSIKA.MDC2020g.21.art"
+]
+outputs.Output.fileName : "dts.tester.CosmicNoField.Test.1.art"

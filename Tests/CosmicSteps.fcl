@@ -1,0 +1,6 @@
+#include "Production/JobConfig/cosmic/S2Resampler.fcl"
+source.firstRun: 503
+physics.filters.cosmicResample.fileNames : [ 
+  "/pnfs/mu2e/scratch/datasets/phy-sim/sim/mu2e/CosmicDSStopsCORSIKA/MDC2020g/art/22/dc/sim.mu2e.CosmicDSStopsCORSIKA.MDC2020g.21.art"
+]
+outputs.Output.fileName : "dts.tester.Cosmic.Test.1.art"
