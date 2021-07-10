@@ -6,6 +6,8 @@
 
 // Bring in info from the previous stage
 physics.filters.cosmicResample: @local::Cosmic.cosmicResample
+physics.filters.cosmicResample.mu2e.MaxEventsToSkip: 18415 # this number depends on the production details
+
 // Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: @local::Cosmic.MultiStageParametersCosmicS2
 
@@ -23,10 +25,7 @@ physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS2
 physics.producers.g4run.SDConfig.preSimulatedHits:  ["cosmicResample:CRV"]
 physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 
-physics.filters.cosmicResample.mu2e.writeEventIDs : true
-
 physics.PrimaryPath: [genCounter, cosmicTimeOffset, cosmicResample, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence]
 outputs.Output.fileName        : "dts.owner.Cosmic.version.sequencer.art"
-outputs.Output.outputCommands : [@sequence::Primary.KeptProducts, "keep art::EventIDs_*_*_*"]
-
-physics.filters.cosmicResample.fileNames: ["/mu2e/app/users/srsoleti/workDir/Production/sim.owner.CosmicDSStopsCRY.version.sequencer.art"]
+outputs.Output.outputCommands : [@sequence::Primary.KeptProducts,
+  "keep mu2e::CosmicLivetime_*_*_*"]

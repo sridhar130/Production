@@ -60,7 +60,7 @@ Primary: {
       fileNames: @nil
       mu2e: {
 	writeEventIDs : true
-        MaxEventsToSkip: 1863000  # based on MDC2020, file of 2e8 Beam Resamples 
+        MaxEventsToSkip: @nil
 	debugLevel : 1
         products: {
           genParticleMixer: { mixingMap: [ [ "beamResampler", "" ] ] }
@@ -91,7 +91,6 @@ Primary: {
 		       "keep mu2e::SimParticleart::Ptrmu2e::MCTrajectorystd::map_compressDetStepMCs_*_*",
 		       "keep mu2e::GenParticles_compressDetStepMCs_*_*",
 		       "keep mu2e::PrimaryParticle_*_*_*",
-		       "keep mu2e::CosmicLivetime_*_*_*",
 		       "keep art::EventIDs_*_*_*",
 		       "keep art::TriggerResults_*_*_*",
 		       "keep mu2e::StatusG4_*_*_*",
