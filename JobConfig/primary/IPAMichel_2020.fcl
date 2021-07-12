@@ -1,15 +1,14 @@
 #
-# generate and produce Detector Steps from mono-energetic e- using mu- target stops
+# generate and produce Detector Steps from decay electrons from IPA
 #
-# original author: Dave Brown, LBNL
+# original author: S Middleton
 #
-#include "Production/JobConfig/primary/TargetStopParticle.fcl"
+#include "Production/JobConfig/primary/IPAStopParticle.fcl"
 physics.producers.generate : {
-  module_type : CeEndpoint
-  inputSimParticles: TargetStopResampler
-  stoppingTargetMaterial : "Al"
+  module_type : IPAMichel
+  inputSimParticles: IPAStopResampler #TODO - have written something, not checked
   verbosity : 0
 }
 physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip : 1863000  # based on MDC2020, file of 2e8 Beam Resamples
-physics.producers.FindMCPrimary.PrimaryProcess : "mu2eCeMinusEndpoint"
-outputs.Output.fileName: "dts.owner.CeEndpoint.version.sequencer.art"
+physics.producers.FindMCPrimary.PrimaryProcess : "IPAMicheleminus"
+outputs.Output.fileName: "dts.owner.IPAMichel.version.sequencer.art"
