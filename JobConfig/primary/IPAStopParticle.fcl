@@ -40,7 +40,7 @@ physics.producers.g4run.inputs: {
    simStageOverride: 2
    inputPhysVolumeMultiInfo: "IPAStopResampler"
    updateEventLevelVolumeInfos: {
-      input: "IPAStopResampler:eventlevel"
+      input: "IPAStopResampler:eventlevel" #TODO - check this
       outInstance: "eventlevel"
    }
 }
