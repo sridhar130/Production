@@ -73,7 +73,7 @@ Beam: {
          particleInput : "g4run"
          useEventLevelVolumeInfo: true
          physVolInfoInput: "g4run:eventlevel"
-         stoppingMaterial : "IPAPolyethyelene"
+         stoppingMaterial : "IPAPolyethylene"
          particleTypes : [ 13, -13 ]
          verbosityLevel: 1
       }
@@ -156,6 +156,8 @@ Beam: {
          wrapFiles: true
          mu2e: {
             writeEventIDs : true
+            MaxEventsToSkip: @nil
+	    debugLevel : 2
             products: {
                genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
                simParticleMixer: { mixingMap: [ [ "BeamFilter", "" ] ] }
@@ -179,13 +181,15 @@ Beam: {
          wrapFiles: true
          mu2e: {
             writeEventIDs : true
+            MaxEventsToSkip:  @nil
+	    debugLevel : 2
             products: {
                genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
                simParticleMixer: { mixingMap: [ [ "NeutralsFilter", "" ] ] }
                stepPointMCMixer: { mixingMap: [
                      [ "NeutralsFilter:Neutrals", ":" ]
                   ] }
-
+               simTimeOffset : "protonTimeOffset"
                volumeInfoMixer: {
                   srInput: "compressPVNeutrals"
                   evtOutInstanceName: "eventlevel"
@@ -194,10 +198,8 @@ Beam: {
          }
       }
 
-      EarlyPrescaleFilter : {
-        module_type : PrescaleEvent
-	triggerPath        : "earlyFlashPath"
-	triggerFlag   : ["PrescaleRandom"]      
+      PrescaleFilter : {
+        module_type : RandomPrescaleFilter
       }
    }
 

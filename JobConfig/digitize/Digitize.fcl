@@ -1,8 +1,7 @@
-
 #
 #  Digitization simulations
 #
-#include "JobConfig/digitize/prolog.fcl"
+#include "Production/JobConfig/digitize/prolog.fcl"
 # name all processes the same, to mask any provenance in ensemble creation
 process_name: Digitize
 source : { module_type : RootInput }
@@ -16,25 +15,26 @@ physics : {
     @table::Digitize.filters 
     @table::Trigger.filters
   }
-  # setup 'trigger reject' stream after RejectEvents is implemented TODO!
   analyzers: { @table::Digitize.analyzers }
   DigitizePath : @local::Digitize.DigitizePath
+  Signallike : [ @sequence::Digitize.DigitizePath, trackable ]
   EndPath : @local::Digitize.EndPath
 }
 #
 outputs : { 
-  Output :@local::Digitize.Output
+  TriggeredOutput : @local::Digitize.TriggeredOutput
+  UntriggeredOutput : @local::Digitize.UntriggeredOutput
 }
 #
 # Final configuration
 #
-#include "JobConfig/digitize/epilog.fcl"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/digitize/epilog.fcl"
 #
-physics.end_paths : [ EndPath ] # needed for generate_fcl
+physics.trigger_paths[0] : DigitizePath
+physics.trigger_paths[1] : Signallike
+physics.end_paths : [ EndPath ]
 # generic output: this is overwritten by generate_fcl
-outputs.Output.fileName: "dig.owner.description.version.sequencer.art"
-# no histogram output
-services.TFileService.fileName : "/dev/null"
-# test values; these get overwritten by generate_fcl
-services.SeedService.baseSeed         :  773651
-services.SeedService.maxUniqueEngines :  20
+outputs.TriggeredOutput.fileName: "dig.owner.DigiTriggered.version.sequencer.art"
+outputs.UntriggeredOutput.fileName: "dig.owner.DigiUntriggered.version.sequencer.art"
+services.SeedService.baseSeed         :  8

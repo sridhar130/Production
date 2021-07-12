@@ -3,7 +3,7 @@
 // see art/Framework/Modules/EventIDFilter_module.cc for the eventid matching syntax details
 // David Brown (LBNL) 31 May 2019
 
-#include "fcl/minimalMessageService.fcl"
+#include "Offline/fcl/minimalMessageService.fcl"
 
 process_name: artselect
 source: { module_type: RootInput }

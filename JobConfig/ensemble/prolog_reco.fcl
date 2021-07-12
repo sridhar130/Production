@@ -1,6 +1,6 @@
 # common parts used in all mixing jobs
 
-#include "JobConfig/reco/prolog.fcl"
+#include "Production/JobConfig/reco/prolog.fcl"
 
 BEGIN_PROLOG
 

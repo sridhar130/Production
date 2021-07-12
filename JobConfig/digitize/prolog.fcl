@@ -1,15 +1,14 @@
 #
 # Prolog for digitizing detector steps.  These scripts can be run as-is, or in conjunction with mixing
 #
-#include "fcl/TrkCaloDt.fcl"
-#include "fcl/standardServices.fcl"
-#include "CommonMC/fcl/prolog.fcl"
-#include "TrackerMC/fcl/prolog.fcl"
-#include "CaloMC/fcl/prolog.fcl"
-#include "CRVResponse/fcl/prolog.fcl"
-#include "Filters/fcl/prolog.fcl"
-#include "Compression/fcl/prolog.fcl"
-#include "Trigger/fcl/prolog_trigger.fcl"
+#include "Offline/fcl/TrkCaloDt.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/TrackerMC/fcl/prolog.fcl"
+#include "Offline/CaloMC/fcl/prolog.fcl"
+#include "Offline/CRVResponse/fcl/prolog.fcl"
+#include "Offline/Filters/fcl/prolog.fcl"
+#include "Offline/Compression/fcl/prolog.fcl"
+#include "Offline/Trigger/fcl/prolog_trigger.fcl"
 #
 BEGIN_PROLOG
 
@@ -19,12 +18,6 @@ Digitize: {
     @table::TrackerMC.DigiProducers
     @table::CaloMC.DigiProducers
     @table::CrvDAQPackage.producers
-    # default PBI with no intensity; this must be overridden when mixing
-    PBISim : {
-      module_type: ProtonBunchIntensityFlat
-      mean: 0.0 # No PBI possible for pure signal! 
-      halfWidth : 1.0
-    }
 
     compressDigiMCs : {
 	module_type : CompressDigiMCs
@@ -33,7 +26,7 @@ Digitize: {
 	simParticleTags : [ @local::DigiCompressionTags.primarySimParticleTag ] 
 	mcTrajectoryTag : @local::DigiCompressionTags.primarySimParticleTag
 	extraStepPointMCTags : @local::DigiCompressionTags.commonExtraStepPointMCTags
-	timeMapTags : [ @sequence::CommonMC.TimeMaps ]
+	timeMapTags : [ ]
 	caloShowerStepTags : @local::DigiCompressionTags.primaryCaloShowerStepTags
 	caloShowerSimTag : @local::DigiCompressionTags.commonCaloShowerSimTag
 	caloShowerROTag : @local::DigiCompressionTags.commonCaloShowerROTag
@@ -51,6 +44,16 @@ Digitize: {
   }
 
   filters : {
+    # filter for hits that might be reconstructable as a track
+    # These are generic settings, some may be overridden based on the primary
+    trackable : {
+      module_type : StrawDigiMCFilter
+      MinNDigis : 10
+      MinParticleMom : 80.0
+      MaxParticleMom : 130.0
+      StrawDigiMCCollection : compressDigiMCs
+      particleTypes : [ 11,-11, 13, -13] # e+-, mu+-
+    }
   }
 
   analyzers: {
@@ -84,22 +87,30 @@ Digitize: {
 		    "keep mu2e::ProtonBunchTimeMC_*_*_*",
 		    "keep mu2e::ProtonBunchTime_*_*_*",
 		    "keep mu2e::EventWeight_*_*_*",
-		    "keep mu2e::ProtonBunchIntensity*_*_*_*",
 		    "keep *_compressDigiMCs_*_*" ]
 
-  Output : {
-     module_type : RootOutput     SelectEvents : [ DigiPath ]
+  TriggeredOutput : {
+     module_type : RootOutput
      SelectEvents : [ "*_trigger" ] # this selects events passing any trigger
+     fileName    : @nil
+  }
+  UntriggeredOutput : {
+     module_type : RootOutput
+     RejectEvents : [ "*_trigger" ] # reject events passing any trigger
      fileName    : @nil
   }
   EndSequence : [digiCompressionCheck]
 }
-Digitize.EndPath : [ @sequence::Digitize.EndSequence, Output ]
+Digitize.EndPath : [ @sequence::Digitize.EndSequence, TriggeredOutput, UntriggeredOutput ]
 # override the Trigger sequence to prepare digis
 Trigger.PrepareDigis: [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
-Digitize.DigitizePath : [ PBISim, @sequence::Digitize.DigitizeSequence ]
+Digitize.DigitizePath : [ @sequence::Digitize.DigitizeSequence ]
 
-Digitize.Output.outputCommands : [ "drop *_*_*_*",
+Digitize.TriggeredOutput.outputCommands : [ "drop *_*_*_*",
+		       @sequence::Digitize.DigiProducts,
+		       @sequence::Digitize.TriggerProducts ]
+
+Digitize.UntriggeredOutput.outputCommands : [ "drop *_*_*_*",
 		       @sequence::Digitize.DigiProducts,
 		       @sequence::Digitize.TriggerProducts ]
 

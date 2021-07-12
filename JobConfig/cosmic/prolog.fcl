@@ -116,15 +116,19 @@ Cosmic: {
       readMode: "sequential"
       wrapFiles: true
       mu2e: {
+         writeEventIDs : true
+         MaxEventsToSkip: @nil
          products: {
             genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
             simParticleMixer: { mixingMap: [ [ "cosmicFilter", ""] ] }
             mcTrajectoryMixer:{ mixingMap: [ [ "cosmicFilter", ""] ] }
+            cosmicLivetimeMixer:{ mixingMap: [ [ "FromCorsikaBinary", ""] ] }
             stepPointMCMixer: { mixingMap: [ [ "cosmicFilter:crvStage1", ":" ], [ "cosmicFilter:CRV", ":" ] ] }
             volumeInfoMixer: {
                evtOutInstanceName: "eventlevel"
                srInput: "compressPV"
             }
+            simTimeOffset : "cosmicTimeOffset"
          }
       }
    }

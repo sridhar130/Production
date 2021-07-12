@@ -1,7 +1,7 @@
 #
-# common prolog for all production jobs.  These are mostly legacy
+# common prolog for all production jobs.
 #
-#include "Mu2eG4/fcl/prolog.fcl"
+#include "Offline/Mu2eG4/fcl/prolog.fcl"
 
 BEGIN_PROLOG
 Common: {

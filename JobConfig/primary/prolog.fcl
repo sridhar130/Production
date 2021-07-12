@@ -1,11 +1,11 @@
 #
 # Prolog to create primary (signal, signal-like or calibration) particles and subsequent detector steps
 #
-#include "TrackerMC/fcl/prolog.fcl"
-#include "CaloMC/fcl/prolog.fcl"
-#include "CRVResponse/fcl/prolog.fcl"
-#include "Filters/fcl/prolog.fcl"
-#include "Compression/fcl/prolog.fcl"
+#include "Offline/TrackerMC/fcl/prolog.fcl"
+#include "Offline/CaloMC/fcl/prolog.fcl"
+#include "Offline/CRVResponse/fcl/prolog.fcl"
+#include "Offline/Filters/fcl/prolog.fcl"
+#include "Offline/Compression/fcl/prolog.fcl"
 #
 BEGIN_PROLOG
 
@@ -31,10 +31,7 @@ Primary: {
     }
     FindMCPrimary : {
       module_type : FindMCPrimary
-      SinglePrimary : true
-      GenParticles : "compressDetStepMCs"
       SimParticles : "compressDetStepMCs"
-      PrimaryGenIds : [] # this is intentionally empty: there should only be 1 GenParticle in primary production
     }
   }
 
@@ -55,8 +52,29 @@ Primary: {
       MinimumTrkSteps : 10 # primary must produce at least this many TrkSteps
       MinimumSumCaloStepE : 50.0 # or at least this much calo energy
     }
+
+    TargetStopResampler : {
+      module_type: ResamplingMixer
+      readMode            : sequential
+      wrapFiles           : true
+      fileNames: @nil
+      mu2e: {
+	writeEventIDs : true
+        MaxEventsToSkip: @nil
+	debugLevel : 1
+        products: {
+          genParticleMixer: { mixingMap: [ [ "beamResampler", "" ] ] }
+          simParticleMixer: { mixingMap: [ [ "TargetStopFilter", "" ] ] }
+          stepPointMCMixer: { mixingMap: [ [ "TargetStopFilter:virtualdetector", ":" ] ] }
+          volumeInfoMixer: {
+            srInput: "compressPVTargetStops"
+            evtOutInstanceName: "eventlevel"
+          }
+        }
+      }
+    }
   }
-  DetStepSequence : [ 
+  DetStepSequence : [
     @sequence::TrackerMC.StepSim,
     @sequence::CaloMC.StepSim,
     CrvSteps ]
@@ -73,7 +91,7 @@ Primary: {
 		       "keep mu2e::SimParticleart::Ptrmu2e::MCTrajectorystd::map_compressDetStepMCs_*_*",
 		       "keep mu2e::GenParticles_compressDetStepMCs_*_*",
 		       "keep mu2e::PrimaryParticle_*_*_*",
-                       "keep mu2e::CosmicLivetime_*_*_*",
+		       "keep art::EventIDs_*_*_*",
 		       "keep art::TriggerResults_*_*_*",
 		       "keep mu2e::StatusG4_*_*_*",
 		       "keep mu2e::GenEventCount_*_*_*" ]

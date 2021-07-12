@@ -1,8 +1,8 @@
 // Andrei Gaponenko, 2013
 
-#include "fcl/minimalMessageService.fcl"
-#include "fcl/standardProducers.fcl"
-#include "fcl/standardServices.fcl"
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardProducers.fcl"
+#include "Offline/fcl/standardServices.fcl"
 
 # Give this job a name.
 process_name : MuonTransportStage1
@@ -15,9 +15,9 @@ services : {
    TFileService          : { fileName : "histMuonTransportStage1.root" }
    RandomNumberGenerator : {defaultEngineKind: "MixMaxRng" }
 
-   GeometryService        : { inputFile      : "JobConfig/test/MuonTransport/geom_MuonTransportStage1.txt" }
-   ConditionsService      : { conditionsfile : "ConditionsService/data/conditions_01.txt"      }
-   GlobalConstantsService : { inputFile      : "GlobalConstantsService/data/globalConstants_01.txt" }
+   GeometryService        : { inputFile      : "Production/JobConfig/test/MuonTransport/geom_MuonTransportStage1.txt" }
+   ConditionsService      : { conditionsfile : "Offline/ConditionsService/data/conditions_01.txt"      }
+   GlobalConstantsService : { inputFile      : "Offline/GlobalConstantsService/data/globalConstants_01.txt" }
    Mu2eG4Helper           : { }
    SeedService            : @local::automaticSeeds
 }
@@ -29,7 +29,7 @@ physics : {
 
         generate: {
             module_type          : EventGenerator
-            inputfile            : "JobConfig/test/MuonTransport/genconfig_MuonTransport.txt"
+            inputfile            : "Production/JobConfig/test/MuonTransport/genconfig_MuonTransport.txt"
         }
 
         g4run : {

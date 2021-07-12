@@ -1,10 +1,10 @@
 // Andrei Gaponenko, 2013
 // Jake Colston & Joseph Brock, 2015 (edit for cd3)--> rhb adapts for antiprotons
 
-#include "fcl/minimalMessageService.fcl"
-#include "fcl/standardProducers.fcl"
-#include "fcl/standardServices.fcl"
-#include "Mu2eG4/fcl/prolog.fcl"
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardProducers.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/Mu2eG4/fcl/prolog.fcl"
 
 BEGIN_PROLOG
 protonInteractionFile: @nil
@@ -40,9 +40,9 @@ services : {
     message                : @local::default_message
     TFileService           : { fileName : "nts.owner.pbar_s1_toVD91.version.sequencer.root" }
     RandomNumberGenerator  : {defaultEngineKind: "MixMaxRng"}
-    GeometryService        : { inputFile      : "JobConfig/common/geom_baseline.txt"    }
-    ConditionsService      : { conditionsfile : "ConditionsService/data/conditions_01.txt"      }
-    GlobalConstantsService : { inputFile      : "GlobalConstantsService/data/globalConstants_01.txt" }
+    GeometryService        : { inputFile      : "Production/JobConfig/common/geom_baseline.txt"    }
+    ConditionsService      : { conditionsfile : "Offline/ConditionsService/data/conditions_01.txt"      }
+    GlobalConstantsService : { inputFile      : "Offline/GlobalConstantsService/data/globalConstants_01.txt" }
     Mu2eG4Helper           : {}
     SeedService            : @local::automaticSeeds
 }

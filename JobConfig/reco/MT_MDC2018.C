@@ -2,7 +2,7 @@
 // Generate random misalignemnts for MDC2018.  Execute as:
 //  root -l JobConfig/reco/MT_MDC2018.C
 //
-#include "JobConfig/reco/MisalignTracker.C+"
+#include "Production/JobConfig/reco/MisalignTracker.C+"
 #include "math.h"
 {
   double twist = 5; // 5 mm at the outer radius over the length of the tracker (~1 mrad)

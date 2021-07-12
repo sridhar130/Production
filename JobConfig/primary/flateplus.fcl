@@ -1,5 +1,5 @@
 # flat range of eplus near the RMC endpoint
-#include "JobConfig/primary/flatE.fcl"
+#include "Production/JobConfig/primary/flatE.fcl"
 process_name: flateplus
 physics.producers.generate.physics.genId : ExternalRMC
 physics.producers.generate.physics.pdgId : -11

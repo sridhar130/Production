@@ -2,7 +2,7 @@
 // In addition the configuration filters events with candidates below 500 MeV
 // Yuri Oksuzian, 2021
 
-#include "JobConfig/primary/primary.fcl"
+#include "Production/JobConfig/primary/primary.fcl"
 
 source : { module_type : RootInput }
 

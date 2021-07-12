@@ -1,15 +1,15 @@
 // Andrei Gaponenko, 2015
 
-#include "fcl/minimalMessageService.fcl"
-#include "fcl/standardServices.fcl"
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardServices.fcl"
 
-process_name :  DSTGTstops
+process_name :  TGTstops
 
 source : { module_type : RootInput }
 
 services : {
    message: @local::default_message
-   TFileService: { fileName: "nts.owner.DS-TGTstops.version.sequencer.root" }
+   TFileService: { fileName: "nts.owner.TGTstops.version.sequencer.root" }
 }
 
 physics: {
@@ -20,7 +20,7 @@ physics: {
       stoppedMuonDumper: {
          module_type: StoppedParticlesDumper
 	 dumpSimParticleLeaves: true
-         inputCollection: "tgtStopFilter"
+         inputCollection: "TargetStopFilter"
          writeProperTime : false
       }
    }
