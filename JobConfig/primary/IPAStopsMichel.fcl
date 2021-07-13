@@ -7,7 +7,10 @@
 #include "Offline/EventGenerator/fcl/prolog.fcl"
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/primary/prolog.fcl"
+
 # name all processes the same, to mask any provenance in ensemble creation
+// Below is the analogous file to TargetStops - it is combined with the IPA Michel primary generator since we have no other reason to look at IPA stops:
+
 process_name: Primary
 source: { module_type : EmptyEvent }
 services : @local::Services.Sim
@@ -38,20 +41,28 @@ physics.producers.g4run.inputs: {
    primaryTag: "generate"
    inputMCTrajectories: ""
    simStageOverride: 2
-   inputPhysVolumeMultiInfo: "IPAStopResampler"
+   inputPhysVolumeMultiInfo: "IPAStopResampler" //TODO - this is defined in the primary/prolog.fcl
    updateEventLevelVolumeInfos: {
-      input: "IPAStopResampler:eventlevel" #TODO - check this
+      input: "IPAStopResampler:eventlevel" //TODO - check this
       outInstance: "eventlevel"
    }
 }
+
 # use reduced BField for these jobs
 services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_tsu_ps.txt"
 
+// Below is the analogous file to primary/CeEndpoint
 physics.producers.generate : {
   module_type : MuStopProductsGun
-  inputSimParticles: IPAStopResampler #TODO - have written something, not checked
-  verbosity : 0
+  verbosityLevel : 1
+  stops : @local::mu2e.IPAMuonStops #TODO
+  # inputSimParticles: IPAStopResampler #TODO - have written something, not checked
+  captureProducts : []
+  decayProducts : [ @local::Pileup.dioGenTool ]
+  material : "IPA"
 }
-physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip : 1863000  # based on MDC2020, file of 2e8 Beam Resamples
+
+
+physics.filters.IPAStopResampler.mu2e.MaxEventsToSkip : 0  
 physics.producers.FindMCPrimary.PrimaryProcess : "IPAMicheleminus"
 outputs.Output.fileName: "dts.owner.IPAMichel.version.sequencer.art"

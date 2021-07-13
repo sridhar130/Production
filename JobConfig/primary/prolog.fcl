@@ -78,7 +78,7 @@ Primary: {
       module_type: ResamplingMixer
       readMode            : sequential
       wrapFiles           : true
-      fileNames: @nil //TODO ....maybe here
+      fileNames: @nil 
       mu2e: {
 	      writeEventIDs : true
         MaxEventsToSkip: @nil
@@ -86,7 +86,7 @@ Primary: {
         products: {
           genParticleMixer: { mixingMap: [ [ "beamResampler", "" ] ] }
           simParticleMixer: { mixingMap: [ [ "IPAStopFilter", "" ] ] }
-          stepPointMCMixer: { mixingMap: [ [ "IPAStopFilter:virtualdetector", ":" ] ] } //TODO - is this needed
+          stepPointMCMixer: { mixingMap: [ [ "IPAStopFilter:virtualdetector", ":" ] ] } 
           volumeInfoMixer: {
             srInput: "compressPVIPAStops"
             evtOutInstanceName: "eventlevel"
