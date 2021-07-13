@@ -9,8 +9,8 @@
 #include "Production/JobConfig/primary/prolog.fcl"
 #include "Production/JobConfig/pileup/prolog.fcl"
 # name all processes the same, to mask any provenance in ensemble creation
-// Below is the analogous file to TargetStops - it is combined with the IPA Michel primary generator since we have no other reason to look at IPA stops:
 
+// Below is the analogous file to TargetStops - it is combined with the IPA Michel primary generator since we have no other reason to look at IPA stops:
 process_name: Primary
 source: { module_type : EmptyEvent }
 services : @local::Services.Sim
@@ -51,11 +51,13 @@ physics.producers.g4run.inputs: {
 # use reduced BField for these jobs
 services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_tsu_ps.txt"
 
-// Below is the analogous file to primary/CeEndpoint
+physics.filters.DetStepFilter.MinimumPartMom : 20.0 // MeV/c TODO - tweak this parameter to get more DetSteps
+
+// Below is the part which generates the IPA electrons
 physics.producers.generate : {
   module_type : Pileup
-  verbosity : 1
-  inputSimParticles: IPAStopResampler //I have added this to the primary/prolog.fcl
+  verbosity : 10
+  inputSimParticles: IPAStopResampler 
   captureProducts : []
   decayProducts : [ @local::Pileup.dioGenTool ]
   stoppingTargetMaterial : "IPA"
@@ -63,5 +65,11 @@ physics.producers.generate : {
 
 
 physics.filters.IPAStopResampler.mu2e.MaxEventsToSkip : 0  
-physics.producers.FindMCPrimary.PrimaryProcess : "IPAMicheleminus"
+physics.producers.FindMCPrimary.PrimaryProcess : "mu2eMuonDecayAtRest"
 outputs.Output.fileName: "dts.owner.IPAMichel.version.sequencer.art"
+outputs.Output.outputCommands : [ "drop *_*_*_*",
+		 "keep art::EventIDs_*_*_*",
+		 "keep mu2e::GenEventCount_*_*_*",
+		 "keep mu2e::StatusG4_*_*_*",
+		 @sequence::Pileup.KeptProducts ]
+ 
