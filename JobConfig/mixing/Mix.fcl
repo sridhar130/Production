@@ -18,8 +18,8 @@ physics : {
     @table::Mixing.filters
   }
   analyzers: { @table::Digitize.analyzers }
-  Triggered : [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence ]
-  Untriggered : [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence , trackable ]
+  Triggered : [ @sequence::Mixing.MixSequence ]
+  Untriggered : [ @sequence::Mixing.MixSequence, Triggerable ]
   EndPath : @local::Digitize.EndPath
 }
 #

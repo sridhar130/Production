@@ -44,11 +44,13 @@ Digitize: {
   }
 
   filters : {
-    # filter for hits that might be reconstructable as a track
-    # These are generic settings, some may be overridden based on the primary
-    trackable : {
+    # filter for Untriggered stream.  These should be events that might have
+    # triggered.  The default setting is a particle with enough tracker digis
+    # in the right momentum range to be reconstructable as a helix
+    # This filter should be overriden as needed for other kinds of primaries (straight cosmics, calo signals, ...)
+    Triggerable : {
       module_type : StrawDigiMCFilter
-      MinNDigis : 10
+      MinNDigis : 15
       MinParticleMom : 80.0
       MaxParticleMom : 130.0
       StrawDigiMCCollection : compressDigiMCs
@@ -97,6 +99,7 @@ Digitize: {
   UntriggeredOutput : {
      module_type : RootOutput
      RejectEvents : [ "*_trigger" ] # reject events passing any trigger
+     SelectEvents : [ "Untriggered" ] # require events pass 'Triggerable' filter
      fileName    : @nil
   }
   EndSequence : [digiCompressionCheck]
