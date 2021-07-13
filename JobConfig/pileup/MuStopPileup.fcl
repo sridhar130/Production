@@ -108,7 +108,8 @@ outputs : { Output : {
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/primary/epilog.fcl"
 #include "Production/JobConfig/pileup/epilog.fcl"
-#
+
+physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip : 71001
 
 # resampling configuration; this should be somewhere common TODO
 physics.producers.g4run.inputs: {
