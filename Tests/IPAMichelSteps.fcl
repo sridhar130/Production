@@ -1,0 +1,7 @@
+#include "Production/JobConfig/primary/IPAMichel_2020.fcl"
+source.firstRun: 501 #TODO
+physics.filters.IPAStopResampler.fileNames : [
+  "/mu2e/app/users/sophie/Offline_October/Production/sim.brownd.IPAStops.MDC2020f.001202.art"
+]
+physics.filters.IPAStopResampler.mu2e.MaxEventsToSkip: 0
+outputs.Output.fileName : "dts.tester.IPAMichel.Test.1.art"

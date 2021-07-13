@@ -88,7 +88,7 @@ Primary: {
           simParticleMixer: { mixingMap: [ [ "IPAStopFilter", "" ] ] }
           stepPointMCMixer: { mixingMap: [ [ "IPAStopFilter:virtualdetector", ":" ] ] } //TODO - is this needed
           volumeInfoMixer: {
-            srInput: "compressPVTargetStops"//TODO protonabsorber?
+            srInput: "compressPVIPAStops"
             evtOutInstanceName: "eventlevel"
           }
         }
