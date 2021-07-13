@@ -7,7 +7,7 @@
 #include "Offline/EventGenerator/fcl/prolog.fcl"
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/primary/prolog.fcl"
-
+#include "Production/JobConfig/pileup/prolog.fcl"
 # name all processes the same, to mask any provenance in ensemble creation
 // Below is the analogous file to TargetStops - it is combined with the IPA Michel primary generator since we have no other reason to look at IPA stops:
 
@@ -41,9 +41,9 @@ physics.producers.g4run.inputs: {
    primaryTag: "generate"
    inputMCTrajectories: ""
    simStageOverride: 2
-   inputPhysVolumeMultiInfo: "IPAStopResampler" //TODO - this is defined in the primary/prolog.fcl
+   inputPhysVolumeMultiInfo: "IPAStopResampler" 
    updateEventLevelVolumeInfos: {
-      input: "IPAStopResampler:eventlevel" //TODO - check this
+      input: "IPAStopResampler:eventlevel" 
       outInstance: "eventlevel"
    }
 }
@@ -53,13 +53,12 @@ services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_ts
 
 // Below is the analogous file to primary/CeEndpoint
 physics.producers.generate : {
-  module_type : MuStopProductsGun
-  verbosityLevel : 1
-  stops : @local::mu2e.IPAMuonStops #TODO
-  # inputSimParticles: IPAStopResampler #TODO - have written something, not checked
+  module_type : Pileup
+  verbosity : 1
+  inputSimParticles: IPAStopResampler //I have added this to the primary/prolog.fcl
   captureProducts : []
   decayProducts : [ @local::Pileup.dioGenTool ]
-  material : "IPA"
+  stoppingTargetMaterial : "IPA"
 }
 
 
