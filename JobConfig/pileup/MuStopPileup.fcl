@@ -10,6 +10,7 @@
 #include "Production/JobConfig/primary/prolog.fcl"
 #include "Production/JobConfig/pileup/prolog.fcl"
 #include "fcl/standardServices.fcl"
+#include "EventGenerator/fcl/prolog.fcl"
 #include "JobConfig/common/prolog.fcl"
 #include "JobConfig/primary/prolog.fcl"
 #include "JobConfig/pileup/prolog.fcl"

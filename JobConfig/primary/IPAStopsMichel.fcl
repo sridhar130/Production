@@ -64,7 +64,7 @@ physics.producers.generate : {
 }
 
 
-physics.filters.IPAStopResampler.mu2e.MaxEventsToSkip : 0  
+physics.filters.IPAStopResampler.mu2e.MaxEventsToSkip : @nil  
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eMuonDecayAtRest"
 outputs.Output.fileName: "dts.owner.IPAMichel.version.sequencer.art"
 
