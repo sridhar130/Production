@@ -40,7 +40,7 @@ physics.producers.EWMProducer.SpillType : 1
 # set the event timing for Onspill
 physics.producers.EWMProducer.SpillType : 1
 # minimal BField map
-services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_reco.txt"
+services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
 # add mixers to the list of step producers.  Note the StrawDigi maker uses a general selector if no module is specified
 physics.producers.makeSD.StrawGasStepModule : ""
 physics.producers.compressDigiMCs.simParticleTags : [@sequence::Mixing.StepMixSequence ]
