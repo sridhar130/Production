@@ -31,12 +31,12 @@ outputs : {
 #
 # Final configuration
 #
-#include "JobConfig/common/epilog.fcl"
-#include "JobConfig/digitize/epilog.fcl"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/digitize/epilog.fcl"
  set the event timing for Onspill
 physics.producers.EWMProducer.SpillType : 1
 # add trigger paths
-#include "gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 # set the event timing for Onspill
 physics.producers.EWMProducer.SpillType : 1
 # minimal BField map
