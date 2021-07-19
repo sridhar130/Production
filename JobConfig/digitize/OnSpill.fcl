@@ -3,6 +3,8 @@
 #
 #include "Production/JobConfig/digitize/Digitize.fcl"
 # add trigger paths
-#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+#include "gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 # set the event timing for Onspill
 physics.producers.EWMProducer.SpillType : 1
+
+services.scheduler.wantSummary: true
