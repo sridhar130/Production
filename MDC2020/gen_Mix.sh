@@ -11,8 +11,8 @@ for dirname in 000 001 002 003 004 005 006 007 008 009; do
   mv $dirname "$1Mix$2_$dirname"
   for file in $1Mix$2_$dirname/*.fcl; do
     echo "editing file $file"
-    sed -i "s/MixTriggered/$1MixTriggered$2/" $file
-    sed -i "s/MixUntriggered/$1MixUntriggered$2/" $file
+    sed -i "s/MixTriggered/$1MixTriggered/" $file
+    sed -i "s/MixUntriggered/$1MixUntriggered/" $file
   done
  fi
 done
