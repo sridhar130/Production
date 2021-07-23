@@ -3,10 +3,10 @@
 #
 # original author: Dave Brown, LBNL
 #
-#include "fcl/standardServices.fcl"
-#include "EventGenerator/fcl/prolog.fcl"
-#include "JobConfig/common/prolog.fcl"
-#include "JobConfig/primary/prolog.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/EventGenerator/fcl/prolog.fcl"
+#include "Production/JobConfig/common/prolog.fcl"
+#include "Production/JobConfig/primary/prolog.fcl"
 # name all processes the same, to mask any provenance in ensemble creation
 process_name: Primary
 source: { module_type : EmptyEvent }
@@ -30,8 +30,8 @@ outputs : { Output :@local::Primary.Output }
 #
 # final configuration
 #
-#include "JobConfig/common/epilog.fcl"
-#include "JobConfig/primary/epilog.fcl"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/primary/epilog.fcl"
 #
 physics.producers.g4run.inputs: {
    primaryType: StageParticles
@@ -45,4 +45,4 @@ physics.producers.g4run.inputs: {
    }
 }
 # use reduced BField for these jobs
-services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_no_tsu_ps.txt"
+services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_tsu_ps.txt"

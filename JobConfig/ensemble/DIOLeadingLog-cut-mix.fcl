@@ -1,4 +1,4 @@
-#include "JobConfig/mixing/prolog.fcl"
+#include "Production/JobConfig/mixing/prolog.fcl"
 process_name: ensembleMix
 
 source: { module_type : EmptyEvent }
@@ -17,7 +17,7 @@ outputs: { Output : @local::Mixing.Output }
 #
 # final configuration
 #
-#include "JobConfig/mixing/epilog.fcl"
+#include "Production/JobConfig/mixing/epilog.fcl"
 physics.producers.generate.physics.genId : dioTail
 
 physics.producers.generate.physics.elow : ${minE}

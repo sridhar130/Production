@@ -1,6 +1,6 @@
 # flat range of photons from pion stops to study external RPC background
 
-#include "JobConfig/primary/Primary.fcl"
+#include "Production/JobConfig/primary/Primary.fcl"
 # set the generator
 physics.producers.generate : {
   module_type: RPCGun

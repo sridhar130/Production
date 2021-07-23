@@ -1,5 +1,5 @@
 # flat range of photons from muon stops to study external RMC background
-#include "JobConfig/primary/flatE.fcl"
+#include "Production/JobConfig/primary/flatE.fcl"
 physics.producers.generate.physics.genId : ExternalRMC
 physics.producers.generate.physics.pdgId : 22
 physics.producers.generate.physics.elow : 80.0 // Mev

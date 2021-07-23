@@ -2,10 +2,10 @@
 // Cosmics hitting crvStage1End volumes are stopped and saved for later resampling.
 //
 // Yuri Oksuzian, 2021
-#include "fcl/standardServices.fcl"
-#include "JobConfig/common/prolog.fcl"
-#include "JobConfig/primary/prolog.fcl"
-#include "JobConfig/cosmic/prolog.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Production/JobConfig/common/prolog.fcl"
+#include "Production/JobConfig/primary/prolog.fcl"
+#include "Production/JobConfig/cosmic/prolog.fcl"
 
 process_name : Primary
 
@@ -43,8 +43,8 @@ physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS1
 #
 # final configuration
 #
-#include "JobConfig/common/epilog.fcl"
-#include "JobConfig/primary/epilog.fcl"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/primary/epilog.fcl"
 
 physics.end_paths : [ EndPath ]
 # no histogram output
@@ -53,4 +53,4 @@ services.SeedService.baseSeed         :  773651
 services.SeedService.maxUniqueEngines :  3
 
 // Need this to increase the world volume.
-services.GeometryService.inputFile: "JobConfig/cosmic/geom_cosmic_current.txt"
+services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_cosmic_current.txt"

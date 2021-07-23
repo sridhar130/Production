@@ -1,8 +1,8 @@
 #
 # pure background frames with full (digi + mc) and detector (digi only) output streams
 #
-#include "JobConfig/digitize/prolog.fcl"
-#include "JobConfig/mixing/prolog.fcl"
+#include "Production/JobConfig/digitize/prolog.fcl"
+#include "Production/JobConfig/mixing/prolog.fcl"
 process_name: NoPrimary
 source: { module_type : EmptyEvent }
 services : @local::Services.SimAndReco # reco is needed for the trigger
@@ -31,16 +31,16 @@ outputs : {
 #
 # Final configuration
 #
-#include "JobConfig/common/epilog.fcl"
-#include "JobConfig/digitize/epilog.fcl"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/digitize/epilog.fcl"
  set the event timing for Onspill
 physics.producers.EWMProducer.SpillType : 1
 # add trigger paths
-#include "gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 # set the event timing for Onspill
 physics.producers.EWMProducer.SpillType : 1
 # minimal BField map
-services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_reco.txt"
+services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
 # add mixers to the list of step producers.  Note the StrawDigi maker uses a general selector if no module is specified
 physics.producers.makeSD.StrawGasStepModule : ""
 physics.producers.compressDigiMCs.simParticleTags : [@sequence::Mixing.StepMixSequence ]

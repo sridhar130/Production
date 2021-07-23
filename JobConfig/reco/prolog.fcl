@@ -1,17 +1,17 @@
 #
 #  Prolog for production reconstruction jobs
 #
-#include "JobConfig/digitize/prolog.fcl"
-#include "CommonMC/fcl/prolog.fcl"
-#include "TrkHitReco/fcl/prolog.fcl"
-#include "TrkReco/fcl/prolog.fcl"
-#include "TrkPatRec/fcl/prolog.fcl"
-#include "Mu2eKinKal/fcl/prolog.fcl"
-#include "CaloReco/fcl/prolog.fcl"
-#include "CaloCluster/fcl/prolog.fcl"
-#include "CaloMC/fcl/prolog.fcl"
-#include "CalPatRec/fcl/prolog.fcl"
-#include "Filters/fcl/prolog.fcl"
+#include "Production/JobConfig/digitize/prolog.fcl"
+#include "Offline/CommonMC/fcl/prolog.fcl"
+#include "Offline/TrkHitReco/fcl/prolog.fcl"
+#include "Offline/TrkReco/fcl/prolog.fcl"
+#include "Offline/TrkPatRec/fcl/prolog.fcl"
+#include "Offline/Mu2eKinKal/fcl/prolog.fcl"
+#include "Offline/CaloReco/fcl/prolog.fcl"
+#include "Offline/CaloCluster/fcl/prolog.fcl"
+#include "Offline/CaloMC/fcl/prolog.fcl"
+#include "Offline/CalPatRec/fcl/prolog.fcl"
+#include "Offline/Filters/fcl/prolog.fcl"
 #
 BEGIN_PROLOG
 Reconstruction : {

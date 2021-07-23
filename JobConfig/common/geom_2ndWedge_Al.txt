@@ -1,5 +1,5 @@
-#include "Mu2eG4/geom/geom_common.txt"
-#include "Mu2eG4/geom/TransportSolenoid_v04.txt"
+#include "Offline/Mu2eG4/geom/geom_common.txt"
+#include "Offline/Mu2eG4/geom/TransportSolenoid_v04.txt"
 int pbar.version = 4;
 int pbar.verbosityLevel    = 3;
 string pbar.Type = "wedge";

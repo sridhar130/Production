@@ -1,14 +1,14 @@
 #
 # Prolog for digitizing detector steps.  These scripts can be run as-is, or in conjunction with mixing
 #
-#include "fcl/TrkCaloDt.fcl"
-#include "fcl/standardServices.fcl"
-#include "TrackerMC/fcl/prolog.fcl"
-#include "CaloMC/fcl/prolog.fcl"
-#include "CRVResponse/fcl/prolog.fcl"
-#include "Filters/fcl/prolog.fcl"
-#include "Compression/fcl/prolog.fcl"
-#include "Trigger/fcl/prolog_trigger.fcl"
+#include "Offline/fcl/TrkCaloDt.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/TrackerMC/fcl/prolog.fcl"
+#include "Offline/CaloMC/fcl/prolog.fcl"
+#include "Offline/CRVResponse/fcl/prolog.fcl"
+#include "Offline/Filters/fcl/prolog.fcl"
+#include "Offline/Compression/fcl/prolog.fcl"
+#include "Offline/Trigger/fcl/prolog_trigger.fcl"
 #
 BEGIN_PROLOG
 
@@ -44,11 +44,13 @@ Digitize: {
   }
 
   filters : {
-    # filter for hits that might be reconstructable as a track
-    # These are generic settings, some may be overridden based on the primary
-    trackable : {
+    # filter for Untriggered stream.  These should be events that might have
+    # triggered.  The default setting is a particle with enough tracker digis
+    # in the right momentum range to be reconstructable as a helix
+    # This filter should be overriden as needed for other kinds of primaries (straight cosmics, calo signals, ...)
+    Triggerable : {
       module_type : StrawDigiMCFilter
-      MinNDigis : 10
+      MinNDigis : 15
       MinParticleMom : 80.0
       MaxParticleMom : 130.0
       StrawDigiMCCollection : compressDigiMCs
@@ -97,6 +99,7 @@ Digitize: {
   UntriggeredOutput : {
      module_type : RootOutput
      RejectEvents : [ "*_trigger" ] # reject events passing any trigger
+     SelectEvents : [ "Untriggered" ] # require events pass 'Triggerable' filter
      fileName    : @nil
   }
   EndSequence : [digiCompressionCheck]

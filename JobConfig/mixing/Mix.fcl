@@ -1,8 +1,8 @@
 #
 #  Mix pileup.  This is a form of OnSpill digitization
 #
-#include "JobConfig/digitize/prolog.fcl"
-#include "JobConfig/mixing/prolog.fcl"
+#include "Production/JobConfig/digitize/prolog.fcl"
+#include "Production/JobConfig/mixing/prolog.fcl"
 process_name: Mix
 source : { module_type : RootInput }
 services : @local::Services.SimAndReco # reco is needed for the trigger
@@ -18,8 +18,8 @@ physics : {
     @table::Mixing.filters
   }
   analyzers: { @table::Digitize.analyzers }
-  Triggered : [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence ]
-  Untriggered : [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence , trackable ]
+  Triggered : [ @sequence::Mixing.MixSequence ]
+  Untriggered : [ @sequence::Mixing.MixSequence, Triggerable ]
   EndPath : @local::Digitize.EndPath
 }
 #
@@ -30,14 +30,14 @@ outputs : {
 #
 # Final configuration
 #
-#include "JobConfig/common/epilog.fcl"
-#include "JobConfig/digitize/epilog.fcl"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/digitize/epilog.fcl"
 # add trigger paths
-#include "gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 # set the event timing for Onspill
 physics.producers.EWMProducer.SpillType : 1
 # minimal BField map
-services.GeometryService.inputFile      : "Mu2eG4/geom/geom_common_reco.txt"
+services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
 # add primary and mixers to the list of step producers.  Note the StrawDigi maker uses a general selector if no module is specified
 physics.producers.makeSD.StrawGasStepModule : ""
 physics.producers.compressDigiMCs.simParticleTags : [compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
@@ -50,5 +50,5 @@ physics.trigger_paths[0] : Triggered
 physics.trigger_paths[1] : Untriggered
 physics.end_paths : [ EndPath ]
 # generic output: this is overwritten by generate_fcl, and also by the gen_Mix.sh script
-outputs.TriggeredOutput.fileName: "dig.owner.description-Triggered.version.sequencer.art"
-outputs.UntriggeredOutput.fileName: "dig.owner.description-Untriggered.version.sequencer.art"
+outputs.TriggeredOutput.fileName: "dig.owner.MixTriggered.version.sequencer.art"
+outputs.UntriggeredOutput.fileName: "dig.owner.MixUntriggered.version.sequencer.art"

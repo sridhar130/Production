@@ -116,7 +116,8 @@ Cosmic: {
       readMode: "sequential"
       wrapFiles: true
       mu2e: {
-         MaxEventsToSkip: 18415
+         writeEventIDs : true
+         MaxEventsToSkip: @nil
          products: {
             genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
             simParticleMixer: { mixingMap: [ [ "cosmicFilter", ""] ] }

@@ -75,7 +75,7 @@ Pileup: {
     spectrumVariable: kineticEnergy
     spectrum: {
       spectrumShape: tabulated
-      spectrumFileName: "ConditionsService/data/neutronSpectrum.txt"
+      spectrumFileName: "Offline/ConditionsService/data/neutronSpectrum.txt"
     }
   }
   

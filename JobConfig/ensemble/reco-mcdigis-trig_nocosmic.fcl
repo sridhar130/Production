@@ -1,6 +1,6 @@
 # Same as mcdigisTrig, but for input digi files that don't have the cosmic time map
 # This is legacy for MDC2018g digis and earlier
-#include "JobConfig/ensemble/reco-mcdigis-trig.fcl"
+#include "Production/JobConfig/ensemble/reco-mcdigis-trig.fcl"
 # generate a CosmicTimeMap; it will be empty
 physics.producers : {
   @table::physics.producers
