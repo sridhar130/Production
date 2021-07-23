@@ -6,7 +6,7 @@
 process_name: MuStopSelector
 source: { module_type: RootInput }
 services: { message: @local::default_message }
-physics: { 
+physics: {
   filters : {
     muminusSelector: {
       module_type: ParticleCodeFilter
@@ -25,18 +25,18 @@ physics: {
   selectMuplus : [muplusSelector]
   trigger_paths : [ selectMuminus, selectMuplus ]
   outpath: [muminusout, muplusout ]
-  end_paths: [outpath] 
+  end_paths: [outpath]
 }
 outputs: {
   muminusout: {
     module_type: RootOutput
-    fileName : "sim.owner.MuminusStops.version.sequencer.art"
+    fileName : "sim.owner.MuminusStopsCat.version.sequencer.art"
     outputCommands:   [ "keep *_*_*_*" ]
     SelectEvents: [selectMuminus]
   }
   muplusout: {
     module_type: RootOutput
-    fileName : "sim.owner.MuplusStops.version.sequencer.art"
+    fileName : "sim.owner.MuplusStopsCat.version.sequencer.art"
     outputCommands:   [ "keep *_*_*_*" ]
     SelectEvents: [selectMuplus]
   }
