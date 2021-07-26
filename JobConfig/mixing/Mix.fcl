@@ -45,7 +45,13 @@ physics.producers.compressDigiMCs.caloShowerStepTags : [compressDetStepMCs, @seq
 physics.producers.CaloShowerROMaker.caloShowerStepCollection : [compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
 physics.producers.CrvPhotons.crvStepModuleLabels : [ compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
 physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","","" ]
-#
+# configure the mixin efficiences
+physics.filters.EleBeamFlashMixer.mu2e.simStageEfficiencyTags: ["EleBeamCat", "EleBeamFlashCat" ]
+physics.filters.MuBeamFlashMixer.mu2e.simStageEfficiencyTags: ["MuBeamCat", "MuBeamFlashCat" ]
+physics.filters.NeutralsFlashMixer.mu2e.simStageEfficiencyTags: ["NeutralsCat", "NeutralsFlashCat" ]
+physics.filters.MuStopPileupMixer.mu2e.simStageEfficiencyTags: ["MuBeamCat", "MuminusStopsCat", "MuStopPileupCat"] 
+physics.filters.MuStopPileupMixer.mu2e.meanEventsPerPOTFactors : [ 1000 ]  # target stops are presampled by 1000
+# define the paths
 physics.trigger_paths[0] : Triggered
 physics.trigger_paths[1] : Untriggered
 physics.end_paths : [ EndPath ]

@@ -21,9 +21,10 @@ Mixing : {
     wrapFiles           : true
     mu2e: {
       protonBunchIntensityTag: "PBISim"
-      meanEventsPerProton: @nil
+#      meanEventsPerProton: @nil
       simStageEfficiencyTags: @nil
-      writeEventIDs : true
+      meanEventsPerPOTFactors : []
+      writeEventIDs : false
       products: {
         genParticleMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
         simParticleMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
@@ -43,7 +44,7 @@ Mixing : {
   producers : {
     PBISim : {  
       module_type: ProtonBunchIntensityLogNormal
-      sigma: @nil
+      SDF: @nil
       extendedMean: @nil
       cutMax:@nil
     }
