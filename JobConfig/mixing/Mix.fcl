@@ -55,6 +55,6 @@ physics.filters.MuStopPileupMixer.mu2e.meanEventsPerPOTFactors : [ 1000 ]  # tar
 physics.trigger_paths[0] : Triggered
 physics.trigger_paths[1] : Untriggered
 physics.end_paths : [ EndPath ]
-# generic output: this is overwritten by generate_fcl, and also by the gen_Mix.sh script
+# generic output: this is overwritten by the gen_Mix.sh script
 outputs.TriggeredOutput.fileName: "dig.owner.MixTriggered.version.sequencer.art"
 outputs.UntriggeredOutput.fileName: "dig.owner.MixUntriggered.version.sequencer.art"

@@ -11,11 +11,13 @@ samListLocations --defname="dts.mu2e.MuStopPileupCat.MDC2020$2.art" > MuStopPile
 #
 # create the database override: this is temporary
 #
-source Production/JobConfig/beam/CreateSimEfficiency.sh MDC2020$2
+#source Production/JobConfig/beam/CreateSimEfficiency.sh MDC2020$2
+#cp MDC2020$2 Production/MDC2020
 #
 # write the template fcl
 #
 rm template.fcl
+# I have to deep-copy the main file so I can later edit the outputs
 if [ $1 == "NoPrimary" ]; then
   echo '#include "Production/JobConfig/mixing/NoPrimary.fcl"' >> template.fcl
 else
@@ -24,7 +26,10 @@ fi
 # the following should be an option (or gotten through the database)
 echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> template.fcl 
 echo 'services.ProditionsService.simbookkeeper.useDb: true' >> template.fcl
-echo services.DbService.textFile : [\"MDC2020${2}_SimEff.txt\"] >> template.fcl
+echo services.DbService.textFile : [\"Production/MDC2020/MDC2020${2}_SimEff.txt\"] >> template.fcl
+# overwrite the outputs
+echo outputs.TriggeredOutput.fileName: \"dig.owner.${1}MixTriggered.version.sequencer.art\" >> template.fcl
+echo outputs.UntriggeredOutput.fileName: \"dig.owner.${1}MixUntriggered.version.sequencer.art\" >> template.fcl 
 #
 # run generate_fcl
 #
@@ -43,19 +48,11 @@ else
   --auxinput=1:physics.filters.MuBeamFlashMixer.fileNames:MuBeamFlashCat$2.txt \
   --auxinput=1:physics.filters.NeutralsFlashMixer.fileNames:NeutralsFlashCat$2.txt
 fi
-#
-# Complete the output file names for Triggered and Untriggered streams
-#
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
  if test -d $dirname; then
   echo "found dir $dirname"
   rm -rf "$1Mix$2_$dirname"
   mv $dirname "$1Mix$2_$dirname"
-  for file in $1Mix$2_$dirname/*.fcl; do
-    echo "editing file $file"
-    sed -i "s/MixTriggered/$1MixTriggered/" $file
-    sed -i "s/MixUntriggered/$1MixUntriggered/" $file
-  done
  fi
 done
 

@@ -4,5 +4,5 @@
 # original author: Dave Brown, LBNL
 #
 physics.producers.PBISim.SDF: 0.6
-physics.producers.PBISim.extendedMean: 1.58e7 # mean of the uncut distribution for a single booster batch
+physics.producers.PBISim.extendedMean: 1.58e7 # mean of the uncut distribution
 physics.producers.PBISim.cutMax: 9.48e7  # truncate the tail at 6 times the mean
