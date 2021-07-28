@@ -20,7 +20,7 @@ physics.filters.NeutralsFlashMixer.mu2e.simStageEfficiencyTags: []
 physics.filters.NeutralsFlashMixer.fileNames : [ "dts.owner.muDauSteps.dsconf.seq.art" ] # needed for art but not used
 physics.filters.NeutralsFlashMixer.mu2e.skipFactor: 0
 physics.filters.NeutralsFlashMixer.mu2e.meanEventsPerProton : 0.0
-physics.producers.PBISim.sigma: 0.7147
+physics.producers.PBISim.SDF: 0.6
 physics.producers.PBISim.extendedMean: 1.0e5 
 physics.producers.PBISim.cutMax: 2.0e5
 outputs.Output.fileName : "dig.owner.ce.dsconf.seq.art"
