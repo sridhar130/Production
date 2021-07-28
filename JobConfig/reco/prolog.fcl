@@ -281,14 +281,14 @@ Reconstruction.TrackReco : [
 #
 # Full reconstruction Path
 Reconstruction.RecoPath : [
-  @sequence::Reconstruction.CaloReco,
-  @sequence::Reconstruction.TrkReco,
+  @sequence::Reconstruction.CaloReco, //makes cluster
+  @sequence::Reconstruction.TrkReco, //makes hits
   @sequence::Reconstruction.CrvReco,
-  @sequence::Reconstruction.TrackReco
+  @sequence::Reconstruction.TrackReco //runs reconstruction
 ]
 # Full reco path with MC
 Reconstruction.RecoMCPath : [
-  @sequence::Reconstruction.RecoPath,
+  @sequence::Reconstruction.RecoPath, //calls the above
   @sequence::Reconstruction.MCReco,
   RecoFilter
 ]

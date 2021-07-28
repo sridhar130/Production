@@ -27,7 +27,7 @@ physics.producers.HelixFinderDe.HelixFitter.maxzsep : 200
 physics.producers.HelixFinderDe.HelixFitter.mindist : 50
 physics.producers.HelixFinderDe.HelixFitter.maxdist : 250
 physics.producers.HelixFinderDe.HelixFitter.minArea : 800
-##physics.producers.HelixFinderDe.minNHit : 40
+physics.producers.HelixFinderDe.HelixFitter.minNHit : 1
 physics.producers.TimeClusterFinderDe.UseCaloCluster : true
 physics.producers.TimeClusterFinderDe.CaloClusterMinE : 10
 physics.producers.TimeClusterFinderDe.AveragePitch : 0.5
