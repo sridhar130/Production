@@ -60,6 +60,7 @@ physics.producers.generate : {
   inputSimParticles: IPAStopResampler 
   stoppingTargetMaterial : "IPA"
   verbosity : 1
+  makeHistograms : true
 }
 
 physics.producers.generate.startMom : 10
