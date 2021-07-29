@@ -32,8 +32,7 @@ Mixing : {
         caloShowerStepMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
         crvStepMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
       }
-# skip a random number of mixin events between 0 and this factor times the number corresponding to the nominal pulse.
-      skipFactor : 2
+      MaxEventsToSkip: @nil
     }
   }
   MixingProducts : [

@@ -9,15 +9,24 @@ samListLocations --defname="dts.mu2e.MuBeamFlashCat.MDC2020$2.art" > MuBeamFlash
 samListLocations --defname="dts.mu2e.EleBeamFlashCat.MDC2020$2.art" > EleBeamFlashCat$2.txt
 samListLocations --defname="dts.mu2e.NeutralsFlashCat.MDC2020$2.art" > NeutralsFlashCat$2.txt
 samListLocations --defname="dts.mu2e.MuStopPileupCat.MDC2020$2.art" > MuStopPileupCat$2.txt
-#
-# create the database override: this is temporary
-#
-#source Production/JobConfig/beam/CreateSimEfficiency.sh MDC2020$2
-#cp MDC2020$2 Production/MDC2020
+# calucate the max skip from the dataset
+nfiles=`samCountFiles.sh "dts.mu2e.MuBeamFlashCat.MDC2020$2.art"`
+nevts=`samCountEvents.sh "dts.mu2e.MuBeamFlashCat.MDC2020$2.art"`
+let nskip_MuBeamFlash=nevts/nfiles
+nfiles=`samCountFiles.sh "dts.mu2e.EleBeamFlashCat.MDC2020$2.art"`
+nevts=`samCountEvents.sh "dts.mu2e.EleBeamFlashCat.MDC2020$2.art"`
+let nskip_EleBeamFlash=nevts/nfiles
+nfiles=`samCountFiles.sh "dts.mu2e.NeutralsFlashCat.MDC2020$2.art"`
+nevts=`samCountEvents.sh "dts.mu2e.NeutralsFlashCat.MDC2020$2.art"`
+let nskip_NeutralsFlash=nevts/nfiles
+nfiles=`samCountFiles.sh "dts.mu2e.MuStopPileupCat.MDC2020$2.art"`
+nevts=`samCountEvents.sh "dts.mu2e.MuStopPileupCat.MDC2020$2.art"`
+let nskip_MuStopPileup=nevts/nfiles
 #
 # write the template fcl
 #
 rm template.fcl
+#
 # I have to deep-copy the main file so I can later edit the outputs
 if [ $1 == "NoPrimary" ]; then
   echo '#include "Production/JobConfig/mixing/NoPrimary.fcl"' >> template.fcl
@@ -29,10 +38,21 @@ else
   echo '#include "Production/JobConfig/mixing/Mix.fcl"' >> template.fcl 
   echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> template.fcl 
 fi
+#
+# set the skips
+#
+echo physics.filters.MuBeamFlashMixer.mu2e.MaxEventsToSkip: ${nskip_MuBeamFlash} >> template.fcl
+echo physics.filters.EleBeamFlashMixer.mu2e.MaxEventsToSkip: ${nskip_EleBeamFlash} >> template.fcl
+echo physics.filters.NeutralsFlashMixer.mu2e.MaxEventsToSkip: ${nskip_NeutralsFlash} >> template.fcl
+echo physics.filters.MuStopPileupMixer.mu2e.MaxEventsToSkip: ${nskip_MuStopPileup} >> template.fcl
+#
+# setup database access for SimEfficiencies
+#
 echo 'services.ProditionsService.simbookkeeper.useDb: true' >> template.fcl
 echo services.DbService.purpose: MDC2020$2 >> template.fcl
-#echo services.DbService.textFile : [\"Production/MDC2020/MDC2020${2}_SimEff.txt\"] >> template.fcl
+#
 # overwrite the outputs
+#
 echo outputs.TriggeredOutput.fileName: \"dig.owner.${1}MixTriggered.version.sequencer.art\" >> template.fcl
 echo outputs.UntriggeredOutput.fileName: \"dig.owner.${1}MixUntriggered.version.sequencer.art\" >> template.fcl 
 #
