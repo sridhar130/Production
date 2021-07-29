@@ -5,12 +5,17 @@
 #
 #include "Production/JobConfig/primary/TargetStopParticle.fcl"
 physics.producers.generate : {
-  module_type : FlatEMinusGun
+  module_type : FlatMuonDaughterGenerator
   inputSimParticles: TargetStopResampler
   stoppingTargetMaterial : "Al"
   verbosity : 0
   makeHistograms : true
+  processcode : "mu2eMuonDecayAtRest"
+  pdgId : -11
 }
+
+physics.producers.generate.startMom : 0
+physics.producers.generate.endMom : 100
 physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip : 1863000  # based on MDC2020, file of 2e8 Beam Resamples
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eFlateMinus"
 outputs.Output.fileName: "dts.owner.flateminus.version.sequencer.art"
