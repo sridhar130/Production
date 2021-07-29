@@ -62,6 +62,8 @@ physics.filters.MuStopPileupMixer.mu2e.meanEventsPerPOTFactors : [ 1000 ]  # tar
 physics.trigger_paths[0] : Triggered
 physics.trigger_paths[1] : Untriggered
 physics.end_paths : [ EndPath ]
-# generic output: this is overwritten by generate_fcl
+# no selection for untriggered output
+outputs.UntriggeredOutput.SelectEvents : [] 
+# generic output: this is overwritten by gen_Mix.sh
 outputs.TriggeredOutput.fileName: "dig.owner.NoPrimaryTriggered.version.sequencer.art"
 outputs.UntriggeredOutput.fileName: "dig.owner.NoPrimaryUntriggered.version.sequencer.art"
