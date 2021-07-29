@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 #
 # this script requires mu2etools, mu2efiletools and dhtools be setup
+# It also requires the SimEfficiencies for the beam campaign be entered in the database
 # $1 is the name of the primary (ie CeEndpoint, etc).  $2 is the campaign version
 #
 # create the mixin input lists
@@ -26,7 +27,8 @@ fi
 # the following should be an option (or gotten through the database)
 echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> template.fcl 
 echo 'services.ProditionsService.simbookkeeper.useDb: true' >> template.fcl
-echo services.DbService.textFile : [\"Production/MDC2020/MDC2020${2}_SimEff.txt\"] >> template.fcl
+echo services.DbService.purpose: MDC2020$2 >> template.fcl
+#echo services.DbService.textFile : [\"Production/MDC2020/MDC2020${2}_SimEff.txt\"] >> template.fcl
 # overwrite the outputs
 echo outputs.TriggeredOutput.fileName: \"dig.owner.${1}MixTriggered.version.sequencer.art\" >> template.fcl
 echo outputs.UntriggeredOutput.fileName: \"dig.owner.${1}MixUntriggered.version.sequencer.art\" >> template.fcl 
