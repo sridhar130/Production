@@ -5,6 +5,8 @@ physics.filters.IPAStopResampler.fileNames : [
   //"root://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/mu2e/scratch/datasets/phy-sim/sim/mu2e/IPAStopsCat/MDC2020i/art/6b/10/sim.mu2e.IPAStopsCat.MDC2020i.001202_00000000.art"
 ]
 
+physics.producers.generate.startMom : 0
+physics.producers.generate.endMom : 100
 physics.filters.IPAStopResampler.mu2e.MaxEventsToSkip: 4143
 outputs.Output.fileName : "dts.tester.IPAFlat.Test.1.art"
 services.scheduler.wantSummary: true

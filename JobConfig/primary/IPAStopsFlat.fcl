@@ -56,15 +56,15 @@ physics.producers.FindMCPrimary.PrimaryProcess : "mu2eFlateMinus"
 physics.filters.IPAStopResampler.mu2e.MaxEventsToSkip : @nil 
 
 physics.producers.generate : {
-  module_type: FlatEMinusGun
+  module_type: FlatMuonDaughterGenerator
   inputSimParticles: IPAStopResampler 
   stoppingTargetMaterial : "IPA"
   verbosity : 1
   makeHistograms : true
+  processcode : "mu2eMuonDecayAtRest"
+  pdgId : -11
 }
 
-physics.producers.generate.startMom : 10
-physics.producers.generate.endMom : 50
 
  
 
