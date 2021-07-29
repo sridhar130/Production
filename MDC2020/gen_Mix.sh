@@ -21,11 +21,14 @@ rm template.fcl
 # I have to deep-copy the main file so I can later edit the outputs
 if [ $1 == "NoPrimary" ]; then
   echo '#include "Production/JobConfig/mixing/NoPrimary.fcl"' >> template.fcl
+# the following should be an option (or gotten through the database)
+  echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> template.fcl 
+elif [ $1 == "NoPrimaryPBISequence" ]; then
+  echo '#include "Production/JobConfig/mixing/NoPrimaryPBISequence.fcl"' >> template.fcl
 else
   echo '#include "Production/JobConfig/mixing/Mix.fcl"' >> template.fcl 
+  echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> template.fcl 
 fi
-# the following should be an option (or gotten through the database)
-echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> template.fcl 
 echo 'services.ProditionsService.simbookkeeper.useDb: true' >> template.fcl
 echo services.DbService.purpose: MDC2020$2 >> template.fcl
 #echo services.DbService.textFile : [\"Production/MDC2020/MDC2020${2}_SimEff.txt\"] >> template.fcl
