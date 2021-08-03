@@ -288,7 +288,7 @@ Reconstruction.RecoPath : [
 ]
 # Full reco path with MC
 Reconstruction.RecoMCPath : [
-  @sequence::Reconstruction.RecoPath, 
+  @sequence::Reconstruction.RecoPath,
   @sequence::Reconstruction.MCReco,
   RecoFilter
 ]
