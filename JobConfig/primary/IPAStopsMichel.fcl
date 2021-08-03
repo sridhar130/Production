@@ -61,7 +61,6 @@ physics.producers.generate : {
   captureProducts : []
   decayProducts : [ @local::Pileup.dioGenTool ]
   stoppingTargetMaterial : "IPA"
-  makeHistograms : true
 }
 
 
