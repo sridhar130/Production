@@ -22,7 +22,6 @@ outputs : {
   Output : {
     @table::Reconstruction.Output
     SelectEvents : [ "RecoPath" ]
-    outputCommands : ["keep *_*_*_*"]
   }
 }
 # final config
