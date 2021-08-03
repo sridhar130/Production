@@ -14,8 +14,8 @@ physics.producers.generate : {
   pdgId : -11
 }
 
-physics.producers.generate.startMom : 0
-physics.producers.generate.endMom : 100
+physics.producers.generate.startMom : @nil
+physics.producers.generate.endMom : @nil
 physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip : 1863000  # based on MDC2020, file of 2e8 Beam Resamples
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eFlateMinus"
 outputs.Output.fileName: "dts.owner.flateminus.version.sequencer.art"
