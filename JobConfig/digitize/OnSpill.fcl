@@ -6,5 +6,3 @@
 #include "gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 # set the event timing for Onspill
 physics.producers.EWMProducer.SpillType : 1
-
-services.scheduler.wantSummary: true
