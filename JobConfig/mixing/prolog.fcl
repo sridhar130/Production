@@ -36,8 +36,12 @@ Mixing : {
     }
   }
   MixingProducts : [
-    "keep mu2e::ProtonBunchIntensity*_*_*_*"
   ]
+
+  # want to drop the PBI object that was created for the primaries
+  InputCommands : [ "keep *_*_*_*",
+	       	    "drop mu2e::ProtonBunchIntensity_PBISim_*_Primary" 
+		  ]
 }
 Mixing : {
   producers : {
@@ -86,6 +90,10 @@ Mixing : {
   }
 
   StepMixSequence : [ MuStopPileupMixer, EleBeamFlashMixer, MuBeamFlashMixer, NeutralsFlashMixer ]
+
+  source : { module_type : RootInput 
+       	     inputCommands : @local::Mixing.InputCommands
+  }
 }
 Mixing.PileupMixSequence : [ PBISim, @sequence::Mixing.StepMixSequence ]
 Mixing.MixSequence : [ SignalFilter, @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence ]

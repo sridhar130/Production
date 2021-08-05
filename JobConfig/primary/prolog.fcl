@@ -33,6 +33,11 @@ Primary: {
       module_type : FindMCPrimary
       SimParticles : "compressDetStepMCs"
     }
+    PBISim : {  
+      module_type: ProtonBunchIntensityFlat
+      mean : 1
+      halfWidth : 0
+    }
   }
 
   filters : {
@@ -115,7 +120,8 @@ Primary: {
 		       "keep art::EventIDs_*_*_*",
 		       "keep art::TriggerResults_*_*_*",
 		       "keep mu2e::StatusG4_*_*_*",
-		       "keep mu2e::GenEventCount_*_*_*" ]
+		       "keep mu2e::GenEventCount_*_*_*",
+		       "keep mu2e::ProtonBunchIntensity_*_*_*" ]
 
   analyzers: {
     genCountLogger: { module_type: GenEventCountReader makeHistograms: false }
@@ -131,7 +137,7 @@ Primary: {
   EndSequence : [ genCountLogger ]
 # define paths
 }
-Primary.PrimarySequence : [ @sequence::Primary.DetStepSequence, @sequence::Primary.DetStepFilterSequence, FindMCPrimary ]
+Primary.PrimarySequence : [ PBISim, @sequence::Primary.DetStepSequence, @sequence::Primary.DetStepFilterSequence, FindMCPrimary ]
 Primary.EndPath : [ @sequence::Primary.EndSequence, Output ]
 Primary.Output.outputCommands : [ "drop *_*_*_*",
 		       @sequence::Primary.KeptProducts]
