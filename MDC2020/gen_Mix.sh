@@ -61,25 +61,29 @@ echo outputs.UntriggeredOutput.fileName: \"dig.owner.${1}MixUntriggered.version.
 # run generate_fcl
 #
 if [ $1 == "NoPrimary" ]; then
-  generate_fcl --dsconf="MDC2020$2" --dsowner=mu2e --description="$1Mix$2" --embed template.fcl \
+  generate_fcl --dsconf="MDC2020$2" --dsowner=mu2e --description="$1Mix" --embed template.fcl \
   --run-number=1203 --events-per-job=$eventsperjob --njobs=$njobs \
   --auxinput=1:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat$2.txt \
   --auxinput=1:physics.filters.EleBeamFlashMixer.fileNames:EleBeamFlashCat$2.txt \
   --auxinput=1:physics.filters.MuBeamFlashMixer.fileNames:MuBeamFlashCat$2.txt \
   --auxinput=1:physics.filters.NeutralsFlashMixer.fileNames:NeutralsFlashCat$2.txt
 else
-  generate_fcl --dsconf="MDC2020$2" --dsowner=mu2e --description="$1Mix$2" --embed template.fcl \
+  generate_fcl --dsconf="MDC2020$2" --dsowner=mu2e --description="$1Mix" --embed template.fcl \
   --inputs="$1$2.txt" --merge-factor=1 \
   --auxinput=1:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat$2.txt \
   --auxinput=1:physics.filters.EleBeamFlashMixer.fileNames:EleBeamFlashCat$2.txt \
   --auxinput=1:physics.filters.MuBeamFlashMixer.fileNames:MuBeamFlashCat$2.txt \
   --auxinput=1:physics.filters.NeutralsFlashMixer.fileNames:NeutralsFlashCat$2.txt
 fi
-for dirname in 000 001 002 003 004 005 006 007 008 009; do
- if test -d $dirname; then
-  echo "found dir $dirname"
-  rm -rf "$1Mix$2_$dirname"
-  mv $dirname "$1Mix$2_$dirname"
- fi
-done
+
+# This is commented out because it's not needed with POMS. Uncomment if running it
+# standalone
+
+# for dirname in 000 001 002 003 004 005 006 007 008 009; do
+#  if test -d $dirname; then
+#   echo "found dir $dirname"
+#   rm -rf "$1Mix_$dirname"
+#   mv $dirname "$1Mix_$dirname"
+#  fi
+# done
 
