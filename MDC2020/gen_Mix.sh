@@ -2,7 +2,7 @@
 #
 # this script requires mu2etools, mu2efiletools and dhtools be setup
 # It also requires the SimEfficiencies for the beam campaign be entered in the database
-# $1 is the name of the primary (ie CeEndpoint, etc).  $2 is the campaign version
+# $1 is the name of the primary (ie CeEndpoint, etc). $2 is the campaign version
 # $3 is the number of events per job. $4 is the number of jobs.
 eventsperjob=$3
 njobs=$4
