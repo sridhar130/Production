@@ -41,6 +41,11 @@ Digitize: {
 	caloClusterMCTag : ""
 	crvCoincClusterMCTag : ""
     }
+    PBISim : {  
+      module_type: ProtonBunchIntensityFlat
+      mean : 1
+      halfWidth : 0
+    }
   }
 
   filters : {
@@ -63,6 +68,7 @@ Digitize: {
   }
 
   DigitizeSequence : [
+    PBISim,
     @sequence::CommonMC.DigiSim,
     @sequence::TrackerMC.DigiSim,
     @sequence::CaloMC.DigiSim,

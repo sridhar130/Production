@@ -4,7 +4,7 @@
 #include "Production/JobConfig/digitize/prolog.fcl"
 #include "Production/JobConfig/mixing/prolog.fcl"
 process_name: Mix
-source : @local::Mixing.source
+source : { module_type : RootInput }
 services : @local::Services.SimAndReco # reco is needed for the trigger
 physics : { 
   producers : {
