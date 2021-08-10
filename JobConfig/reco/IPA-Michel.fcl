@@ -1,7 +1,7 @@
 #
 # Reconstruct from Michel electrons from the IPA
 # David Brown (LBNL) 1 Feb 2019
-#
+# Edits : S Middleton 15 July 2021 (to match updated parameter names)
 #include "Production/JobConfig/reco/Reco.fcl"
 
 # the following need to be overwritten for the specific channel
@@ -16,25 +16,25 @@ physics.producers.KSFDeM.ParameterErrors : [20.0, 0.1, 0.01, 20.0, 0.1]
 # find low-momentum helices 
 physics.producers.HelixFinderDe.targetconsistent_init : false
 physics.producers.HelixFinderDe.targetconsistent : false
-physics.producers.HelixFinderDe.RobustHelixFit.minCenterR : 300
-physics.producers.HelixFinderDe.RobustHelixFit.maxCenterR : 500
-physics.producers.HelixFinderDe.RobustHelixFit.minR : 100
-physics.producers.HelixFinderDe.RobustHelixFit.maxR : 200
-physics.producers.HelixFinderDe.RobustHelixFit.minAbsLambda : 50
-physics.producers.HelixFinderDe.RobustHelixFit.maxAbsLambda : 150
-physics.producers.HelixFinderDe.RobustHelixFit.minzsep : 40
-physics.producers.HelixFinderDe.RobustHelixFit.maxzsep : 200
-physics.producers.HelixFinderDe.RobustHelixFit.mindist : 50
-physics.producers.HelixFinderDe.RobustHelixFit.maxdist : 250
-physics.producers.HelixFinderDe.RobustHelixFit.minArea : 800
-##physics.producers.HelixFinderDe.minNHit : 40
+physics.producers.HelixFinderDe.HelixFitter.minCenterR : 300
+physics.producers.HelixFinderDe.HelixFitter.maxCenterR : 500
+physics.producers.HelixFinderDe.HelixFitter.minR : 100
+physics.producers.HelixFinderDe.HelixFitter.maxR : 200
+physics.producers.HelixFinderDe.HelixFitter.minAbsLambda : 50
+physics.producers.HelixFinderDe.HelixFitter.maxAbsLambda : 150
+physics.producers.HelixFinderDe.HelixFitter.minzsep : 40
+physics.producers.HelixFinderDe.HelixFitter.maxzsep : 200
+physics.producers.HelixFinderDe.HelixFitter.mindist : 50
+physics.producers.HelixFinderDe.HelixFitter.maxdist : 250
+physics.producers.HelixFinderDe.HelixFitter.minArea : 800
+physics.producers.HelixFinderDe.HelixFitter.minNHit : 1
 physics.producers.TimeClusterFinderDe.UseCaloCluster : true
 physics.producers.TimeClusterFinderDe.CaloClusterMinE : 10
 physics.producers.TimeClusterFinderDe.AveragePitch : 0.5
 # turn off the rest
-physics.producers.TimeClusterFinderDmu.ymin : 1e7
-physics.producers.TimeClusterFinderUe.ymin : 1e7
-physics.producers.TimeClusterFinderUmu.ymin : 1e7
+physics.producers.TimeClusterFinderDmu.Ymin : 1e7
+physics.producers.TimeClusterFinderUe.Ymin : 1e7
+physics.producers.TimeClusterFinderUmu.Ymin : 1e7
 # primary finding
 physics.producers.FindMCPrimary.SinglePrimary : true
 # TPR downstream electrons only for now
@@ -43,6 +43,8 @@ physics.producers.MHDeP.HelixFinders : []
 physics.producers.MHDmuM.HelixFinders : []
 physics.producers.MHDmuP.HelixFinders : []
 # output filter update
-physics.filters.RecoFilter.TrkTags : [ "KFFDeM" ]
-physics.filters.RecoFilter.MomentumCutoff : [40.0]
+physics.filters.RecoFilter.TrkTags : [ "KFFDeM","KFFUeM" ]
+physics.filters.RecoFilter.MomentumCutoff : [1.0,1.0]
+
+services.scheduler.wantSummary: true
 

@@ -52,20 +52,22 @@ physics.producers.g4run.inputs: {
 services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_tsu_ps.txt"
 
 physics.filters.DetStepFilter.MinimumPartMom : 10.0 // MeV/c TODO - tweak this parameter to get more DetSteps
+physics.producers.FindMCPrimary.PrimaryProcess : "mu2eFlateMinus"
+physics.filters.IPAStopResampler.mu2e.MaxEventsToSkip : @nil 
 
-// Below is the part which generates the IPA electrons
 physics.producers.generate : {
-  module_type : Pileup
-  verbosity : 10
+  module_type: FlatMuonDaughterGenerator
   inputSimParticles: IPAStopResampler 
-  captureProducts : []
-  decayProducts : [ @local::Pileup.dioGenTool ]
   stoppingTargetMaterial : "IPA"
+  verbosity : 1
+  makeHistograms : true
+  processcode : "mu2eMuonDecayAtRest"
+  pdgId : -11
 }
 
 
-physics.filters.IPAStopResampler.mu2e.MaxEventsToSkip : @nil  
-physics.producers.FindMCPrimary.PrimaryProcess : "mu2eMuonDecayAtRest"
+ 
+
 outputs.Output.fileName: "dts.owner.IPAMichel.version.sequencer.art"
 
  
