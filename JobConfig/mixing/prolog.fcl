@@ -36,7 +36,6 @@ Mixing : {
     }
   }
   MixingProducts : [
-    "keep mu2e::ProtonBunchIntensity*_*_*_*"
   ]
 }
 Mixing : {
