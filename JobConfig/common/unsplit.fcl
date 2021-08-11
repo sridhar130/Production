@@ -1,0 +1,13 @@
+// Analog of artcat.fcl but write the output file with splitLevel : 1
+//
+// See comments in ./artcat.fcl
+//
+// Rob Kutschke, 2021
+
+#include "Offline/fcl/minimalMessageService.fcl"
+
+process_name: unsplit
+source: { module_type: RootInput }
+services: { message: @local::default_message }
+physics: { e1: [out]  end_paths: [e1] }
+outputs: { out: { module_type: RootOutput fileName: @nil splitLevel: 1 } }
