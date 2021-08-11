@@ -1,4 +1,5 @@
 // Analog of artcat.fcl but write the output file with splitLevel : 1
+// This will write each data product as an unsplit unit.
 //
 // See comments in ./artcat.fcl
 //
