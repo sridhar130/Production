@@ -16,8 +16,8 @@ physics : {
     @table::Trigger.filters
   }
   analyzers: { @table::Digitize.analyzers }
-  Triggered : @local::Digitize.DigitizePath
-  Untriggered : [ @sequence::Digitize.DigitizePath, Triggerable ]
+  Triggered : @local::Digitize.DigitizeSequence
+  Untriggered : [ @sequence::Digitize.DigitizeSequence, Triggerable ]
   EndPath : @local::Digitize.EndPath
 }
 #

@@ -114,8 +114,6 @@ Digitize: {
 Digitize.EndPath : [ @sequence::Digitize.EndSequence, TriggeredOutput, UntriggeredOutput ]
 # override the Trigger sequence to prepare digis
 Trigger.PrepareDigis: [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
-Digitize.DigitizePath : [ @sequence::Digitize.DigitizeSequence ]
-
 Digitize.TriggeredOutput.outputCommands : [ "drop *_*_*_*",
 		       @sequence::Digitize.DigiProducts,
 		       @sequence::Digitize.TriggerProducts ]
