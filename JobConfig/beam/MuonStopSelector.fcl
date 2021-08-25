@@ -11,13 +11,13 @@ physics: {
     muminusSelector: {
       module_type: ParticleCodeFilter
       SimParticles : TargetStopFilter
-      ParticleCodes : [ [13, "unknown", "muMinusCaptureAtRest" ] ] # mu-, * , muMinusCaptureAtRest
+      ParticleCodes : [ [13, "uninitialized", "muMinusCaptureAtRest" ] ] # mu-, * , muMinusCaptureAtRest
       PrintLevel : 0
     }
     muplusSelector: {
       module_type: ParticleCodeFilter
       SimParticles : TargetStopFilter
-      ParticleCodes : [ [-13, "unknown" , "unknown" ] ] # mu+, *, *
+      ParticleCodes : [ [-13, "uninitialized" , "uninitialized" ] ] # mu+, *, *
       PrintLevel : 0
     }
   }
