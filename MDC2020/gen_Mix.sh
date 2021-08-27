@@ -9,6 +9,30 @@
 # $5 is the number of events per job. 
 # $6 is the number of jobs.
 
+if [[ $# -eq 0 ]] ; then
+    usage='Usage:
+gen_Mix.sh [primaryName] [datasetDescription] [campaignInput] \
+           [campaignOutput] [nEventsPerJob] [nJobs]
+
+This script will produce the fcl files needed for a mixing stage. It
+is necessary to provide, in order:
+- the name of the primary [primaryName]
+- the dataset description [datasetDescription],
+- the campaign version of the input file [campaignInput],
+- the campaign version of the output file [campaignOutput],
+- the number of events per job [nEventsPerJob],
+- the number of jobs [nJobs].
+
+Example:
+    gen_Mix.sh CeEndpoint MDC2020 k m 1000 100
+
+This will produce the fcl files for a mixing stage of 100 jobs with 1000 events
+per job, using the CeEndpoint primary and the MDC2020k samples as input. The output
+files will have the MDC2020m description.'
+    echo "$usage"
+    exit 0
+fi
+
 eventsperjob=$5
 njobs=$6
 # create the mixin input lists
