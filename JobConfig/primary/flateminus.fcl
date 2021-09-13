@@ -1,8 +1,18 @@
-# flat range of eminus near the DIO endpoint
-#include "Production/JobConfig/primary/flatE.fcl"
-process_name: flateminus
-physics.producers.generate.physics.genId : dioTail
-physics.producers.generate.physics.pdgId : 11
-physics.producers.generate.physics.elow : 75.0 // Mev
-physics.producers.generate.physics.ehi : 110.0 // Mev
+#
+# generate and produce Detector Steps from flat spectrum using mu- target stops
+#
+# original author: S Middleton
+#
+#include "Production/JobConfig/primary/TargetStopParticle.fcl"
+physics.producers.generate : {
+  module_type : FlatMuonDaughterGenerator
+  inputSimParticles: TargetStopResampler
+  stoppingTargetMaterial : "Al"
+  verbosity : 0
+}
+
+physics.producers.generate.startMom : @nil
+physics.producers.generate.endMom : @nil
+physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip : 1863000  # based on MDC2020, file of 2e8 Beam Resamples
+physics.producers.FindMCPrimary.PrimaryProcess : "mu2eFlateMinus"
 outputs.Output.fileName: "dts.owner.flateminus.version.sequencer.art"
