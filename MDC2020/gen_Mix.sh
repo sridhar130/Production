@@ -80,7 +80,7 @@ echo physics.filters.MuStopPileupMixer.mu2e.MaxEventsToSkip: ${nskip_MuStopPileu
 # setup database access for SimEfficiencies
 #
 echo 'services.ProditionsService.simbookkeeper.useDb: true' >> template.fcl
-echo services.DbService.purpose: $2$4 >> template.fcl
+echo services.DbService.purpose: $2i >> template.fcl
 #
 # overwrite the outputs
 #
