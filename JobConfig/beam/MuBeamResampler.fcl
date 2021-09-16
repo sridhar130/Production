@@ -45,7 +45,7 @@ physics: {
     }
     TargetStopPrescaleFilter: {
       @table::Beam.filters.PrescaleFilter
-      nPrescale         : 1000 # this depends on the resampling factor
+      nPrescale         : 1000 # this depends on the resampling factor.  If you change this, you MUST ALSO update Production/JobConfig/mixing/Mix.fcl
     }
     beamResampler       : @local::Beam.filters.beamResampler
     TargetStopFilter    : @local::Beam.filters.TargetStopFilter

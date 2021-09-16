@@ -6,14 +6,14 @@
 process_name: Mix
 source : { module_type : RootInput }
 services : @local::Services.SimAndReco # reco is needed for the trigger
-physics : { 
+physics : {
   producers : {
     @table::Digitize.producers
-    @table::Trigger.producers 
+    @table::Trigger.producers
     @table::Mixing.producers
   }
-  filters: { 
-    @table::Digitize.filters 
+  filters: {
+    @table::Digitize.filters
     @table::Trigger.filters
     @table::Mixing.filters
   }
@@ -23,7 +23,7 @@ physics : {
   EndPath : @local::Digitize.EndPath
 }
 #
-outputs : { 
+outputs : {
   TriggeredOutput : @local::Mixing.TriggeredOutput
   UntriggeredOutput : @local::Mixing.UntriggeredOutput
 }
@@ -49,8 +49,8 @@ physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","","" ]
 physics.filters.EleBeamFlashMixer.mu2e.simStageEfficiencyTags: ["EleBeamCat", "EleBeamFlashCat" ]
 physics.filters.MuBeamFlashMixer.mu2e.simStageEfficiencyTags: ["MuBeamCat", "MuBeamFlashCat" ]
 physics.filters.NeutralsFlashMixer.mu2e.simStageEfficiencyTags: ["NeutralsCat", "NeutralsFlashCat" ]
-physics.filters.MuStopPileupMixer.mu2e.simStageEfficiencyTags: ["MuBeamCat", "MuminusStopsCat", "MuStopPileupCat"] 
-physics.filters.MuStopPileupMixer.mu2e.meanEventsPerPOTFactors : [ 1000 ]  # target stops are presampled by 1000
+physics.filters.MuStopPileupMixer.mu2e.simStageEfficiencyTags: ["MuBeamCat", "MuminusStopsCat", "MuStopPileupCat"]
+physics.filters.MuStopPileupMixer.mu2e.meanEventsPerPOTFactors : [ 1000 ]  # target stops are prescaled by 1000 (see Production/JobConfig/beam/MuBeamResampler.fcl)
 # define the paths
 physics.trigger_paths[0] : Triggered
 physics.trigger_paths[1] : Untriggered
