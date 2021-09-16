@@ -58,8 +58,9 @@ do
         numbers=(${sequencer//_/ })
         counter_string_old=${numbers[1]}
         counter_string=$(printf "%08d" $ifile)
-        sed -i "s/$counter_string_old/$counter_string/g" $f
-        sed -i "s/$counter_string_old/$counter_string/g" $f.json
+        sed -i "/outputs/s/$counter_string_old/$counter_string/g" $f
+        sed -i "/dh.sequencer/s/$counter_string_old/$counter_string/g" $f.json
+        sed -i "/file_name/s/$counter_string_old/$counter_string/g" $f.json
         mv "$f" `basename "${f/$counter_string_old/$counter_string}"`
         mv "$f.json" `basename "${f/$counter_string_old/$counter_string}.json"`
         ifile=$((ifile+1))
