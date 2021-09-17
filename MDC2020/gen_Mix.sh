@@ -64,6 +64,7 @@ if [ $1 == "NoPrimary" ]; then
 # the following should be an option (or gotten through the database)
   echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> template.fcl
 elif [ $1 == "NoPrimaryPBISequence" ]; then
+  samweb list-file-locations --schema=root --defname="sim.mu2e.$1.$2$4.art"  | cut -f1 > $1$4.txt
   echo '#include "Production/JobConfig/mixing/NoPrimaryPBISequence.fcl"' >> template.fcl
 else
   samweb list-file-locations --schema=root --defname="dts.mu2e.$1.$2$4.art"  | cut -f1 > $1$4.txt
