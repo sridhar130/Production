@@ -6,25 +6,25 @@
 process_name: NoPrimary
 source: { module_type : EmptyEvent }
 services : @local::Services.SimAndReco # reco is needed for the trigger
-physics : { 
+physics : {
   producers : {
     @table::Digitize.producers
-    @table::Trigger.producers 
+    @table::Trigger.producers
     @table::Mixing.producers
   }
-  filters: { 
-    @table::Digitize.filters 
+  filters: {
+    @table::Digitize.filters
     @table::Trigger.filters
     @table::Mixing.filters
   }
   analyzers: { @table::Digitize.analyzers }
   # same path for triggered, untriggered streams, but different selections
-  Triggered : [ PBISim, @sequence::StepMixSequence, @sequence::Digitize.DigitizeSequence ]
-  Untriggered : [ PBISim, @sequence::StepMixSequence, @sequence::Digitize.DigitizeSequence ]
+  Triggered : [ PBISim, @sequence::Mixing.StepMixSequence, @sequence::Digitize.DigitizeSequence ]
+  Untriggered : [ PBISim, @sequence::Mixing.StepMixSequence, @sequence::Digitize.DigitizeSequence ]
   EndPath : @local::Digitize.EndPath
 }
 #
-outputs : { 
+outputs : {
   TriggeredOutput : @local::Mixing.TriggeredOutput
   UntriggeredOutput : @local::Mixing.UntriggeredOutput
 }
@@ -33,8 +33,12 @@ outputs : {
 #
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/digitize/epilog.fcl"
- set the event timing for Onspill
-physics.producers.EWMProducer.SpillType : 1
+#
+# patch for no primary
+physics.producers.compressDigiMCs.extraStepPointMCTags : []
+physics.producers.compressDigiMCs.mcTrajectoryTag : ""
+physics.producers.compressDigiMCs.primaryParticleTag : ""
+physics.producers.FindMCPrimary : @erase
 # add trigger paths
 #include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 # set the event timing for Onspill
@@ -48,10 +52,19 @@ physics.producers.compressDigiMCs.caloShowerStepTags : [@sequence::Mixing.StepMi
 physics.producers.CaloShowerROMaker.caloShowerStepCollection : [@sequence::Mixing.StepMixSequence ]
 physics.producers.CrvPhotons.crvStepModuleLabels : [ @sequence::Mixing.StepMixSequence ]
 physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","" ]
-#
+# configure the mixin efficiences
+physics.filters.EleBeamFlashMixer.mu2e.simStageEfficiencyTags: ["EleBeamCat", "EleBeamFlashCat" ]
+physics.filters.MuBeamFlashMixer.mu2e.simStageEfficiencyTags: ["MuBeamCat", "MuBeamFlashCat" ]
+physics.filters.NeutralsFlashMixer.mu2e.simStageEfficiencyTags: ["NeutralsCat", "NeutralsFlashCat" ]
+physics.filters.MuStopPileupMixer.mu2e.simStageEfficiencyTags: ["MuBeamCat", "MuminusStopsCat", "MuStopPileupCat"]
+physics.filters.MuStopPileupMixer.mu2e.meanEventsPerPOTFactors : [ 1000 ]  # target stops are presampled by 1000
+# define the paths
 physics.trigger_paths[0] : Triggered
 physics.trigger_paths[1] : Untriggered
 physics.end_paths : [ EndPath ]
-# generic output: this is overwritten by generate_fcl
+# no selection for untriggered output
+outputs.UntriggeredOutput.SelectEvents : []
+# generic output: this is overwritten by gen_Mix.sh
 outputs.TriggeredOutput.fileName: "dig.owner.NoPrimaryTriggered.version.sequencer.art"
-outputs.UntriggeredOutput.fileName: "dig.owner.NoPrimaryUntriggered.version.sequencer.art"physics.trigger_paths[0] : MixPath 
+outputs.UntriggeredOutput.fileName: "dig.owner.NoPrimaryUntriggered.version.sequencer.art"
+services.ProditionsService.simbookkeeper.useDb: true

@@ -51,7 +51,7 @@ physics.producers.g4run.inputs: {
 # use reduced BField for these jobs
 services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_tsu_ps.txt"
 
-physics.filters.DetStepFilter.MinimumPartMom : 20.0 // MeV/c TODO - tweak this parameter to get more DetSteps
+physics.filters.DetStepFilter.MinimumPartMom : 10.0 // MeV/c TODO - tweak this parameter to get more DetSteps
 
 // Below is the part which generates the IPA electrons
 physics.producers.generate : {

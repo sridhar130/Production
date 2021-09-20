@@ -1,0 +1,4 @@
+#include "Production/JobConfig/mixing/CreatePBISequence.fcl"
+source.fileNames : [  "/pnfs/mu2e/persistent/users/brownd/PBISequence/PBI_33344.csv" ]
+source.runNumber : 1201
+outputs.Output.fileName : "sim.mu2e.PBI33344.MDC2020.1201.art"
