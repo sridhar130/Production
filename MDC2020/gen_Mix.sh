@@ -20,8 +20,8 @@ is necessary to provide, in order:
 - the dataset description [datasetDescription],
 - the campaign version of the input file [campaignInput],
 - the campaign version of the output file [campaignOutput],
-- the number of events per job [nEventsPerJob],
-- the number of jobs [nJobs].
+- the number of events per job [nEventsPerJob] (needed only for NoPrimary),
+- the number of jobs [nJobs] (needed only for NoPrimary).
 
 Example:
     gen_Mix.sh CeEndpoint MDC2020 k m 1000 100
