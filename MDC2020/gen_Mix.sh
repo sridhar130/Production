@@ -24,7 +24,7 @@ is necessary to provide, in order:
 - the number of jobs [nJobs] (needed only for NoPrimary).
 
 Example:
-    gen_Mix.sh CeEndpoint MDC2020 k m 1000 100
+    gen_Mix.sh CeEndpoint MDC2020 k m
 
 This will produce the fcl files for a mixing stage of 100 jobs with 1000 events
 per job, using the CeEndpoint primary and the MDC2020k samples as input. The output
