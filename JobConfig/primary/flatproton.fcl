@@ -1,5 +1,5 @@
 #
-# protons from muon nuclear capture 
+# protons from muon nuclear capture
 #
 # original author: Dave Brown, LBNL
 #
@@ -11,7 +11,7 @@ physics.producers.generate : {
   muonStops: @local::mu2e.tgtMuonStops
   physics: {
     pdgId : 2212
-  	genId : muonCapture
+    genId : muonCapture
     spectrumShape: flat
     spectrumVariable: kineticEnergy
     elow : 0.0 // Mev

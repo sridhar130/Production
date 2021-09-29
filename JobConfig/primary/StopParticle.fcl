@@ -34,10 +34,10 @@ outputs : { Output :@local::Primary.Output }
 #include "Production/JobConfig/primary/epilog.fcl"
 #
 physics.producers.g4run.inputs: {
-   primaryType: StageParticles
-   primaryTag: "generate"
-   inputMCTrajectories: ""
-   simStageOverride: 2
+  primaryType: StageParticles
+  primaryTag: "generate"
+  inputMCTrajectories: ""
+  simStageOverride: 2
 }
 
 # use reduced BField for these jobs

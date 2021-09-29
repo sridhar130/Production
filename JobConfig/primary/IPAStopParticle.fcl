@@ -9,6 +9,6 @@ physics.PrimaryPath : [ IPAStopResampler, @sequence::Common.generateSequence, @s
 
 physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "IPAStopResampler"
 physics.producers.g4run.inputs.updateEventLevelVolumeInfos: {
-      input: "IPAStopResampler:eventlevel"
-      outInstance: "eventlevel"
+  input: "IPAStopResampler:eventlevel"
+  outInstance: "eventlevel"
 }
