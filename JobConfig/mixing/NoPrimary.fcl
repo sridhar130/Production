@@ -19,8 +19,8 @@ physics : {
   }
   analyzers: { @table::Digitize.analyzers }
   # same path for triggered, untriggered streams, but different selections
-  Triggered : [ PBISim, @sequence::Mixing.StepMixSequence, @sequence::Digitize.DigitizeSequence ]
-  Untriggered : [ PBISim, @sequence::Mixing.StepMixSequence, @sequence::Digitize.DigitizeSequence ]
+  Triggered : [ FindMCPrimary, PBISim, @sequence::Mixing.StepMixSequence, @sequence::Digitize.DigitizeSequence ]
+  Untriggered : [ FindMCPrimary, PBISim, @sequence::Mixing.StepMixSequence, @sequence::Digitize.DigitizeSequence ]
   EndPath : @local::Digitize.EndPath
 }
 #
@@ -37,8 +37,6 @@ outputs : {
 # patch for no primary
 physics.producers.compressDigiMCs.extraStepPointMCTags : []
 physics.producers.compressDigiMCs.mcTrajectoryTag : ""
-physics.producers.compressDigiMCs.primaryParticleTag : ""
-physics.producers.FindMCPrimary : @erase
 # add trigger paths
 #include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 # set the event timing for Onspill
