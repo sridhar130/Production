@@ -3,7 +3,7 @@
 #
 BEGIN_PROLOG
 
-beam: {
+Beam: {
 
   producers: {
 
