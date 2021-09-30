@@ -243,6 +243,7 @@ Reconstruction : {
 	    "keep mu2e::TimeClusters_MH*_*_*",
 	    "keep mu2e::CaloClusters_*_*_*",
 	    "keep mu2e::CaloHits_*_*_*",
+	    "keep mu2e::ComboHit*_*_*_*",
 	    "keep mu2e::EventWindowMarker_*_*_*",
 	    "keep mu2e::ProtonBunchTime_*_*_*",
 	    "keep *_SelectRecoMC_*_*"
@@ -297,8 +298,8 @@ Reconstruction.Output : {
   module_type : RootOutput
   SelectEvents : [ RecoPath ]
   fileName    : @nil
-#  outputCommands : [ "keep *_*_*_*" ]
-  outputCommands : [ "drop *_*_*_*",
+  outputCommands : [ "keep *_*_*_*" ]
+ outputCommands : [ 
   @sequence::Digitize.TriggerProducts,
   @sequence::Reconstruction.HighRecoProducts,
   @sequence::Reconstruction.MCRecoProducts]
