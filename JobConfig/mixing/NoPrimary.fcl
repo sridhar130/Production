@@ -37,7 +37,7 @@ outputs : {
 #
 # patch for no primary
 physics.producers.compressDigiMCs.extraStepPointMCTags : ["NullMCPrimary:virtualdetector", "NullMCPrimary:stoppingtarget", "NullMCPrimary:protonabsorber"]
-physics.producers.compressDigiMCs.mcTrajectoryTag : ""
+physics.producers.compressDigiMCs.mcTrajectoryTag : "NullMCPrimary"
 physics.producers.compressDigiMCs.primaryParticleTag : "NullMCPrimary"
 
 physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","" ]
