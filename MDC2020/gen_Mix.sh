@@ -20,11 +20,11 @@ is necessary to provide, in order:
 - the dataset description [datasetDescription],
 - the campaign version of the input file [campaignInput],
 - the campaign version of the output file [campaignOutput],
-- the number of events per job [nEventsPerJob],
-- the number of jobs [nJobs].
+- the number of events per job [nEventsPerJob] (needed only for NoPrimary),
+- the number of jobs [nJobs] (needed only for NoPrimary).
 
 Example:
-    gen_Mix.sh CeEndpoint MDC2020 k m 1000 100
+    gen_Mix.sh CeEndpoint MDC2020 k m
 
 This will produce the fcl files for a mixing stage of 100 jobs with 1000 events
 per job, using the CeEndpoint primary and the MDC2020k samples as input. The output
@@ -36,10 +36,10 @@ fi
 eventsperjob=$5
 njobs=$6
 # create the mixin input lists
-samListLocations --defname="dts.mu2e.MuBeamFlashCat.$2$3.art" > MuBeamFlashCat$3.txt
-samListLocations --defname="dts.mu2e.EleBeamFlashCat.$2$3.art" > EleBeamFlashCat$3.txt
-samListLocations --defname="dts.mu2e.NeutralsFlashCat.$2$3.art" > NeutralsFlashCat$3.txt
-samListLocations --defname="dts.mu2e.MuStopPileupCat.$2$3.art" > MuStopPileupCat$3.txt
+samweb list-file-locations --schema=root --defname="dts.mu2e.MuBeamFlashCat.$2$3.art"  | cut -f1 > MuBeamFlashCat$3.txt
+samweb list-file-locations --schema=root --defname="dts.mu2e.EleBeamFlashCat.$2$3.art"  | cut -f1 > EleBeamFlashCat$3.txt
+samweb list-file-locations --schema=root --defname="dts.mu2e.NeutralsFlashCat.$2$3.art"  | cut -f1 > NeutralsFlashCat$3.txt
+samweb list-file-locations --schema=root --defname="dts.mu2e.MuStopPileupCat.$2$3.art"  | cut -f1 > MuStopPileupCat$3.txt
 # calucate the max skip from the dataset
 nfiles=`samCountFiles.sh "dts.mu2e.MuBeamFlashCat.$2$3.art"`
 nevts=`samCountEvents.sh "dts.mu2e.MuBeamFlashCat.$2$3.art"`
@@ -64,10 +64,12 @@ if [ $1 == "NoPrimary" ]; then
 # the following should be an option (or gotten through the database)
   echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> template.fcl
 elif [ $1 == "NoPrimaryPBISequence" ]; then
+  samweb list-file-locations --schema=root --defname="sim.mu2e.$1.$2$4.art"  | cut -f1 > $1$4.txt
   echo '#include "Production/JobConfig/mixing/NoPrimaryPBISequence.fcl"' >> template.fcl
 else
+  samweb list-file-locations --schema=root --defname="dts.mu2e.$1.$2$4.art"  | cut -f1 > $1$4.txt
   echo '#include "Production/JobConfig/mixing/Mix.fcl"' >> template.fcl
-  echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> template.fcl
+  echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> template.fcl  # number of booster batchs should be configuratble FIXME!
 fi
 #
 # set the skips
@@ -79,8 +81,7 @@ echo physics.filters.MuStopPileupMixer.mu2e.MaxEventsToSkip: ${nskip_MuStopPileu
 #
 # setup database access for SimEfficiencies
 #
-echo 'services.ProditionsService.simbookkeeper.useDb: true' >> template.fcl
-echo services.DbService.purpose: $2i >> template.fcl
+echo services.DbService.purpose: $2$3 >> template.fcl
 #
 # overwrite the outputs
 #

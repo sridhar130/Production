@@ -8,11 +8,9 @@ physics.producers.generate : {
   module_type : FlatMuonDaughterGenerator
   inputSimParticles: TargetStopResampler
   stoppingTargetMaterial : "Al"
+  pdgId : 13
   verbosity : 0
 }
 
-physics.producers.generate.startMom : @nil
-physics.producers.generate.endMom : @nil
-physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip : 1863000  # based on MDC2020, file of 2e8 Beam Resamples
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eFlateMinus"
-outputs.Output.fileName: "dts.owner.flateminus.version.sequencer.art"
+outputs.Output.fileName: "dts.owner.FlateMinus.version.sequencer.art"
