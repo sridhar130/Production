@@ -47,8 +47,9 @@ Mixing : {
       cutMax:@nil
     }
 # null MCPrimary 'finder', used in NoPrimary
-    FindMCPrimary : {
+    NullMCPrimary : {
       module_type: NullMCPrimary
+      ExtraSteps : [ "virtualdetector", "stoppingtarget", "protonabsorber" ]
     }
   }
   filters : {
