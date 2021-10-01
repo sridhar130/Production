@@ -11,5 +11,4 @@ physics.producers.generate : {
   pdgId : 11
   verbosity : 0
 }
-physics.producers.FindMCPrimary.PrimaryProcess : "mu2eCeMinusEndpoint"
 outputs.Output.fileName: "dts.owner.CeEndpoint.version.sequencer.art"
