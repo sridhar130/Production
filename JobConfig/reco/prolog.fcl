@@ -297,7 +297,8 @@ Reconstruction.Output : {
   module_type : RootOutput
   SelectEvents : [ RecoPath ]
   fileName    : @nil
-  outputCommands : [ 
+#  outputCommands : [ "keep *_*_*_*" ]
+  outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.TriggerProducts,
   @sequence::Reconstruction.HighRecoProducts,
   @sequence::Reconstruction.MCRecoProducts]
