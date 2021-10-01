@@ -16,8 +16,8 @@
 process_name: EleBeamResampler
 
 source : {
-   module_type : EmptyEvent
-   maxEvents : @nil
+  module_type : EmptyEvent
+  maxEvents : @nil
 }
 
 services : @local::Services.Sim
@@ -44,7 +44,7 @@ physics: {
       @table::Pileup.filters.DetStepFilter
       @table::Beam.filters.DetStepFilter
     }
-# instance to select flash without time cuts (prescaled)
+    # instance to select flash without time cuts (prescaled)
     EarlyDetStepFilter : {
       @table::Primary.filters.DetStepFilter
       @table::Pileup.filters.DetStepFilter
@@ -86,27 +86,27 @@ outputs: {
 
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: {
-   primaryType: "StepPoints"
-   primaryTag: "beamResampler:Beam"
-   inputMCTrajectories: ""
+  primaryType: "StepPoints"
+  primaryTag: "beamResampler:Beam"
+  inputMCTrajectories: ""
 
-   simStageOverride: 1
-   inputPhysVolumeMultiInfo: "beamResampler"
-   updateEventLevelVolumeInfos: {
-      input: "beamResampler:eventlevel"
-      outInstance: "eventlevel"
-   }
+  simStageOverride: 1
+  inputPhysVolumeMultiInfo: "beamResampler"
+  updateEventLevelVolumeInfos: {
+    input: "beamResampler:eventlevel"
+    outInstance: "eventlevel"
+  }
 }
 # copy over VD hits
 physics.producers.g4run.SDConfig.preSimulatedHits:  ["beamResampler:virtualdetector"]
 # Kill stuck e+/e-
 physics.producers.g4run.Mu2eG4CommonCut:{
-   type: intersection
-   pars:
-   [
-      {type: intersection pars: [ { type: kineticEnergy cut: 1.0 }, { type: pdgId pars: [ 11, -11] }]},
-      {type: inVolume pars: [ TS2Vacuum, TS3Vacuum, TS4Vacuum, TS5Vacuum, DS2Vacuum, HallAir ]}
-   ]
+  type: intersection
+  pars:
+  [
+    {type: intersection pars: [ { type: kineticEnergy cut: 1.0 }, { type: pdgId pars: [ 11, -11] }]},
+    {type: inVolume pars: [ TS2Vacuum, TS3Vacuum, TS4Vacuum, TS5Vacuum, DS2Vacuum, HallAir ]}
+  ]
 }
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
