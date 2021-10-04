@@ -42,7 +42,7 @@ outputs: {
   FlashOutput : {
     module_type: RootOutput
     outputCommands:   [ "drop *_*_*_*",
-      @sequence::Pileup.DtsKeptProducts,
+      @sequence::Pileup.DtsKeptProducts
     ]
     SelectEvents: [flashPath]
     fileName: "dts.owner.NeutralsFlash.version.sequencer.art"
@@ -51,21 +51,20 @@ outputs: {
   EarlyFlashOutput : {
     module_type: RootOutput
     outputCommands:   [ "drop *_*_*_*",
-      @sequence::Pileup.DtsKeptProducts,
+      @sequence::Pileup.DtsKeptProducts
     ]
     SelectEvents: [earlyFlashPath]
     fileName : "dts.owner.EarlyNeutralsFlash.version.sequencer.art"
   }
 }
 # set prescale factor
-phusics.filters.EarlyPrescaleFilter.nPrescale         : 20
+physics.filters.EarlyPrescaleFilter.nPrescale         : 20
 
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: {
   primaryType: "StepPoints"
   primaryTag: "neutralsResampler:Neutrals"
   inputMCTrajectories: ""
-
   simStageOverride: 1
   inputPhysVolumeMultiInfo: "neutralsResampler"
   updateEventLevelVolumeInfos: {
@@ -76,4 +75,3 @@ physics.producers.g4run.inputs: {
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/pileup/epilog.fcl"
-services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_tsu_ps.txt"

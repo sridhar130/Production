@@ -44,7 +44,7 @@ outputs: {
   FlashOutput : {
     module_type: RootOutput
     outputCommands:   [ "drop *_*_*_*",
-      @sequence::Pileup.DtsKeptProducts,
+      @sequence::Pileup.DtsKeptProducts
     ]
     SelectEvents: [flashPath]
     fileName : "dts.owner.EleBeamFlash.version.sequencer.art"
@@ -53,21 +53,20 @@ outputs: {
   EarlyFlashOutput : {
     module_type: RootOutput
     outputCommands:   [ "drop *_*_*_*",
-      @sequence::Pileup.DtsKeptProducts,
+      @sequence::Pileup.DtsKeptProducts
     ]
     SelectEvents: [earlyFlashPath]
     fileName : "dts.owner.EarlyEleBeamFlash.version.sequencer.art"
   }
 }
 # set prescale factor
-phusics.filters.EarlyPrescaleFilter.nPrescale         : 1000
+physics.filters.EarlyPrescaleFilter.nPrescale         : 1000
 
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: {
   primaryType: "StepPoints"
   primaryTag: "beamResampler:Beam"
   inputMCTrajectories: ""
-
   simStageOverride: 1
   inputPhysVolumeMultiInfo: "beamResampler"
   updateEventLevelVolumeInfos: {
@@ -80,4 +79,3 @@ physics.producers.g4run.SDConfig.preSimulatedHits:  ["beamResampler:virtualdetec
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/pileup/epilog.fcl"
-services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_tsu_ps.txt"
