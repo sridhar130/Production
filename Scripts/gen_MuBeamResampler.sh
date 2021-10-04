@@ -1,6 +1,11 @@
 #!/usr/bin/bash
+#
+# create a script for running the MuBeamResampler, either from an official dataset, or from a hand-supplied file
+#
+
+if [[ !${1} == "" ]]; then
 # create the input list
-dataset=sim.mu2e.MuBeamCat.MDC2020$1.art
+dataset=sim.mu2e.MuBeamCat.$1.art
 samListLocations --defname="$dataset" > MuBeamCat.txt
 # calucate the max skip from the dataset
 nfiles=`samCountFiles.sh $dataset`

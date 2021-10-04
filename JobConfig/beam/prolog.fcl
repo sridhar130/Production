@@ -41,50 +41,6 @@ Beam: {
       hitInputs : []
       particleInputs : [ "g4run" ]
     }
-
-    compressPVTargetStops: {
-      module_type: CompressPhysicalVolumes
-      volumesInput : "g4run"
-      hitInputs : []
-      particleInputs : [ "TargetStopFilter" ]
-    }
-
-    compressPVIPAStops: {
-      module_type: CompressPhysicalVolumes
-      volumesInput : "g4run"
-      hitInputs : []
-      particleInputs : [ "IPAStopFilter" ]
-    }
-
-    # below are used for stopped muon daughter selecting/vetoing
-
-    TargetMuonFinder: {
-      module_type: "StoppedParticlesFinder"
-      particleInput: "g4run"
-      particleTypes: [ 13, -13 ]
-      physVolInfoInput: "g4run:eventlevel"
-      useEventLevelVolumeInfo: true
-      stoppingMaterial: "StoppingTarget_Al"
-      verbosityLevel: 1
-    }
-
-    IPAMuonFinder : {
-      module_type : StoppedParticlesFinder
-      particleInput : "g4run"
-      useEventLevelVolumeInfo: true
-      physVolInfoInput: "g4run:eventlevel"
-      stoppingMaterial : "IPAPolyethylene"
-      particleTypes : [ 13, -13 ]
-      verbosityLevel: 1
-    }
-
-    stoppedMuonDaughters: {
-      module_type: SimParticleDaughterSelector
-      particleInput: "TargetMuonFinder"
-      # EMCascade should not be vetoed because we do not re-simulate it
-      processes: [ "DIO", "NuclearCapture" ]
-    }
-
   }
 
   filters: {
@@ -117,90 +73,6 @@ Beam: {
       vetoDaughters: []
     }
 
-    TargetStopFilter: {
-      module_type: FilterG4Out
-      mainHitInputs: []
-      extraHitInputs: [ "g4run:virtualdetector" ]
-      mainSPPtrInputs: [ "TargetMuonFinder" ]
-    }
-
-    IPAStopFilter: {
-      module_type: FilterG4Out
-      mainHitInputs: []
-      extraHitInputs: [ "g4run:virtualdetector" ]
-      mainSPPtrInputs: [ "IPAMuonFinder" ]
-    }
-
-    FlashFilter: {
-      module_type: FilterG4Out
-      mainHitInputs:  [ "g4run:tracker", "g4run:calorimeter", "g4run:CRV", "g4run:virtualdetector" ]
-      vetoParticles:  [ "stoppedMuonDaughters" ]
-    }
-
-    # DetectorSteFilter with time cut for the main flash stream
-    # these select energy deposits after the peak of the flash has passed, to keep useless payload down
-    # Note this is a partial config, it must be combined with Pileup definition
-    DetStepFilter : {
-      TimeCutConfig : {
-        MinimumTime : 250 # good hits are after this time
-        MaximumTime : 10 # not a typo: good hits are before this time
-      }
-    }
-
-    # resamplers
-
-    beamResampler: {
-      module_type: ResamplingMixer
-      fileNames: @nil
-      readMode: "sequential"
-      wrapFiles: true
-      mu2e: {
-        writeEventIDs : true
-        MaxEventsToSkip: @nil
-        debugLevel : 0
-        products: {
-          genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
-          simParticleMixer: { mixingMap: [ [ "BeamFilter", "" ] ] }
-          stepPointMCMixer: { mixingMap: [
-              [ "BeamFilter:virtualdetector", ":" ],
-              [ "BeamFilter:Beam", ":" ]
-            ] }
-          simTimeOffset : "protonTimeOffset"
-          volumeInfoMixer: {
-            srInput: "compressPVBeam"
-            evtOutInstanceName: "eventlevel"
-          }
-        }
-      }
-    }
-
-    neutralsResampler: {
-      module_type: ResamplingMixer
-      fileNames: @nil
-      readMode: "sequential"
-      wrapFiles: true
-      mu2e: {
-        writeEventIDs : true
-        MaxEventsToSkip:  @nil
-        debugLevel : 0
-        products: {
-          genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
-          simParticleMixer: { mixingMap: [ [ "NeutralsFilter", "" ] ] }
-          stepPointMCMixer: { mixingMap: [
-              [ "NeutralsFilter:Neutrals", ":" ]
-            ] }
-          simTimeOffset : "protonTimeOffset"
-          volumeInfoMixer: {
-            srInput: "compressPVNeutrals"
-            evtOutInstanceName: "eventlevel"
-          }
-        }
-      }
-    }
-
-    PrescaleFilter : {
-      module_type : RandomPrescaleFilter
-    }
   }
 
   # define regions where particles may eventually interact with the detectors (CRV or trracker/calo), See doc 26541 for a graphical description
@@ -291,17 +163,6 @@ Beam: {
     "keep mu2e::GenEventCount_*_*_*",
     "keep mu2e::StatusG4_*_*_*"
   ]
-
-  DtsKeptProducts : [
-    "keep art::EventIDs_*_*_*",
-    "keep mu2e::GenEventCount_*_*_*",
-    "keep mu2e::StatusG4_*_*_*",
-    "keep mu2e::SimParticleart::Ptrdoublestd::map_*_*_*"
-  ]
-
-  # some commen sequences
-  beamResamplerSequence : [genCounter, protonTimeOffset, beamResampler]
-  neutralsResamplerSequence : [genCounter, protonTimeOffset, neutralsResampler]
 
 }
 END_PROLOG

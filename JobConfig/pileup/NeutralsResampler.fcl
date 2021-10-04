@@ -8,8 +8,6 @@
 #include "Offline/fcl/standardServices.fcl"
 #include "Offline/CommonMC/fcl/prolog.fcl"
 #include "Production/JobConfig/common/prolog.fcl"
-#include "Production/JobConfig/beam/prolog.fcl"
-#include "Production/JobConfig/primary/prolog.fcl"
 #include "Production/JobConfig/pileup/prolog.fcl"
 
 process_name: NeutralsResampler
@@ -23,38 +21,18 @@ services : @local::Services.Sim
 physics: {
   producers : {
     @table::Common.producers
-    @table::Primary.producers
-    compressDetStepMCs : {
-      @table::Primary.producers.compressDetStepMCs
-      @table::Pileup.producers.compressDetStepMCs
-    }
-    protonTimeOffset : @local::CommonMC.producers.protonTimeOffset
+    @table::Pileup.producers
   }
   filters : {
     @table::Common.filters
-    EarlyPrescaleFilter : {
-      @table::Beam.filters.PrescaleFilter
-      nPrescale         : 20
-    }
-    neutralsResampler    : @local::Beam.filters.neutralsResampler
-    DetStepFilter : {
-      @table::Primary.filters.DetStepFilter
-      @table::Pileup.filters.DetStepFilter
-      @table::Beam.filters.DetStepFilter
-    }
-    # instance to select flash without time cuts (prescaled)
-    EarlyDetStepFilter : {
-      @table::Primary.filters.DetStepFilter
-      @table::Pileup.filters.DetStepFilter
-    }
+    @table::Pileup.filters
   }
   analyzers : {
     @table::Common.analyzers
   }
   # setup paths
-  flashPath : [ @sequence::Beam.neutralsResamplerSequence, @sequence::Common.g4Sequence, @sequence::Primary.DetStepSequence, DetStepFilter, compressDetStepMCs ]
-  earlyFlashPath : [ @sequence::Beam.neutralsResamplerSequence, @sequence::Common.g4Sequence, EarlyPrescaleFilter,
-    @sequence::Primary.DetStepSequence, EarlyDetStepFilter, compressDetStepMCs ]
+  flashPath : [ @sequence::Pileup.neutralsResamplerSequence, @sequence::Common.g4Sequence, @sequence::Pileup.DetStepSequence ]
+  earlyFlashPath : [ @sequence::Pileup.neutralsResamplerSequence, @sequence::Common.g4Sequence, @sequence::Pileup.EarlyDetStepSequence ]
   trigger_paths: [ flashPath , earlyFlashPath ]
   outPath : [ FlashOutput, EarlyFlashOutput ]
   end_paths: [outPath]
@@ -64,8 +42,7 @@ outputs: {
   FlashOutput : {
     module_type: RootOutput
     outputCommands:   [ "drop *_*_*_*",
-      @sequence::Beam.DtsKeptProducts,
-      @sequence::Pileup.KeptProducts
+      @sequence::Pileup.DtsKeptProducts,
     ]
     SelectEvents: [flashPath]
     fileName: "dts.owner.NeutralsFlash.version.sequencer.art"
@@ -74,13 +51,14 @@ outputs: {
   EarlyFlashOutput : {
     module_type: RootOutput
     outputCommands:   [ "drop *_*_*_*",
-      @sequence::Beam.DtsKeptProducts,
-      @sequence::Pileup.KeptProducts
+      @sequence::Pileup.DtsKeptProducts,
     ]
     SelectEvents: [earlyFlashPath]
     fileName : "dts.owner.EarlyNeutralsFlash.version.sequencer.art"
   }
 }
+# set prescale factor
+phusics.filters.EarlyPrescaleFilter.nPrescale         : 20
 
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: {
@@ -95,17 +73,7 @@ physics.producers.g4run.inputs: {
     outInstance: "eventlevel"
   }
 }
-# Kill stuck e+/e-
-physics.producers.g4run.Mu2eG4CommonCut:{
-  type: intersection
-  pars:
-  [
-    {type: intersection pars: [ { type: kineticEnergy cut: 1.0 }, { type: pdgId pars: [ 11, -11] }]},
-    {type: inVolume pars: [ TS2Vacuum, TS3Vacuum, TS4Vacuum, TS5Vacuum, DS2Vacuum, HallAir ]}
-  ]
-}
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/pileup/epilog.fcl"
-#include "Production/JobConfig/beam/epilog.fcl"
 services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_tsu_ps.txt"
