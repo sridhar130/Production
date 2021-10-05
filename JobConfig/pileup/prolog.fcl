@@ -55,6 +55,18 @@ Pileup: {
     }
   }
   
+  LeadingLogGenTool : {
+    tool_type : LeadingLogGenerator
+    spectrumVariable: totalEnergy
+    spectrum : {
+      spectrumShape : ceLeadingLog
+      pdgId : 11 
+      elow : 1. #MeV
+      ehigh : 104.97
+      spectrumResolution : 0.1 #MeV
+    }
+  }
+  
   muonCaptureProtonGenTool : {
     tool_type : MuCapProtonGenerator
     spectrumVariable : kineticEnergy
