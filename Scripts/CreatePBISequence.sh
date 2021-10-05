@@ -28,6 +28,7 @@ for pbifile in $outroot*.txt; do
 # now run the jobs
   echo creating art file $artfile
   mu2e -c $fclfile >& $logfile
+  printJson --no-parents $artfile > $artfile.json
 done
 
 
