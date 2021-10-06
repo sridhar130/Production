@@ -3,15 +3,16 @@
 #
 # original author: S Middleton
 #
+
 #include "Production/JobConfig/primary/TargetStopParticle.fcl"
 
 physics.producers.generate : {
-  module_type : LeadingLogGenerator
+  module_type : Pileup
+  verbosity : 10
   inputSimParticles: TargetStopResampler
-  stoppingTargetMaterial : "Al" 
-  captureProducts : [@local::Pileup.LeadingLogGenTool]#TODO - we need to have the ehi tdependet on the nuc.
-  pdgId : 11
-  verbosity : 0
+  captureProducts : [@local::Pileup.LeadingLogGenTool]
+  decayProducts : []
+  stoppingTargetMaterial : "Al"
 }
 
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eCeMinusLeadingLog"

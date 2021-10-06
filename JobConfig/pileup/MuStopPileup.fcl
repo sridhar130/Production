@@ -58,7 +58,18 @@ physics : {
              spectrumShape: "flat"
           }
           tool_type: "MuCapPhotonGenerator"
-       }
+       },
+       {
+        spectrum : {
+          spectrumShape : "ceLeadingLog"
+          pdgId : 11 
+          elow : 1. #MeV
+          ehigh : 104.97 #TODO - get from target material
+          spectrumResolution : 0.1 #MeV
+        }
+        spectrumVariable: totalEnergy
+        tool_type : LeadingLogGenerator
+      }
       ]
       decayProducts: [
        {
