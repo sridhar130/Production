@@ -1,10 +1,32 @@
 #
-# Radiative Ce- spectrum, based on doc 7615 spectrum 
+# Radiative Ce+ spectrum, based on doc 7615 spectrum 
 #
-#include "Production/JobConfig/primary/Primary.fcl"
-# set the generator
-physics.producers.generate : @local::EventGenerator.producers.CePLeadingLog
-# set the stops.  This should go away with art-based muon stops FIXME!
-physics.producers.generate.muonStops.inputFiles : [ "mergedMuonStops/nts.mu2e.DS-TGTstops.MDC2018a.001002_00000000.root" ]
-# customize the output
-outputs.Output.fileName: "dts.owner.CePLeadingLog.version.sequencer.art"
+# original author: S Middleton
+#
+
+#include "Production/JobConfig/primary/TargetStopParticle.fcl"
+
+
+physics.producers.generate : {
+  module_type : LeadingLog
+  inputSimParticles: TargetStopResampler
+  stoppingTargetMaterial : "Al" 
+  captureProducts : [
+       {
+          spectrum : {
+            spectrumShape : ceLeadingLog
+            pdgId : 11 
+            elow : 1. #MeV
+            ehi : 92.32 #TODO - get from target material
+            spectrumResolution : 0.1 #MeV
+          }
+          tool_type : LeadingLogGenerator
+          # spectrumVariable: totalEnergy - TODO - not supported 
+       }
+      ] #TODO - we need to have the ehi tdependet on the nuc.
+  pdgId : -11
+  verbosity : 0
+}
+
+physics.producers.FindMCPrimary.PrimaryProcess : "mu2eCePlusLeadingLog"
+outputs.Output.fileName: "dts.owner.eMinusLeadingLog.version.sequencer.art"
