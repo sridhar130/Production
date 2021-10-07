@@ -13,6 +13,7 @@ physics.producers.generate : {
   stoppingTargetMaterial : "Al" 
   captureProducts : [
        {
+          tool_type : LeadingLogGenerator
           spectrum : {
             spectrumShape : ceLeadingLog
             pdgId : 11 
@@ -20,7 +21,7 @@ physics.producers.generate : {
             ehi : 104.97 #TODO - get from target material
             spectrumResolution : 0.1 #MeV
           }
-          tool_type : LeadingLogGenerator
+          pdgId : 11
           # spectrumVariable: totalEnergy - TODO - not supported 
        }
       ] #TODO - we need to have the ehi tdependet on the nuc.

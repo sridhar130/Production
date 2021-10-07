@@ -15,15 +15,16 @@ physics.producers.generate : {
        {
           spectrum : {
             spectrumShape : ceLeadingLog
-            pdgId : 11 
+            pdgId : -11 
             elow : 1. #MeV
             ehi : 92.32 #TODO - get from target material
             spectrumResolution : 0.1 #MeV
           }
+          pdgId : -11
           tool_type : LeadingLogGenerator
           # spectrumVariable: totalEnergy - TODO - not supported 
        }
-      ] #TODO - we need to have the ehi tdependet on the nuc.
+      ] 
   pdgId : -11
   verbosity : 0
 }
