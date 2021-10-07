@@ -6,13 +6,26 @@
 
 #include "Production/JobConfig/primary/TargetStopParticle.fcl"
 
+
 physics.producers.generate : {
-  module_type : Pileup
-  verbosity : 10
+  module_type : LeadingLog
   inputSimParticles: TargetStopResampler
-  captureProducts : [@local::Pileup.LeadingLogGenTool]
-  decayProducts : []
-  stoppingTargetMaterial : "Al"
+  stoppingTargetMaterial : "Al" 
+  captureProducts : [
+       {
+          spectrum : {
+            spectrumShape : ceLeadingLog
+            pdgId : 11 
+            elow : 1. #MeV
+            ehi : 104.97 #TODO - get from target material
+            spectrumResolution : 0.1 #MeV
+          }
+          tool_type : LeadingLogGenerator
+          # spectrumVariable: totalEnergy - TODO - not supported 
+       }
+      ] #TODO - we need to have the ehi tdependet on the nuc.
+  pdgId : 11
+  verbosity : 0
 }
 
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eCeMinusLeadingLog"
