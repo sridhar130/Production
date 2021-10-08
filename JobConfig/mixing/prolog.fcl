@@ -8,6 +8,8 @@
 #include "Offline/CommonMC/fcl/prolog.fcl"
 #include "Offline/TrackerMC/fcl/prolog.fcl"
 #include "Offline/CaloMC/fcl/prolog.fcl"
+# the following defines the prescale factors
+#include "Production/JobConfig/pileup/prolog.fcl"
 
 BEGIN_PROLOG
 

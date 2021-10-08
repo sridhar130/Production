@@ -10,6 +10,7 @@
 #include "Offline/CommonMC/fcl/prolog.fcl"
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/pileup/prolog.fcl"
+#include "Production/JobConfig/pileup/P.fcl"
 
 process_name: EleBeamResampler
 
@@ -60,7 +61,7 @@ outputs: {
   }
 }
 # set prescale factor
-physics.filters.EarlyPrescaleFilter.nPrescale         : 1000
+physics.filters.EarlyPrescaleFilter.nPrescale :  @local::EarlyEleBeamFlashPrescale
 
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: {
