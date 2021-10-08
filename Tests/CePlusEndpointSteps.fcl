@@ -3,5 +3,6 @@ source.firstRun: 501
 physics.filters.TargetStopResampler.fileNames : [
   "/pnfs/mu2e/tape/phy-sim/sim/mu2e/MuminusStopsCat/MDC2020k/art/39/6a/sim.mu2e.MuminusStopsCat.MDC2020k.001201_00000000.art"
 ] 
+#physics.EndPath : [GeneratorPlots]
 physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip: 0
 outputs.Output.fileName : "dts.tester.CePlusEndpoint.Test.1.art"

@@ -11,7 +11,7 @@ physics.producers.generate : {
   module_type : LeadingLog
   inputSimParticles: TargetStopResampler
   stoppingTargetMaterial : "Al" 
-  captureProducts : [
+  captureProducts : 
        {
           tool_type : LeadingLogGenerator
           spectrum : {
@@ -22,12 +22,19 @@ physics.producers.generate : {
             spectrumResolution : 0.1 #MeV
           }
           pdgId : 11
-          # spectrumVariable: totalEnergy - TODO - not supported 
        }
-      ] #TODO - we need to have the ehi tdependet on the nuc.
+
   pdgId : 11
   verbosity : 0
 }
 
+physics.analyzers.GeneratorPlots : {
+  module_type : GeneratorPlots
+  SimParticleCollection : compressDetStepMCs
+}
+
+
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eCeMinusLeadingLog"
-outputs.Output.fileName: "dts.owner.eMinusLeadingLog.version.sequencer.art"
+outputs.Output.fileName: "dts.owner.CeLeadingLog.version.sequencer.art"
+
+

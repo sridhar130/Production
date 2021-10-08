@@ -1,10 +1,32 @@
 #
-# Radiative DIO spectrum far tail, based on doc 7615 spectrum 
+# Radiative DIO spectrum, based on Czernecki et al spectrum 
 #
-#include "Production/JobConfig/primary/Primary.fcl"
-# set the generator
-physics.producers.generate : @local::EventGenerator.producers.dioalll
-# set the stops.  This should go away with art-based muon stops FIXME!
-physics.producers.generate.muonStops.inputFiles : [ "mergedMuonStops/nts.mu2e.DS-TGTstops.MDC2018a.001002_00000000.root" ]
-# customize the output
-outputs.Output.fileName: "dts.owner.DIOtail.version.sequencer.art"
+# original author: S Middleton
+#
+
+#include "Production/JobConfig/primary/TargetStopParticle.fcl"
+
+
+physics.producers.generate : {
+  module_type : DecayInOrbitGenerator
+  inputSimParticles: TargetStopResampler
+  stoppingTargetMaterial : "Al" 
+  captureProducts : 
+       {
+          tool_type : DIOGenerator
+          spectrum : {
+            spectrumShape : Czarnecki
+            pdgId : 11 
+            elow : 1. #MeV
+            ehi : 104.97 #TODO - get from target material
+            spectrumResolution : 0.1 #MeV
+          }
+          pdgId : 11
+       }
+
+  pdgId : 11
+  verbosity : 0
+}
+
+physics.producers.FindMCPrimary.PrimaryProcess : "mu2eDIOLeadingLog"
+outputs.Output.fileName: "dts.owner.mu2eDIOLeadingLog.version.sequencer.art"

@@ -1,8 +1,8 @@
-#include "Production/JobConfig/primary/CePLeadingLog.fcl"
+#include "Production/JobConfig/primary/DIO.fcl"
 source.firstRun: 501 #TODO
 physics.filters.TargetStopResampler.fileNames : [
 "/pnfs/mu2e/tape/phy-sim/sim/mu2e/MuminusStopsCat/MDC2020k/art/39/6a/sim.mu2e.MuminusStopsCat.MDC2020k.001201_00000000.art"]
-#physics.EndPath : [GeneratorPlots]
+
 physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip: 0
-outputs.Output.fileName : "dts.tester.CePLeadingLog.Test.1.art"
+outputs.Output.fileName : "dts.tester.DIO.Test.1.art"
 
