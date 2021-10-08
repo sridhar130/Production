@@ -4,37 +4,39 @@
 # It also requires the SimEfficiencies for the beam campaign be entered in the database
 # $1 is the name of the primary (ie CeEndpoint, etc).
 # $2 is the dataset description
-# $3 is the campaign version of the input file.
-# $4 is the campaign version of the output and primary file.
-# $5 is the number of events per job. 
-# $6 is the number of jobs.
+# $3 is the campaign version of the input files for the mixing.
+# $4 is the campaign version of the primary files.
+# $5 is the campaign version of the output and primary file.
+# $6 is the number of events per job. 
+# $7 is the number of jobs.
 
 if [[ $# -eq 0 ]] ; then
     usage='Usage:
 gen_Mix.sh [primaryName] [datasetDescription] [campaignInput] \
-           [campaignOutput] [nEventsPerJob] [nJobs]
+           [primaryVersion] [campaignOutput] [nEventsPerJob] [nJobs]
 
 This script will produce the fcl files needed for a mixing stage. It
 is necessary to provide, in order:
 - the name of the primary [primaryName]
 - the dataset description [datasetDescription],
 - the campaign version of the input file [campaignInput],
+- the campaign version of the primary file [primaryVersion],
 - the campaign version of the output file [campaignOutput],
 - the number of events per job [nEventsPerJob] (needed only for NoPrimary),
 - the number of jobs [nJobs] (needed only for NoPrimary).
 
 Example:
-    gen_Mix.sh CeEndpoint MDC2020 k m
+    gen_Mix.sh CeEndpoint MDC2020 k m m
 
 This will produce the fcl files for a mixing stage of 100 jobs with 1000 events
-per job, using the CeEndpoint primary and the MDC2020k samples as input. The output
-files will have the MDC2020m description.'
+per job, using the MDC2020m CeEndpoint primary and the MDC2020k samples as input.
+The output files will have the MDC2020m description.'
     echo "$usage"
     exit 0
 fi
 
-eventsperjob=$5
-njobs=$6
+eventsperjob=$6
+njobs=$7
 # create the mixin input lists
 samweb list-file-locations --schema=root --defname="dts.mu2e.MuBeamFlashCat.$2$3.art"  | cut -f1 > MuBeamFlashCat$3.txt
 samweb list-file-locations --schema=root --defname="dts.mu2e.EleBeamFlashCat.$2$3.art"  | cut -f1 > EleBeamFlashCat$3.txt
@@ -91,14 +93,14 @@ echo outputs.UntriggeredOutput.fileName: \"dig.owner.${1}MixUntriggered.version.
 # run generate_fcl
 #
 if [ $1 == "NoPrimary" ]; then
-  generate_fcl --dsconf="$2$4" --dsowner=mu2e --description="$1Mix" --embed template.fcl \
+  generate_fcl --dsconf="$2$5" --dsowner=mu2e --description="$1Mix" --embed template.fcl \
   --run-number=1203 --events-per-job=$eventsperjob --njobs=$njobs \
   --auxinput=1:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat$3.txt \
   --auxinput=1:physics.filters.EleBeamFlashMixer.fileNames:EleBeamFlashCat$3.txt \
   --auxinput=1:physics.filters.MuBeamFlashMixer.fileNames:MuBeamFlashCat$3.txt \
   --auxinput=1:physics.filters.NeutralsFlashMixer.fileNames:NeutralsFlashCat$3.txt
 else
-  generate_fcl --dsconf="$2$4" --dsowner=mu2e --description="$1Mix" --embed template.fcl \
+  generate_fcl --dsconf="$2$5" --dsowner=mu2e --description="$1Mix" --embed template.fcl \
   --inputs="$1$4.txt" --merge-factor=1 \
   --auxinput=1:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat$3.txt \
   --auxinput=1:physics.filters.EleBeamFlashMixer.fileNames:EleBeamFlashCat$3.txt \
