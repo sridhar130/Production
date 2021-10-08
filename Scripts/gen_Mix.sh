@@ -6,7 +6,7 @@
 # $2 is the dataset description
 # $3 is the campaign version of the input files for the mixing.
 # $4 is the campaign version of the primary files.
-# $5 is the campaign version of the output and primary file.
+# $5 is the campaign version of the output files.
 # $6 is the number of events per job. 
 # $7 is the number of jobs.
 
