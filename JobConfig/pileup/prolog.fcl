@@ -54,7 +54,7 @@ Pileup: {
       spectrumResolution : 0.1 #MeV
     }
   }
-
+ 
   muonCaptureProtonGenTool : {
     tool_type : MuCapProtonGenerator
     spectrumVariable : kineticEnergy
