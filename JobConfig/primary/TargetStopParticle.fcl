@@ -9,6 +9,6 @@ physics.PrimaryPath : [ TargetStopResampler, @sequence::Common.generateSequence,
 
 physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "TargetStopResampler"
 physics.producers.g4run.inputs.updateEventLevelVolumeInfos: {
-      input: "TargetStopResampler:eventlevel"
-      outInstance: "eventlevel"
+  input: "TargetStopResampler:eventlevel"
+  outInstance: "eventlevel"
 }
