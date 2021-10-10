@@ -17,7 +17,7 @@ physics.producers.generate : {
             spectrumShape : ceLeadingLog
             pdgId : 11 
             elow : 1. #MeV
-            ehi : 104.97 #TODO - get from target material
+            ehi : 104.97 
             spectrumResolution : 0.1 #MeV
           }
           pdgId : 11
