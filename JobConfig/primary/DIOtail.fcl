@@ -1,32 +1,30 @@
 #
-# Radiative DIO spectrum, based on Czernecki et al spectrum 
+# Radiative DIO spectrum, based on Czernecki and Szaferon's spectrum, supplied by Julien Heeck
 #
 # original author: S Middleton
 #
 
 #include "Production/JobConfig/primary/TargetStopParticle.fcl"
 
-
 physics.producers.generate : {
   module_type : DecayInOrbitGenerator
   inputSimParticles: TargetStopResampler
   stoppingTargetMaterial : "Al" 
-  captureProducts : 
+  decayProducts : 
        {
           tool_type : DIOGenerator
-          spectrum : {
-            spectrumShape : Czarnecki
-            pdgId : 11 
-            elow : 1. #MeV
-            ehi : 104.97 #TODO - get from target material
-            spectrumResolution : 0.1 #MeV
-          }
-          pdgId : 11
+          spectrum : {          
+		        pdgId            :  11
+		        spectrumVariable : "totalEnergy"
+		        spectrumShape    : "tabulated"
+		        spectrumFileName : "ConditionsService/data/heeck_et_al_2021_aluminum.tbl"
+		        ehi              : 104.97
+		        elow             : 100.
+	        }
        }
 
-  pdgId : 11
   verbosity : 0
 }
 
-physics.producers.FindMCPrimary.PrimaryProcess : "mu2eDIOLeadingLog"
+physics.producers.FindMCPrimary.PrimaryProcess : "mu2eMuonDecayAtRest"
 outputs.Output.fileName: "dts.owner.mu2eDIOLeadingLog.version.sequencer.art"

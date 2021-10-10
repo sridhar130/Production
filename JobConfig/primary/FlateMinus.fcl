@@ -8,7 +8,7 @@ physics.producers.generate : {
   module_type : FlatMuonDaughterGenerator
   inputSimParticles: TargetStopResampler
   stoppingTargetMaterial : "Al"
-  pdgId : 13
+  pdgId : 11
   verbosity : 0
 }
 
