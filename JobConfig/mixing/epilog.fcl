@@ -4,7 +4,7 @@ physics.producers.EWMProducer.SpillType : 1
 services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
 # add primary and mixers to the list of step producers.  Note the StrawDigi maker uses a general selector if no module is specified
 physics.producers.makeSD.StrawGasStepModule : ""
-# configure the mixin efficencies
+# configure the mixin efficiencies
 physics.filters.EleBeamFlashMixer.mu2e.simStageEfficiencyTags: ["EleBeamCat", "EleBeamFlashCat" ]
 physics.filters.MuBeamFlashMixer.mu2e.simStageEfficiencyTags: ["MuBeamCat", "MuBeamFlashCat" ]
 physics.filters.NeutralsFlashMixer.mu2e.simStageEfficiencyTags: ["NeutralsCat", "NeutralsFlashCat" ]
