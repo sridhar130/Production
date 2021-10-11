@@ -15,7 +15,7 @@ physics.producers.generate : {
   inputSimParticles: IPAStopResampler
   stoppingTargetMaterial : "IPA"
   verbosity : 1
-  pdgId : 13
+  pdgId : 11
 }
 
 outputs.Output.fileName: "dts.owner.IPAFlat.version.sequencer.art"
