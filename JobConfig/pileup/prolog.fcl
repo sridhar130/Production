@@ -270,7 +270,13 @@ Pileup: {
     @sequence::TrackerMC.StepSim,
     @sequence::CaloMC.StepSim,
     CrvSteps , EarlyDetStepFilter, compressDetStepMCs ]
-
+  #
+  #  Define the prescale values used in the various resamplers
+  #
+  EarlyEleBeamFlashPrescale : 1000
+  EarlyMuBeamFlashPrescale : 30
+  EarlyNeutralsFlashPrescale : 20
+  MuminusTargetStopPrescale : 1000
 }
 # DetctorStepFilter instance to select DetSteps outside the flash
 Pileup.filters.DetStepFilter : {

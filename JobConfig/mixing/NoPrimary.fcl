@@ -3,6 +3,7 @@
 #
 #include "Production/JobConfig/digitize/prolog.fcl"
 #include "Production/JobConfig/mixing/prolog.fcl"
+#include "Production/JobConfig/pileup/prolog.fcl"
 process_name: NoPrimary
 source: { module_type : EmptyEvent }
 services : @local::Services.SimAndReco # reco is needed for the trigger
