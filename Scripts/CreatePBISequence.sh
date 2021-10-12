@@ -9,6 +9,9 @@
 # $5 is the user field for the filename
 # $6 is the description field for the filename
 #
+# Example:
+# ./CreatePBISequence.sh 33344 Normal 1000 1201 mu2e MDC2020
+
 infile=PBI_$2_$1.txt
 nlines=`wc -l < $infile`
 let nfiles=$nlines/$3
