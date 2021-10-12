@@ -98,7 +98,7 @@ digraph SimWorkflow {
   }
 
   subgraph clusterBeam {
-    label="Beam and Pileup";
+    label="Beam";
     fontsize="24";
 
     POT_ExtMon [shape=box,color=blue,
@@ -186,26 +186,30 @@ digraph SimWorkflow {
     Beam -> BeamSplitting
       BeamSplitting ->  MuBeam [ label="concatenate x50000"];
     BeamSplitting ->  EleBeam [ label="concatenate x1000"];
+  }
+  subgraph clusterPileup {
+    label="Pileup";
+    fontsize="24";
 
     NeutralsResampling [shape=box,color=blue,
                        label=<<table border="0" cellborder="0" cellspacing="1">
                          <tr><td align="center"><b>Neutrals Resampling</b></td></tr>
-                         <tr><td align="left"><font color="darkgreen">beam/NeutralsResampler.fcl</font></td></tr>
-                         <tr><td align="left"><font color="lightgreen">beam/NeutralsResampler_MT.fcl</font></td></tr>
+                         <tr><td align="left"><font color="darkgreen">pileup/NeutralsResampler.fcl</font></td></tr>
+                         <tr><td align="left"><font color="lightgreen">pileup/NeutralsResampler_MT.fcl</font></td></tr>
                          </table>>];
 
     MuBeamResampling [shape=box,color=blue,
                      label=<<table border="0" cellborder="0" cellspacing="1">
                        <tr><td align="center"><b>Muon Beam Resampling</b></td></tr>
-                       <tr><td align="left"><font color="darkgreen">beam/MuBeamResampler.fcl</font></td></tr>
-                       <tr><td align="left"><font color="lightgreen">beam/MuBeamResampler_MT.fcl</font></td></tr>
+                       <tr><td align="left"><font color="darkgreen">pileup/MuBeamResampler.fcl</font></td></tr>
+                       <tr><td align="left"><font color="lightgreen">pileup/MuBeamResampler_MT.fcl</font></td></tr>
                        </table>>];
 
     EleBeamResampling [shape=box,color=blue,
                       label=<<table border="0" cellborder="0" cellspacing="1">
                         <tr><td align="center"><b>Electron Beam Resampling</b></td></tr>
-                        <tr><td align="left"><font color="darkgreen">beam/EleBeamResampler.fcl</font></td></tr>
-                        <tr><td align="left"><font color="lightgreen">beam/EleBeamResampler_MT.fcl</font></td></tr>
+                        <tr><td align="left"><font color="darkgreen">pileup/EleBeamResampler.fcl</font></td></tr>
+                        <tr><td align="left"><font color="lightgreen">pileup/EleBeamResampler_MT.fcl</font></td></tr>
                         </table>>];
 
     MuBeam -> MuBeamResampling [ label=<resample 10<sup>+3</sup>> ];
@@ -230,7 +234,7 @@ digraph SimWorkflow {
     MuminusTargetStops [shape=oval, color=lightblue,
                        label=<<table border="0" cellborder="0" cellspacing="1">
                          <tr><td align="center"><b>Mu- Target Stops</b></td></tr>
-                         <tr><td align="left"><font color="red">sim.mu2e.MuminusTargetStopsCat.art</font></td></tr>
+                         <tr><td align="left"><font color="red">sim.mu2e.MuminusTargetStopsCat.art</font><font color="black"> prescale 1000</font></td></tr>
                          </table>>];
 
     MuplusTargetStops [shape=oval, color=lightblue,
@@ -242,7 +246,7 @@ digraph SimWorkflow {
     TargetStopSplitter [shape=box,color=blue,
                        label=<<table border="0" cellborder="0" cellspacing="1">
                          <tr><td align="center"><b>Target Stop Muon Splitting</b></td></tr>
-                         <tr><td align="left"><font color="darkgreen">beam/MuonStopSelector.fcl</font></td></tr>
+                         <tr><td align="left"><font color="darkgreen">pileup/MuonStopSelector.fcl</font></td></tr>
                          </table>>];
 
     TargetStops -> TargetStopSplitter
@@ -253,22 +257,22 @@ digraph SimWorkflow {
     MuBeamFlashPileup [shape=oval, color=lightblue,
                       label=<<table border="0" cellborder="0" cellspacing="1">
                         <tr><td align="center"><b>Muon BeamFlash Pileup</b></td></tr>
-                        <tr><td align="left"><font color="red">dts.mu2e.MuBeamFlashCat.art</font> <font color="black">t &gt; 350 ns || t &lt; 10 ns</font></td></tr>
+                        <tr><td align="left"><font color="red">dts.mu2e.MuBeamFlashCat.art</font> <font color="black">t &gt; 250 ns || t &lt; 10 ns</font></td></tr>
                         <tr><td align="left"><font color="fuchsia">dts.mu2e.EarlyMuBeamFlashCat.art</font><font color="black"> prescale 30</font></td></tr>
                         </table>>];
 
     EleBeamFlashPileup [shape=oval, color=lightblue,
                        label=<<table border="0" cellborder="0" cellspacing="1">
                          <tr><td align="center"><b>Electron BeamFlash Pileup</b></td></tr>
-                         <tr><td align="left"><font color="red">dts.mu2e.EleBeamFlashCat.art</font> <font color="black">t &gt; 350 ns || t &lt; 10 ns</font></td></tr>
-                         <tr><td align="left"><font color="fuchsia">dts.mu2e.EarlyEleBeamFlashCat.art</font><font color="black"> prescale 10<sup>-3</sup></font></td></tr>
+                         <tr><td align="left"><font color="red">dts.mu2e.EleBeamFlashCat.art</font> <font color="black">t &gt; 250 ns || t &lt; 10 ns</font></td></tr>
+                         <tr><td align="left"><font color="fuchsia">dts.mu2e.EarlyEleBeamFlashCat.art</font><font color="black"> prescale 1000</font></td></tr>
                          </table>>];
 
     NeutralsFlashPileup [shape=oval, color=lightblue,
                         label=<<table border="0" cellborder="0" cellspacing="1">
                           <tr><td align="center"><b>NeutralsFlash Pileup</b></td></tr>
-                          <tr><td align="left"><font color="red">dts.mu2e.NeutralsFlashCat.art</font> </td></tr>
-                          <tr><td align="left"><font color="fuchsia">dts.mu2e.EarlyNeutralsFlashCat.art</font><font color="black"> prescale 10<sup>-3</sup></font></td></tr>
+                          <tr><td align="left"><font color="red">dts.mu2e.NeutralsFlashCat.art</font><font color="black">t &gt; 250 ns || t &lt; 10 ns</font></td></tr>
+                          <tr><td align="left"><font color="fuchsia">dts.mu2e.EarlyNeutralsFlashCat.art</font><font color="black"> prescale 20</font></td></tr>
                           </table>>];
     NeutralsResampling -> NeutralsFlashPileup [ label="concatenate x1000 (x500 MT)" ];
     MuBeamResampling -> MuBeamFlashPileup [ label="concatenate x1000 (x500 MT)" ];
