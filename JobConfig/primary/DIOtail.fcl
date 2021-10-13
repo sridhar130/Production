@@ -17,7 +17,7 @@ physics.producers.generate : {
 		        pdgId            :  11
 		        spectrumVariable : "totalEnergy"
 		        spectrumShape    : "tabulated"
-		        spectrumFileName : "ConditionsService/data/heeck_et_al_2021_aluminum.tbl"
+		        spectrumFileName : "ConditionsService/data/czarnecki_szafron_Al_2016_tail.tbl"
 		        ehi              : 104.97
 		        elow             : 100.
 	        }
