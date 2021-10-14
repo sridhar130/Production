@@ -65,7 +65,8 @@ if [ $1 == "NoPrimary" ]; then
   echo '#include "Production/JobConfig/mixing/NoPrimary.fcl"' >> template.fcl
 # the following should be an option (or gotten through the database)
   echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> template.fcl
-elif [ $1 == "NoPrimaryPBISequence" ]; then
+elif [[ $1 == PBI* ]]; then
+  echo sim.mu2e.$1.$2$4.art
   samweb list-file-locations --schema=root --defname="sim.mu2e.$1.$2$4.art"  | cut -f1 > $1$4.txt
   echo '#include "Production/JobConfig/mixing/NoPrimaryPBISequence.fcl"' >> template.fcl
 else
