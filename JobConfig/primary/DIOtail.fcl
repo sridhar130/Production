@@ -7,7 +7,7 @@
 #include "Production/JobConfig/primary/TargetStopParticle.fcl"
 
 physics.producers.generate : {
-  module_type : DecayInOrbitGenerator
+  module_type : SingleProcessGenerator
   inputSimParticles: TargetStopResampler
   stoppingTargetMaterial : "Al" 
   decayProducts : 
@@ -19,7 +19,7 @@ physics.producers.generate : {
 		        spectrumShape    : "tabulated"
 		        spectrumFileName : "ConditionsService/data/czarnecki_szafron_Al_2016_tail.tbl"
 		        ehi              : 104.97
-		        elow             : 103.
+		        elow             : 100.
 	        }
        }
 
