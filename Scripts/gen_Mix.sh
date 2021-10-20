@@ -9,6 +9,7 @@
 # $5 is the campaign version of the output files.
 # $6 is the number of events per job. 
 # $7 is the number of jobs.
+# $8 is a flag : if set, directories are renamed
 
 if [[ $# -eq 0 ]] ; then
     usage='Usage:
@@ -108,14 +109,13 @@ else
   --auxinput=1:physics.filters.NeutralsFlashMixer.fileNames:NeutralsFlashCat$3.txt
 fi
 
-# This is commented out because it's not needed with POMS. Uncomment if running it
-# standalone
-
-# for dirname in 000 001 002 003 004 005 006 007 008 009; do
-#  if test -d $dirname; then
-#   echo "found dir $dirname"
-#   rm -rf "$1Mix_$dirname"
-#   mv $dirname "$1Mix_$dirname"
-#  fi
-# done
+if [ ! -z "$8" ]; then
+  for dirname in 000 001 002 003 004 005 006 007 008 009; do
+    if test -d $dirname; then
+      echo "found dir $dirname"
+      rm -rf "$1Mix_$dirname"
+      mv $dirname "$1Mix_$dirname"
+    fi
+  done
+fi
 
