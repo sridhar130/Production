@@ -27,5 +27,3 @@ physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 
 physics.PrimaryPath: [genCounter, cosmicTimeOffset, cosmicResample, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence]
 outputs.Output.fileName        : "dts.owner.Cosmic.version.sequencer.art"
-outputs.Output.outputCommands : [@sequence::Primary.KeptProducts,
-  "keep mu2e::CosmicLivetime_*_*_*"]
