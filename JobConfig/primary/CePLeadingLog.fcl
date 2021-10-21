@@ -10,22 +10,18 @@ physics.producers.generate : {
   module_type : LeadingLog
   inputSimParticles: TargetStopResampler
   stoppingTargetMaterial : "Al" 
-  captureProducts : 
-       {
-          spectrum : {
-            spectrumShape : ceLeadingLog
-            pdgId : -11 
-            elow : 1. 
-            ehi : 92.32 #TODO - get from target material
-            spectrumResolution : 0.1 #MeV
-          }
-          pdgId : -11
-          tool_type : LeadingLogGenerator
-       }
-      
+  spectrum : {
+    spectrumShape : ceLeadingLog
+    pdgId : -11 
+    elow : 1. #MeV
+    ehi : 92.32 
+    spectrumResolution : 0.1 #MeV
+  }
   pdgId : -11
   verbosity : 0
 }
 
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eCePlusLeadingLog"
-outputs.Output.fileName: "dts.owner.eMinusLeadingLog.version.sequencer.art"
+outputs.Output.fileName: "dts.owner.CePLeadingLog.version.sequencer.art"
+
+
