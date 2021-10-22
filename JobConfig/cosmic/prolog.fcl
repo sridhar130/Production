@@ -122,7 +122,6 @@ Cosmic: {
         genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
         simParticleMixer: { mixingMap: [ [ "cosmicFilter", ""] ] }
         mcTrajectoryMixer:{ mixingMap: [ [ "cosmicFilter", ""] ] }
-        cosmicLivetimeMixer: { moduleLabel: "FromCorsikaBinary" }
         stepPointMCMixer: { mixingMap: [ [ "cosmicFilter:crvStage1", ":" ], [ "cosmicFilter:CRV", ":" ] ] }
         volumeInfoMixer: {
           evtOutInstanceName: "eventlevel"
