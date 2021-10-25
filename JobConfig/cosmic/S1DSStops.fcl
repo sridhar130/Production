@@ -35,7 +35,7 @@ physics: {
 outputs : { Output : @local::Primary.Output }
 
 outputs.Output.fileName : "sim.owner.CosmicDSStops.version.sequencer.art"
-outputs.Output.outputCommands : [@sequence::Primary.KeptProducts, "keep *_compressPV_*_*", "keep mu2e::GenParticles_*_*_*", "keep *_cosmicFilter_*_*"]
+outputs.Output.outputCommands : [@sequence::Primary.KeptProducts, "keep mu2e::CosmicLivetime_*_*_*", "keep *_compressPV_*_*", "keep mu2e::GenParticles_*_*_*", "keep *_cosmicFilter_*_*"]
 
 physics.producers.g4run.TrajectoryControl: @local::mu2eg4DefaultTrajectories
 physics.producers.g4run.SDConfig.enableSD: [ CRV ]

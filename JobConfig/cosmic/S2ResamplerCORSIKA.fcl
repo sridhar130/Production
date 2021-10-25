@@ -1,7 +1,3 @@
 #include "Production/JobConfig/cosmic/S2Resampler.fcl"
 
-physics.filters.cosmicResample.mu2e.products.cosmicLivetimeMixer.moduleLabel: "generate"
-
 outputs.Output.fileName        : "dts.owner.CosmicCORSIKA.version.sequencer.art"
-outputs.Output.outputCommands : [@sequence::Primary.KeptProducts,
-   "keep mu2e::CosmicLivetime_*_mixed_*"]

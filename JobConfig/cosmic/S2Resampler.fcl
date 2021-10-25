@@ -7,6 +7,7 @@
 # Bring in info from the previous stage
 physics.filters.cosmicResample: @local::Cosmic.cosmicResample
 physics.filters.cosmicResample.mu2e.MaxEventsToSkip: 18415 # this number depends on the production details
+physics.filters.cosmicResample.mu2e.products.cosmicLivetimeMixer.moduleLabel: "generate"
 
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: @local::Cosmic.MultiStageParametersCosmicS2
