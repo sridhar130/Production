@@ -193,7 +193,6 @@ Cosmic: {
   NoSignalOutput : {
     module_type : RootOutput
     SelectEvents : [ PrimaryPath ]
-    RejectEvents : [ SelectSignal ]
     fileName    : @nil
   }
 }
