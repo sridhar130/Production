@@ -30,17 +30,17 @@ physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 physics.PrimaryPath: [ genCounter, cosmicTimeOffset, cosmicResample, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence ]
 physics.SelectSignal: [ genCounter, cosmicTimeOffset, cosmicResample, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence, signalFilter ]
 physics.trigger_paths : [ PrimaryPath, SelectSignal ]
-physics.EndPath : [ @sequence::Primary.EndSequence, SignalOutput, NoSignalOutput ]
+physics.EndPath : [ @sequence::Primary.EndSequence, Output, LooseOutput ]
 
 outputs : {
-  SignalOutput : @local::Cosmic.SignalOutput
-  NoSignalOutput : @local::Cosmic.NoSignalOutput
+  Output : @local::Cosmic.Output
+  LooseOutput : @local::Cosmic.LooseOutput
 }
 
-outputs.NoSignalOutput.fileName        : "dts.owner.CosmicNoSignal.version.sequencer.art"
-outputs.NoSignalOutput.outputCommands : [@sequence::Primary.KeptProducts,
+outputs.LooseOutput.fileName        : "dts.owner.CosmicLoose.version.sequencer.art"
+outputs.LooseOutput.outputCommands : [@sequence::Primary.KeptProducts,
    "keep mu2e::CosmicLivetime_*_mixed_*"]
 
-outputs.SignalOutput.fileName        : "dts.owner.Cosmic.version.sequencer.art"
-outputs.SignalOutput.outputCommands : [@sequence::Primary.KeptProducts,
+outputs.Output.fileName        : "dts.owner.Cosmic.version.sequencer.art"
+outputs.Output.outputCommands : [@sequence::Primary.KeptProducts,
    "keep mu2e::CosmicLivetime_*_mixed_*"]

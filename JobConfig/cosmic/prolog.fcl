@@ -184,13 +184,13 @@ Cosmic: {
     ]
   }
 
-  SignalOutput : {
+  Output : {
     module_type : RootOutput
     SelectEvents : [ SelectSignal ]
     fileName    : @nil
   }
 
-  NoSignalOutput : {
+  LooseOutput : {
     module_type : RootOutput
     SelectEvents : [ PrimaryPath ]
     fileName    : @nil
