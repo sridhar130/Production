@@ -1,3 +1,4 @@
 #include "Production/JobConfig/cosmic/S2Resampler.fcl"
 
-outputs.Output.fileName        : "dts.owner.CosmicCORSIKA.version.sequencer.art"
+outputs.SignalOutput.fileName        : "dts.owner.CosmicCORSIKA.version.sequencer.art"
+outputs.NoSignalOutput.fileName        : "dts.owner.CosmicCORSIKANoSignal.version.sequencer.art"
