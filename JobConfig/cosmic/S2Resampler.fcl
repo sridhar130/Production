@@ -7,6 +7,8 @@
 # Bring in info from the previous stage
 physics.filters.cosmicResample: @local::Cosmic.cosmicResample
 physics.filters.cosmicResample.mu2e.MaxEventsToSkip: 18415 # this number depends on the production details
+physics.filters.cosmicResample.mu2e.products.cosmicLivetimeMixer.moduleLabel: "generate"
+physics.filters.signalFilter: @local::Cosmic.signalFilter
 
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: @local::Cosmic.MultiStageParametersCosmicS2
@@ -25,7 +27,20 @@ physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS2
 physics.producers.g4run.SDConfig.preSimulatedHits:  ["cosmicResample:CRV"]
 physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 
-physics.PrimaryPath: [genCounter, cosmicTimeOffset, cosmicResample, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence]
+physics.PrimaryPath: [ genCounter, cosmicTimeOffset, cosmicResample, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence ]
+physics.SelectSignal: [ genCounter, cosmicTimeOffset, cosmicResample, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence, signalFilter ]
+physics.trigger_paths : [ PrimaryPath, SelectSignal ]
+physics.EndPath : [ @sequence::Primary.EndSequence, Output, LooseOutput ]
+
+outputs : {
+  Output : @local::Cosmic.Output
+  LooseOutput : @local::Cosmic.LooseOutput
+}
+
+outputs.LooseOutput.fileName        : "dts.owner.CosmicLoose.version.sequencer.art"
+outputs.LooseOutput.outputCommands : [@sequence::Primary.KeptProducts,
+   "keep mu2e::CosmicLivetime_*_mixed_*"]
+
 outputs.Output.fileName        : "dts.owner.Cosmic.version.sequencer.art"
 outputs.Output.outputCommands : [@sequence::Primary.KeptProducts,
-  "keep mu2e::CosmicLivetime_*_*_*"]
+   "keep mu2e::CosmicLivetime_*_mixed_*"]
