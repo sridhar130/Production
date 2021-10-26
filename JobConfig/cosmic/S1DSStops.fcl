@@ -27,7 +27,9 @@ physics: {
     genCountLogger: { module_type: GenEventCountReader makeHistograms: false }
   }
 
-  PrimaryPath :  [@sequence::Common.generateSequence, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, compressPV]
+  # Here we moved the genCounter at the end in order to get a correct scaling of the
+  # cosmic livetime after resampling
+  PrimaryPath :  [generate, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, compressPV, genCounter]
   EndPath : @local::Primary.EndPath
 
 }
