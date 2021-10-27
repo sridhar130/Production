@@ -110,6 +110,17 @@ Cosmic: {
     mcTrajectoryInputs : [ "g4run" ]
     vetoDaughters: []
   }
+  signalFilter : {
+    module_type : DetectorStepFilter
+    MinimumTrkStepEnergy : 1.0e-6 # 1 ev
+    KeepPDG : [ ] # Loop at steps from all particle types
+    CaloShowerSteps: []
+    CrvSteps: []
+    StrawGasSteps: [ compressDetStepMCs ]
+    MinimumPartMom : 50.0 # MeV/c
+    MaximumPartMom : 250.0 # MeV/c
+    MinimumTrkSteps : 10 # primary must produce at least this many StrawGasSteps
+  }
   cosmicResample: {
     module_type: ResamplingMixer
     fileNames: @nil
@@ -122,7 +133,6 @@ Cosmic: {
         genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
         simParticleMixer: { mixingMap: [ [ "cosmicFilter", ""] ] }
         mcTrajectoryMixer:{ mixingMap: [ [ "cosmicFilter", ""] ] }
-        cosmicLivetimeMixer:{ mixingMap: [ [ "FromCorsikaBinary", ""] ] }
         stepPointMCMixer: { mixingMap: [ [ "cosmicFilter:crvStage1", ":" ], [ "cosmicFilter:CRV", ":" ] ] }
         volumeInfoMixer: {
           evtOutInstanceName: "eventlevel"
@@ -185,5 +195,16 @@ Cosmic: {
     ]
   }
 
+  Output : {
+    module_type : RootOutput
+    SelectEvents : [ SelectSignal ]
+    fileName    : @nil
+  }
+
+  LooseOutput : {
+    module_type : RootOutput
+    SelectEvents : [ PrimaryPath ]
+    fileName    : @nil
+  }
 }
 END_PROLOG
