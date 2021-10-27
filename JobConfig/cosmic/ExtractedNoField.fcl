@@ -40,7 +40,7 @@ outputs.Output.fileName : "sim.owner.CosmicNoFieldExtracted.version.sequencer.ar
 outputs.Output.outputCommands : [@sequence::Primary.KeptProducts, "keep mu2e::CosmicLivetime_*_*_*", "keep mu2e::GenParticles_*_*_*"]
 
 physics.producers.g4run.TrajectoryControl: @local::mu2eg4DefaultTrajectories
-physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS1
+physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicNoField
 physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 
 #
