@@ -25,7 +25,6 @@ physics: {
 
   analyzers: {
     @table::Primary.analyzers
-    genCountLogger: { module_type: GenEventCountReader makeHistograms: false }
   }
 
   PrimaryPath :  [ @sequence::Common.generateSequence, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence ]
