@@ -144,7 +144,7 @@ Cosmic: {
   }
   generateCRY: {
     module_type: CRYEventGenerator
-    inputFile    : "EventGenerator/defaultConfigs/defaultCRYconfig.txt"
+    inputFile    : "Offline/EventGenerator/defaultConfigs/defaultCRYconfig.txt"
   }
   generateCORSIKA: {
     module_type  : CORSIKAEventGenerator
@@ -177,6 +177,17 @@ Cosmic: {
     [
       @local::cosmicKineticEnergyCutS1,
       @local::crvStage1End,
+      {
+        type: inVolume
+        pars: [ worldDirtBottom ]
+      }
+    ]
+  }
+  Mu2eG4CommonCutCosmicNoField: {
+    type: union
+    pars:
+    [
+      @local::cosmicKineticEnergyCutS1,
       {
         type: inVolume
         pars: [ worldDirtBottom ]
