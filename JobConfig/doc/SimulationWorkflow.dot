@@ -66,7 +66,7 @@ digraph SimWorkflow {
     CosmicGenerator [shape=box, peripheries=3, color=blue,
                     label=<<table border="0" cellborder="0" cellspacing="1">
                       <tr><td align="center"><b>Cosmic Generation</b></td></tr>
-                      <tr><td align="left"><font color="darkgreen">cosmic/S1DSStopsX.fcl, X = [CORSIKA, CRY, ...]</font></td></tr>
+                      <tr><td align="left"><font color="darkgreen">cosmic/S1DSStopsCosmicX.fcl, X = [CORSIKA, CRY, ...]</font></td></tr>
                       </table>>];
 
     CORSIKAOutput -> CosmicGenerator;
@@ -165,26 +165,26 @@ digraph SimWorkflow {
                 </table>>];
 
     POT -> Neutrals [ label="concatenate x1000/NThreads"];
-    POT ->  Beam
+    POT ->  Beam;
+    POT_ExtMon ->  ExtMon;
+    POT_ExtMon ->  ExtMonRegion;
 
-      POT_ExtMon ->  ExtMon
-      POT_ExtMon ->  ExtMonRegion
+    POT_Validation -> Neutrals;
+    POT_Validation -> Beam;
+    POT_Validation -> ExtMon;
+    POT_Validation -> ExtMonRegion;
+    POT_Validation -> Truncated;
 
-      POT_Validation -> Neutrals
-      POT_Validation -> Beam
-      POT_Validation -> ExtMon
-      POT_Validation -> ExtMonRegion
-      POT_Validation -> Truncated
+    BeamSplitting  [shape=box,color=blue,
+                   label=<<table border="0" cellborder="0" cellspacing="1">
+                     <tr><td align="center"><b>Beam Splitting</b></td></tr>
+                     <tr><td align="left"><font color="darkgreen">beam/BeamSplitter.fcl</font></td></tr>
+                     </table>>];
 
-      BeamSplitting  [shape=box,color=blue,
-                     label=<<table border="0" cellborder="0" cellspacing="1">
-                       <tr><td align="center"><b>Beam Splitting</b></td></tr>
-                       <tr><td align="left"><font color="darkgreen">beam/BeamSplitter.fcl</font></td></tr>
-                       </table>>];
-
-    Beam -> BeamSplitting
-      BeamSplitting ->  MuBeam [ label="concatenate x50000"];
+    Beam -> BeamSplitting;
+    BeamSplitting ->  MuBeam [ label="concatenate x50000"];
     BeamSplitting ->  EleBeam [ label="concatenate x1000"];
+    {rank=same MuBeam EleBeam Neutrals};
   }
   subgraph clusterPileup {
     label="Pileup";
@@ -245,9 +245,9 @@ digraph SimWorkflow {
                          <tr><td align="left"><font color="darkgreen">pileup/MuonStopSelector.fcl</font></td></tr>
                          </table>>];
 
-    TargetStops -> TargetStopSplitter
+    TargetStops -> TargetStopSplitter;
 
-      TargetStopSplitter -> MuminusTargetStops [ label="concatenate x10"];
+    TargetStopSplitter -> MuminusTargetStops [ label="concatenate x10"];
     TargetStopSplitter -> MuplusTargetStops [ label="concatenate x1000"];
 
     MuBeamFlashPileup [shape=oval, color=lightblue,
@@ -343,11 +343,16 @@ digraph SimWorkflow {
                       <tr><td align="left"><font color="darkgreen">mixing/Mix.fcl</font></td></tr>
                       </table>>];
 
-    NomixDigitization [shape=box, peripheries=1, color=blue,
+    OnSpillDigitization [shape=box, peripheries=1, color=blue,
                       label=<<table border="0" cellborder="0" cellspacing="1">
-                        <tr><td align="center"><b> Primary Only Digitization </b></td></tr>
-                        <tr><td align="left"><font color="darkgreen">digitize/OffSpill.fcl</font></td></tr>
-                        <tr><td align="left"><font color="lightgreen">digitize/OnSpill.fcl</font></td></tr>
+                        <tr><td align="center"><b> primary only OnSpill digitization </b></td></tr>
+                        <tr><td align="left"><font color="darkgreen">digitize/onspill.fcl</font></td></tr>
+                        </table>>];
+
+   OffSpillDigitization [shape=box, peripheries=1, color=blue,
+                      label=<<table border="0" cellborder="0" cellspacing="1">
+                        <tr><td align="center"><b> cosmic primary only OffSpill digitization </b></td></tr>
+                        <tr><td align="left"><font color="darkgreen">digitize/offspill.fcl</font></td></tr>
                         </table>>];
 
     TargetMuonPrimary -> MixDigitization;
@@ -358,26 +363,38 @@ digraph SimWorkflow {
     EleBeamFlashPileup -> MixDigitization [style=dashed, label=<resample 10<sup>+4</sup>?>];
     NeutralsFlashPileup -> MixDigitization [style=dashed, label=<resample 10<sup>+4</sup>?>];
 
-    TargetMuonPrimary -> NomixDigitization;
-    IPAMuonMichel -> NomixDigitization;
-    CosmicPrimary -> NomixDigitization;
+    TargetMuonPrimary -> OnSpillDigitization;
+    IPAMuonMichel -> OnSpillDigitization;
+    CosmicPrimary -> OnSpillDigitization;
 
-    UnmixedDigis [shape=oval, peripheries=3, color=lightblue,
+    CosmicPrimary -> OffSpillDigitization;
+
+    OnSpillDigis [shape=oval, peripheries=3, color=lightblue,
                  label=<<table border="0" cellborder="0" cellspacing="1">
-                   <tr><td align="center"><b>Unmixed Digis</b></td></tr>
-                   <tr><td align="left"><font color="red">dig.mu2e.X.art, X = [CeMinus, CORSIKA, ...]</font></td></tr>
+                   <tr><td align="center"><b>OnSpill Digis</b></td></tr>
+                   <tr><td align="left"><font color="red">dig.mu2e.XDigiTriggered.art, X = [CeMinus, CosmicCORSIKA, ...]</font></td></tr>
+                   <tr><td align="left"><font color="fuchsia">dig.mu2e.XDigiUntriggered.art, X = [CeMinus, CosmicCORSIKA, ...]</font></td></tr>
+                   </table>>];
+
+    OffSpillDigis [shape=oval, peripheries=3, color=lightblue,
+                 label=<<table border="0" cellborder="0" cellspacing="1">
+                   <tr><td align="center"><b>OffSpill Digis</b></td></tr>
+                   <tr><td align="left"><font color="red">dig.mu2e.CosmicXOffSpillTriggered.art, X = [CORSIKA, Cry, ...]</font></td></tr>
+                   <tr><td align="left"><font color="fuchsia">dig.mu2e.CosmicXOffSpillUntriggered.art, X = [CORSIKA, Cry, ...]</font></td></tr>
                    </table>>];
 
     MixedDigis [shape=oval, peripheries=3, color=lightblue,
                label=<<table border="0" cellborder="0" cellspacing="1">
                  <tr><td align="center"><b>Mixed Digis</b></td></tr>
-                 <tr><td align="left"><font color="red">dig.mu2e.XMix.art, X = [CeMinus, CORSIKA, ...]</font></td></tr>
+                 <tr><td align="left"><font color="red">dig.mu2e.XMixTriggered.art, X = [CeMinus, CosmicCORSIKA, ...]</font></td></tr>
+                 <tr><td align="left"><font color="fuchsia">dig.mu2e.XMixUntriggered.art, X = [CeMinus, CORSIKA, ...]</font></td></tr>
                  </table>>];
 
-    NomixDigitization -> UnmixedDigis;
+    OnSpillDigitization -> OnSpillDigis;
+    OffSpillDigitization -> OffSpillDigis;
     MixDigitization -> MixedDigis;
 
-    {rank=same NomixDigitization MixDigitization};
+    {rank=same OnSpillDigitization MixDigitization};
 
   }
   subgraph clusterReco {
@@ -387,19 +404,19 @@ digraph SimWorkflow {
 
     Reconstruction [shape=box, peripheries=1, color=blue,
                    label=<<table border="0" cellborder="0" cellspacing="1">
-                     <tr><td align="center"><b> Reconstruction </b></td></tr>
+                     <tr><td align="center"><b> OnSpill Reconstruction </b></td></tr>
                      <tr><td align="left"><font color="darkgreen">reco/Reco.fcl </font></td></tr>
                      </table>>];
 
     Reco [shape=oval, color=lightblue, peripheries=3
       label=<<table border="0" cellborder="0" cellspacing="1">
       <tr><td align="center"><b>Reconstructed Events (Tracks, CaloClusters, CRVClusters, ...)</b></td></tr>
-      <tr><td align="left"><font color="red">mcs.mu2e.X.art, X = [CeMinus, CORSIKA, ...]</font></td></tr>
+      <tr><td align="left"><font color="red">mcs.mu2e.X.art, X = [CeMinusMixTriggered, CosmicCORSIKA, ...]</font></td></tr>
       </table>>];
 
-    MixedDigis -> Reconstruction
-      UnmixedDigis -> Reconstruction
-      Reconstruction -> Reco
+    MixedDigis -> Reconstruction;
+    OnSpillDigis -> Reconstruction;
+    Reconstruction -> Reco;
 
   }
 }
