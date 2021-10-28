@@ -1,6 +1,10 @@
 #include "Production/JobConfig/cosmic/ExtractedNoField.fcl"
 
-targetParams: {
+source: {
+  module_type: FromCorsikaBinary
+  fileNames: ["/pnfs/mu2e/persistent/users/srsoleti/corsika/sim.srsoleti.corsika.v1.30001.csk"]
+  runNumber          : 1205
+  showerAreaExtension  : 10000
   projectToTargetBox : true
   targetBoxXmin: -10000
   targetBoxXmax: 3000
@@ -8,14 +12,6 @@ targetParams: {
   targetBoxYmax: 9880 # defined by CRV
   targetBoxZmin: 17105 # defined by CRV
   targetBoxZmax: 32220 # defined by Calo Z1
-}
-
-source: {
-  module_type: FromCorsikaBinary
-  fileNames: ["/pnfs/mu2e/persistent/users/srsoleti/corsika/sim.srsoleti.corsika.v1.30001.csk"]
-  runNumber          : 1205
-  showerAreaExtension  : 10000
-  @table::targetParams
   fluxConstant: 1.8e4
 }
 
