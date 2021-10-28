@@ -5,9 +5,9 @@ targetParams: {
   targetBoxXmin: -10000
   targetBoxXmax: 3000
   targetBoxYmin: -5000
-  targetBoxYmax: 5000
-  targetBoxZmin: -5000
-  targetBoxZmax: 21000
+  targetBoxYmax: 9880 # defined by CRV
+  targetBoxZmin: 17105 # defined by CRV
+  targetBoxZmax: 32220 # defined by Calo Z1
 }
 
 source: {

@@ -144,7 +144,7 @@ Cosmic: {
   }
   generateCRY: {
     module_type: CRYEventGenerator
-    inputFile    : "EventGenerator/defaultConfigs/defaultCRYconfig.txt"
+    inputFile    : "Offline/EventGenerator/defaultConfigs/defaultCRYconfig.txt"
   }
   generateCORSIKA: {
     module_type  : CORSIKAEventGenerator
