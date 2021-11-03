@@ -1,0 +1,4 @@
+#include "Production/JobConfig/cosmic/S2Resampler.fcl"
+
+outputs.Output.fileName        : "dts.owner.CosmicCRY.version.sequencer.art"
+outputs.LooseOutput.fileName        : "dts.owner.CosmicLooseCRY.version.sequencer.art"
