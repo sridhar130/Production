@@ -8,6 +8,8 @@
 physics.filters.cosmicResample: @local::Cosmic.cosmicResample
 physics.filters.cosmicResample.mu2e.MaxEventsToSkip: 18415 # this number depends on the production details
 physics.filters.cosmicResample.mu2e.products.cosmicLivetimeMixer.moduleLabel: "generate"
+physics.filters.cosmicResample.mu2e.products.cosmicLivetimeMixer.genCounterLabel: "genCounter::Primary"
+
 physics.filters.signalFilter: @local::Cosmic.signalFilter
 
 # Point Mu2eG4 to the pre-simulated data
