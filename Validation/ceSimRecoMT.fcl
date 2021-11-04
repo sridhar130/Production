@@ -3,7 +3,7 @@
 # and simulate all the way through the detector
 # run calorimeter and tracker reco
 #
-#include "Offline/Validation/fcl/ceSimReco.fcl"
+#include "Production/Validation/ceSimReco.fcl"
 physics.producers.g4run.module_type: "Mu2eG4MT"
 
 # this sets the number of threads used in MT mode
