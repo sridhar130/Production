@@ -6,3 +6,5 @@
 #include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 # set the event timing for Onspill
 physics.producers.EWMProducer.SpillType : 1
+physics.producers.EWMProducer.RecoFromMCTruth : true
+physics.producers.EWMProducer.RecoFromMCTruthErr : 0.5
