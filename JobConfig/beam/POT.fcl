@@ -73,6 +73,7 @@ physics.producers.g4run.Mu2eG4CommonCut: {
 # tweak Mu2eG4 settings
 physics.producers.g4run.SDConfig.enableSD: [ virtualdetector ] # only VDs are active
 physics.producers.g4run.physics.minRangeCut : 1. # mm  coarse range for this stage
+physics.producers.g4run.physics.noDecay     : [ 211, -211 ] # Added for Pion Infinite Lifetime
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/beam/epilog.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
