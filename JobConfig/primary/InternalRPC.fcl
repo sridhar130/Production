@@ -1,0 +1,25 @@
+#
+# RPC spectrum, based on doc Bistrilich spectrum 
+#
+# original author: S Middleton
+#
+
+#include "Production/JobConfig/primary/TargetStopParticle.fcl"
+
+physics.producers.generate : {
+  module_type : RPCGenGun
+  inputSimParticles: TargetStopResampler
+  stoppingTargetMaterial : "Al" 
+  verbosity : 0
+  RPCType : InternalRPC
+  spectrum : {
+    spectrumShape : Bistirlich
+    elow : 1. #MeV
+    ehi : 140.
+  }
+
+}
+
+physics.producers.FindMCPrimary.PrimaryProcess : "InternalRPC"
+outputs.Output.fileName: "dts.owner.InternalRPC.version.sequencer.art"
+
