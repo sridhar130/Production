@@ -22,10 +22,11 @@ physics: {
       ParticleCodes : [ [211, "uninitialized", "mu2eKillerVolume" ], # pi-, * , Manually stopped
         [-211, "uninitialized" , "mu2eKillerVolume" ] ] # pi+, *,  Manually stopped
     }
+    
   }
   selectMuons : [muonSelector ]
   selectPions : [pionSelector ]
-  trigger_paths : [ selectMuons ]
+  trigger_paths : [ selectMuons, selectPions ]
   outpath: [muonout, electronout, pionout ]
   end_paths: [outpath]
 }
@@ -41,13 +42,13 @@ outputs: {
     module_type: RootOutput
     fileName : "sim.owner.EleBeamCat.version.sequencer.art"
     outputCommands:   [ "keep *_*_*_*" ]
-    RejectEvents: [selectMuons, selectPions]
+    RejectEvents: [selectPions]
   }
   pionout: {
     module_type: RootOutput
     fileName : "sim.owner.PiBeamCat.version.sequencer.art"
     outputCommands:   [ "keep *_*_*_*" ]
-    RejectEvents: [selectMuons]
+    SelectEvents: [selectPions]
   }
 }
 
