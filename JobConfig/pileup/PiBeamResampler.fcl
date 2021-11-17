@@ -71,8 +71,8 @@ outputs: {
   }
 }
 # set prescale factors
-physics.filters.TargetStopPrescaleFilter.nPrescale         : @local::Pileup.PiminusTargetStopPrescale
-physics.filters.EarlyPrescaleFilter.nPrescale         : @local::Pileup.EarlyPiBeamFlashPrescale
+physics.filters.TargetStopPrescaleFilter.nPrescale         : 1 #@local::Pileup.PiminusTargetStopPrescale
+physics.filters.EarlyPrescaleFilter.nPrescale         : 1 #@local::Pileup.EarlyPiBeamFlashPrescale
 
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: {

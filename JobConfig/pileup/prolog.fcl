@@ -43,6 +43,16 @@ Pileup: {
       stoppingMaterial: "StoppingTarget_Al"
       verbosityLevel: 1
     }
+    
+    TargetPionFinder: {
+      module_type: "StoppedParticlesFinder"
+      particleInput: "g4run"
+      particleTypes: [ 211, -211 ]
+      physVolInfoInput: "g4run:eventlevel"
+      useEventLevelVolumeInfo: true
+      stoppingMaterial: "StoppingTarget_Al"
+      verbosityLevel: 1
+    }
 
     IPAMuonFinder : {
       module_type : StoppedParticlesFinder
