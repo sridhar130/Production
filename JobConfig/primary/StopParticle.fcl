@@ -26,7 +26,6 @@ physics : {
   trigger_paths : [ PrimaryPath ]
   end_paths : [ EndPath ]
 }
-outputs : { Output :@local::Primary.Output }
 #
 # final configuration
 #

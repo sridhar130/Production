@@ -5,7 +5,9 @@
 #
 #include "Production/JobConfig/primary/StopParticle.fcl"
 
-physics.PrimaryPath : [ IPAStopResampler, @sequence::Common.generateSequence, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence ]
+physics.PrimaryPath : [ IPAStopResampler, @sequence::Common.generateSequence, @sequence::Common.g4Sequence, @sequence::Primary.CalibSequence ]
+outputs : { CalibOutput :@local::Primary.Output }
+physics.EndPath : [ @sequence::Primary.EndSequence, CalibOutput ]
 
 physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "IPAStopResampler"
 physics.producers.g4run.inputs.updateEventLevelVolumeInfos: {

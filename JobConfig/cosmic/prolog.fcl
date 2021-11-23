@@ -195,13 +195,13 @@ Cosmic: {
     ]
   }
 
-  Output : {
+  SignalOutput : {
     module_type : RootOutput
-    SelectEvents : [ SelectSignal ]
+    SelectEvents : [ SignalPath ]
     fileName    : @nil
   }
 
-  LooseOutput : {
+  CalibOutput : {
     module_type : RootOutput
     SelectEvents : [ PrimaryPath ]
     fileName    : @nil
