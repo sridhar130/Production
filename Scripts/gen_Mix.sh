@@ -11,9 +11,9 @@
 # $7 is the number of booster batches
 
 # optional arguments:
-# -n is the number of events per job (only needed for NoPrimary, ignored otherwise)
-# -N is the number of jobs (only needed for NoPrimary, ignored otherwise)
-# -m is a flag : if not null, directories are renamed
+# $8 is the number of events per job (only needed for NoPrimary, ignored otherwise)
+# $9 is the number of jobs (only needed for NoPrimary, ignored otherwise)
+# $10 is a flag : if not null, directories are renamed
 
 usage() { echo "Usage:
   source Production/Scripts/gen_Mix.sh [primaryName] [datasetDescription] [mixin version] \
@@ -49,23 +49,10 @@ nbb=$7
 eventsperjob=-1
 njobs=-1
 moveit=
-
-while getopts ":n:N:m:" opt; do
-  case "${opt}" in
-    n)
-      eventsperjob =${OPTARG}
-      ;;
-    N)
-      njobs=${OPTARG}
-      ;;
-    m)
-      moveit=1
-      ;;
-    *)
-      usage
-      ;;
-  esac
-done
+if [[ $# -ge 8 ]]; then eventsperjob=$8; fi
+if [[ $# -ge 9 ]]; then  njobs=$9; fi
+if [[ $# -ge 10 ]]; then  moveit=$10; fi
+echo "Generating mixing scripts for $primary conf $primaryconf mixin conf $mixinconf output conf $outconf database version $dbver with $nbb booster batches"
 
 # create the mixin input lists
 samweb list-file-locations --schema=root --defname="dts.mu2e.MuBeamFlashCat.$mixinconf.art"  | cut -f1 > MuBeamFlashCat$mixinconf.txt
@@ -94,6 +81,10 @@ rm template.fcl
 #
 if [ $primary == "NoPrimary" ]; then
   echo '#include "Production/JobConfig/mixing/NoPrimary.fcl"' >> template.fcl
+  if [[ $njobs -lt 0 || $eventsperjob -lt 0 ]]; then
+    echo njobs and eventsperjob must be specified for NoPrimary
+    return 0;
+  fi
 elif [[ $primary == PBI* ]]; then
   samweb list-file-locations --schema=root --defname="sim.mu2e.${primary}.${primaryconf}.art"  | cut -f1 > ${primary}.txt
   echo '#include "Production/JobConfig/mixing/NoPrimaryPBISequence.fcl"' >> template.fcl
@@ -149,10 +140,12 @@ if [ ! -z "$moveit" ]; then
   for dirname in 000 001 002 003 004 005 006 007 008 009; do
     if test -d $dirname; then
       echo "found dir $dirname"
-      if test -d $micout_$dirname; then
-        rm -rf "$mixout_$dirname"
+      if test -d ${mixout}_${dirname}; then
+        echo "removing ${mixout}_${dirname}"
+        rm -rf "${mixout}_${dirname}"
       fi
-      mv $dirname "$mixout_$dirname"
+      echo "moving $dirname to ${mixout}_${dirname}"
+      mv $dirname $mixout\_$dirname
     fi
   done
 fi
