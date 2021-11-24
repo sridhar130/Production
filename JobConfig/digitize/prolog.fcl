@@ -57,7 +57,7 @@ Digitize: {
       module_type : StrawDigiMCFilter
       MinNDigis : 15
       MinParticleMom : 80.0
-      MaxParticleMom : 130.0
+      MaxParticleMom : 200.0
       StrawDigiMCCollection : compressDigiMCs
       particleTypes : [ 11,-11, 13, -13] # e+-, mu+-
     }
