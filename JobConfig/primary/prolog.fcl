@@ -134,4 +134,5 @@ Primary: {
 # define the main sequence
 Primary.PrimarySequence : [ @sequence::Primary.DetStepSequence, PrimaryFilter, @sequence::Primary.FinalizeSequence ]
 Primary.PrimaryOutput.outputCommands : [ "drop *_*_*_*", @sequence::Primary.KeptProducts]
+Primary.EndPath : [ @sequence::Primary.EndSequence, PrimaryOutput ]
 END_PROLOG
