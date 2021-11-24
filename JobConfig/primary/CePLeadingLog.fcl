@@ -22,6 +22,6 @@ physics.producers.generate : {
 }
 
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eCePlusLeadingLog"
-outputs.SignalOutput.fileName: "dts.owner.CePLeadingLog.version.sequencer.art"
+outputs.PrimaryOutput.fileName: "dts.owner.CePLeadingLog.version.sequencer.art"
 
 

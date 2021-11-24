@@ -5,10 +5,10 @@
 #
 #include "Production/JobConfig/primary/StopParticle.fcl"
 
-physics.SignalPath : [ TargetStopResampler, @sequence::Common.generateSequence, @sequence::Common.g4Sequence, @sequence::Primary.SignalSequence ]
-physics.trigger_paths : [ SignalPath ]
-outputs : { SignalOutput : @local::Primary.SignalOutput }
-physics.EndPath : [ @sequence::Primary.EndSequence, SignalOutput ]
+physics.PrimaryPath : [ TargetStopResampler, @sequence::Common.generateSequence, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence ]
+physics.trigger_paths : [ PrimaryPath ]
+outputs : { PrimaryOutput : @local::Primary.PrimaryOutput }
+physics.EndPath : [ @sequence::Primary.EndSequence, PrimaryOutput ]
 physics.end_paths : [ EndPath ]
 
 physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "TargetStopResampler"

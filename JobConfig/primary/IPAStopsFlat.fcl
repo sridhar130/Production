@@ -17,4 +17,4 @@ physics.producers.generate : {
   pdgId : 11
 }
 
-outputs.CalibOutput.fileName: "dts.owner.IPAFlat.version.sequencer.art"
+outputs.PrimaryOutput.fileName: "dts.owner.IPAFlat.version.sequencer.art"

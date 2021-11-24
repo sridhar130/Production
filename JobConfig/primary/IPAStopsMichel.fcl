@@ -18,4 +18,4 @@ physics.producers.generate : {
   stoppingTargetMaterial : "IPA"
 }
 
-outputs.CalibOutput.fileName: "dts.owner.IPAMichel.version.sequencer.art"
+outputs.PrimaryOutput.fileName: "dts.owner.IPAMichel.version.sequencer.art"
