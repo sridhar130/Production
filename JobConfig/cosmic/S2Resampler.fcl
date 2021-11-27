@@ -5,7 +5,7 @@
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/primary/prolog.fcl"
 #include "Production/JobConfig/cosmic/prolog.fcl"
-process_name: CosmicS2
+process_name: S2Resampler
 # the following will change when we read art stops
 source: { module_type : EmptyEvent }
 services : @local::Services.Sim
@@ -17,36 +17,33 @@ physics : {
   filters : {
     @table::Common.filters
     @table::Primary.filters
+    cosmicResample : @local::Cosmic.cosmicResample
   }
   analyzers : { @table::Primary.analyzers }
-  PrimaryPath : [ genCounter, cosmicTimeOffset, cosmicResample, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence]
+  # CrvSteps come in from the S1 file
+  PrimaryPath : [ @sequence::Cosmic.ResampleSequence, @sequence::Cosmic.SimSequence ]
+
   EndPath : @local::Primary.EndPath
   trigger_paths : [ PrimaryPath ]
   end_paths : [ EndPath ]
 }
 outputs : { PrimaryOutput :@local::Primary.PrimaryOutput }
 #
-# Bring in info from the previous stage
-physics.filters.cosmicResample: @local::Cosmic.cosmicResample
-physics.filters.cosmicResample.mu2e.MaxEventsToSkip: 18415 # this number depends on the production details FIXME!
-physics.filters.cosmicResample.mu2e.products.cosmicLivetimeMixer.moduleLabel: "generate"
-physics.filters.cosmicResample.mu2e.products.cosmicLivetimeMixer.genCounterLabel: "genCounter::Primary"
 
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: @local::Cosmic.MultiStageParametersCosmicS2
-
-physics.producers.cosmicTimeOffset: @local::CommonMC.producers.cosmicTimeOffset
-physics.producers.cosmicTimeOffset.intervalStart: 0
-physics.producers.cosmicTimeOffset.intervalEnd: 100005
-
 physics.producers.g4run.inputs.simStageOverride: 1
 physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "cosmicResample"
 physics.producers.g4run.inputs.updateEventLevelVolumeInfos.input: "cosmicResample:eventlevel"
 physics.producers.g4run.inputs.updateEventLevelVolumeInfos.outInstance: "eventlevel"
 
+physics.producers.cosmicTimeOffset: @local::CommonMC.producers.cosmicTimeOffset
+physics.producers.cosmicTimeOffset.intervalStart: 0
+physics.producers.cosmicTimeOffset.intervalEnd: 100005
+
 # Kill cosmics outside of the CRV region
 physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS2
-physics.producers.g4run.SDConfig.preSimulatedHits:  ["cosmicResample:CRV"]
+#physics.producers.g4run.SDConfig.preSimulatedHits:  ["cosmicResample:CRV"]
 physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 
 outputs.PrimaryOutput.fileName        : "dts.owner.Cosmic.version.sequencer.art"

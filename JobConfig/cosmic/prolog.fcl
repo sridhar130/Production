@@ -116,19 +116,27 @@ Cosmic: {
     readMode: "sequential"
     wrapFiles: true
     mu2e: {
+      debugLevel : 0
       writeEventIDs : true
       MaxEventsToSkip: @nil
       products: {
-        genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
-        simParticleMixer: { mixingMap: [ [ "cosmicFilter", ""] ] }
-        mcTrajectoryMixer:{ mixingMap: [ [ "cosmicFilter", ""] ] }
-        stepPointMCMixer: { mixingMap: [ [ "cosmicFilter:crvStage1", ":" ], [ "cosmicFilter:CRV", ":" ] ] }
+        genParticleMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
+        simParticleMixer: { mixingMap: [ [ "compressDetStepMCs", ""] ] }
+        mcTrajectoryMixer:{ mixingMap: [ [ "compressDetStepMCs", ""] ] }
+        stepPointMCMixer: { mixingMap: [ [ "cosmicFilter:crvStage1", ":" ] ] }
+        crvStepMixer: { mixingMap: [ [ "compressDetStepMCs", ""] ] }
         volumeInfoMixer: {
           evtOutInstanceName: "eventlevel"
           srInput: "compressPV"
         }
         simTimeOffset : "cosmicTimeOffset"
+        # Bring in info from the previous stage
+        cosmicLivetimeMixer : {
+          moduleLabel: "generate"
+          genCounterLabel: "genCounter::S1DSStops"
+        }
       }
+
     }
   }
   generateCRY: {
@@ -157,7 +165,7 @@ Cosmic: {
   MultiStageParametersCosmicS2: {
     primaryType: StepPoints
     primaryTag: "cosmicResample:crvStage1"
-    inputMCTrajectories: "cosmicResample"
+    inputMCTrajectories: "compressDetStepMCs"
     inputPhysVolumeMultiInfo: ""
   }
   Mu2eG4CommonCutCosmicS1: {
@@ -183,6 +191,8 @@ Cosmic: {
       }
     ]
   }
-
+  # define sequences
+  ResampleSequence: [ genCounter, cosmicTimeOffset, cosmicResample ]
+  SimSequence : [@sequence::Common.g4Sequence, @sequence::TrackerMC.StepSim, @sequence::CaloMC.StepSim, @sequence::Primary.Finalize ]
 }
 END_PROLOG

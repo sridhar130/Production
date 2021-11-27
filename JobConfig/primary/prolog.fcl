@@ -102,7 +102,7 @@ Primary: {
     @sequence::CaloMC.StepSim,
     CrvSteps ]
   # sequence to finalize the output
-  FinalizeSequence : [  compressDetStepMCs, FindMCPrimary ]
+  Finalize : [  PrimaryFilter, compressDetStepMCs, FindMCPrimary ]
 
   KeptProducts : [
     "keep mu2e::StrawGasSteps_compressDetStepMCs_*_*",
@@ -132,7 +132,7 @@ Primary: {
   EndSequence : [ genCountLogger ]
 }
 # define the main sequence
-Primary.PrimarySequence : [ @sequence::Primary.DetStepSequence, PrimaryFilter, @sequence::Primary.FinalizeSequence ]
+Primary.PrimarySequence : [ @sequence::Primary.DetStepSequence, @sequence::Primary.Finalize ]
 Primary.PrimaryOutput.outputCommands : [ "drop *_*_*_*", @sequence::Primary.KeptProducts]
 Primary.EndPath : [ @sequence::Primary.EndSequence, PrimaryOutput ]
 END_PROLOG

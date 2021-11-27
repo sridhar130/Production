@@ -3,8 +3,11 @@
 #
 # Yuri Oksuzian, 2021
 #include "Offline/fcl/standardServices.fcl"
+#include "Offline/CRVResponse/fcl/prolog.fcl"
+#include "Offline/Compression/fcl/prolog.fcl"
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/cosmic/prolog.fcl"
+
 
 process_name : S1DSStops
 
@@ -14,6 +17,21 @@ physics: {
   producers : {
     compressPV: @local::Cosmic.compressPV
     @table::Common.producers
+    CrvSteps :{
+      @table::CrvSteps
+      stepPointsModuleLabels : ["cosmicFilter"]
+    }
+    compressDetStepMCs : {
+      module_type : CompressDetStepMCs
+      strawGasStepTag : ""
+      caloShowerStepTag : ""
+      crvStepTag : "CrvSteps"
+      simParticleTag : "cosmicFilter"
+      mcTrajectoryTag : "cosmicFilter"
+      debugLevel : 0
+      stepPointMCTags : []
+      compressionOptions : @local::DetStepCompression.standardCompression
+    }
   }
 
   filters : {
@@ -28,7 +46,7 @@ physics: {
 
   # Here we moved the genCounter at the end in order to get a correct scaling of the
   # cosmic livetime after resampling
-  S1Path :  [generate, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, compressPV, genCounter]
+  S1Path :  [generate, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, CrvSteps, compressDetStepMCs, compressPV, genCounter]
   EndPath : [ genCountLogger, S1Output ]
 }
 
@@ -44,8 +62,11 @@ outputs : {
       "keep mu2e::GenEventCount_*_*_*",
       "keep mu2e::CosmicLivetime_*_*_*",
       "keep *_compressPV_*_*",
-      "keep mu2e::GenParticles_*_*_*",
-      "keep *_cosmicFilter_*_*"]
+      "keep mu2e::StepPointMCs_cosmicFilter_crvStage1_*",
+      "keep mu2e::CrvSteps_compressDetStepMCs_*_*",
+      "keep mu2e::SimParticlemv_compressDetStepMCs_*_*",
+      "keep mu2e::SimParticleart::Ptrmu2e::MCTrajectorystd::map_compressDetStepMCs_*_*",
+      "keep mu2e::GenParticles_compressDetStepMCs_*_*"]
   }
 }
 
