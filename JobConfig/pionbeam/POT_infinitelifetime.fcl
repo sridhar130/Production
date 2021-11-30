@@ -47,7 +47,7 @@ outputs: {
       "keep *_BeamFilter_*_*",
       "keep *_compressPVBeam_*_*"
     ]
-    fileName : "sim.owner.Beam.version.sequencer.art"
+    fileName : "sim.owner.PiBeam.version.sequencer.art"
   }
 }
 # setup Mu2eG4 selection

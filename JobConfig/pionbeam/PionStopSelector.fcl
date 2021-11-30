@@ -8,13 +8,13 @@ source: { module_type: RootInput }
 services: { message: @local::default_message }
 physics: {
   filters : {
-    muminusSelector: {
+    piminusSelector: {
       module_type: ParticleCodeFilter
       SimParticles : TargetStopFilter
       ParticleCodes : [ [211, "uninitialized", "mu2ePionCaptureAtRest" ] ] # Pi-, * , mu2ePionCaptureAtRest
       PrintLevel : 0
     }
-    muplusSelector: {
+    piplusSelector: {
       module_type: ParticleCodeFilter
       SimParticles : TargetStopFilter
       ParticleCodes : [ [-211, "uninitialized" , "mu2ePionCaptureAtRest" ] ] # Pi+, *, mu2ePionCaptureAtRest

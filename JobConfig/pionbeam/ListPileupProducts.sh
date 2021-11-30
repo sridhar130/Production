@@ -11,7 +11,7 @@ if [[ ${2} == "" ]]; then
   samweb list-file-locations --schema=root --defname="sim.mu2e.EleBeamCat.$1.art"  | cut -f1 > EleBeam.txt
   samweb list-file-locations --schema=root --defname="sim.mu2e.MuBeamCat.$1.art"  | cut -f1 > MuBeam.txt
   samweb list-file-locations --schema=root --defname="sim.mu2e.NeutralsCat.$1.art"  | cut -f1 > Neutrals.txt
-  samweb list-file-locations --schema=root --defname="sim.mu2e.TargetStopsCat.$1.art"  | cut -f1 > TargetStops.txt
+  samweb list-file-locations --schema=root --defname="sim.mu2e.PionTargetStopsCat.$1.art"  | cut -f1 > PionTargetStops.txt
   # create scripts for running changed and neutral resampling off these outputs.  These need the resampler inputs
   rm mubeamresample.fcl
   rm elebeamresample.fcl
@@ -47,15 +47,25 @@ if [[ ${2} == "" ]]; then
   echo "\"`cat Neutrals.txt`\"" >> neutresample.fcl
   echo ']' >> neutresample.fcl
 
-  echo '#include "Production/JobConfig/pileup/MuStopPileup.fcl"' >> tgtresample.fcl
+  echo '#include "Production/JobConfig/pionbeam/PiStopPileup.fcl"' >> tgtresample.fcl
   echo 'source.firstRun: 1202' >> tgtresample.fcl
   echo 'source.firstSubRun: 0' >> tgtresample.fcl
   echo 'source.maxEvents: 10000' >> tgtresample.fcl
   echo 'services.SeedService.baseSeed: 502016040' >> tgtresample.fcl
   echo 'physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip: 0' >> tgtresample.fcl
   echo 'physics.filters.TargetStopResampler.fileNames : [' >> tgtresample.fcl
-  echo "\"`cat TargetStops.txt`\"" >> tgtresample.fcl
+  echo "\"`cat PionTargetStops.txt`\"" >> tgtresample.fcl
   echo ']' >> tgtresample.fcl
+  
+  echo '#include "Production/JobConfig/pileup/PiBeamResampler.fcl"' >> pibeamresample.fcl
+  echo 'source.firstRun: 1202' >> pibeamresample.fcl
+  echo 'source.firstSubRun: 0' >> pibeamresample.fcl
+  echo 'source.maxEvents: 1000' >> pibeamresample.fcl
+  echo 'services.SeedService.baseSeed: 502016040' >> pibeamresample.fcl
+  echo 'physics.filters.beamResampler.mu2e.MaxEventsToSkip: 0' >> pibeamresample.fcl
+  echo 'physics.filters.beamResampler.fileNames : [' >> pibeamresample.fcl
+  echo "\"`cat PiBeam.txt`\"" >> pibeamresample.fcl
+  echo ']' >> pibeamresample.fcl
 
   # run a small number of these jobs: TODO
   return 0

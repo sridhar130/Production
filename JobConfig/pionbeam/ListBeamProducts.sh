@@ -17,22 +17,24 @@ if [[ ${1} == "" ]]; then
 #  echo "sim.mu2e.EleBeamCat.owner.version.sequencer.art" >> EleBeam.txt
 #  echo "sim.mu2e.MuBeamCat.owner.version.sequencer.art" >> MuBeam.txt
 #  echo "sim.mu2e.Neutrals.owner.version.sequencer.art" >> Neutrals.txt
-#  echo "sim.mu2e.PiBeamCat.owner.version.sequencer.art" >> PiBeam.txt
+#  echo "sim.mu2e.PiPlusBeamCat.owner.version.sequencer.art" >> PiPlusBeam.txt
+#  echo "sim.mu2e.PiInfiniteBeamCat.owner.version.sequencer.art" >> PiInfiniteBeam.txt
 else
   echo "Dumping products from Production version $1"
   # locate the specified output
   samweb list-file-locations --schema=root --defname="sim.mu2e.EleBeamCat.$1.art"  | cut -f1 > EleBeam.txt
   samweb list-file-locations --schema=root --defname="sim.mu2e.MuBeamCat.$1.art"  | cut -f1 > MuBeam.txt
-  samweb list-file-locations --schema=root --defname="sim.mu2e.PiBeamCat.$1.art"  | cut -f1 > PiBeam.txt
+  samweb list-file-locations --schema=root --defname="sim.mu2e.PiInfiniteBeamCat.$1.art"  | cut -f1 > PiInfiniteBeam.txt
   samweb list-file-locations --schema=root --defname="sim.mu2e.NeutralsCat.$1.art"  | cut -f1 > Neutrals.txt
 fi
 # dump the contents of the first events of all the collections
 rm MuBeamProducts$1.txt
 rm EleBeamProducts$1.txt
 rm NeutralsProducts$1.txt
-rm BeamProducts$1.txt
+rm PiPlusBeamProducts$1.txt
+rm PiInfiniteBeamProducts$1.txt
 mu2e -c Offline/Print/fcl/fileDumper.fcl --source-list MuBeam.txt --nevts 1 | grep -E 'POT|PROCESS|PRINCIPAL' > MuBeamProducts$1.txt
 mu2e -c Offline/Print/fcl/fileDumper.fcl --source-list EleBeam.txt --nevts 1 | grep -E 'POT|PROCESS|PRINCIPAL' > EleBeamProducts$1.txt
-mu2e -c Offline/Print/fcl/fileDumper.fcl --source-list EleBeam.txt --nevts 1 | grep -E 'POT|PROCESS|PRINCIPAL' > PiBeamProducts$1.txt
+mu2e -c Offline/Print/fcl/fileDumper.fcl --source-list PiInfiniteBeam.txt --nevts 1 | grep -E 'POT|PROCESS|PRINCIPAL' > PiInfiniteBeamProducts$1.txt
 mu2e -c Offline/Print/fcl/fileDumper.fcl --source-list Neutrals.txt --nevts 1 | grep -E 'POT|PROCESS|PRINCIPAL' > NeutralsProducts$1.txt
 

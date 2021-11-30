@@ -31,12 +31,10 @@ physics: {
     @table::Common.analyzers
   }
   # setup paths
-  targetStopPath : [ @sequence::Pileup.beamResamplerSequence, @sequence::Common.g4Sequence, TargetStopPrescaleFilter, TargetPionFinder, TargetStopFilter, compressPVTargetStops]
+  targetStopPath : [ @sequence::Pileup.beamResamplerSequence, @sequence::Common.g4Sequence, TargetStopPrescaleFilter, TargetPionFinder, TargetPiStopFilter, compressPVTargetPiStops]
   
-  flashPath : [ @sequence::Pileup.beamResamplerSequence, @sequence::Common.g4Sequence, @sequence::Pileup.flashSequence, @sequence::Pileup.DetStepSequence ]
-  earlyFlashPath : [ @sequence::Pileup.beamResamplerSequence, @sequence::Common.g4Sequence, @sequence::Pileup.flashSequence, @sequence::Pileup.EarlyDetStepSequence ]
-  trigger_paths: [ flashPath, earlyFlashPath, targetStopPath ]
-  outPath : [ FlashOutput, EarlyFlashOutput, TargetStopOutput ]
+  trigger_paths: [ targetStopPath ]
+  outPath : [ TargetStopOutput ]
   end_paths: [outPath]
 }
 
@@ -45,8 +43,8 @@ outputs: {
     module_type: RootOutput
     outputCommands:   [ "drop *_*_*_*",
       @sequence::Pileup.SimKeptProducts,
-      "keep *_TargetStopFilter_*_*",
-      "keep *_compressPVTargetStops_*_*"
+      "keep *_TargetPiStopFilter_*_*",
+      "keep *_compressPVTargetPiStops_*_*"
     ]
     SelectEvents: [targetStopPath]
     fileName : "sim.owner.TargetStops.version.sequencer.art"
