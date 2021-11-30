@@ -123,7 +123,7 @@ Cosmic: {
         genParticleMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
         simParticleMixer: { mixingMap: [ [ "compressDetStepMCs", ""] ] }
         mcTrajectoryMixer:{ mixingMap: [ [ "compressDetStepMCs", ""] ] }
-        stepPointMCMixer: { mixingMap: [ [ "cosmicFilter:crvStage1", ":" ] ] }
+        stepPointMCMixer: { mixingMap: [ [ "compressDetStepMCs:crvStage1", ":" ] ] }
         crvStepMixer: { mixingMap: [ [ "compressDetStepMCs", ""] ] }
         volumeInfoMixer: {
           evtOutInstanceName: "eventlevel"
@@ -136,7 +136,6 @@ Cosmic: {
           genCounterLabel: "genCounter::S1DSStops"
         }
       }
-
     }
   }
   generateCRY: {
@@ -163,10 +162,15 @@ Cosmic: {
     ]
   }
   MultiStageParametersCosmicS2: {
-    primaryType: StepPoints
+    primaryType: "StepPoints"
     primaryTag: "cosmicResample:crvStage1"
-    inputMCTrajectories: "compressDetStepMCs"
-    inputPhysVolumeMultiInfo: ""
+    inputMCTrajectories: "cosmicResample"
+    simStageOverride: 1
+    inputPhysVolumeMultiInfo: "cosmicResample"
+    updateEventLevelVolumeInfos : {
+      input: "cosmicResample:eventlevel"
+      outInstance: "eventlevel"
+    }
   }
   Mu2eG4CommonCutCosmicS1: {
     type: union
@@ -193,6 +197,5 @@ Cosmic: {
   }
   # define sequences
   ResampleSequence: [ genCounter, cosmicTimeOffset, cosmicResample ]
-  SimSequence : [@sequence::Common.g4Sequence, @sequence::TrackerMC.StepSim, @sequence::CaloMC.StepSim, @sequence::Primary.Finalize ]
 }
 END_PROLOG

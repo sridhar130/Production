@@ -23,7 +23,6 @@ Mixing : {
     wrapFiles           : true
     mu2e: {
       protonBunchIntensityTag: "PBISim"
-      #      meanEventsPerProton: @nil
       simStageEfficiencyTags: @nil
       meanEventsPerPOTFactors : []
       writeEventIDs : false

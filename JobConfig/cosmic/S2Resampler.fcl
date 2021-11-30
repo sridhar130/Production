@@ -1,10 +1,14 @@
 # Re-sample cosmics from stage-1
 # Yuri Oksuzian, 2020
-#include "Offline/CommonMC/fcl/prolog.fcl"
 #include "Offline/fcl/standardServices.fcl"
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/primary/prolog.fcl"
 #include "Production/JobConfig/cosmic/prolog.fcl"
+#
+# define the sim sequence: unfortunately this can't be in prolog as it depends on primary
+# Note that CrvSteps now come in from the S1 file
+S2SimSequence : [@sequence::Common.g4Sequence, @sequence::TrackerMC.StepSim, @sequence::CaloMC.StepSim, @sequence::Primary.Finalize ]
+
 process_name: S2Resampler
 # the following will change when we read art stops
 source: { module_type : EmptyEvent }
@@ -13,6 +17,11 @@ physics : {
   producers : {
     @table::Common.producers
     @table::Primary.producers
+    cosmicTimeOffset: {
+      module_type: CosmicTimeOffset
+      intervalStart: 0
+      intervalEnd: 100005
+    }
   }
   filters : {
     @table::Common.filters
@@ -20,27 +29,18 @@ physics : {
     cosmicResample : @local::Cosmic.cosmicResample
   }
   analyzers : { @table::Primary.analyzers }
-  # CrvSteps come in from the S1 file
-  PrimaryPath : [ @sequence::Cosmic.ResampleSequence, @sequence::Cosmic.SimSequence ]
+  PrimaryPath : [ @sequence::Cosmic.ResampleSequence, @sequence::S2SimSequence ]
 
   EndPath : @local::Primary.EndPath
   trigger_paths : [ PrimaryPath ]
   end_paths : [ EndPath ]
 }
 outputs : { PrimaryOutput :@local::Primary.PrimaryOutput }
-#
 
+#  CrvSteps come from the S1 output
+physics.producers.compressDetStepMCs.crvStepTag : "cosmicResample"
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: @local::Cosmic.MultiStageParametersCosmicS2
-physics.producers.g4run.inputs.simStageOverride: 1
-physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "cosmicResample"
-physics.producers.g4run.inputs.updateEventLevelVolumeInfos.input: "cosmicResample:eventlevel"
-physics.producers.g4run.inputs.updateEventLevelVolumeInfos.outInstance: "eventlevel"
-
-physics.producers.cosmicTimeOffset: @local::CommonMC.producers.cosmicTimeOffset
-physics.producers.cosmicTimeOffset.intervalStart: 0
-physics.producers.cosmicTimeOffset.intervalEnd: 100005
-
 # Kill cosmics outside of the CRV region
 physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS2
 #physics.producers.g4run.SDConfig.preSimulatedHits:  ["cosmicResample:CRV"]

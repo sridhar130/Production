@@ -7,6 +7,6 @@ physics.filters.filterS1: {
   inputs : [ "cosmicResample:CRV" ] # broken! there are no StepPointMCs in S1 output FIXME
   cutEDepMin: 16  # Filter events that deposit lower than 16 MeV in CRV
 }
-physics.PrimaryPath: [@sequence::Cosmic.ResampleSequence, filterS1, @sequence::Cosmic.SimSequence ]
+physics.PrimaryPath: [@sequence::Cosmic.ResampleSequence, filterS1, @sequence::S2SimSequence ]
 physics.filters.PrimaryFilter.MaximumPartMom: 500
 outputs.Output.fileName        : "dts.owner.CosmicHigh.version.sequencer.art"

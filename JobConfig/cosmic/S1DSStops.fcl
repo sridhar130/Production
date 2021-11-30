@@ -29,8 +29,8 @@ physics: {
       simParticleTag : "cosmicFilter"
       mcTrajectoryTag : "cosmicFilter"
       debugLevel : 0
-      stepPointMCTags : []
-      compressionOptions : @local::DetStepCompression.standardCompression
+      stepPointMCTags : ["cosmicFilter:crvStage1"]
+      compressionOptions : @local::DetStepCompression.noCompression
     }
   }
 
@@ -62,7 +62,7 @@ outputs : {
       "keep mu2e::GenEventCount_*_*_*",
       "keep mu2e::CosmicLivetime_*_*_*",
       "keep *_compressPV_*_*",
-      "keep mu2e::StepPointMCs_cosmicFilter_crvStage1_*",
+      "keep mu2e::StepPointMCs_compressDetStepMCs_*_*",
       "keep mu2e::CrvSteps_compressDetStepMCs_*_*",
       "keep mu2e::SimParticlemv_compressDetStepMCs_*_*",
       "keep mu2e::SimParticleart::Ptrmu2e::MCTrajectorystd::map_compressDetStepMCs_*_*",
