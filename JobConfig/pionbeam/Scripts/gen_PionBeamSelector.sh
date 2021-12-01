@@ -1,4 +1,4 @@
-generate_fcl --dsconf=v2 --dsowner=sophie --description=PionBeamSelector --include JobConfig/pionbeam/PionBeamSelector.fcl \
+generate_fcl --dsconf=MDC2020$1 --dsowner=sophie --description=PionBeamSelector --include JobConfig/pionbeam/PionBeamSelector.fcl \
 --inputs PiInfiniteBeamv2.txt --merge-factor 1000
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
  if test -d $dirname; then
