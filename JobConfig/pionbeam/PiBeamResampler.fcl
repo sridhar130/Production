@@ -34,12 +34,12 @@ physics: {
   targetStopPath : [ @sequence::Pileup.beamResamplerSequence, @sequence::Common.g4Sequence, TargetStopPrescaleFilter, TargetPionFinder, TargetPiStopFilter, compressPVTargetPiStops]
   
   trigger_paths: [ targetStopPath ]
-  outPath : [ TargetStopOutput ]
+  outPath : [ TargetPiStopOutput ]
   end_paths: [outPath]
 }
 
 outputs: {
-  TargetStopOutput : {
+  TargetPiStopOutput : {
     module_type: RootOutput
     outputCommands:   [ "drop *_*_*_*",
       @sequence::Pileup.SimKeptProducts,
@@ -47,25 +47,7 @@ outputs: {
       "keep *_compressPVTargetPiStops_*_*"
     ]
     SelectEvents: [targetStopPath]
-    fileName : "sim.owner.TargetStops.version.sequencer.art"
-  }
-
-  FlashOutput : {
-    module_type: RootOutput
-    outputCommands:   [ "drop *_*_*_*",
-      @sequence::Pileup.DtsKeptProducts
-    ]
-    SelectEvents: [flashPath]
-    fileName : "dts.owner.PiBeamFlash.version.sequencer.art"
-  }
-
-  EarlyFlashOutput : {
-    module_type: RootOutput
-    outputCommands:   [ "drop *_*_*_*",
-      @sequence::Pileup.DtsKeptProducts
-    ]
-    SelectEvents: [earlyFlashPath]
-    fileName : "dts.owner.EarlyPiBeamFlash.version.sequencer.art"
+    fileName : "sim.owner.PiTargetStops.version.sequencer.art"
   }
 }
 # set prescale factors
