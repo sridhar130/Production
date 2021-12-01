@@ -177,7 +177,7 @@ Pileup: {
 
     neutralsResampler: {
       module_type: ResamplingMixer
-      fileNames: ["/pnfs/mu2e/tape/usr-sim/sim/sophie/PiInfiniteBeamCat/v0/art/b9/a7/sim.sophie.PiInfiniteBeamCat.v0.001201_00000000.art"]
+      fileNames: @nil
       readMode: "sequential"
       wrapFiles: true
       mu2e: {
