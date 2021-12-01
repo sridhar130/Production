@@ -3,22 +3,22 @@
 # Sophie Middleton , 2021
 #include "Offline/fcl/minimalMessageService.fcl"
 
-process_name: MuStopSelector
+process_name: PionStopSelector
 source: { module_type: RootInput }
 services: { message: @local::default_message }
 physics: {
   filters : {
-    piminusSelector: {
-      module_type: ParticleCodeFilter
-      SimParticles : TargetStopFilter
-      ParticleCodes : [ [211, "uninitialized", "mu2ePionCaptureAtRest" ] ] # Pi-, * , mu2ePionCaptureAtRest
-      PrintLevel : 0
-    }
     piplusSelector: {
       module_type: ParticleCodeFilter
-      SimParticles : TargetStopFilter
-      ParticleCodes : [ [-211, "uninitialized" , "mu2ePionCaptureAtRest" ] ] # Pi+, *, mu2ePionCaptureAtRest
-      PrintLevel : 0
+      SimParticles : TargetPiStopFilter
+      ParticleCodes : [ [211, "uninitialized","mu2eKillerVolume" ] ] # Pi+, * ,mu2eKillerVolume
+      PrintLevel : 2
+    }
+    piminusSelector: {
+      module_type: ParticleCodeFilter
+      SimParticles : TargetPiStopFilter
+      ParticleCodes : [ [-211, "uninitialized" ,  "mu2eKillerVolume" ] ] # Pi-, *,mu2eKillerVolume
+      PrintLevel : 2
     }
   }
   selectPiminus : [piminusSelector]
