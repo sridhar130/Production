@@ -285,7 +285,6 @@ Pileup: {
   beamResamplerSequence : [genCounter, protonTimeOffset, beamResampler]
   neutralsResamplerSequence : [genCounter, protonTimeOffset, neutralsResampler]
   flashSequence : [ TargetMuonFinder, stoppedMuonDaughters, FlashFilter ]
-  
   DetStepSequence : [
     @sequence::TrackerMC.StepSim,
     @sequence::CaloMC.StepSim,
