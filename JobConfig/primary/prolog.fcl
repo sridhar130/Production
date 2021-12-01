@@ -73,6 +73,27 @@ Primary: {
         }
       }
     }
+    
+    TargetPiStopResampler : {
+      module_type: ResamplingMixer
+      readMode            : sequential
+      wrapFiles           : true
+      fileNames: @nil
+      mu2e: {
+        writeEventIDs : true
+        MaxEventsToSkip: @nil
+        debugLevel : 0
+        products: {
+          genParticleMixer: { mixingMap: [ [ "beamResampler", "" ] ] }
+          simParticleMixer: { mixingMap: [ [ "TargetPiStopFilter", "" ] ] }
+          stepPointMCMixer: { mixingMap: [ [ "TargetPiStopFilter:virtualdetector", ":" ] ] }
+          volumeInfoMixer: {
+            srInput: "compressPVTargetPiStops"
+            evtOutInstanceName: "eventlevel"
+          }
+        }
+      }
+    }
 
     IPAStopResampler : {
       module_type: ResamplingMixer

@@ -8,7 +8,7 @@
 
 physics.producers.generate : {
   module_type : RPCGenGun
-  inputSimParticles: TargetStopResampler
+  inputSimParticles: TargetPiStopResampler
   stoppingTargetMaterial : "Al" 
   verbosity : 0
   RPCType : InternalRPC
@@ -19,6 +19,15 @@ physics.producers.generate : {
   }
 
 }
+
+        fhicl::Atom<art::InputTag> inputSimParticles{Name("inputSimParticles"),Comment("A SimParticleCollection with input stopped muons.")};
+        fhicl::Atom<std::string> stoppingTargetMaterial{
+        Name("stoppingTargetMaterial"),Comment("Material determines endpoint energy and pion life time.  Material pist be known to the GlobalConstantsService."),"Al" };
+        fhicl::Atom<unsigned> verbosity{Name("verbosity"),0};
+        fhicl::Atom<std::string> RPCType{Name("RPCType"),Comment("a process code, should be either RPCInternal or RPCExternal") };
+        fhicl::Sequence<int> decayOffPDGCodes{Name("decayOffPDGCodes"),Comment("decayOffPDGCodes")};
+        fhicl::Sequence<art::InputTag> hitCollections {Name("hitCollections"), Comment("A list of StepPointMCCollection-s")};
+        fhicl::DelegatedParameter spectrum{Name("spectrum"), Comment("Parameters for BinnedSpectrum")};
 
 physics.producers.FindMCPrimary.PrimaryProcess : "InternalRPC"
 outputs.Output.fileName: "dts.owner.InternalRPC.version.sequencer.art"

@@ -77,6 +77,13 @@ Pileup: {
       hitInputs : []
       particleInputs : [ "TargetStopFilter" ]
     }
+    compressPVTargetPiStops: {
+      module_type: CompressPhysicalVolumes
+      volumesInput : "g4run"
+      hitInputs : []
+      particleInputs : [ "TargetPiStopFilter" ]
+    }
+
 
     compressPVIPAStops: {
       module_type: CompressPhysicalVolumes
@@ -112,6 +119,14 @@ Pileup: {
       extraHitInputs: [ "g4run:virtualdetector" ]
       mainSPPtrInputs: [ "TargetMuonFinder" ]
     }
+
+    TargetPiStopFilter: {
+      module_type: FilterG4Out
+      mainHitInputs: []
+      extraHitInputs: [ "g4run:virtualdetector" ]
+      mainSPPtrInputs: [ "TargetPionFinder" ]
+    }
+
 
     IPAStopFilter: {
       module_type: FilterG4Out
@@ -162,7 +177,7 @@ Pileup: {
 
     neutralsResampler: {
       module_type: ResamplingMixer
-      fileNames: @nil
+      fileNames: ["/pnfs/mu2e/tape/usr-sim/sim/sophie/PiInfiniteBeamCat/v0/art/b9/a7/sim.sophie.PiInfiniteBeamCat.v0.001201_00000000.art"]
       readMode: "sequential"
       wrapFiles: true
       mu2e: {
@@ -270,7 +285,7 @@ Pileup: {
   beamResamplerSequence : [genCounter, protonTimeOffset, beamResampler]
   neutralsResamplerSequence : [genCounter, protonTimeOffset, neutralsResampler]
   flashSequence : [ TargetMuonFinder, stoppedMuonDaughters, FlashFilter ]
-
+  
   DetStepSequence : [
     @sequence::TrackerMC.StepSim,
     @sequence::CaloMC.StepSim,

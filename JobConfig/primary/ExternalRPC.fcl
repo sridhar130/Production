@@ -8,7 +8,7 @@
 
 physics.producers.generate : {
   module_type : RPCGenGun
-  inputSimParticles: TargetStopResampler
+  inputSimParticles: TargetPiStopResampler
   stoppingTargetMaterial : "Al" 
   verbosity : 0
   RPCType : ExternalRPC
