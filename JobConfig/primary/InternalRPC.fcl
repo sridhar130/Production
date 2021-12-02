@@ -8,16 +8,17 @@
 
 physics.producers.generate : {
   module_type : RPCGenGun
-  inputSimParticles: TargetPiStopResampler
+  inputSimParticles: "TargetPiStopResampler"
   stoppingTargetMaterial : "Al" 
-  verbosity : 0
+  verbosity : 1
   RPCType : "InternalRPC"
   decayOffPDGCodes : [211,-211]
-  hitCollections : 
+  hitCollections : ["TargetPiStopFiler:virtualdetector"]
   spectrum : {
     spectrumShape : Bistirlich
     elow : 1. #MeV
     ehi : 140.
+    spectrumResolution : 0.1 #MeV
   }
 
 }
