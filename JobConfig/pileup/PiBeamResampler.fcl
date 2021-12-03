@@ -31,7 +31,7 @@ physics: {
     @table::Common.analyzers
   }
   # setup paths
-  targetStopPath : [ @sequence::Common.g4Sequence, TargetStopPrescaleFilter, TargetPionFinder, TargetPiStopFilter, compressPVTargetPiStops]
+  targetStopPath : [ @sequence::Pileup.beamResamplerSequence, @sequence::Common.g4Sequence, TargetPionFinder, TargetPiStopFilter, compressPVTargetPiStops]
   
   trigger_paths: [ targetStopPath ]
   outPath : [ TargetPiStopOutput ]
