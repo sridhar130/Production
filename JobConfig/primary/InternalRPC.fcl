@@ -20,7 +20,7 @@ physics.producers.generate : {
     ehi : 140.
     spectrumResolution : 0.1 #MeV
   }
-
+  doHistograms : true
 }
 
 physics.producers.FindMCPrimary.PrimaryProcess : "InternalRPC"
