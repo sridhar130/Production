@@ -23,7 +23,7 @@ Pileup: {
       strawGasStepTag : "StrawGasStepMaker"
       caloShowerStepTag : "CaloShowerStepMaker"
       crvStepTag : "CrvSteps"
-      simParticleTag : [ "g4run" ]
+      simParticleTags : [ "g4run" ]
       debugLevel : 0
       # save StepPoints in VDs, ProtonAbsorber and ST
       stepPointMCTags : [ ] # turn off VD hits for pileup
