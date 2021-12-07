@@ -145,11 +145,11 @@ Digitize.TrkOutput.outputCommands : [ "drop *_*_*_*",
 Digitize.CaloOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.DigiProducts]
 
-Digitize.Outputs : [
+Digitize.Outputs : {
   TriggeredOutput : @local::Digitize.TriggeredOutput
   UntriggeredOutput : @local::Digitize.UntriggeredOutput
   TrkOutput : @local::Digitize.TrkOutput
   CaloOutput : @local::Digitize.CaloOutput
-]
+}
 
 END_PROLOG

@@ -110,7 +110,7 @@ Cosmic: {
     mcTrajectoryInputs : [ "g4run" ]
     vetoDaughters: []
   }
-  cosmicResample: {
+  CosmicResampler: {
     module_type: ResamplingMixer
     fileNames: @nil
     readMode: "sequential"
@@ -156,8 +156,8 @@ Cosmic: {
   }
   MultiStageParametersCosmicS2: {
     primaryType: StepPoints
-    primaryTag: "cosmicResample:crvStage1"
-    inputMCTrajectories: "cosmicResample"
+    primaryTag: "CosmicResampler:crvStage1"
+    inputMCTrajectories: "CosmicResampler"
     inputPhysVolumeMultiInfo: ""
   }
   Mu2eG4CommonCutCosmicS1: {

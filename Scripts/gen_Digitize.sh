@@ -13,21 +13,39 @@ name=$primary.$2$3
 conf=$2$4
 merge=$5
 digitype=$6
+digout=${primary}${digitype}
+#
+#NoField and Extracted require consistency with the primary
+#
+if [[ "${digitype}" == "Extracted" || "${digitype}" == "NoField" ]]; then
+  if [[ "${primary}" != *"${digitype}" ]]; then
+    echo "Primary ${primary} doesn't match digitization type ${digitype}; aborting"
+    return 1
+  else
+    # no need for redundant labels
+    digout=$primary
+  fi
+else
+  if [[ "${primary}" == *"Extracted" || "${primary}" == *"NoField" ]]; then
+    echo "Primary ${primary} incompatible with digitization type ${digitype}; aborting"
+    return 1
+  fi
+fi
 
-rm template.fcl
+rm digitize.fcl
 samweb list-file-locations --schema=root --defname="dts.mu2e.${name}.art"  | cut -f1 > $name.txt
-echo \#include \"Production/JobConfig/digitize/${digitype}.fcl\" >> template.fcl
-echo outputs.TriggeredOutput.fileName: \"dig.owner.${primary}${digitype}Triggered.version.sequencer.art\" >> template.fcl
-echo outputs.UntriggeredOutput.fileName: \"dig.owner.${primary}${digitype}Untriggered.version.sequencer.art\" >> template.fcl
-echo outputs.TrkOutput.fileName: \"dig.owner.${primary}${digitype}Trk.version.sequencer.art\" >> template.fcl
-echo outputs.CaloOutput.fileName: \"dig.owner.${primary}${digitype}Calo.version.sequencer.art\" >> template.fcl
-generate_fcl --dsconf="$conf" --dsowner=mu2e --description="${primary}${digitype}" --embed template.fcl \
+echo \#include \"Production/JobConfig/digitize/${digitype}.fcl\" >> digitize.fcl
+echo outputs.TriggeredOutput.fileName: \"dig.owner.${digout}Triggered.version.sequencer.art\" >> digitize.fcl
+echo outputs.UntriggeredOutput.fileName: \"dig.owner.${digout}Untriggered.version.sequencer.art\" >> digitize.fcl
+echo outputs.TrkOutput.fileName: \"dig.owner.${digout}Trk.version.sequencer.art\" >> digitize.fcl
+echo outputs.CaloOutput.fileName: \"dig.owner.${digout}Calo.version.sequencer.art\" >> digitize.fcl
+generate_fcl --dsconf="$conf" --dsowner=mu2e --description="${digout}" --embed digitize.fcl \
   --inputs="$name.txt" --merge-factor=$merge
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
   if test -d $dirname; then
     echo "found dir $dirname"
-    rm -rf "${primary}${digitype}_$dirname"
-    mv $dirname "${primary}${digitype}_$dirname"
+    rm -rf "${digout}_$dirname"
+    mv $dirname "${digout}_$dirname"
   fi
 done
 
