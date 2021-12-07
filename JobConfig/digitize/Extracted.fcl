@@ -4,11 +4,14 @@
 #include "Production/JobConfig/digitize/Digitize.fcl"
 # add trigger paths
 #include "Offline/gen/fcl/Trigger/ExtrPosTrigMenu/ExtrPosTrigMenu.fcl"
-# setthe event timing for OffSpill
+# set the event timing for OffSpill
 physics.producers.EWMProducer.SpillType : 0
 # override the Untriggered filter to just prescale
 physics.filters.Triggerable : {
   module_type : RandomPrescaleFilter
-  nPrescale         : 100
+  nPrescale         : 1000
 }
+# extracted geometry
+services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
+
 

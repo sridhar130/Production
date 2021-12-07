@@ -1,10 +1,12 @@
 #
-#  Digitization specialization for on-spill simulations
+#  Digitization specialization for on-spill simulations (no pileup mixing)
+#  This should NOT be used for physics studies
 #
 #include "Production/JobConfig/digitize/Digitize.fcl"
 # add trigger paths
 #include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
-# set the event timing for Onspill
+# set the event timing for OnSpill
 physics.producers.EWMProducer.SpillType : 1
-physics.producers.EWMProducer.RecoFromMCTruth : true
-physics.producers.EWMProducer.RecoFromMCTruthErr : 0.5
+# minimal BField map
+services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
+

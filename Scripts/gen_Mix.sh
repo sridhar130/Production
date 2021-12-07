@@ -121,7 +121,7 @@ echo outputs.UntriggeredOutput.fileName: \"dig.owner.${mixout}Untriggered.versio
 #
 # run generate_fcl
 #
-if [ $1 == "NoPrimary" ]; then
+if [ $primary == "NoPrimary" ]; then
   generate_fcl --dsconf="$outconf" --dsowner=mu2e --description="$mixout" --embed mix.fcl \
   --run-number=1203 --events-per-job=$eventsperjob --njobs=$njobs \
   --auxinput=1:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat$mixinconf.txt \

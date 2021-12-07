@@ -1,7 +1,3 @@
-# set the event timing for Onspill
-physics.producers.EWMProducer.SpillType : 1
-# minimal BField map
-services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
 # add primary and mixers to the list of step producers.  Note the StrawDigi maker uses a general selector if no module is specified
 physics.producers.makeSD.StrawGasStepModule : ""
 # configure the mixin efficiencies
@@ -19,6 +15,10 @@ outputs.TriggeredOutput.fileName: "dig.owner.MixTriggered.version.sequencer.art"
 outputs.UntriggeredOutput.fileName: "dig.owner.MixUntriggered.version.sequencer.art"
 # mixing requires the SimEfficiency tables
 services.ProditionsService.simbookkeeper.useDb: true
-# add trigger paths
-#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+# adjust detstep lists to include pileup
+physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","","" ]
+physics.producers.compressDigiMCs.simParticleTags : [compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
+physics.producers.compressDigiMCs.caloShowerStepTags : [compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
+physics.producers.CaloShowerROMaker.caloShowerStepCollection : [compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
+physics.producers.CrvPhotons.crvStepModuleLabels : [ compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
 

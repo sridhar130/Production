@@ -23,19 +23,16 @@ physics : {
   EndPath : @local::Digitize.EndPath
 }
 #
-outputs : {
-  TriggeredOutput : @local::Mixing.TriggeredOutput
-  UntriggeredOutput : @local::Mixing.UntriggeredOutput
-}
+outputs : @local::Digitize.Outputs
 #
 # Final configuration
 #
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/digitize/epilog.fcl"
 #include "Production/JobConfig/mixing/epilog.fcl"
-physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","","" ]
-physics.producers.compressDigiMCs.simParticleTags : [compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
-physics.producers.compressDigiMCs.caloShowerStepTags : [compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
-physics.producers.CaloShowerROMaker.caloShowerStepCollection : [compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
-physics.producers.CrvPhotons.crvStepModuleLabels : [ compressDetStepMCs, @sequence::Mixing.StepMixSequence ]
+#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+# set the event timing for OnSpill
+physics.producers.EWMProducer.SpillType : 1
+# minimal BField map
+services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
 
