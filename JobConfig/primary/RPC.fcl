@@ -8,10 +8,10 @@
 
 physics.producers.generate : {
   module_type : RPCGun
-  inputSimParticles: "TargetPiStopResampler"
+  inputSimParticles: TargetPiStopResampler
   stoppingTargetMaterial : "Al" 
   verbosity : 1
-  RPCType : "InternalRPC"
+  RPCType : @nil
   decayOffPDGCodes : [211,-211]
   spectrum : {
     spectrumShape : Bistirlich
@@ -22,6 +22,6 @@ physics.producers.generate : {
   doHistograms : true
 }
 
-physics.producers.FindMCPrimary.PrimaryProcess : "InternalRPC"
-#outputs.Output.fileName: "dts.owner.InternalRPC.version.sequencer.art"
+physics.producers.FindMCPrimary.PrimaryProcess : @nil 
+
 
