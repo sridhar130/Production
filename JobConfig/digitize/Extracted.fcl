@@ -13,5 +13,21 @@ physics.filters.Triggerable : {
 }
 # extracted geometry
 services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
+# setup CRV lookup tables to follow
+services.GeometryService.inputFile      : "Production/JobConfig/cosmic/geom_extracted_nofield.txt"
+physics.producers.CrvPhotons.CRVSectors : ["EX","T1","T2"] #/gused only to match the vector entries below
+physics.producers.CrvPhotons.reflectors : [  0 ,  1 ,  0 ]
+physics.producers.CrvPhotons.lookupTableFileNames : ["CRVConditions/v6_0/LookupTable_6000_0",  #/gEX
+  "CRVConditions/v6_0/LookupTable_2370_1",  #/gT1
+  "CRVConditions/v6_0/LookupTable_3200_0"]  #/gT2
+#/gnumber of photons per MeV visible energy deposited
+#/gfor 68 PE/SiPM @ 1 m away from SiPM (Test beam June 2017)
+#/gusing the pulse height calibration, this value gives 45 PE/SiPM @ 1 m away from SiPM
+physics.producers.CrvPhotons.scintillationYields  : [39400,39400,39400]
+physics.producers.CrvCoincidence.CRVSectors   : ["EX","T1","T2"]
+physics.producers.CrvCoincidence.PEthresholds : [  8 ,  8 ,  8 ]
+physics.producers.CrvCoincidence.adjacentPulseTimeDifferences  : [ 10 , 10 , 10 ]
+physics.producers.CrvCoincidence.maxTimeDifferences            : [ 10 , 10 , 10 ]
+physics.producers.CrvCoincidence.coincidenceLayers             : [  3 ,  3 ,  3 ]
 
 
