@@ -7,13 +7,12 @@
 #include "Production/JobConfig/primary/TargetPiStopParticle.fcl"
 
 physics.producers.generate : {
-  module_type : RPCGenGun
+  module_type : RPCGun
   inputSimParticles: "TargetPiStopResampler"
   stoppingTargetMaterial : "Al" 
   verbosity : 1
   RPCType : "InternalRPC"
   decayOffPDGCodes : [211,-211]
-  hitCollections : ["TargetPiStopFiler:virtualdetector"]
   spectrum : {
     spectrumShape : Bistirlich
     elow : 1. #MeV
