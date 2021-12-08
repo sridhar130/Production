@@ -71,9 +71,4 @@ physics.producers.g4run.SDConfig.preSimulatedHits:  ["beamResampler:virtualdetec
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/pileup/epilog.fcl"
-# reconfigure StepPoint producers to avoid double-counting particles from the pistop filter deep copy
-physics.producers.StrawGasStepMaker.SkipTheseStepPoints : "g4run"
-physics.producers.StrawGasStepMaker.KeepDeltasModule : ""
-physics.producers.CaloShowerStepMaker.caloStepPointCollection : ["FlashFilter:calorimeter"]
-physics.producers.CrvSteps.stepPointsModuleLabels : [ "FlashFilter" ]
-physics.producers.compressDetStepMCs.simParticleTag : "FlashFilter"
+
