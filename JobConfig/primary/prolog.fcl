@@ -22,7 +22,7 @@ Primary: {
       strawGasStepTag : "StrawGasStepMaker"
       caloShowerStepTag : "CaloShowerStepMaker"
       crvStepTag : "CrvSteps"
-      simParticleTag : "g4run"
+      simParticleTags : [ "g4run" ]
       mcTrajectoryTag : "g4run"
       debugLevel : 0
       # save StepPoints in VDs, ProtonAbsorber and ST
@@ -69,6 +69,27 @@ Primary: {
           stepPointMCMixer: { mixingMap: [ [ "TargetStopFilter:virtualdetector", ":" ] ] }
           volumeInfoMixer: {
             srInput: "compressPVTargetStops"
+            evtOutInstanceName: "eventlevel"
+          }
+        }
+      }
+    }
+    
+    TargetPiStopResampler : {
+      module_type: ResamplingMixer
+      readMode            : sequential
+      wrapFiles           : true
+      fileNames: @nil
+      mu2e: {
+        writeEventIDs : true
+        MaxEventsToSkip: @nil
+        debugLevel : 0
+        products: {
+          genParticleMixer: { mixingMap: [ [ "beamResampler", "" ] ] }
+          simParticleMixer: { mixingMap: [ [ "TargetPiStopFilter", "" ] ] }
+          stepPointMCMixer: { mixingMap: [ [ "TargetPiStopFilter:virtualdetector", ":" ] ] }
+          volumeInfoMixer: {
+            srInput: "compressPVTargetPiStops"
             evtOutInstanceName: "eventlevel"
           }
         }
