@@ -9,7 +9,7 @@
 # $4 is the campaign version of the primary files.
 # $5 is the campaign version of the output files.
 # $6 is the database version
-# $7 is the proton beam intensity used to scale the pileup (1BB, 2BB, Low)
+# $7 is the beam intensity: one (1 booster batch), two, or low (low intensity)
 
 # optional arguments:
 # $8 is the number of events per job (only needed for NoPrimary, ignored otherwise)
@@ -115,7 +115,7 @@ elif [ $nbb == "2BB" ]; then
 elif [ $nbb == "Low" ]; then
   echo '#include "Production/JobConfig/mixing/LowIntensity.fcl"' >> mix.fcl
 else
-  echo "Unknown proton beam intensity; aborting"
+  echo "Unknown proton beam intensity $nbb; aborting"
   return 1;
 fi
 #
