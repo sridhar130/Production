@@ -10,7 +10,7 @@ physics.producers.generate : {
   module_type : RPCGun
   inputSimParticles: TargetPiStopResampler
   stoppingTargetMaterial : "Al" 
-  verbosity : 1
+  verbosity : 0
   RPCType : @nil
   decayOffPDGCodes : [211,-211]
   spectrum : {
