@@ -75,7 +75,16 @@ Digitize: {
     @sequence::CrvDAQPackage.CrvDAQSequence,
     compressDigiMCs ]
 
-
+  TriggerProducts : [
+    "keep mu2e::TriggerInfo_*_*_*",
+    "keep art::TriggerResults_*_*_*",
+    "keep mu2e::KalSeeds_TT*_*_*",
+    "keep mu2e::HelixSeeds_TT*_*_*",
+    "keep mu2e::TimeClusters_TT*_*_*",
+    "keep mu2e::CaloClusters_CaloClusterFast_*_*",
+    "keep mu2e::ProtonBunchIntensity*_*_*_*"
+  ]
+  #
   DigiProducts : [
     "keep mu2e::StrawDigis_*_*_*",
     "keep mu2e::StrawDigiADCWaveforms_*_*_*",
