@@ -21,7 +21,7 @@ nevts=`samCountEvents.sh $dataset`
 let nskip=nevts/nfiles
 # write the pibeamresampler.fcl
 rm pibeamresampler.fcl
-echo '#include "Production/JobConfig/pionbeam/PiBeamResampler.fcl"' >> pibeamresampler.fcl
+echo '#include "Production/JobConfig/pileup/PiBeamResampler.fcl"' >> pibeamresampler.fcl
 echo physics.filters.beamResampler.mu2e.MaxEventsToSkip: ${nskip} >> pibeamresampler.fcl
 #
 generate_fcl --dsconf=$1$3 --dsowner=sophie --run-number=1202 --description=PiBeamResampler --events-per-job=400000 --njobs=$4 --embed pibeamresampler.fcl --auxinput=1:physics.filters.beamResampler.fileNames:PiInfiniteBeamCat.txt
