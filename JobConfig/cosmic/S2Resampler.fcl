@@ -39,6 +39,7 @@ outputs : { PrimaryOutput :@local::Primary.PrimaryOutput }
 
 #  CrvSteps come from the S1 output
 physics.producers.compressDetStepMCs.crvStepTag : "cosmicResample"
+physics.producers.compressDetStepMCs.simParticleTags: [ "g4run", "cosmicResample" ]
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: @local::Cosmic.MultiStageParametersCosmicS2
 # Kill cosmics outside of the CRV region
