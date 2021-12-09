@@ -47,9 +47,10 @@ physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS2
 #physics.producers.g4run.SDConfig.preSimulatedHits:  ["cosmicResample:CRV"]
 physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 
-outputs.PrimaryOutput.fileName        : "dts.owner.Cosmic.version.sequencer.art"
-outputs.PrimaryOutput.outputCommands : [@sequence::Primary.KeptProducts,
-   "keep mu2e::CosmicLivetime_*_mixed_*"]
+outputs.PrimaryOutput.outputCommands : [
+  "drop *_*_*_*",
+  @sequence::Primary.KeptProducts,
+  "keep mu2e::CosmicLivetime_*_mixed_*"]
 #
 # final configuration
 #

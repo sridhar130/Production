@@ -1,2 +1,2 @@
 #include "Production/JobConfig/cosmic/S2Resampler.fcl"
-outputs.Output.fileName        : "dts.owner.CosmicCORSIKA.version.sequencer.art"
+outputs.PrimaryOutput.fileName        : "dts.owner.CosmicCORSIKA.version.sequencer.art"
