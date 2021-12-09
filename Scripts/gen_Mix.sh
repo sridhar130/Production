@@ -9,7 +9,7 @@
 # $4 is the campaign version of the primary files.
 # $5 is the campaign version of the output files.
 # $6 is the database version
-# $7 is the number of booster batches
+# $7 is the beam intensity: one (1 booster batch), two, or low (low intensity)
 
 # optional arguments:
 # $8 is the number of events per job (only needed for NoPrimary, ignored otherwise)
@@ -50,6 +50,7 @@ nbb=$7
 eventsperjob=-1
 njobs=-1
 moveit=
+
 if [[ $# -ge 8 ]]; then eventsperjob=$8; fi
 if [[ $# -ge 9 ]]; then  njobs=$9; fi
 if [[ $# -ge 10 ]]; then  moveit=$10; fi
@@ -98,6 +99,8 @@ if [ $nbb == "one" ]; then
   echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> mix.fcl
 elif [ $nbb == "two" ]; then
   echo '#include "Production/JobConfig/mixing/TwoBB.fcl"' >> mix.fcl
+elif [ $nbb == "low" ]; then
+  echo '#include "Production/JobConfig/mixing/LowIntensity.fcl"' >> mix.fcl
 else
   echo "Must specify 'one' or 'two' booster batches"
 fi

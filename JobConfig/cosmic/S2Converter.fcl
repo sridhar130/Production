@@ -19,7 +19,7 @@ physics.filters.CaloStepFilter.StrawGasSteps: [ ]
 
 physics.producers.CaloShowerStepMaker.caloStepPointCollection: ["detectorFilter:calorimeter"]
 physics.producers.CrvSteps.stepPointsModuleLabels : ["detectorFilter"]
-physics.producers.compressDetStepMCs.simParticleTags: [ "detectorFilter" ]
+physics.producers.compressDetStepMCs.simParticleTags: ["detectorFilter"]
 physics.producers.compressDetStepMCs.stepPointMCTags : [ "detectorFilter:virtualdetector", "detectorFilter:protonabsorber" ]
 physics.producers.compressDetStepMCs.mcTrajectoryTag: "detectorFilter"
 outputs.Output.fileName        : "sim.owner.CosmicConverted.version.sequencer.art"
