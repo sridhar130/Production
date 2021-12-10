@@ -18,27 +18,15 @@ physics : {
     @table::Mixing.filters
   }
   analyzers: { @table::Digitize.analyzers }
-  Triggered : [ @sequence::Mixing.MixSequence ]
+  MixPath : [ @sequence::Mixing.MixSequence ]
   Untriggered : [ @sequence::Mixing.MixSequence, Triggerable ]
   EndPath : [ @sequence::Digitize.EndSequence, TriggeredOutput, UntriggeredOutput ]
 }
-#
-outputs : {
-  TriggeredOutput : @local::Digitize.TriggeredOutput
-  UntriggeredOutput : @local::Digitize.UntriggeredOutput
-}
-physics.trigger_paths[0] : Triggered
-physics.trigger_paths[1] : Untriggered
-physics.end_paths : [ EndPath ]
-#
+
 # Final configuration
 #
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/digitize/epilog.fcl"
 #include "Production/JobConfig/mixing/epilog.fcl"
 #include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
-# set the event timing for OnSpill
-physics.producers.EWMProducer.SpillType : 1
-# minimal BField map
-services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
 

@@ -106,15 +106,13 @@ Digitize: {
     "keep mu2e::ProtonBunchIntensity*_*_*_*"
   ]
 
-
   #
   # different streams for different purposes:  Triggered is for physics studies.  Untriggered is for algorithm improvement.
   # *Calib are for calibration and alignment
   #
   TriggeredOutput : {
     module_type : RootOutput
-    SelectEvents : [ "*_trigger" ] # this selects events passing any 'physics' trigger
-    RejectEvents : [ "cst*_trigger" , "caloCalib*_trigger"] # reject events passing a calibration trigger
+    SelectEvents : [ "*_trigger" ] # this selects events passing any trigger.  We should eventually exclude 'Service' triggers FIXME
     fileName    : @nil
   }
 
@@ -133,13 +131,12 @@ Digitize: {
 
   CaloOutput : {
     module_type : RootOutput
-    SelectEvents : [ "caloCalib*_trigger" ] # selects events passing calorimeter trigger
+    SelectEvents : [ "caloCalib*_trigger" ] # selects events passing calorimeter calibration trigger
     fileName    : @nil
   }
 
   EndSequence : [digiCompressionCheck]
 }
-Digitize.EndPath : [ @sequence::Digitize.EndSequence, TriggeredOutput, UntriggeredOutput, TrkOutput, CaloOutput ]
 # override the Trigger sequence to prepare digis
 Trigger.PrepareDigis: [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
 Digitize.TriggeredOutput.outputCommands : [ "drop *_*_*_*",

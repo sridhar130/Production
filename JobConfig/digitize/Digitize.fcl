@@ -16,12 +16,10 @@ physics : {
     @table::Trigger.filters
   }
   analyzers: { @table::Digitize.analyzers }
-  Triggered : @local::Digitize.DigitizeSequence
+  DigitizePath : @local::Digitize.DigitizeSequence
   Untriggered : [ @sequence::Digitize.DigitizeSequence, Triggerable ]
-  EndPath : @local::Digitize.EndPath
 }
 #
-outputs : @local::Digitize.Outputs
 #
 # Final configuration
 #
@@ -30,6 +28,5 @@ outputs : @local::Digitize.Outputs
 #
 # define the digitization paths.  Trigger paths must be added separately
 #
-physics.trigger_paths[0] : Triggered
+physics.trigger_paths[0] : DigitizePath
 physics.trigger_paths[1] : Untriggered
-physics.end_paths : [ EndPath ]

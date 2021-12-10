@@ -35,10 +35,22 @@ fi
 rm digitize.fcl
 samweb list-file-locations --schema=root --defname="dts.mu2e.${name}.art"  | cut -f1 > $name.txt
 echo \#include \"Production/JobConfig/digitize/${digitype}.fcl\" >> digitize.fcl
-echo outputs.TriggeredOutput.fileName: \"dig.owner.${digout}Triggered.version.sequencer.art\" >> digitize.fcl
-echo outputs.UntriggeredOutput.fileName: \"dig.owner.${digout}Untriggered.version.sequencer.art\" >> digitize.fcl
-echo outputs.TrkOutput.fileName: \"dig.owner.${digout}Trk.version.sequencer.art\" >> digitize.fcl
-echo outputs.CaloOutput.fileName: \"dig.owner.${digout}Calo.version.sequencer.art\" >> digitize.fcl
+# turn off streams according to the digitization type.
+if [[ "${digitype}" == "Extracted" || "${digitype}" == "NoField" ]]; then
+  echo outputs.TrkOutput.fileName: \"dig.owner.${digout}Trk.version.sequencer.art\" >> digitize.fcl
+  echo outputs.CaloOutput.fileName: \"dig.owner.${digout}Calo.version.sequencer.art\" >> digitize.fcl
+  echo outputs.UntriggeredOutput.fileName: \"dig.owner.${digout}Untriggered.version.sequencer.art\" >> digitize.fcl
+elif [[ "${digitype}" == "OffSpill" ]]; then
+  # keep all streams
+  echo outputs.TrkOutput.fileName: \"dig.owner.${digout}Trk.version.sequencer.art\" >> digitize.fcl
+  echo outputs.CaloOutput.fileName: \"dig.owner.${digout}Calo.version.sequencer.art\" >> digitize.fcl
+  echo outputs.TriggeredOutput.fileName: \"dig.owner.${digout}Triggered.version.sequencer.art\" >> digitize.fcl
+  echo outputs.UntriggeredOutput.fileName: \"dig.owner.${digout}Untriggered.version.sequencer.art\" >> digitize.fcl
+elif [[ "${digitype}" == "OnSpill" ]]; then
+  # turn off 'calibration' streams for now
+  echo outputs.TriggeredOutput.fileName: \"dig.owner.${digout}Triggered.version.sequencer.art\" >> digitize.fcl
+  echo outputs.UntriggeredOutput.fileName: \"dig.owner.${digout}Untriggered.version.sequencer.art\" >> digitize.fcl
+fi
 generate_fcl --dsconf="$conf" --dsowner=mu2e --description="${digout}" --embed digitize.fcl \
   --inputs="$name.txt" --merge-factor=$merge
 for dirname in 000 001 002 003 004 005 006 007 008 009; do

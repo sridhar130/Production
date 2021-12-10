@@ -13,6 +13,23 @@ physics.filters.Triggerable : {
 }
 # extracted geometry
 services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
+# produce only calibration streams
+physics.EndPath : [ @sequence::Digitize.EndSequence, TrkOutput, CaloOutput, UntriggeredOutput ]
+physics.end_paths : [ EndPath ]
+outputs : {
+  TrkOutput : {
+    @table::Digitize.TrkOutput
+    fileName : "dig.owner.ExtractedTrk.version.sequencer.art"
+  }
+  CaloOutput : {
+    @table::Digitize.CaloOutput
+    fileName : "dig.owner.ExtractedCalo.version.sequencer.art"
+  }
+  UntriggeredOutput : {
+    @table::Digitize.UntriggeredOutput
+    fileName : "dig.owner.ExtractedUntriggered.version.sequencer.art"
+  }
+}
 # setup CRV lookup tables to follow
 services.GeometryService.inputFile      : "Production/JobConfig/cosmic/geom_extracted_nofield.txt"
 physics.producers.CrvPhotons.CRVSectors : ["EX","T1","T2"] #/gused only to match the vector entries below
@@ -29,6 +46,4 @@ physics.producers.CrvCoincidence.PEthresholds : [  8 ,  8 ,  8 ]
 physics.producers.CrvCoincidence.adjacentPulseTimeDifferences  : [ 10 , 10 , 10 ]
 physics.producers.CrvCoincidence.maxTimeDifferences            : [ 10 , 10 , 10 ]
 physics.producers.CrvCoincidence.coincidenceLayers             : [  3 ,  3 ,  3 ]
-# turn off 'physics' stream
-outputs.TriggeredOutput.fileName : "/dev/null"
 
