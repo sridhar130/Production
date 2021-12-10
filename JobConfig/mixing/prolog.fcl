@@ -36,8 +36,6 @@ Mixing : {
       MaxEventsToSkip: @nil
     }
   }
-  MixingProducts : [
-  ]
 }
 Mixing : {
   producers : {
@@ -59,22 +57,6 @@ Mixing : {
     EleBeamFlashMixer : @local::Mixing.DetStepMixer
     MuBeamFlashMixer : @local::Mixing.DetStepMixer
     NeutralsFlashMixer : @local::Mixing.DetStepMixer
-  }
-  TriggeredOutput : {
-    @table::Digitize.TriggeredOutput
-    outputCommands : [ "drop *_*_*_*",
-      @sequence::Mixing.MixingProducts,
-      @sequence::Digitize.DigiProducts,
-      @sequence::Digitize.TriggerProducts ]
-
-  }
-  UntriggeredOutput : {
-    @table::Digitize.UntriggeredOutput
-    outputCommands : [ "drop *_*_*_*",
-      @sequence::Mixing.MixingProducts,
-      @sequence::Digitize.DigiProducts,
-      @sequence::Digitize.TriggerProducts ]
-    SelectEvents : [ Untriggered ]
   }
 
   StepMixSequence : [ MuStopPileupMixer, EleBeamFlashMixer, MuBeamFlashMixer, NeutralsFlashMixer ]

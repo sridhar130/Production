@@ -110,7 +110,7 @@ Cosmic: {
     mcTrajectoryInputs : [ "g4run" ]
     vetoDaughters: []
   }
-  cosmicResample: {
+  cosmicResampler: {
     module_type: ResamplingMixer
     fileNames: @nil
     readMode: "sequential"
@@ -163,12 +163,12 @@ Cosmic: {
   }
   MultiStageParametersCosmicS2: {
     primaryType: "StepPoints"
-    primaryTag: "cosmicResample:crvStage1"
-    inputMCTrajectories: "cosmicResample"
+    primaryTag: "cosmicResampler:crvStage1"
+    inputMCTrajectories: "cosmicResampler"
     simStageOverride: 1
-    inputPhysVolumeMultiInfo: "cosmicResample"
+    inputPhysVolumeMultiInfo: "cosmicResampler"
     updateEventLevelVolumeInfos : {
-      input: "cosmicResample:eventlevel"
+      input: "cosmicResampler:eventlevel"
       outInstance: "eventlevel"
     }
   }
@@ -196,6 +196,6 @@ Cosmic: {
     ]
   }
   # define sequences
-  ResampleSequence: [ genCounter, cosmicTimeOffset, cosmicResample ]
+  ResampleSequence: [ genCounter, cosmicTimeOffset, cosmicResampler ]
 }
 END_PROLOG
