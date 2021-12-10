@@ -16,6 +16,12 @@ physics: {
   producers : {
     @table::Common.producers
     @table::Primary.producers
+    cosmicTimeOffset: {
+      module_type: CosmicTimeOffset
+      intervalStart: 0
+      intervalEnd: 100005
+      cosmicModuleLabel : "generate"
+    }
   }
 
   filters : {
@@ -27,18 +33,19 @@ physics: {
     @table::Primary.analyzers
   }
 
-  PrimaryPath :  [ @sequence::Common.generateSequence, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence ]
+  PrimaryPath :  [ @sequence::Common.generateSequence, cosmicTimeOffset, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence ]
   EndPath : @local::Primary.EndPath
   trigger_paths : [ PrimaryPath ]
   end_paths : [ EndPath ]
 }
 
-outputs : { Output : @local::Primary.Output }
+outputs : { PrimaryOutput : @local::Primary.PrimaryOutput }
 
-outputs.Output.fileName : "sim.owner.CosmicNoFieldExtracted.version.sequencer.art"
-outputs.Output.outputCommands : [@sequence::Primary.KeptProducts, "keep mu2e::CosmicLivetime_*_*_*", "keep mu2e::GenParticles_*_*_*"]
+outputs.PrimaryOutput.fileName : "sim.owner.CosmicNoFieldExtracted.version.sequencer.art"
+outputs.PrimaryOutput.outputCommands : [@sequence::Primary.KeptProducts, "keep mu2e::CosmicLivetime_*_*_*", "keep mu2e::GenParticles_*_*_*"]
 
 physics.producers.g4run.TrajectoryControl: @local::mu2eg4DefaultTrajectories
+physics.producers.g4run.inputs.primaryTag : cosmicTimeOffset
 physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicNoField
 physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 
@@ -47,6 +54,8 @@ physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 #
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/primary/epilog.fcl"
+#
+# need to offset the GenParticles
 
 physics.end_paths : [ EndPath ]
 # no histogram output
