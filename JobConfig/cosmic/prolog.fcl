@@ -110,31 +110,24 @@ Cosmic: {
     mcTrajectoryInputs : [ "g4run" ]
     vetoDaughters: []
   }
-  cosmicResampler: {
+  CosmicResampler: {
     module_type: ResamplingMixer
     fileNames: @nil
     readMode: "sequential"
     wrapFiles: true
     mu2e: {
-      debugLevel : 0
       writeEventIDs : true
       MaxEventsToSkip: @nil
       products: {
-        genParticleMixer: { mixingMap: [ [ "compressDetStepMCs", "" ] ] }
-        simParticleMixer: { mixingMap: [ [ "compressDetStepMCs", ""] ] }
-        mcTrajectoryMixer:{ mixingMap: [ [ "compressDetStepMCs", ""] ] }
-        stepPointMCMixer: { mixingMap: [ [ "compressDetStepMCs:crvStage1", ":" ] ] }
-        crvStepMixer: { mixingMap: [ [ "compressDetStepMCs", ""] ] }
+        genParticleMixer: { mixingMap: [ [ "generate", "" ] ] }
+        simParticleMixer: { mixingMap: [ [ "cosmicFilter", ""] ] }
+        mcTrajectoryMixer:{ mixingMap: [ [ "cosmicFilter", ""] ] }
+        stepPointMCMixer: { mixingMap: [ [ "cosmicFilter:crvStage1", ":" ], [ "cosmicFilter:CRV", ":" ] ] }
         volumeInfoMixer: {
           evtOutInstanceName: "eventlevel"
           srInput: "compressPV"
         }
         simTimeOffset : "cosmicTimeOffset"
-        # Bring in info from the previous stage
-        cosmicLivetimeMixer : {
-          moduleLabel: "generate"
-          genCounterLabel: "genCounter::S1DSStops"
-        }
       }
     }
   }
@@ -162,15 +155,10 @@ Cosmic: {
     ]
   }
   MultiStageParametersCosmicS2: {
-    primaryType: "StepPoints"
-    primaryTag: "cosmicResampler:crvStage1"
-    inputMCTrajectories: "cosmicResampler"
-    simStageOverride: 1
-    inputPhysVolumeMultiInfo: "cosmicResampler"
-    updateEventLevelVolumeInfos : {
-      input: "cosmicResampler:eventlevel"
-      outInstance: "eventlevel"
-    }
+    primaryType: StepPoints
+    primaryTag: "CosmicResampler:crvStage1"
+    inputMCTrajectories: "CosmicResampler"
+    inputPhysVolumeMultiInfo: ""
   }
   Mu2eG4CommonCutCosmicS1: {
     type: union
@@ -195,7 +183,6 @@ Cosmic: {
       }
     ]
   }
-  # define sequences
-  ResampleSequence: [ genCounter, cosmicTimeOffset, cosmicResampler ]
+
 }
 END_PROLOG

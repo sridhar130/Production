@@ -4,9 +4,9 @@
 #include "Production/JobConfig/cosmic/S2Resampler.fcl"
 physics.filters.filterS1: {
   module_type: FilterCosmicsStage1
-  inputs : [ "cosmicResample:CRV" ] # broken! there are no StepPointMCs in S1 output FIXME
+  inputs : [ "cosmicResample:CRV" ]
   cutEDepMin: 16  # Filter events that deposit lower than 16 MeV in CRV
 }
-physics.PrimaryPath: [@sequence::Cosmic.ResampleSequence, filterS1, @sequence::S2SimSequence ]
-physics.filters.PrimaryFilter.MaximumPartMom: 500
+physics.PrimaryPath: [genCounter, cosmicTimeOffset, cosmicResample, filterS1, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence]
+physics.filters.DetStepFilter.MaximumPartMom: 500
 outputs.Output.fileName        : "dts.owner.CosmicHigh.version.sequencer.art"

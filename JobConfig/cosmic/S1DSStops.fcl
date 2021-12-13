@@ -3,13 +3,10 @@
 #
 # Yuri Oksuzian, 2021
 #include "Offline/fcl/standardServices.fcl"
-#include "Offline/CRVResponse/fcl/prolog.fcl"
-#include "Offline/Compression/fcl/prolog.fcl"
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/cosmic/prolog.fcl"
 
-
-process_name : S1DSStops
+process_name : Primary
 
 services: @local::Services.Sim
 
@@ -17,21 +14,6 @@ physics: {
   producers : {
     compressPV: @local::Cosmic.compressPV
     @table::Common.producers
-    CrvSteps :{
-      @table::CrvSteps
-      stepPointsModuleLabels : ["cosmicFilter"]
-    }
-    compressDetStepMCs : {
-      module_type : CompressDetStepMCs
-      strawGasStepTag : ""
-      caloShowerStepTag : ""
-      crvStepTag : "CrvSteps"
-      simParticleTags : [ "cosmicFilter" ]
-      mcTrajectoryTag : "cosmicFilter"
-      debugLevel : 0
-      stepPointMCTags : ["cosmicFilter:crvStage1"]
-      compressionOptions : @local::DetStepCompression.noCompression
-    }
   }
 
   filters : {
@@ -46,7 +28,7 @@ physics: {
 
   # Here we moved the genCounter at the end in order to get a correct scaling of the
   # cosmic livetime after resampling
-  S1Path :  [generate, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, CrvSteps, compressDetStepMCs, compressPV, genCounter]
+  S1Path :  [generate, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, compressPV, genCounter]
   EndPath : [ genCountLogger, S1Output ]
 }
 
@@ -62,11 +44,8 @@ outputs : {
       "keep mu2e::GenEventCount_*_*_*",
       "keep mu2e::CosmicLivetime_*_*_*",
       "keep *_compressPV_*_*",
-      "keep mu2e::StepPointMCs_compressDetStepMCs_*_*",
-      "keep mu2e::CrvSteps_compressDetStepMCs_*_*",
-      "keep mu2e::SimParticlemv_compressDetStepMCs_*_*",
-      "keep mu2e::SimParticleart::Ptrmu2e::MCTrajectorystd::map_compressDetStepMCs_*_*",
-      "keep mu2e::GenParticles_compressDetStepMCs_*_*"]
+      "keep mu2e::GenParticles_*_*_*",
+      "keep *_cosmicFilter_*_*"]
   }
 }
 
@@ -82,8 +61,8 @@ physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS1
 physics.trigger_paths : [ S1Path ]
 physics.end_paths : [ EndPath ]
 services.SeedService.baseSeed         :  773651
+# set a coarse range for stepping through dirt and CRV
+physics.producers.g4run.physics.minRangeCut : 1.0 # 1 mm
 
 # Need this to increase the world volume.
 services.GeometryService.inputFile : "Production/JobConfig/cosmic/geom_cosmic.txt"
-# set a coarse range for stepping through dirt and CRV
-physics.producers.g4run.physics.minRangeCut : 1.0 // 1 mm

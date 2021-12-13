@@ -1,15 +1,11 @@
 # Re-sample cosmics from stage-1
 # Yuri Oksuzian, 2020
+#include "Offline/CommonMC/fcl/prolog.fcl"
 #include "Offline/fcl/standardServices.fcl"
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/primary/prolog.fcl"
 #include "Production/JobConfig/cosmic/prolog.fcl"
-#
-# define the sim sequence: unfortunately this can't be in prolog as it depends on primary
-# Note that CrvSteps now come in from the S1 file
-S2SimSequence : [@sequence::Common.g4Sequence, @sequence::TrackerMC.StepSim, @sequence::CaloMC.StepSim, @sequence::Primary.Finalize ]
-
-process_name: S2Resampler
+process_name: CosmicS2
 # the following will change when we read art stops
 source: { module_type : EmptyEvent }
 services : @local::Services.Sim
@@ -17,20 +13,13 @@ physics : {
   producers : {
     @table::Common.producers
     @table::Primary.producers
-    cosmicTimeOffset: {
-      module_type: CosmicTimeOffset
-      intervalStart: 0
-      intervalEnd: 100005
-    }
   }
   filters : {
     @table::Common.filters
     @table::Primary.filters
-    cosmicResampler : @local::Cosmic.cosmicResampler
   }
   analyzers : { @table::Primary.analyzers }
-  PrimaryPath : [ @sequence::Cosmic.ResampleSequence, @sequence::S2SimSequence ]
-
+  PrimaryPath : [ genCounter, cosmicTimeOffset, CosmicResampler, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence]
   EndPath : @local::Primary.EndPath
   trigger_paths : [ PrimaryPath ]
   end_paths : [ EndPath ]
@@ -38,26 +27,31 @@ physics : {
 outputs : { PrimaryOutput :@local::Primary.PrimaryOutput }
 #
 # Bring in info from the previous stage
-physics.filters.cosmicResampler: @local::Cosmic.cosmicResampler
-physics.filters.cosmicResampler.mu2e.MaxEventsToSkip: 0 # this number is overwritten by production, based on collection sizes
-physics.filters.cosmicResampler.mu2e.products.cosmicLivetimeMixer.moduleLabel: "generate"
-physics.filters.cosmicResampler.mu2e.products.cosmicLivetimeMixer.genCounterLabel: "genCounter::S1DSStops"
-
-#  CrvSteps come from the S1 output
-physics.producers.compressDetStepMCs.crvStepTag : "cosmicResampler"
-physics.producers.compressDetStepMCs.simParticleTags: [ "g4run", "cosmicResampler" ]
+physics.filters.CosmicResampler: @local::Cosmic.CosmicResampler
+physics.filters.CosmicResampler.mu2e.MaxEventsToSkip: 0 # this number is overwritten by production, based on collection sizes
+physics.filters.CosmicResampler.mu2e.products.cosmicLivetimeMixer.moduleLabel: "generate"
+physics.filters.CosmicResampler.mu2e.products.cosmicLivetimeMixer.genCounterLabel: "genCounter::Primary"
+# configure the time offset: this works for OffSpill and OnSpill
+physics.producers.cosmicTimeOffset: @local::CommonMC.producers.cosmicTimeOffset
+physics.producers.cosmicTimeOffset.intervalStart: 0
+physics.producers.cosmicTimeOffset.intervalEnd: 100005
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: @local::Cosmic.MultiStageParametersCosmicS2
+physics.producers.g4run.inputs.simStageOverride: 1
+physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "CosmicResampler"
+physics.producers.g4run.inputs.updateEventLevelVolumeInfos.input: "CosmicResampler:eventlevel"
+physics.producers.g4run.inputs.updateEventLevelVolumeInfos.outInstance: "eventlevel"
 # Kill cosmics outside of the CRV region
 physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS2
+physics.producers.g4run.SDConfig.preSimulatedHits:  ["CosmicResampler:CRV"]
+# Allow MCTrajectories to save their own SimParticles, even if they aren't part of a DetectorStep
+physics.producers.compressDetStepMCs.compressionOptions.mcTrajectoryCompressionLevel: "noCompression"
+physics.producers.compressDetStepMCs.simParticleTags : [ "g4run", "CosmicResampler" ]
+# setup primary finding for either generator (needs extension if new cosmic generators are added)
 physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
-
-outputs.PrimaryOutput.outputCommands : [
-  "drop *_*_*_*",
-  @sequence::Primary.KeptProducts,
-  "keep mu2e::CosmicLivetime_*_mixed_*"]
-
-
+# add cosmic livetime output for bookkeeping
+outputs.PrimaryOutput.outputCommands : [@sequence::Primary.KeptProducts,
+   "keep mu2e::CosmicLivetime_*_mixed_*" ]
 #
 # final configuration
 #
