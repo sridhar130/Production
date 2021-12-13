@@ -46,7 +46,6 @@ physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS2
 physics.producers.g4run.SDConfig.preSimulatedHits:  ["CosmicResampler:CRV"]
 # Allow MCTrajectories to save their own SimParticles, even if they aren't part of a DetectorStep
 physics.producers.compressDetStepMCs.compressionOptions.mcTrajectoryCompressionLevel: "noCompression"
-physics.producers.compressDetStepMCs.simParticleTags : [ "g4run", "CosmicResampler" ]
 # setup primary finding for either generator (needs extension if new cosmic generators are added)
 physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 # add cosmic livetime output for bookkeeping
