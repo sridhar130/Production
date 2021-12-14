@@ -6,7 +6,7 @@
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/cosmic/prolog.fcl"
 
-process_name : S1DSStops
+process_name : Primary
 
 services: @local::Services.Sim
 
@@ -61,6 +61,8 @@ physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS1
 physics.trigger_paths : [ S1Path ]
 physics.end_paths : [ EndPath ]
 services.SeedService.baseSeed         :  773651
+# set a coarse range for stepping through dirt and CRV
+physics.producers.g4run.physics.minRangeCut : 1.0 # 1 mm
 
 # Need this to increase the world volume.
 services.GeometryService.inputFile : "Production/JobConfig/cosmic/geom_cosmic.txt"

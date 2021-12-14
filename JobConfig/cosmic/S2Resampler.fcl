@@ -31,26 +31,26 @@ physics.filters.CosmicResampler: @local::Cosmic.CosmicResampler
 physics.filters.CosmicResampler.mu2e.MaxEventsToSkip: 0 # this number is overwritten by production, based on collection sizes
 physics.filters.CosmicResampler.mu2e.products.cosmicLivetimeMixer.moduleLabel: "generate"
 physics.filters.CosmicResampler.mu2e.products.cosmicLivetimeMixer.genCounterLabel: "genCounter::Primary"
-
-# Point Mu2eG4 to the pre-simulated data
-physics.producers.g4run.inputs: @local::Cosmic.MultiStageParametersCosmicS2
-
+# configure the time offset: this works for OffSpill and OnSpill
 physics.producers.cosmicTimeOffset: @local::CommonMC.producers.cosmicTimeOffset
 physics.producers.cosmicTimeOffset.intervalStart: 0
 physics.producers.cosmicTimeOffset.intervalEnd: 100005
-
+# Point Mu2eG4 to the pre-simulated data
+physics.producers.g4run.inputs: @local::Cosmic.MultiStageParametersCosmicS2
 physics.producers.g4run.inputs.simStageOverride: 1
 physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "CosmicResampler"
 physics.producers.g4run.inputs.updateEventLevelVolumeInfos.input: "CosmicResampler:eventlevel"
 physics.producers.g4run.inputs.updateEventLevelVolumeInfos.outInstance: "eventlevel"
-
 # Kill cosmics outside of the CRV region
 physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS2
 physics.producers.g4run.SDConfig.preSimulatedHits:  ["CosmicResampler:CRV"]
+# Allow MCTrajectories to save their own SimParticles, even if they aren't part of a DetectorStep
+physics.producers.compressDetStepMCs.compressionOptions.mcTrajectoryCompressionLevel: "noCompression"
+# setup primary finding for either generator (needs extension if new cosmic generators are added)
 physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
-
+# add cosmic livetime output for bookkeeping
 outputs.PrimaryOutput.outputCommands : [@sequence::Primary.KeptProducts,
-   "keep mu2e::CosmicLivetime_*_mixed_*"]
+   "keep mu2e::CosmicLivetime_*_mixed_*" ]
 #
 # final configuration
 #

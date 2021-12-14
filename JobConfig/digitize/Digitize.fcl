@@ -30,3 +30,4 @@ physics : {
 #
 physics.trigger_paths[0] : DigitizePath
 physics.trigger_paths[1] : Untriggered
+services.SeedService.baseSeed          : 8
