@@ -51,7 +51,8 @@ elif [[ "${digitype}" == "OnSpill" ]]; then
   echo outputs.TriggeredOutput.fileName: \"dig.owner.${digout}Triggered.version.sequencer.art\" >> digitize.fcl
   echo outputs.UntriggeredOutput.fileName: \"dig.owner.${digout}Untriggered.version.sequencer.art\" >> digitize.fcl
 fi
-generate_fcl --dsconf="$conf" --dsowner=mu2e --description="${digout}" --embed digitize.fcl \
+
+generate_fcl --dsconf="$conf" --dsowner=mu2e --description="${digout}Digi" --embed digitize.fcl \
   --inputs="$name.txt" --merge-factor=$merge
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
   if test -d $dirname; then
