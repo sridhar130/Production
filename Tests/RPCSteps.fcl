@@ -4,8 +4,8 @@ source.firstRun: 501 #TODO
 physics.filters.TargetPiStopResampler.fileNames : ["/mu2e/app/users/sophie/Offline_October/Jobs/sim.owner.PiminusStopsCat.version.sequencer.art"]
 
 # change for Int/Ext:
-physics.producers.generate.RPCType : "InternalRPC"  
-physics.producers.FindMCPrimary.PrimaryProcess : "InternalRPC"
+physics.producers.generate.RPCType : "mu2eInternalRPC"  
+physics.producers.FindMCPrimary.PrimaryProcess : "mu2eInternalRPC"
 
 physics.filters.TargetPiStopResampler.mu2e.MaxEventsToSkip: 0
 outputs.PrimaryOutput.fileName : "dts.tester.RPC.Test.1.art"
