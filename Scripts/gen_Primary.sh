@@ -8,7 +8,7 @@
 # $2 is the production (ie MDC2020)
 # $3 is the stops production version
 # $4 is the output primary production version
-# $5 is the kind of input stops (Target, IPA or Cosmic)
+# $5 is the kind of input stops (Muminus, Muplus, IPA or Cosmic)
 # $6 is the number of jobs
 # $7 is the number of events/job
 if [[ $# -lt 7 ]]; then
@@ -22,12 +22,15 @@ stype=$5
 njobs=$6
 eventsperjob=$7
 
-dataset=sim.mu2e.${stype}StopsCat.${stopsconf}.art
-resampler=${stype}StopResampler
-# Cosmic case is special
-if [[ "${stype}" == "Cosmic" ]]; then
+if [[ "${stype}" == "Muminus" ]] ||  [[ "${stype}" == "Muplus" ]]; then
+  dataset=sim.mu2e.${stype}StopsCat.${stopsconf}.art
+  resampler=TargetStopResampler
+elif [[ "${stype}" == "Cosmic" ]]; then
   dataset=sim.mu2e.${stype}DSStops${primary}.${stopsconf}.art   # should have Cat FIXME!
   resampler=${stype}Resampler
+else
+  dataset=sim.mu2e.${stype}StopsCat.${stopsconf}.art
+  resampler=${stype}StopResampler
 fi
 
 samweb list-file-locations --schema=root --defname="$dataset"  | cut -f1 > Stops.txt
