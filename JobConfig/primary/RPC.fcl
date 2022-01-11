@@ -17,6 +17,7 @@ physics.producers.generate : {
     ehi : 140.
     spectrumResolution : 0.1 #MeV
   }
+  pionDecayOff : true
   doHistograms : true
 }
 
