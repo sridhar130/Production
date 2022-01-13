@@ -21,4 +21,4 @@ source: {
 
 physics.producers.generate : @local::Cosmic.generateCORSIKA
 outputs.PrimaryOutput.fileName : "dts.owner.CosmicCORSIKANominalNoField.version.sequencer.art"
-services.GeometryService.inputFile: "Production/JobConfig/common/geom_nofield.txt"
+services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_no_field.txt"

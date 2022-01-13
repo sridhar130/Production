@@ -1,4 +1,0 @@
-# This configuration simulate cosmics with no field and extracted position
-#include "Production/JobConfig/cosmic/NoField.fcl"
-services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_extracted_nofield.txt"
-

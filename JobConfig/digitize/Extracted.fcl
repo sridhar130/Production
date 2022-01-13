@@ -31,7 +31,6 @@ outputs : {
   }
 }
 # setup CRV lookup tables to follow
-services.GeometryService.inputFile      : "Production/JobConfig/cosmic/geom_extracted_nofield.txt"
 physics.producers.CrvPhotons.CRVSectors : ["EX","T1","T2"] #/gused only to match the vector entries below
 physics.producers.CrvPhotons.reflectors : [  0 ,  1 ,  0 ]
 physics.producers.CrvPhotons.lookupTableFileNames : ["CRVConditions/v6_0/LookupTable_6000_0",  #/gEX
