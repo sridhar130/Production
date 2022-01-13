@@ -1,4 +1,3 @@
-
 #!/usr/bin/bash
 #
 # create fcl for producing primaries from stopped particles

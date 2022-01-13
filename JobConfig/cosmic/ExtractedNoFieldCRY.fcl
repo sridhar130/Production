@@ -1,6 +1,7 @@
-#include "Production/JobConfig/cosmic/ExtractedNoField.fcl"
+#include "Production/JobConfig/cosmic/NoField.fcl"
 
 source.module_type: EmptyEvent
 physics.producers.generate : @local::Cosmic.generateCRY
 physics.producers.generate.inputFile    : "Offline/EventGenerator/defaultConfigs/extractedCRYconfig.txt"
-outputs.Output.fileName : "sim.owner.CosmicCRYNoFieldExtracted.version.sequencer.art"
+outputs.PrimaryOutput.fileName : "dts.owner.CosmicCRYNoFieldExtracted.version.sequencer.art"
+services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_extracted_nofield.txt"

@@ -1,5 +1,5 @@
-#include "Production/JobConfig/cosmic/ExtractedNoField.fcl"
-
+#include "Production/JobConfig/cosmic/NoField.fcl"
+# extracted geometry CORSIKA
 source: {
   module_type: FromCorsikaBinary
   fileNames: ["/pnfs/mu2e/persistent/users/srsoleti/corsika/sim.srsoleti.corsika.v1.30001.csk"]
@@ -16,5 +16,6 @@ source: {
 }
 
 physics.producers.generate : @local::Cosmic.generateCORSIKA
+outputs.PrimaryOutput.fileName : "dts.owner.CosmicCORSIKAExtractedNoField.version.sequencer.art"
+services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_extracted_nofield.txt"
 
-outputs.Output.fileName         : "sim.owner.CosmicCORSIKANoFieldExtracted.version.sequencer.art"
