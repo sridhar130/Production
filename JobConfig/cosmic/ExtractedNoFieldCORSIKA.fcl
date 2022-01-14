@@ -12,5 +12,4 @@ physics.producers.generate : {
   targetBoxYmax : 9880
 }
 outputs.PrimaryOutput.fileName : "dts.owner.CosmicCORSIKAExtractedNoField.version.sequencer.art"
-services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_cosmic_nofield.txt"
-
+services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_cosmic_extracted.txt"
