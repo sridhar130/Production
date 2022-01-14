@@ -110,6 +110,12 @@ Cosmic: {
     mcTrajectoryInputs : [ "g4run" ]
     vetoDaughters: []
   }
+  cosmicTimeOffset: {
+    module_type: CosmicTimeOffset
+    intervalStart: 0
+    intervalEnd: 100005
+    cosmicModuleLabel : "generate"
+  }
   CosmicResampler: {
     module_type: ResamplingMixer
     fileNames: @nil
