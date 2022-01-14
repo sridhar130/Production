@@ -4,4 +4,4 @@ source.module_type: EmptyEvent
 physics.producers.generate : @local::Cosmic.generateCRY
 physics.producers.generate.inputFile    : "Offline/EventGenerator/defaultConfigs/extractedCRYconfig.txt"
 outputs.PrimaryOutput.fileName : "dts.owner.CosmicCRYNoFieldExtracted.version.sequencer.art"
-services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
+services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_cosmic_nofield.txt"

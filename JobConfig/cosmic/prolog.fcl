@@ -86,6 +86,31 @@ cosmicKineticEnergyCutS2: {
 }
 
 Cosmic: {
+  CORSIKA : {
+    source : {
+      module_type: FromCorsikaBinary
+      # example file only, should be overwritten downstream
+      fileNames: ["/pnfs/mu2e/persistent/users/srsoleti/corsika/sim.srsoleti.corsika.v1.30001.csk"]
+      runNumber          : 1205
+      showerAreaExtension  : 10000
+      projectToTargetBox : true
+      targetBoxXmin: -10000
+      targetBoxXmax: 3000
+      targetBoxYmin: -5000
+      targetBoxYmax: 5000
+      targetBoxZmin: -5000
+      targetBoxZmax: 21000
+      fluxConstant: 1.8e4
+    }
+    generate: {
+      module_type  : CORSIKAEventGenerator
+      corsikaModuleLabel: "FromCorsikaBinary"
+      refPointChoice: "UNDEFINED"
+      projectToTargetBox : true
+      targetBoxYmax : 5000
+      intDist: -1
+    }
+  }
   # generator truncation filter; only needed for cosmic rays in principle
   g4status: {
     module_type: FilterStatusG4
@@ -140,14 +165,6 @@ Cosmic: {
   generateCRY: {
     module_type: CRYEventGenerator
     inputFile    : "Offline/EventGenerator/defaultConfigs/defaultCRYconfig.txt"
-  }
-  generateCORSIKA: {
-    module_type  : CORSIKAEventGenerator
-    corsikaModuleLabel: "FromCorsikaBinary"
-    refPointChoice: "UNDEFINED"
-    projectToTargetBox : true
-    targetBoxYmax : 5000
-    intDist: -1
   }
   Mu2eG4CommonCutCosmicS2:{
     type: union
