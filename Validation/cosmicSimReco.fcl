@@ -49,14 +49,6 @@ services : @local::Services.Sim
 
 physics: {
   producers : {
-    generate : {
-      module_type : CeEndpoint
-      inputSimParticles: TargetStopResampler
-      stoppingTargetMaterial : "Al"
-      pdgId : 11
-      verbosity : 0
-    }
-
     @table::Common.producers
     @table::Primary.producers
     @table::Digitize.producers
