@@ -8,39 +8,6 @@
 #include "Production/JobConfig/digitize/prolog.fcl"
 #include "Production/JobConfig/cosmic/prolog.fcl"
 #include "Production/JobConfig/reco/prolog.fcl"
-BEGIN_PROLOG
-
-CosmicOuterShower:
-{
-  type: intersection
-  pars:
-  [
-    { type: plane normal: [  0,  0, -1 ] point : [ -3904, 0, 17000 ] }, //-z
-    { type: plane normal: [  0,  0,  1 ] point : [ -3904, 0, 25000 ] }, //+z
-    { type: plane normal: [  1,  0,  0 ] point : [ -1900, 0, 21000 ] }, //+x
-    { type: plane normal: [ -1,  0,  0 ] point : [ -5900, 0, 21000 ] }, //-x
-    { type: plane normal: [  0,  1,  0 ] point : [ -3904, 1000, 21000 ] }, //+y
-    { type: plane normal: [  0, -1,  0 ] point : [ -3904, -1000, 21000 ] }, //-y
-    { type: kineticEnergy cut: 80.0 },
-    { type: pdgId pars: [ 22, 11, -11 ] }
-  ]
-}
-
-inDirt:
-{
-  type: inVolume
-  pars: [ worldDirtBottom, worldDirtNW, worldDirtSW, worldDirtSE, worldDirtNE ]
-}
-
-SpeedUpCosmics: {
-  type: union
-  pars:
-  [
-    @local::CosmicOuterShower ,
-    @local::inDirt
-  ]
-}
-END_PROLOG
 
 process_name : cosmicSimReco
 
@@ -111,10 +78,9 @@ outputs : {
     fileName    : @nil
     outputCommands : [
       "keep *_*_*_*",
+      "drop mu2e::CrvSiPMChargess_*_*_*",
       "drop mu2e::SimParticlemv_g4run_*_*",
       "drop mu2e::StepPointMCs_g4run_CRV_*",
-      "drop *_protonTimeMap_*_*",
-      "drop *_muonTimeMap_*_*",
       "drop *_g4run_*_*",
       "drop mu2e::SimParticleart::Ptrmu2e::MCTrajectorystd::map_*_*_*",
       "keep mu2e::StatusG4_*_*_*"
@@ -136,14 +102,13 @@ services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_no_field.tx
 services.scheduler.wantSummary: true
 services.TimeTracker.printSummary: true
 
-# turn off trajectories
-simulation.default.mod.g4run.TrajectoryControl: @local::mu2eg4NoTrajectories
-
-# Larger range cut for the first stage - OK for CRV itself
+# g4 config
+physics.producers.g4run.TrajectoryControl: @local::mu2eg4NoTrajectories
+physics.producers.g4run.inputs.primaryTag : cosmicTimeOffset
+physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicNoField
 physics.producers.g4run.physics.minRangeCut : 1.0 // mm
-
 # stop showers outside the detector
-physics.producers.g4run.Mu2eG4CommonCut : @local::SpeedUpCosmics
+physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicNoField
 
 # only simulate CRV
 #physics.producers.g4run.SDConfig.enableSD : [ CRV ]
@@ -156,6 +121,11 @@ physics.producers.CaloShowerROMaker.caloShowerStepCollection : [ "CaloShowerStep
 # turn off very verbose
 physics.producers.CrvCoincidence.verboseLevel : 0
 physics.producers.CrvCoincidenceClusterFinder.verboseLevel : 0
+# OffSpill timing config; this should come from prolog TODO
+physics.producers.CrvCoincidence.timeWindowStart : 0
+physics.producers.CrvCoincidence.timeWindowEnd : 100005
+physics.producers.CrvCoincidenceClusterFinder.timeWindowStart : 0
+physics.producers.CrvCoincidenceClusterFinder.timeWindowEnd : 100005
 
 # print summaries
 services.scheduler.wantSummary: true
