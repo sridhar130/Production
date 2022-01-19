@@ -1,24 +1,5 @@
 #include "Production/JobConfig/cosmic/NoField.fcl"
-# nominal geometry CORSIKA
-targetParams: {
-  projectToTargetBox : true
-  targetBoxXmin: -10000
-  targetBoxXmax: 3000
-  targetBoxYmin: -5000
-  targetBoxYmax: 5000
-  targetBoxZmin: -5000
-  targetBoxZmax: 21000
-}
-
-source: {
-  module_type: FromCorsikaBinary
-  fileNames: ["/pnfs/mu2e/persistent/users/srsoleti/corsika/sim.srsoleti.corsika.v1.30001.csk"]
-  runNumber          : 1205
-  showerAreaExtension  : 10000
-  @table::targetParams
-  fluxConstant: 1.8e4
-}
-
-physics.producers.generate : @local::Cosmic.generateCORSIKA
+source : @local::Cosmic.CORSIKA.source
+physics.producers.generate : @local::Cosmic.CORSIKA.generate
 outputs.PrimaryOutput.fileName : "dts.owner.CosmicCORSIKANominalNoField.version.sequencer.art"
-services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_no_field.txt"
+services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_cosmic_nofield.txt"

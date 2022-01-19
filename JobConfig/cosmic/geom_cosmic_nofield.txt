@@ -1,7 +1,6 @@
-#include "Offline/Mu2eG4/geom/geom_common_current.txt"
+#include "Offline/Mu2eG4/geom/geom_common_no_field.txt"
 
-// Cosmis s1 samples for CD3 were generated with the TDR target geometry.
-// Keep using it for the subsequent stages.
+// larger world box to allow low-incident angle tracks
 
 double world.minimalMargin.xmin = 500000;
 double world.minimalMargin.xmax = 500000;

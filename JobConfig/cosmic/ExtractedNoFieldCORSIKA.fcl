@@ -1,21 +1,15 @@
 #include "Production/JobConfig/cosmic/NoField.fcl"
-# extracted geometry CORSIKA
+
 source: {
-  module_type: FromCorsikaBinary
-  fileNames: ["/pnfs/mu2e/persistent/users/srsoleti/corsika/sim.srsoleti.corsika.v1.30001.csk"]
-  runNumber          : 1205
-  showerAreaExtension  : 10000
-  projectToTargetBox : true
-  targetBoxXmin: -10000
-  targetBoxXmax: 3000
-  targetBoxYmin: -5000
+  @table::Cosmic.CORSIKA.source
+  # override for extracted position
   targetBoxYmax: 9880 # defined by CRV
   targetBoxZmin: 17105 # defined by CRV
   targetBoxZmax: 32220 # defined by Calo Z1
-  fluxConstant: 1.8e4
 }
-
-physics.producers.generate : @local::Cosmic.generateCORSIKA
+physics.producers.generate : {
+  @table::Cosmic.CORSIKA.generate
+  targetBoxYmax : 9880
+}
 outputs.PrimaryOutput.fileName : "dts.owner.CosmicCORSIKAExtractedNoField.version.sequencer.art"
-services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
-
+services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_cosmic_extracted.txt"

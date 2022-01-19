@@ -16,12 +16,7 @@ physics: {
   producers : {
     @table::Common.producers
     @table::Primary.producers
-    cosmicTimeOffset: {
-      module_type: CosmicTimeOffset
-      intervalStart: 0
-      intervalEnd: 100005
-      cosmicModuleLabel : "generate"
-    }
+    cosmicTimeOffset : @local::Cosmic.cosmicTimeOffset
   }
 
   filters : {
