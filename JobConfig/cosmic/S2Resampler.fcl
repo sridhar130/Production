@@ -54,5 +54,6 @@ outputs.PrimaryOutput.outputCommands : [@sequence::Primary.KeptProducts,
 #
 # final configuration
 #
+#include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/primary/epilog.fcl"
