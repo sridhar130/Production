@@ -46,6 +46,7 @@ physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 #
 # final configuration
 #
+#include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/primary/epilog.fcl"
 #
