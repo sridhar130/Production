@@ -128,8 +128,10 @@ physics.producers.g4run.Mu2eG4CommonCut: {
 
 physics.producers.g4run.SDConfig.enableSD: [ virtualdetector ] # activate just the explicitly listed SDs
 
-# Not too coarse - we care about stopped muon positions.
-physics.producers.g4run.physics.minRangeCut : 0.010 # mm
+# Coarser cuts per e-mail discussion with Krzysztof Genser on 2022-02-18
+physics.producers.g4run.physics.minRangeCut : 1. # mm
+physics.producers.g4run.physics.protonProductionCut : 1. # mm
+physics.producers.g4run.physics.turnOnRadioactiveDecay : true
 
 services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_current.txt"
 services.TFileService.fileName : "nts.owner.stoppedMuonsSingleStage.version.sequencer.root"
