@@ -11,6 +11,7 @@
 #include "Offline/CaloCluster/fcl/prolog.fcl"
 #include "Offline/CaloMC/fcl/prolog.fcl"
 #include "Offline/CalPatRec/fcl/prolog.fcl"
+#include "Offline/CRVResponse/fcl/prolog.fcl"
 #include "Offline/Filters/fcl/prolog.fcl"
 #
 BEGIN_PROLOG
@@ -231,7 +232,7 @@ Reconstruction : {
   # Calo reco
   CaloReco : [ @sequence::CaloReco.Reco, @sequence::CaloCluster.Reco ]
   # CRV reco
-  CrvReco : [ CrvRecoPulses, CrvCoincidence, CrvCoincidenceClusterFinder ]
+  CrvReco : [ @sequence::CrvRecoPackage.CrvRecoSequence ]
   # full MC sequence; form the Calo and CRV matching, and compress based on reco content
   MCReco :  [@sequence::CaloMC.TruthMatch,  CrvCoincidenceClusterMatchMC, SelectRecoMC, compressRecoMCs ]
 

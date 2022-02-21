@@ -121,11 +121,6 @@ physics.producers.CaloShowerROMaker.caloShowerStepCollection : [ "CaloShowerStep
 # turn off very verbose
 physics.producers.CrvCoincidence.verboseLevel : 0
 physics.producers.CrvCoincidenceClusterFinder.verboseLevel : 0
-# OffSpill timing config; this should come from prolog TODO
-physics.producers.CrvCoincidence.timeWindowStart : 0
-physics.producers.CrvCoincidence.timeWindowEnd : 100005
-physics.producers.CrvCoincidenceClusterFinder.timeWindowStart : 0
-physics.producers.CrvCoincidenceClusterFinder.timeWindowEnd : 100005
 
 # print summaries
 services.scheduler.wantSummary: true
