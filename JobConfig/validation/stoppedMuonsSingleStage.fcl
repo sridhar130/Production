@@ -131,7 +131,7 @@ physics.producers.g4run.SDConfig.enableSD: [ virtualdetector ] # activate just t
 # Coarser cuts per e-mail discussion with Krzysztof Genser on 2022-02-18
 physics.producers.g4run.physics.minRangeCut : 1. # mm
 physics.producers.g4run.physics.protonProductionCut : 1. # mm
-physics.producers.g4run.physics.turnOnRadioactiveDecay : true
+physics.producers.g4run.physics.turnOffRadioactiveDecay : true
 
 services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_current.txt"
 services.TFileService.fileName : "nts.owner.stoppedMuonsSingleStage.version.sequencer.root"
