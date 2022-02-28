@@ -1,0 +1,5 @@
+#include "Production/JobConfig/cosmic/NoField.fcl"
+source : @local::Cosmic.CORSIKA.source
+physics.producers.generate : @local::Cosmic.CORSIKA.generate
+outputs.PrimaryOutput.fileName : "dts.owner.CosmicCORSIKANominalNoField.version.sequencer.art"
+services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_cosmic_nofield.txt"

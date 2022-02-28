@@ -51,8 +51,11 @@ physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 # add cosmic livetime output for bookkeeping
 outputs.PrimaryOutput.outputCommands : [@sequence::Primary.KeptProducts,
    "keep mu2e::CosmicLivetime_*_mixed_*" ]
+# for consistency with S1
+services.GeometryService.inputFile : "Production/JobConfig/cosmic/geom_cosmic.txt"
 #
 # final configuration
 #
+#include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/primary/epilog.fcl"
