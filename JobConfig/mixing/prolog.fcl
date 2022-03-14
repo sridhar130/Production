@@ -60,6 +60,9 @@ Mixing : {
   }
 
   StepMixSequence : [ MuStopPileupMixer, EleBeamFlashMixer, MuBeamFlashMixer, NeutralsFlashMixer ]
+  # when mixing early events the intensity must be scaled down
+  EarlyReductionFactor : 1.0e-2
+
 }
 Mixing.PileupMixSequence : [ PBISim, @sequence::Mixing.StepMixSequence ]
 Mixing.MixSequence : [ @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence ]
