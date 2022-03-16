@@ -58,7 +58,7 @@ if [[ $# -ge 10 ]]; then
   nmixin=1
   nbb="Low"
 fi
-mixout=${primary}Mix${early}
+mixout=${primary}Mix${nbb}${early}
 
 # consistency check: cannot mix Extracted or NoField data
 if [[ "${primary}" == *"Extracted" || "${primary}" == *"NoField" ]]; then
@@ -106,6 +106,9 @@ elif [[ $primary == PBI* ]]; then
 else
   samweb list-file-locations --schema=root --defname="dts.mu2e.${primary}.${primaryconf}.art"  | cut -f1 > ${primary}.txt
   echo '#include "Production/JobConfig/mixing/Mix.fcl"' >> mix.fcl
+fi
+if [ $early == "Early" ]; then
+  echo '#include "Production/JobConfig/mixing/EarlyMixins.fcl"' >> mix.fcl
 fi
 # setup the number of booster batches
 if [ $nbb == "1BB" ]; then

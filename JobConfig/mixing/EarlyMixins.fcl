@@ -5,23 +5,25 @@ physics.filters.EleBeamFlashMixer.mu2e.simStageEfficiencyTags: ["EleBeamCat", "E
 physics.filters.MuBeamFlashMixer.mu2e.simStageEfficiencyTags: ["MuBeamCat", "EarlyMuBeamFlashCat" ]
 physics.filters.NeutralsFlashMixer.mu2e.simStageEfficiencyTags: ["NeutralsCat", "EarlyNeutralsFlashCat" ]
 #
-#  Account for prescaling, and scale  down to a reasonable number
-#
-EarlyReductionFactor : 1.0e-2
-#
-physics.filters.EleBeamFlashMixer.mu2e.meanEventsPerPOTFactors: [ @local::Pileup.EarlyEleBeamFlashPrescale , @local::EarlyReductionFactor ]
-physics.filters.MuBeamFlashMixer.mu2e.meanEventsPerPOTFactors: [ @local::Pileup.EarlyMuBeamFlashPrescale, @local::EarlyReductionFactor ]
-physics.filters.NeutralsFlashMixer.mu2e.meanEventsPerPOTFactors: [ @local::Pileup.EarlyNeutralsFlashPrescale, @local::EarlyReductionFactor ]
-physics.filters.MuStopPileupMixer.mu2e.meanEventsPerPOTFactors: [ @local::Pileup.MuminusTargetStopPrescale,  @local::EarlyReductionFactor ]
+physics.filters.EleBeamFlashMixer.mu2e.meanEventsPerPOTFactors: [ @local::Pileup.EarlyEleBeamFlashPrescale , @local::Mixing.EarlyReductionFactor ]
+physics.filters.MuBeamFlashMixer.mu2e.meanEventsPerPOTFactors: [ @local::Pileup.EarlyMuBeamFlashPrescale, @local::Mixing.EarlyReductionFactor ]
+physics.filters.NeutralsFlashMixer.mu2e.meanEventsPerPOTFactors: [ @local::Pileup.EarlyNeutralsFlashPrescale, @local::Mixing.EarlyReductionFactor ]
+physics.filters.MuStopPileupMixer.mu2e.meanEventsPerPOTFactors: [ @local::Pileup.MuminusTargetStopPrescale,  @local::Mixing.EarlyReductionFactor ]
 # testing
 #physics.filters.EleBeamFlashMixer.mu2e.debugLevel:  1
 #physics.filters.MuBeamFlashMixer.mu2e.debugLevel: 1
 #physics.filters.NeutralsFlashMixer.mu2e.debugLevel: 1
 #physics.filters.MuStopPileupMixer.mu2e.debugLevel: 1
 #
-# Remove the time cuts applied in the digitization modules: TODO!
-#
-#
-# Adjust the EWM: TODO!
-#
+# Define the early digitization time and propagate it
+earlydigitime : 250
+# tracker
+services.ProditionsService.strawElectronics.digitizationStart : @local::earlydigitime
+# crv
+physics.producers.CrvPhotons.digitizationStart : @local::earlydigitime
+physics.producers.CrvSiPMCharges.digitizationStart : @local::earlydigitime
+physics.producers.CrvWaveforms.digitizationStart : @local::earlydigitime
+# calo
+physics.producers.CaloShowerROMaker.digitizationStart : @local::earlydigitime
+physics.producers.CaloDigiMaker.digitizationStart : @local::earlydigitime
 #
