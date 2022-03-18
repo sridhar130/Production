@@ -49,13 +49,19 @@ nbb=$7
 eventsperjob=-1
 njobs=-1
 moveit=
-early=
-nmixin=25
+early=""
+neutnmixin=50
+elenmixin=25
+mustopnmixin=2
+mubeamnmixin=1
 if [[ $# -ge 8 ]]; then eventsperjob=$8; fi
 if [[ $# -ge 9 ]]; then  njobs=$9; fi
 if [[ $# -ge 10 ]]; then
   early=Early
-  nmixin=1
+  neutnmixin=1
+  elenmixin=1
+  mustopnmixin=1
+  mubeamnmixin=1
   nbb="Low"
 fi
 mixout=${primary}Mix${nbb}${early}
@@ -107,7 +113,7 @@ else
   samweb list-file-locations --schema=root --defname="dts.mu2e.${primary}.${primaryconf}.art"  | cut -f1 > ${primary}.txt
   echo '#include "Production/JobConfig/mixing/Mix.fcl"' >> mix.fcl
 fi
-if [ $early == "Early" ]; then
+if [ "$early" == "Early" ]; then
   echo '#include "Production/JobConfig/mixing/EarlyMixins.fcl"' >> mix.fcl
 fi
 # setup the number of booster batches
@@ -145,17 +151,17 @@ echo outputs.UntriggeredOutput.fileName: \"dig.owner.${mixout}Untriggered.versio
 if [ $primary == "NoPrimary" ]; then
   generate_fcl --dsconf="$outconf" --dsowner=mu2e --description="$mixout" --embed mix.fcl \
   --run-number=1203 --events-per-job=$eventsperjob --njobs=$njobs \
-  --auxinput=1:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat$mixinconf.txt \
-  --auxinput=${nmixin}:physics.filters.EleBeamFlashMixer.fileNames:EleBeamFlashCat$mixinconf.txt \
-  --auxinput=1:physics.filters.MuBeamFlashMixer.fileNames:MuBeamFlashCat$mixinconf.txt \
-  --auxinput=${nmixin}:physics.filters.NeutralsFlashMixer.fileNames:NeutralsFlashCat$mixinconf.txt
+  --auxinput=${mustopnmixin}:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat$mixinconf.txt \
+  --auxinput=${elenmixin}:physics.filters.EleBeamFlashMixer.fileNames:EleBeamFlashCat$mixinconf.txt \
+  --auxinput=${mubeamnmixin}:physics.filters.MuBeamFlashMixer.fileNames:MuBeamFlashCat$mixinconf.txt \
+  --auxinput=${neutnmixin}:physics.filters.NeutralsFlashMixer.fileNames:NeutralsFlashCat$mixinconf.txt
 else
   generate_fcl --dsconf="$outconf" --dsowner=mu2e --description="$mixout" --embed mix.fcl \
   --inputs="$primary.txt" --merge-factor=1 \
-  --auxinput=1:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat$mixinconf.txt \
-  --auxinput=${nmixin}:physics.filters.EleBeamFlashMixer.fileNames:EleBeamFlashCat$mixinconf.txt \
-  --auxinput=1:physics.filters.MuBeamFlashMixer.fileNames:MuBeamFlashCat$mixinconf.txt \
-  --auxinput=${nmixin}:physics.filters.NeutralsFlashMixer.fileNames:NeutralsFlashCat$mixinconf.txt
+  --auxinput=${mustopnmixin}:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat$mixinconf.txt \
+  --auxinput=${elenmixin}:physics.filters.EleBeamFlashMixer.fileNames:EleBeamFlashCat$mixinconf.txt \
+  --auxinput=${mubeamnmixin}:physics.filters.MuBeamFlashMixer.fileNames:MuBeamFlashCat$mixinconf.txt \
+  --auxinput=${neutnmixin}:physics.filters.NeutralsFlashMixer.fileNames:NeutralsFlashCat$mixinconf.txt
 fi
 
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
