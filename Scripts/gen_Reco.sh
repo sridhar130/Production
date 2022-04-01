@@ -25,7 +25,7 @@ is necessary to provide, in order:
 - the number of input collections to merge into 1 output [mergeFactor]
 
 Example:
-    gen_Reco.sh CeEndpointMixTriggered MDC2020 k m perfect 10
+    gen_Reco.sh CeEndpointMixTriggered MDC2020 k m perfect v1_0 10
 
 This will produce the fcl files for a reco stage
 on CeEndpointMixTriggered digis, merging 10 inputs per output. The output
