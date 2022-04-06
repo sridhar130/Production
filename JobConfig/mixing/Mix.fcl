@@ -20,13 +20,15 @@ physics : {
   analyzers: { @table::Digitize.analyzers }
   MixPath : [ @sequence::Mixing.MixSequence ]
   Untriggered : [ @sequence::Mixing.MixSequence, Triggerable ]
-  EndPath : [ @sequence::Digitize.EndSequence, TriggeredOutput, UntriggeredOutput ]
+  EndPath : [ @sequence::Digitize.EndSequence, SignalOutput, TrkCalibOutput, UntriggeredOutput ]
 }
-
+physics.trigger_paths[0] : MixPath
+physics.trigger_paths[1] : Untriggered
 # Final configuration
 #
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/digitize/epilog.fcl"
+#include "Production/JobConfig/digitize/OnSpill_epilog.fcl"
 #include "Production/JobConfig/mixing/epilog.fcl"
 #include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 

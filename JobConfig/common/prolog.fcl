@@ -28,5 +28,6 @@ Common: {
   }
   g4Sequence :  [ g4run, g4consistentFilter ]
   generateSequence :  [ generate, genCounter ]
+  BaseSeed : 8
 }
 END_PROLOG

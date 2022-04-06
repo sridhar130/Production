@@ -58,6 +58,7 @@ for dirname in 000 001 002 003 004 005 006 007 008 009; do
   if test -d $dirname; then
     echo "found dir $dirname"
     rm -rf "${digout}_$dirname"
+    echo "moving $dirname to ${digout}_${dirname}"
     mv $dirname "${digout}_$dirname"
   fi
 done

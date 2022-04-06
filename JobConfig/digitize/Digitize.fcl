@@ -1,6 +1,7 @@
 #
 #  Digitization simulations
 #
+#include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/digitize/prolog.fcl"
 # name all processes the same, to mask any provenance in ensemble creation
 process_name: Digitize
@@ -16,18 +17,17 @@ physics : {
     @table::Trigger.filters
   }
   analyzers: { @table::Digitize.analyzers }
+  # define the digitization paths.  Trigger paths are added in epilog
   DigitizePath : @local::Digitize.DigitizeSequence
   Untriggered : [ @sequence::Digitize.DigitizeSequence, Triggerable ]
+  trigger_paths[0] : DigitizePath
+  trigger_paths[1] : Untriggered
 }
-#
 #
 # Final configuration
 #
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/digitize/epilog.fcl"
 #
-# define the digitization paths.  Trigger paths must be added separately
-#
-physics.trigger_paths[0] : DigitizePath
-physics.trigger_paths[1] : Untriggered
-services.SeedService.baseSeed          : 8
+# digitization needs seeds
+services.SeedService.baseSeed : @local::Common.BaseSeed

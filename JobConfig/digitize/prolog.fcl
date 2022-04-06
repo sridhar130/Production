@@ -110,28 +110,34 @@ Digitize: {
   # different streams for different purposes:  Triggered is for physics studies.  Untriggered is for algorithm improvement.
   # *Calib are for calibration and alignment
   #
-  TriggeredOutput : {
+  # Stream for events passing any 'physics signal' trigger, and (prescaled) precursors
+  SignalOutput : {
     module_type : RootOutput
-    SelectEvents : [ "*_trigger" ] # this selects events passing any trigger.  We should eventually exclude 'Service' triggers FIXME
+    SelectEvents : [ "*_highP_*_trigger", "*Helix*M_trigger", "*Helix*P_trigger" ]
     fileName    : @nil
   }
-
+  # Stream for 'random trigger' events (also called 'minbias')
+  RandomOutput : {
+    module_type : RootOutput
+    SelectEvents : [ "minBias_*_trigger" ]
+    fileName    : @nil
+  }
+  # Stream for events useful for tracker calibration and alignment
+  TrkCalibOutput : {
+    module_type : RootOutput
+    SelectEvents : [ "*_lowP_*_trigger","*_ipa_*_trigger", "cst*_trigger" ]     fileName    : @nil
+  }
+  # Stream for events useful for calorimeter calibration
+  CaloCalibOutput : {
+    module_type : RootOutput
+    SelectEvents : [ "caloCalib*_trigger" ] # selects events passing calorimeter calibration trigger
+    fileName    : @nil
+  }
+  # Stream for MC only: Stream for events which 'should have' triggered, but didnt, useful for studying trigger efficiency
   UntriggeredOutput : {
     module_type : RootOutput
     RejectEvents : [ "*_trigger" ] # reject events passing any trigger
     SelectEvents : [ "Untriggered" ] # require events pass 'Triggerable' filter
-    fileName    : @nil
-  }
-
-  TrkOutput : {
-    module_type : RootOutput
-    SelectEvents : [ "cst*_trigger" ] # selects events passing tracker calibration trigger.  This should include a 'Calib' flag FIXME!
-    fileName    : @nil
-  }
-
-  CaloOutput : {
-    module_type : RootOutput
-    SelectEvents : [ "caloCalib*_trigger" ] # selects events passing calorimeter calibration trigger
     fileName    : @nil
   }
 
