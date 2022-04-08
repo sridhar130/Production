@@ -1,0 +1,4 @@
+#
+# epilog file for running positive muon beam
+#
+services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_muplus_no_tsu_ps.txt"
