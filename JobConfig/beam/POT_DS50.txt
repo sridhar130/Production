@@ -1,3 +1,0 @@
-#include "Production/JobConfig/beam/POT.fcl"
-
-services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_DS50_no_ds.txt"
