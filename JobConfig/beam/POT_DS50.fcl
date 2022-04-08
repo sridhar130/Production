@@ -1,2 +1,0 @@
-#include "Production/JobConfig/beam/POT.fcl"
-#include "Production/JobConfig/beam/epilog_DS50.fcl"
