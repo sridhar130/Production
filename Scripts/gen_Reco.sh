@@ -35,7 +35,11 @@ files will have the MDC2020m description.'
 fi
 samweb list-file-locations --schema=root --defname="dig.mu2e.$1.$2$3.art"  | cut -f1 > Digis.txt
 
-generate_fcl --dsowner=mu2e --override-outputs --auto-description=Reco --include Production/JobConfig/reco/Reco.fcl --dsconf "$2$4_$5_$6" \
+echo '#include "Production/JobConfig/reco/Reco.fcl"' > template.fcl
+echo 'services.DbService.purpose:' $5 >> template.fcl
+echo 'services.DbService.version:' $6 >> template.fcl
+
+generate_fcl --dsowner=mu2e --override-outputs --auto-description --embed template.fcl --dsconf "$2$4_$5_$6" \
 --inputs "Digis.txt" --merge-factor=$7
 
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
