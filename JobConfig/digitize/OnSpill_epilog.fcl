@@ -4,17 +4,28 @@
 physics.producers.EWMProducer.SpillType : 1
 # minimal BField map
 services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
-# only produce physics streams for now
-physics.EndPath : [ @sequence::Digitize.EndSequence, TriggeredOutput, UntriggeredOutput ]
+# produce all streams
+physics.EndPath : [ @sequence::Digitize.EndSequence, SignalOutput, DiagOutput, TrkOutput, CaloOutput, UntriggeredOutput ]
 physics.end_paths : [ EndPath ]
 outputs : {
+  SignalOutput : {
+    @table::Digitize.SignalOutput
+    fileName : "dig.owner.OnSpillSignal.version.sequencer.art"
+  }
+  DiagOutput : {
+    @table::Digitize.DiagOutput
+    fileName : "dig.owner.OnSpillDiag.version.sequencer.art"
+  }
+  TrkOutput : {
+    @table::Digitize.TrkOutput
+    fileName : "dig.owner.OnSpillTrk.version.sequencer.art"
+  }
+  CaloOutput : {
+    @table::Digitize.CaloOutput
+    fileName : "dig.owner.OnSpillCalo.version.sequencer.art"
+  }
   UntriggeredOutput : {
     @table::Digitize.UntriggeredOutput
     fileName : "dig.owner.OnSpillUntriggered.version.sequencer.art"
   }
-  TriggeredOutput : {
-    @table::Digitize.TriggeredOutput
-    fileName : "dig.owner.OnSpillTriggered.version.sequencer.art"
-  }
 }
-

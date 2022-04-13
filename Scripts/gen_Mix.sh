@@ -9,12 +9,10 @@
 # $4 is the campaign version of the primary files.
 # $5 is the campaign version of the output files.
 # $6 is the database version
-# $7 is the beam intensity: 1BB (1 booster batch), 2BB, or Low (low intensity)
+# $7 is the proton beam intensity model: 1BB (1 booster batch), 2BB, Low (low intensity), or Seq (Sequence)
 
 # optional arguments:
-# $8 is the number of events per job (only needed for NoPrimary, ignored otherwise)
-# $9 is the number of jobs (only needed for NoPrimary, ignored otherwise)
-# $10 is a flag: if not null, Early pileup is mixed instead of cut
+# $8 is a flag: if not null, Early pileup is mixed instead of cut
 
 usage() { echo "Usage:
   source Production/Scripts/gen_Mix.sh [primaryName] [datasetDescription] [mixin version] \
@@ -54,9 +52,7 @@ neutnmixin=50
 elenmixin=25
 mustopnmixin=2
 mubeamnmixin=1
-if [[ $# -ge 8 ]]; then eventsperjob=$8; fi
-if [[ $# -ge 9 ]]; then  njobs=$9; fi
-if [[ $# -ge 10 ]]; then
+if [[ $# -ge 8 ]]; then
   early=Early
   neutnmixin=1
   elenmixin=1
@@ -71,7 +67,6 @@ if [[ "${primary}" == *"Extracted" || "${primary}" == *"NoField" ]]; then
   echo "Primary ${primary} incompatible with mixing; aborting"
   return 1
 fi
-
 
 echo "Generating mixing scripts for $primary conf $primaryconf mixin conf $mixinconf output conf $outconf database version $dbver $early with $nbb proton intensity"
 
@@ -93,77 +88,51 @@ let nskip_NeutralsFlash=nevts/nfiles
 nfiles=`samCountFiles.sh "dts.mu2e.MuStopPileupCat.$mixinconf.art"`
 nevts=`samCountEvents.sh "dts.mu2e.MuStopPileupCat.$mixinconf.art"`
 let nskip_MuStopPileup=nevts/nfiles
-#
 # write the mix.fcl
-#
 rm mix.fcl
-#
-# create a template file.  Start with the primary
-#
-if [ $primary == "NoPrimary" ]; then
-  echo '#include "Production/JobConfig/mixing/NoPrimary.fcl"' >> mix.fcl
-  if [[ $njobs -lt 0 || $eventsperjob -lt 0 ]]; then
-    echo njobs and eventsperjob must be specified for NoPrimary
-    return 1;
-  fi
-elif [[ $primary == PBI* ]]; then
-  samweb list-file-locations --schema=root --defname="sim.mu2e.${primary}.${primaryconf}.art"  | cut -f1 > ${primary}.txt
-  echo '#include "Production/JobConfig/mixing/NoPrimaryPBISequence.fcl"' >> mix.fcl
-else
-  samweb list-file-locations --schema=root --defname="dts.mu2e.${primary}.${primaryconf}.art"  | cut -f1 > ${primary}.txt
-  echo '#include "Production/JobConfig/mixing/Mix.fcl"' >> mix.fcl
-fi
-if [ "$early" == "Early" ]; then
-  echo '#include "Production/JobConfig/mixing/EarlyMixins.fcl"' >> mix.fcl
-fi
-# setup the number of booster batches
+# create a template file, starting from the basic Mix
+echo '#include "Production/JobConfig/mixing/Mix.fcl"' >> mix.fcl
+# locate the primary collection
+samweb list-file-locations --schema=root --defname="dts.mu2e.${primary}.${primaryconf}.art"  | cut -f1 > ${primary}.txt
+# Setup the beam intensity model
 if [ $nbb == "1BB" ]; then
   echo '#include "Production/JobConfig/mixing/OneBB.fcl"' >> mix.fcl
 elif [ $nbb == "2BB" ]; then
   echo '#include "Production/JobConfig/mixing/TwoBB.fcl"' >> mix.fcl
 elif [ $nbb == "Low" ]; then
   echo '#include "Production/JobConfig/mixing/LowIntensity.fcl"' >> mix.fcl
+elif [ $nbb == "Seq" ]; then
+  echo '#include "Production/JobConfig/mixing/PBISequence.fcl"' >> mix.fcl
 else
   echo "Unknown proton beam intensity $nbb; aborting"
   return 1;
 fi
-#
+# setup option for early digitization
+if [ "$early" == "Early" ]; then
+  echo '#include "Production/JobConfig/mixing/EarlyMixins.fcl"' >> mix.fcl
+fi
 # set the skips
-#
 echo physics.filters.MuBeamFlashMixer.mu2e.MaxEventsToSkip: ${nskip_MuBeamFlash} >> mix.fcl
 echo physics.filters.EleBeamFlashMixer.mu2e.MaxEventsToSkip: ${nskip_EleBeamFlash} >> mix.fcl
 echo physics.filters.NeutralsFlashMixer.mu2e.MaxEventsToSkip: ${nskip_NeutralsFlash} >> mix.fcl
 echo physics.filters.MuStopPileupMixer.mu2e.MaxEventsToSkip: ${nskip_MuStopPileup} >> mix.fcl
-#
 # setup database access for SimEfficiencies.  This is relevant to the mixin files
-#
 echo services.DbService.purpose: $mixinconf >> mix.fcl
 echo services.DbService.version: $dbver >> mix.fcl
-#
 # overwrite the outputs
-#
-echo outputs.TriggeredOutput.fileName: \"dig.owner.${mixout}Triggered.version.sequencer.art\" >> mix.fcl
+echo outputs.SignalOutput.fileName: \"dig.owner.${mixout}Signal.version.sequencer.art\" >> mix.fcl
+echo outputs.DiagOutput.fileName: \"dig.owner.${mixout}Diag.version.sequencer.art\" >> mix.fcl
+echo outputs.TrkOutput.fileName: \"dig.owner.${mixout}Trk.version.sequencer.art\" >> mix.fcl
+echo outputs.CaloOutput.fileName: \"dig.owner.${mixout}Calo.version.sequencer.art\" >> mix.fcl
 echo outputs.UntriggeredOutput.fileName: \"dig.owner.${mixout}Untriggered.version.sequencer.art\" >> mix.fcl
-#
-#
 # run generate_fcl
-#
-if [ $primary == "NoPrimary" ]; then
-  generate_fcl --dsconf="$outconf" --dsowner=mu2e --description="$mixout" --embed mix.fcl \
-  --run-number=1203 --events-per-job=$eventsperjob --njobs=$njobs \
+generate_fcl --dsconf="$outconf" --dsowner=mu2e --description="$mixout" --embed mix.fcl \
+  --inputs="${primary}.txt" --merge-factor=1 \
   --auxinput=${mustopnmixin}:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat$mixinconf.txt \
   --auxinput=${elenmixin}:physics.filters.EleBeamFlashMixer.fileNames:EleBeamFlashCat$mixinconf.txt \
   --auxinput=${mubeamnmixin}:physics.filters.MuBeamFlashMixer.fileNames:MuBeamFlashCat$mixinconf.txt \
   --auxinput=${neutnmixin}:physics.filters.NeutralsFlashMixer.fileNames:NeutralsFlashCat$mixinconf.txt
-else
-  generate_fcl --dsconf="$outconf" --dsowner=mu2e --description="$mixout" --embed mix.fcl \
-  --inputs="$primary.txt" --merge-factor=1 \
-  --auxinput=${mustopnmixin}:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat$mixinconf.txt \
-  --auxinput=${elenmixin}:physics.filters.EleBeamFlashMixer.fileNames:EleBeamFlashCat$mixinconf.txt \
-  --auxinput=${mubeamnmixin}:physics.filters.MuBeamFlashMixer.fileNames:MuBeamFlashCat$mixinconf.txt \
-  --auxinput=${neutnmixin}:physics.filters.NeutralsFlashMixer.fileNames:NeutralsFlashCat$mixinconf.txt
-fi
-
+#  move to an appropriate directory
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
   if test -d $dirname; then
     echo "found dir $dirname"

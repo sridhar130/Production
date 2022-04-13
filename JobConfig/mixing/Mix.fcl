@@ -20,7 +20,7 @@ physics : {
   analyzers: { @table::Digitize.analyzers }
   MixPath : [ @sequence::Mixing.MixSequence ]
   Untriggered : [ @sequence::Mixing.MixSequence, Triggerable ]
-  EndPath : [ @sequence::Digitize.EndSequence, SignalOutput, TrkCalibOutput, UntriggeredOutput ]
+  EndPath : [ @sequence::Digitize.EndSequence, SignalOutput, DiagOutput, TrkOutput, CaloOutput, UntriggeredOutput ]
 }
 physics.trigger_paths[0] : MixPath
 physics.trigger_paths[1] : Untriggered

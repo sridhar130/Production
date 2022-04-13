@@ -3,7 +3,6 @@
 #
 #include "Production/JobConfig/digitize/prolog.fcl"
 #include "Production/JobConfig/mixing/prolog.fcl"
-#include "Production/JobConfig/pileup/prolog.fcl"
 process_name: NoPrimary
 source: { module_type : EmptyEvent }
 services : @local::Services.SimAndReco # reco is needed for the trigger
@@ -28,9 +27,11 @@ physics : {
 #
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/digitize/epilog.fcl"
+#include "Production/JobConfig/digitize/OnSpill_epilog.fcl"
 #include "Production/JobConfig/mixing/epilog.fcl"
+#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 #
-# patch for no primary
+# patch for no primary; we need a NullMCPrimary
 physics.producers.compressDigiMCs.extraStepPointMCTags : ["NullMCPrimary:virtualdetector", "NullMCPrimary:stoppingtarget", "NullMCPrimary:protonabsorber"]
 physics.producers.compressDigiMCs.mcTrajectoryTag : "NullMCPrimary"
 physics.producers.compressDigiMCs.primaryParticleTag : "NullMCPrimary"

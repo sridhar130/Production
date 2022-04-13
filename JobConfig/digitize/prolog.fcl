@@ -105,30 +105,31 @@ Digitize: {
     "keep mu2e::CaloClusters_CaloClusterFast_*_*",
     "keep mu2e::ProtonBunchIntensity*_*_*_*"
   ]
-
   #
-  # different streams for different purposes:  Triggered is for physics studies.  Untriggered is for algorithm improvement.
-  # *Calib are for calibration and alignment
+  # different streams for different end uses:  Signal is for physics studies, background studies, and calibration and alignment
+  # Untriggered is for trigger algorithm improvement
+  # Trk and Calo are for calibration and alignment
   #
-  # Stream for events passing any 'physics signal' trigger, and (prescaled) precursors
+  # Stream for events passing any 'physics signal' trigger; at the moment, just high-momentum tracks
   SignalOutput : {
     module_type : RootOutput
-    SelectEvents : [ "*_highP_*_trigger", "*Helix*M_trigger", "*Helix*P_trigger" ]
+    SelectEvents : [ "*_highP_*_trigger" ]
     fileName    : @nil
   }
-  # Stream for 'random trigger' events (also called 'minbias')
-  RandomOutput : {
+  # Stream for diagnostic events; random and (prescaled) signal precursors
+  DiagOutput : {
     module_type : RootOutput
-    SelectEvents : [ "minBias_*_trigger" ]
+    SelectEvents : [ "minBias_*_trigger" , "*Helix*M_trigger", "*Helix*P_trigger"]
     fileName    : @nil
   }
   # Stream for events useful for tracker calibration and alignment
-  TrkCalibOutput : {
+  TrkOutput : {
     module_type : RootOutput
-    SelectEvents : [ "*_lowP_*_trigger","*_ipa_*_trigger", "cst*_trigger" ]     fileName    : @nil
+    SelectEvents : [ "*_lowP_*_trigger","*_ipa_*_trigger", "cst*_trigger" ]
+    fileName    : @nil
   }
   # Stream for events useful for calorimeter calibration
-  CaloCalibOutput : {
+  CaloOutput : {
     module_type : RootOutput
     SelectEvents : [ "caloCalib*_trigger" ] # selects events passing calorimeter calibration trigger
     fileName    : @nil
@@ -145,10 +146,10 @@ Digitize: {
 }
 # override the Trigger sequence to prepare digis
 Trigger.PrepareDigis: [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
-Digitize.TriggeredOutput.outputCommands : [ "drop *_*_*_*",
+Digitize.SignalOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.DigiProducts]
 
-Digitize.UntriggeredOutput.outputCommands : [ "drop *_*_*_*",
+Digitize.DiagOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.DigiProducts]
 
 Digitize.TrkOutput.outputCommands : [ "drop *_*_*_*",
@@ -157,11 +158,16 @@ Digitize.TrkOutput.outputCommands : [ "drop *_*_*_*",
 Digitize.CaloOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.DigiProducts]
 
+Digitize.UntriggeredOutput.outputCommands : [ "drop *_*_*_*",
+  @sequence::Digitize.DigiProducts]
+
 Digitize.Outputs : {
-  TriggeredOutput : @local::Digitize.TriggeredOutput
+  SignalOutput : @local::Digitize.SignalOutput
+  DiagOutput : @local::Digitize.DiagOutput
   UntriggeredOutput : @local::Digitize.UntriggeredOutput
   TrkOutput : @local::Digitize.TrkOutput
   CaloOutput : @local::Digitize.CaloOutput
+  UntriggeredOutput : @local::Digitize.UntriggeredOutput
 }
 
 END_PROLOG
