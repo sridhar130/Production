@@ -20,15 +20,6 @@ physics.trigger_paths[0] : MixPath
 physics.trigger_paths[1] : UntriggeredPath
 physics.end_paths : [ EndPath ]
 outputs : @local::Digitize.Outputs
-#  SignalOutput :  {
-#    @table::Digitize.SignalOutput
-#    fileName: "dig.owner.MixSignal.version.sequencer.art"
-#  }
-#  UntriggeredOutput : {
-#    @table::Digitize.UntriggeredOutput
-#    fileName: "dig.owner.MixUntriggered.version.sequencer.art"
-#  }
-#}
 # set the event timing for OnSpill
 physics.producers.EWMProducer.SpillType : 1
 # minimal BField map
