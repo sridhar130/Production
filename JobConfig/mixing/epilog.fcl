@@ -17,7 +17,7 @@ physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","","" ]
 #  Physics signal and calibration streams, filtered on different triggers
 #
 physics.trigger_paths[0] : MixPath
-physics.trigger_paths[1] : Untriggered
+physics.trigger_paths[1] : UntriggeredPath
 physics.end_paths : [ EndPath ]
 outputs : @local::Digitize.Outputs
 #  SignalOutput :  {

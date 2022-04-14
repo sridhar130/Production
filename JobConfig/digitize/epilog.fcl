@@ -10,4 +10,9 @@ physics.producers.compressDigiMCs.extraStepPointMCTags : ["compressDetStepMCs:vi
 physics.producers.compressDigiMCs.mcTrajectoryTag : "compressDetStepMCs"
 physics.producers.CrvPhotons.crvStepModuleLabels : [ "compressDetStepMCs" ]
 physics.producers.CrvPhotons.crvStepProcessNames : [ "" ]
+# digitization needs seeds
+services.SeedService.baseSeed : @local::Common.BaseSeed
+# minimal BField map
+services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
+# produce all streams
 

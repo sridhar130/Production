@@ -61,6 +61,12 @@ Digitize: {
       StrawDigiMCCollection : compressDigiMCs
       particleTypes : [ 11,-11, 13, -13] # e+-, mu+-
     }
+    # Untriggered stream prescaler; stream-dependent
+    UntriggeredPrescale : {
+      module_type : Prescaler
+      prescaleFactor : @nil
+      prescaleOffset : 0
+    }
   }
 
   analyzers: {
@@ -74,6 +80,9 @@ Digitize: {
     @sequence::CaloMC.DigiSim,
     @sequence::CrvDAQPackage.CrvDAQSequence,
     compressDigiMCs ]
+
+  UntriggeredSequence : [
+    UntriggeredPrescale, Triggerable ]
 
   TriggerProducts : [
     "keep mu2e::TriggerInfo_*_*_*",
@@ -131,14 +140,14 @@ Digitize: {
   # Stream for events useful for calorimeter calibration
   CaloOutput : {
     module_type : RootOutput
-    SelectEvents : [ "caloCalib*_trigger" ] # selects events passing calorimeter calibration trigger
+    SelectEvents : [ "calo*_trigger" ] # selects events passing calorimeter calibration trigger
     fileName    : @nil
   }
   # Stream for MC only: Stream for events which 'should have' triggered, but didnt, useful for studying trigger efficiency
   UntriggeredOutput : {
     module_type : RootOutput
     RejectEvents : [ "*_trigger" ] # reject events passing any trigger
-    SelectEvents : [ "Untriggered" ] # require events pass 'Triggerable' filter
+    SelectEvents : [ "UntriggeredPath" ] # require events pass 'Triggerable' filter
     fileName    : @nil
   }
 
@@ -164,7 +173,6 @@ Digitize.UntriggeredOutput.outputCommands : [ "drop *_*_*_*",
 Digitize.Outputs : {
   SignalOutput : @local::Digitize.SignalOutput
   DiagOutput : @local::Digitize.DiagOutput
-  UntriggeredOutput : @local::Digitize.UntriggeredOutput
   TrkOutput : @local::Digitize.TrkOutput
   CaloOutput : @local::Digitize.CaloOutput
   UntriggeredOutput : @local::Digitize.UntriggeredOutput

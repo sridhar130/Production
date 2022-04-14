@@ -1,44 +1,8 @@
 #
-# pure background frames with full (digi + mc) and detector (digi only) output streams
+# configuration for NoPrimary: in this case, Untriggered selection should be wide open (null prescaler)
 #
-#include "Production/JobConfig/digitize/prolog.fcl"
-#include "Production/JobConfig/mixing/prolog.fcl"
-process_name: NoPrimary
-source: { module_type : EmptyEvent }
-services : @local::Services.SimAndReco # reco is needed for the trigger
-physics : {
-  producers : {
-    @table::Digitize.producers
-    @table::Trigger.producers
-    @table::Mixing.producers
-  }
-  filters: {
-    @table::Digitize.filters
-    @table::Trigger.filters
-    @table::Mixing.filters
-  }
-  analyzers: { @table::Digitize.analyzers }
-  # same path for triggered, untriggered streams, but different selections
-  MixPath : [ NullMCPrimary, PBISim, @sequence::Mixing.StepMixSequence, @sequence::Digitize.DigitizeSequence ]
-  Untriggered : [ NullMCPrimary, PBISim, @sequence::Mixing.StepMixSequence, @sequence::Digitize.DigitizeSequence ]
+physics.filters.Triggerable : {
+  module_type : Prescaler
+  prescaleFactor : 1
+  prescaleOffset : 0
 }
-#
-# Final configuration
-#
-#include "Production/JobConfig/common/epilog.fcl"
-#include "Production/JobConfig/digitize/epilog.fcl"
-#include "Production/JobConfig/digitize/OnSpill_epilog.fcl"
-#include "Production/JobConfig/mixing/epilog.fcl"
-#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
-#
-# patch for no primary; we need a NullMCPrimary
-physics.producers.compressDigiMCs.extraStepPointMCTags : ["NullMCPrimary:virtualdetector", "NullMCPrimary:stoppingtarget", "NullMCPrimary:protonabsorber"]
-physics.producers.compressDigiMCs.mcTrajectoryTag : "NullMCPrimary"
-physics.producers.compressDigiMCs.primaryParticleTag : "NullMCPrimary"
-
-physics.producers.CrvPhotons.crvStepProcessNames : [ "","","","" ]
-physics.producers.compressDigiMCs.simParticleTags : [@sequence::Mixing.StepMixSequence ]
-physics.producers.compressDigiMCs.caloShowerStepTags : [@sequence::Mixing.StepMixSequence ]
-physics.producers.CaloShowerROMaker.caloShowerStepCollection : [@sequence::Mixing.StepMixSequence ]
-physics.producers.CrvPhotons.crvStepModuleLabels : [ @sequence::Mixing.StepMixSequence ]
-

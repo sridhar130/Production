@@ -7,11 +7,12 @@
 # $2 is the output primary production version
 # $3 is the number of jobs
 # $4 is the number of events/job
+# $5 is added to the primary (PBISequence)
 if [[ $# -lt 4 ]]; then
   echo "Missing arguments, provided $# but there should be 5"
   return 1
 fi
-primary=NoPrimary
+primary=NoPrimary$5
 primaryconf=$1$2
 njobs=$3
 eventsperjob=$4
@@ -19,7 +20,7 @@ eventsperjob=$4
 # now generate the fcl
 #
 generate_fcl --dsconf=${primaryconf} --dsowner=brownd --run-number=1202 --description=${primary} --events-per-job=${eventsperjob} --njobs=${njobs} \
-  --include Production/JobConfig/primary/NoPrimary.fcl
+  --include Production/JobConfig/primary/${primary}.fcl
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
  if test -d $dirname; then
   echo "found dir $dirname"

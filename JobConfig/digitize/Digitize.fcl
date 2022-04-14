@@ -17,17 +17,22 @@ physics : {
     @table::Trigger.filters
   }
   analyzers: { @table::Digitize.analyzers }
-  # define the digitization paths.  Trigger paths are added in epilog
+  # define the digitization paths.  Trigger paths are added specific to digitization type
   DigitizePath : @local::Digitize.DigitizeSequence
-  Untriggered : [ @sequence::Digitize.DigitizeSequence, Triggerable ]
-  trigger_paths[0] : DigitizePath
-  trigger_paths[1] : Untriggered
+  UntriggeredPath : [ @sequence::Digitize.DigitizeSequence, @sequence::Digitize.UntriggeredSequence ]
+}
+physics.trigger_paths[0] : DigitizePath
+physics.trigger_paths[1] : UntriggeredPath
+# define all outputs: not all digitization types will use all of
+outputs : {
+  SignalOutput : @local::Digitize.SignalOutput
+  DiagOutput :  @local::Digitize.DiagOutput
+  TrkOutput :  @local::Digitize.TrkOutput
+  CaloOutput : @local::Digitize.CaloOutput
+  UntriggeredOutput : @local::Digitize.UntriggeredOutput
 }
 #
 # Final configuration
 #
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/digitize/epilog.fcl"
-#
-# digitization needs seeds
-services.SeedService.baseSeed : @local::Common.BaseSeed

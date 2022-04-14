@@ -2,5 +2,12 @@
 #  Digitization specialization for on-spill simulations with no pileup mixing
 #  This should NOT be used for physics studies
 #
-#include "Production/JobConfig/digitize/Digitize.fcl"
-#include "Production/JobConfig/digitize/OnSpill_epilog.fcl"
+# enable OnSpill trigger menu
+#
+#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+# set the event timing for OnSpill
+physics.producers.EWMProducer.SpillType : 1
+# keep all streams
+physics.EndPath : [ @sequence::Digitize.EndSequence, SignalOutput, DiagOutput, TrkOutput, CaloOutput, UntriggeredOutput ]
+# override the untriggered filter
+physics.filters.UntriggeredPrescale.prescaleFactor : 10 # record 10% of the untriggered

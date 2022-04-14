@@ -111,13 +111,18 @@ fi
 if [ "$early" == "Early" ]; then
   echo '#include "Production/JobConfig/mixing/EarlyMixins.fcl"' >> mix.fcl
 fi
+# NoPrimary needs a special filter
+if [ "${primary}" == "NoPrimary*" ]; then
+  echo '#include "Production/JobConfig/mixing/NoPrimary.fcl"' >> mix.fcl
+fi
 # set the skips
 echo physics.filters.MuBeamFlashMixer.mu2e.MaxEventsToSkip: ${nskip_MuBeamFlash} >> mix.fcl
 echo physics.filters.EleBeamFlashMixer.mu2e.MaxEventsToSkip: ${nskip_EleBeamFlash} >> mix.fcl
 echo physics.filters.NeutralsFlashMixer.mu2e.MaxEventsToSkip: ${nskip_NeutralsFlash} >> mix.fcl
 echo physics.filters.MuStopPileupMixer.mu2e.MaxEventsToSkip: ${nskip_MuStopPileup} >> mix.fcl
-# setup database access for SimEfficiencies.  This is relevant to the mixin files
-echo services.DbService.purpose: $mixinconf >> mix.fcl
+# setup database access for SimEfficiencies.  This is relevant to the mixin files, but we use
+# the primary as purpose to bring in tables needed just for digitization
+echo services.DbService.purpose: $primaryconf >> mix.fcl
 echo services.DbService.version: $dbver >> mix.fcl
 # overwrite the outputs
 echo outputs.SignalOutput.fileName: \"dig.owner.${mixout}Signal.version.sequencer.art\" >> mix.fcl
