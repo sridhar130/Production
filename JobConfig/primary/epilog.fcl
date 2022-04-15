@@ -6,5 +6,4 @@ physics.producers.g4run.physics.minRangeRegionCuts: { CalorimeterMother : 0.1}
 physics.producers.g4run.TrajectoryControl: @local::mu2eg4DefaultTrajectories
 # extend the sensitive volume list to include passive material (only for primaries)
 physics.producers.g4run.SDConfig.enableSD: [@sequence::physics.producers.g4run.SDConfig.enableSD, stoppingtarget , protonabsorber ]
-
-services.SeedService.baseSeed         :  8
+services.SeedService.baseSeed : @local::Common.BaseSeed

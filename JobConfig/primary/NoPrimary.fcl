@@ -26,7 +26,7 @@ physics : {
   }
 }
 #include "Production/JobConfig/common/epilog.fcl"
-services.SeedService.baseSeed         :  8
+services.SeedService.baseSeed : @local::Common.BaseSeed
 physics.PrimaryPath : [ FindMCPrimary, compressDetStepMCs ]
 physics.trigger_paths : [ PrimaryPath ]
 outputs : { PrimaryOutput : @local::Primary.PrimaryOutput }

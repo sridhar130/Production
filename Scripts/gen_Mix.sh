@@ -42,6 +42,7 @@ primary=$1
 mixinconf=$2$3
 primaryconf=$2$4
 outconf=$2$5
+dbpurpose=$2_DIGI
 dbver=$6
 nbb=$7
 eventsperjob=-1
@@ -68,7 +69,7 @@ if [[ "${primary}" == *"Extracted" || "${primary}" == *"NoField" ]]; then
   return 1
 fi
 
-echo "Generating mixing scripts for $primary conf $primaryconf mixin conf $mixinconf output conf $outconf database version $dbver $early with $nbb proton intensity"
+echo "Generating mixing scripts for $primary conf $primaryconf mixin conf $mixinconf output conf $outconf database puppose, version $dbpurpose, $dbver $early with $nbb proton intensity"
 
 # create the mixin input lists.  Note there is no early MuStopPileup
 samweb list-file-locations --schema=root --defname="dts.mu2e.${early}MuBeamFlashCat.$mixinconf.art"  | cut -f1 > MuBeamFlashCat$mixinconf.txt
@@ -120,10 +121,10 @@ echo physics.filters.MuBeamFlashMixer.mu2e.MaxEventsToSkip: ${nskip_MuBeamFlash}
 echo physics.filters.EleBeamFlashMixer.mu2e.MaxEventsToSkip: ${nskip_EleBeamFlash} >> mix.fcl
 echo physics.filters.NeutralsFlashMixer.mu2e.MaxEventsToSkip: ${nskip_NeutralsFlash} >> mix.fcl
 echo physics.filters.MuStopPileupMixer.mu2e.MaxEventsToSkip: ${nskip_MuStopPileup} >> mix.fcl
-# setup database access for SimEfficiencies.  This is relevant to the mixin files, but we use
-# the primary as purpose to bring in tables needed just for digitization
-echo services.DbService.purpose: $primaryconf >> mix.fcl
+# setup database access, for SimEfficiences and digi parameters
+echo services.DbService.purpose: $dbpurpose >> mix.fcl
 echo services.DbService.version: $dbver >> mix.fcl
+echo services.DbService.verbose : 1 >> digitize.fcl
 # overwrite the outputs
 echo outputs.SignalOutput.fileName: \"dig.owner.${mixout}Signal.version.sequencer.art\" >> mix.fcl
 echo outputs.DiagOutput.fileName: \"dig.owner.${mixout}Diag.version.sequencer.art\" >> mix.fcl
