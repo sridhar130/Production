@@ -10,6 +10,7 @@ physics.producers.CrvPhotons.crvStepProcessNames : [ "" ]
 # digitization needs seeds
 services.SeedService.baseSeed : @local::Common.BaseSeed
 # minimal BField map
-services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
+services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common.txt"
+services.GeometryService.bFieldFile     : "Offline/Mu2eG4/geom/bfgeom_reco_v01.txt"
 # produce all streams
 
