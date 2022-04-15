@@ -7,7 +7,7 @@
 process_name: cosmicsplitter
 source: { module_type: RootInput }
 services : @local::Services.Sim
-services.SeedService.baseSeed         :  8
+services.SeedService.baseSeed : @local::Common.BaseSeed
 physics: {
   filters : {
     OnSpillSignalFilter : { # select particles in the Ce signal momentum band, with no cut on the hits

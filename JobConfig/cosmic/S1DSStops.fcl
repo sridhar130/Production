@@ -61,7 +61,7 @@ physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS1
 
 physics.trigger_paths : [ S1Path ]
 physics.end_paths : [ EndPath ]
-services.SeedService.baseSeed         :  773651
+services.SeedService.baseSeed : @local::Common.BaseSeed
 # set a coarse range for stepping through dirt and CRV
 physics.producers.g4run.physics.minRangeCut : 1.0 # 1 mm
 

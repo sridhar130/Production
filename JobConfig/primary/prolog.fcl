@@ -33,7 +33,12 @@ Primary: {
       module_type : FindMCPrimary
       SimParticles : "compressDetStepMCs"
     }
-  }
+    # null MCPrimary, for NoPrimary events
+    NullMCPrimary : {
+      module_type: NullMCPrimary
+      ExtraSteps : [ "virtualdetector", "stoppingtarget", "protonabsorber" ] # these will be created but empty
+    }
+ }
 
   filters : {
     # basic step filter configuration: these can get refined for particular primaries
@@ -74,7 +79,7 @@ Primary: {
         }
       }
     }
-    
+
     TargetPiStopResampler : {
       module_type: ResamplingMixer
       readMode            : sequential
