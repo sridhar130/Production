@@ -7,7 +7,8 @@
 # set the event timing for OffSpill
 physics.producers.EWMProducer.SpillType : 0
 # minimal BField map
-services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
+services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common.txt"
+services.GeometryService.bFieldFile     : "Offline/Mu2eG4/geom/bfgeom_reco_v01.txt"
 # produce physics and calibration streams
 physics.EndPath : [ @sequence::Digitize.EndSequence, TriggeredOutput, UntriggeredOutput, TrkOutput, CaloOutput ]
 physics.end_paths : [ EndPath ]
