@@ -61,6 +61,12 @@ Digitize: {
       StrawDigiMCCollection : compressDigiMCs
       particleTypes : [ 11,-11, 13, -13] # e+-, mu+-
     }
+    # Untriggered stream prescaler; stream-dependent
+    UntriggeredPrescale : {
+      module_type : Prescaler
+      prescaleFactor : @nil
+      prescaleOffset : 0
+    }
   }
 
   analyzers: {
@@ -74,6 +80,9 @@ Digitize: {
     @sequence::CaloMC.DigiSim,
     @sequence::CrvDAQPackage.CrvDAQSequence,
     compressDigiMCs ]
+
+  UntriggeredSequence : [
+    UntriggeredPrescale, Triggerable ]
 
   TriggerProducts : [
     "keep mu2e::TriggerInfo_*_*_*",
@@ -105,33 +114,40 @@ Digitize: {
     "keep mu2e::CaloClusters_CaloClusterFast_*_*",
     "keep mu2e::ProtonBunchIntensity*_*_*_*"
   ]
-
   #
-  # different streams for different purposes:  Triggered is for physics studies.  Untriggered is for algorithm improvement.
-  # *Calib are for calibration and alignment
+  # different streams for different end uses:  Signal is for physics studies, background studies, and calibration and alignment
+  # Untriggered is for trigger algorithm improvement
+  # Trk and Calo are for calibration and alignment
   #
-  TriggeredOutput : {
+  # Stream for events passing any 'physics signal' trigger; at the moment, just high-momentum tracks
+  SignalOutput : {
     module_type : RootOutput
-    SelectEvents : [ "*_trigger" ] # this selects events passing any trigger.  We should eventually exclude 'Service' triggers FIXME
+    SelectEvents : [ "*_highP_*_trigger" ]
     fileName    : @nil
   }
-
+  # Stream for diagnostic events; random and (prescaled) signal precursors
+  DiagOutput : {
+    module_type : RootOutput
+    SelectEvents : [ "minBias_*_trigger" , "*Helix*M_trigger", "*Helix*P_trigger"]
+    fileName    : @nil
+  }
+  # Stream for events useful for tracker calibration and alignment
+  TrkOutput : {
+    module_type : RootOutput
+    SelectEvents : [ "*_lowP_*_trigger","*_ipa_*_trigger", "cst*_trigger" ]
+    fileName    : @nil
+  }
+  # Stream for events useful for calorimeter calibration
+  CaloOutput : {
+    module_type : RootOutput
+    SelectEvents : [ "calo*_trigger" ] # selects events passing calorimeter calibration trigger
+    fileName    : @nil
+  }
+  # Stream for MC only: Stream for events which 'should have' triggered, but didnt, useful for studying trigger efficiency
   UntriggeredOutput : {
     module_type : RootOutput
     RejectEvents : [ "*_trigger" ] # reject events passing any trigger
-    SelectEvents : [ "Untriggered" ] # require events pass 'Triggerable' filter
-    fileName    : @nil
-  }
-
-  TrkOutput : {
-    module_type : RootOutput
-    SelectEvents : [ "cst*_trigger" ] # selects events passing tracker calibration trigger.  This should include a 'Calib' flag FIXME!
-    fileName    : @nil
-  }
-
-  CaloOutput : {
-    module_type : RootOutput
-    SelectEvents : [ "caloCalib*_trigger" ] # selects events passing calorimeter calibration trigger
+    SelectEvents : [ "UntriggeredPath" ] # require events pass 'Triggerable' filter
     fileName    : @nil
   }
 
@@ -139,10 +155,10 @@ Digitize: {
 }
 # override the Trigger sequence to prepare digis
 Trigger.PrepareDigis: [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
-Digitize.TriggeredOutput.outputCommands : [ "drop *_*_*_*",
+Digitize.SignalOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.DigiProducts]
 
-Digitize.UntriggeredOutput.outputCommands : [ "drop *_*_*_*",
+Digitize.DiagOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.DigiProducts]
 
 Digitize.TrkOutput.outputCommands : [ "drop *_*_*_*",
@@ -151,11 +167,15 @@ Digitize.TrkOutput.outputCommands : [ "drop *_*_*_*",
 Digitize.CaloOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.DigiProducts]
 
+Digitize.UntriggeredOutput.outputCommands : [ "drop *_*_*_*",
+  @sequence::Digitize.DigiProducts]
+
 Digitize.Outputs : {
-  TriggeredOutput : @local::Digitize.TriggeredOutput
-  UntriggeredOutput : @local::Digitize.UntriggeredOutput
+  SignalOutput : @local::Digitize.SignalOutput
+  DiagOutput : @local::Digitize.DiagOutput
   TrkOutput : @local::Digitize.TrkOutput
   CaloOutput : @local::Digitize.CaloOutput
+  UntriggeredOutput : @local::Digitize.UntriggeredOutput
 }
 
 END_PROLOG

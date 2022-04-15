@@ -11,18 +11,6 @@ services.GeometryService.inputFile: "Production/JobConfig/common/geom_nofield.tx
 # produce only calibration streams
 physics.EndPath : [ @sequence::Digitize.EndSequence, TrkOutput, CaloOutput, UntriggeredOutput ]
 physics.end_paths : [ EndPath ]
-outputs : {
-  TrkOutput : {
-    @table::Digitize.TrkOutput
-    fileName : "dig.owner.NoFieldTrk.version.sequencer.art"
-  }
-  CaloOutput : {
-    @table::Digitize.CaloOutput
-    fileName : "dig.owner.NoFieldCalo.version.sequencer.art"
-  }
-  UntriggeredOutput : {
-    @table::Digitize.UntriggeredOutput
-    fileName : "dig.owner.NoFieldUntriggered.version.sequencer.art"
-  }
-}
-
+# override the untriggered filter
+physics.filters.untriggeredprescale.prescalefactor : 100 # only record 1% of the untriggered
+physics.filters.Triggerable.MaxParticleMom : 1e10
