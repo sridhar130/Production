@@ -49,10 +49,14 @@ physics.producers.compressDetStepMCs.compressionOptions.mcTrajectoryCompressionL
 # setup primary finding for either generator (needs extension if new cosmic generators are added)
 physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 # add cosmic livetime output for bookkeeping
-outputs.PrimaryOutput.outputCommands : [@sequence::Primary.KeptProducts,
-   "keep mu2e::CosmicLivetime_*_mixed_*" ]
+outputs.PrimaryOutput.outputCommands : [
+  "drop *_*_*_*",
+  @sequence::Primary.KeptProducts,
+  "keep mu2e::CosmicLivetime_*_mixed_*"]
 # for consistency with S1
 services.GeometryService.inputFile : "Production/JobConfig/cosmic/geom_cosmic.txt"
+# allow MCTrajectories to save their own SimParticles
+physics.producers.compressDetStepMCs.compressionOptions.mcTrajectoryCompressionLevel: "noCompression"
 #
 # final configuration
 #
