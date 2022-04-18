@@ -16,16 +16,7 @@ source : {
   module_type : RootInput
 }
 
-services : {
-  message               : @local::default_message
-  TFileService          : { fileName : "nts.owner.filtered-s1.version.sequencer.root" }
-  RandomNumberGenerator : {defaultEngineKind: "MixMaxRng" }
-  GeometryService        : { inputFile      : "Offline/Mu2eG4/geom/geom_common_crv_v07.txt" }
-  ConditionsService      : { conditionsfile : "Offline/ConditionsService/data/conditions_01.txt"      }
-  GlobalConstantsService : { inputFile      : "Offline/GlobalConstantsService/data/globalConstants_01.txt" }
-  Mu2eG4Helper           : { }
-  SeedService            : @local::automaticSeeds
-}
+services : @local::Services.Sim
 
 physics : {
   filters: {
@@ -66,7 +57,12 @@ services.message.destinations.log.categories.ArtReport.limit : 1
 services.message.destinations.log.categories.ArtReport.timespan : 300
 
 #Add Mu2e geometry service identifier
-services.GeometryService.simulatedDetector.tool_type : "Mu2e"
 services.SeedService.policy:  autoIncrement
 services.SeedService.maxUniqueEngines: 20
 services.SeedService.baseSeed: 658586250
+
+# Define the root output file
+services.TFileService : { fileName : "nts.owner.filtered-s1.version.sequencer.root" }
+
+# Override geometry file
+services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_crv_v07.txt"
