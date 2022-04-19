@@ -10,6 +10,7 @@ physics.filters.UntriggeredPrescale.prescaleFactor : 100 # only record 1% of the
 physics.filters.Triggerable.MaxParticleMom : 1e10
 # extracted geometry
 services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
+services.GeometryService.bFieldFile: "Offline/Mu2eG4/geom/bfgeom_no_field.txt"
 # produce only calibration streams
 physics.EndPath : [ @sequence::Digitize.EndSequence, TrkOutput, CaloOutput, UntriggeredOutput ]
 physics.end_paths : [ EndPath ]

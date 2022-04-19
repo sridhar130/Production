@@ -23,5 +23,4 @@ outputs : @local::Digitize.Outputs
 # set the event timing for OnSpill
 physics.producers.EWMProducer.SpillType : 1
 # minimal BField map
-services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_reco.txt"
-
+services.GeometryService.bFieldFile     : "Offline/Mu2eG4/geom/bfgeom_reco_v01.txt"
