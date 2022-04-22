@@ -8,11 +8,12 @@
 # $3 is the campaign version of the mixin files.
 # $4 is the campaign version of the primary files.
 # $5 is the campaign version of the output files.
-# $6 is the database version
-# $7 is the proton beam intensity model: 1BB (1 booster batch), 2BB, Low (low intensity), or Seq (Sequence)
+# $6 is the database purpose
+# $7 is the database version
+# $8 is the proton beam intensity model: 1BB (1 booster batch), 2BB, Low (low intensity), or Seq (Sequence)
 
 # optional arguments:
-# $8 is a flag: if not null, Early pileup is mixed instead of cut
+# $9 is a flag: if not null, Early pileup is mixed instead of cut
 
 usage() { echo "Usage:
   source Production/Scripts/gen_Mix.sh [primaryName] [datasetDescription] [mixin version] \
@@ -27,9 +28,10 @@ usage() { echo "Usage:
   - the database version
   - the proton intensity (1BB, 2BB, Low)
   Example:
-  gen_Mix.sh CeEndpoint MDC2020 k m m v2_0 one
+  gen_Mix.sh CeEndpoint MDC2020 k m m perfect v2_0 one
   This will produce the fcl files for a mixing stage
   using the MDC2020m CeEndpoint primary as input and the MDC2020k pileup as mixins.
+  The database purpose will be 'perfect' and the version 'v2_0'.
   The output files will have the MDC2020m description."
 }
 
@@ -42,9 +44,9 @@ primary=$1
 mixinconf=$2$3
 primaryconf=$2$4
 outconf=$2$5
-dbpurpose=$2_DIGI
-dbver=$6
-nbb=$7
+dbpurpose=$2_$6
+dbver=$7
+nbb=$8
 eventsperjob=-1
 njobs=-1
 moveit=
@@ -53,7 +55,7 @@ neutnmixin=50
 elenmixin=25
 mustopnmixin=2
 mubeamnmixin=1
-if [[ $# -ge 8 ]]; then
+if [[ $# -ge 9 ]]; then
   early=Early
   neutnmixin=1
   elenmixin=1
