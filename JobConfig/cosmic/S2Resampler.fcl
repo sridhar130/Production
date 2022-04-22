@@ -41,11 +41,6 @@ physics.producers.g4run.inputs.simStageOverride: 1
 physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "CosmicResampler"
 physics.producers.g4run.inputs.updateEventLevelVolumeInfos.input: "CosmicResampler:eventlevel"
 physics.producers.g4run.inputs.updateEventLevelVolumeInfos.outInstance: "eventlevel"
-# Geant4 physics settings to speed up simulation
-physics.producers.g4run.physics.minRangeRegionCuts: { CalorimeterMother : 0.1 TrackerMother : 0.001 }
-physics.producers.g4run.physics.minRangeCut : 1.0 # mm
-physics.producers.g4run.physics.physicsListName: ShieldingM
-physics.producers.g4run.physics.useEmOption4InTracker: true
 # Kill cosmics outside of the CRV region
 physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS2
 physics.producers.g4run.SDConfig.preSimulatedHits:  ["CosmicResampler:CRV"]
@@ -64,3 +59,4 @@ services.GeometryService.inputFile : "Production/JobConfig/cosmic/geom_cosmic.tx
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/primary/epilog.fcl"
+#include "Production/JobConfig/cosmic/resampling_epilog.fcl"
