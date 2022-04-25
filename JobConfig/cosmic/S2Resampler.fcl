@@ -59,3 +59,4 @@ services.GeometryService.inputFile : "Production/JobConfig/cosmic/geom_cosmic.tx
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/primary/epilog.fcl"
+#include "Production/JobConfig/cosmic/resampling_epilog.fcl"
