@@ -16,7 +16,7 @@ conf=$2$4
 merge=$5
 digitype=$6
 digout=${primary}${digitype}
-dbpurpose=$7
+dbpurpose=$2_$7
 dbver=$8
 #
 #NoField and Extracted require consistency with the primary
@@ -37,7 +37,7 @@ usage() { echo "Usage:
   Example:
   gen_Digitize.sh CeEndpoint MDC2020 m m 1 OnSpill perfect v2_0
   This will produce the fcl files for digitizing CeEndpoint primaries
-  from MDC2020m according to onspill timing, using 'v2_0' of the 'perfect' database
+  from MDC2020m according to onspill timing, using 'v2_0' of the 'MDC2020_perfect' database
   for digitization parameters"
 }
 

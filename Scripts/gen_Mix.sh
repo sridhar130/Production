@@ -32,7 +32,7 @@ usage() { echo "Usage:
   gen_Mix.sh CeEndpoint MDC2020 k m m perfect v2_0 1BB
   This will produce the fcl files for a mixing stage
   using the MDC2020m CeEndpoint primary as input and the MDC2020k pileup as mixins.
-  The database purpose will be 'perfect' and the version 'v2_0'.
+  The database purpose will be 'MDC2020_perfect' and the version 'v2_0'.
   The output files will have the MDC2020m description."
 }
 
@@ -45,7 +45,7 @@ primary=$1
 mixinconf=$2$3
 primaryconf=$2$4
 outconf=$2$5
-dbpurpose=$6
+dbpurpose=$2_$6
 dbver=$7
 nbb=$8
 eventsperjob=-1
