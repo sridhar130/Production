@@ -16,22 +16,23 @@
 # $9 is a flag: if not null, Early pileup is mixed instead of cut
 
 usage() { echo "Usage:
-  source Production/Scripts/gen_Mix.sh [primaryName] [datasetDescription] [mixin version] \
-    [primary version] [output version] [database version] [intensity]
+  source Production/Scripts/gen_Mix.sh [primaryName] [datasetDescription] [mixinVersion] \
+    [primaryVersion] [outputVersion] [databasePurpose] [databaseVersion] [intensity]
 
   This script will produce the fcl files needed for a mixing stage. You must provide in order:
   - the name of the primary [primaryName]
   - the dataset description [datasetDescription],
-  - the campaign version of the input file [campaignInput],
+  - the campaign version of the input file [mixinVersion],
   - the campaign version of the primary file [primaryVersion],
-  - the campaign version of the output file [campaignOutput],
-  - the database version
-  - the proton intensity (1BB, 2BB, Low)
+  - the campaign version of the output file [outputVersion],
+  - the database purpose [databasePurpose],
+  - the database version [databaseVersion],
+  - the proton intensity (1BB, 2BB, Low, Seq) [intensity]
   Example:
-  gen_Mix.sh CeEndpoint MDC2020 k m m perfect v2_0 one
+  gen_Mix.sh CeEndpoint MDC2020 k m m perfect v2_0 1BB
   This will produce the fcl files for a mixing stage
   using the MDC2020m CeEndpoint primary as input and the MDC2020k pileup as mixins.
-  The database purpose will be 'perfect' and the version 'v2_0'.
+  The database purpose will be 'MDC2020_perfect' and the version 'v2_0'.
   The output files will have the MDC2020m description."
 }
 
@@ -71,7 +72,7 @@ if [[ "${primary}" == *"Extracted" || "${primary}" == *"NoField" ]]; then
   return 1
 fi
 
-echo "Generating mixing scripts for $primary conf $primaryconf mixin conf $mixinconf output conf $outconf database puppose, version $dbpurpose, $dbver $early with $nbb proton intensity"
+echo "Generating mixing scripts for $primary conf $primaryconf mixin conf $mixinconf output conf $outconf database purpose, version $dbpurpose, $dbver $early with $nbb proton intensity"
 
 # create the mixin input lists.  Note there is no early MuStopPileup
 samweb list-file-locations --schema=root --defname="dts.mu2e.${early}MuBeamFlashCat.$mixinconf.art"  | cut -f1 > MuBeamFlashCat$mixinconf.txt

@@ -8,32 +8,37 @@
 # $4 is the campaign version of the output (digi) file.
 # $5 is the number of input collections to merge (merge factor)
 # $6 is the digitization type (OnSpill, OffSpill, NoField, Extracted)
-# $7 is the database version
+# $7 is the database purpose (perfect, best, startup)
+# $8 is the database version
 primary=$1
 name=$primary.$2$3
 conf=$2$4
 merge=$5
 digitype=$6
 digout=${primary}${digitype}
-dbpurpose=$2_DIGI
-dbver=$7
+dbpurpose=$2_$7
+dbver=$8
 #
 #NoField and Extracted require consistency with the primary
 #
 usage() { echo "Usage:
   source Production/Scripts/gen_Digitize.sh [primaryName] [datasetDescription] \
-    [primary version] [output version] [nmerge] [digitype] [database version]
+    [campaignInput] [campaignOutput] [nmerge] [digitype] [dbpurpose] [dbversion]
 
   This script will produce the fcl files needed for a digitization stage. You must provide in order:
   - the name of the primary [primaryName]
   - the dataset description [datasetDescription],
   - the campaign version of the input file [campaignInput],
   - the campaign version of the output file [campaignOutput],
-  - the database version
+  - the merge factor  [nmerge],
+  - the digitization type (OnSpill, OffSpill, NoField, Extracted) [digitype],
+  - the database purpose (perfect, best, startup) [dbpurpose],
+  - the database version [dbversion]
   Example:
-  gen_Digitize.sh CeEndpoint MDC2020 k m 1 OnSpill v2_0
+  gen_Digitize.sh CeEndpoint MDC2020 m m 1 OnSpill perfect v2_0
   This will produce the fcl files for digitizing CeEndpoint primaries
-  from MDC2020m according to onspill timing, using v2_0 of the database for digitization parameters"
+  from MDC2020m according to onspill timing, using 'v2_0' of the 'MDC2020_perfect' database
+  for digitization parameters"
 }
 
 if [[ $# -lt 7 ]] ; then
@@ -55,7 +60,7 @@ else
     return 1
   fi
 fi
-echo "Generating digitization scripts for $primary conf $conf output $digout database puppose, version $dbpurpose, $dbver"
+echo "Generating digitization scripts for $primary conf $conf output $digout database purpose, version $dbpurpose, $dbver"
 
 rm digitize.fcl
 samweb list-file-locations --schema=root --defname="dts.mu2e.${name}.art"  | cut -f1 > $name.txt
