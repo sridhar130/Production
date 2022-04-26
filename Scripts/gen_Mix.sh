@@ -44,7 +44,7 @@ fi
 primary=$1
 mixinconf=$2$3
 primaryconf=$2$4
-outconf=$2$5
+outconf=$2$3$5_$6_$7
 dbpurpose=$2_$6
 dbver=$7
 nbb=$8
