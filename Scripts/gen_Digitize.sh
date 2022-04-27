@@ -12,7 +12,7 @@
 # $8 is the database version
 primary=$1
 name=$primary.$2$3
-conf=$2$4
+conf=$2$4_$7_$8
 merge=$5
 digitype=$6
 digout=${primary}${digitype}
