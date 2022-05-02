@@ -11,5 +11,13 @@ physics.producers.CrvPhotons.crvStepProcessNames : [ "" ]
 services.SeedService.baseSeed : @local::Common.BaseSeed
 # minimal BField map
 services.GeometryService.bFieldFile     : "Offline/Mu2eG4/geom/bfgeom_reco_v01.txt"
-# produce all streams
+# setup proditions; as new proditions are added to the database this file MUST be updated or reco won't see them
+services.ProditionsService.alignedTracker.useDb: true
+services.ProditionsService.alignedTracker.verbose: 0
+services.ProditionsService.trackerStatus.Settings.useDb: true
+services.ProditionsService.trackerStatus.Settings.verbose: 0
+services.ProditionsService.strawElectronics.useDb: true
+services.ProditionsService.strawElectronics.verbose: 0
+# don't use database time offsets in digitization
+services.ProditionsService.strawElectronics.overrideDbTimeOffsets : true
 
