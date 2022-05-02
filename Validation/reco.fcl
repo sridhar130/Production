@@ -42,44 +42,44 @@ physics.producers.KKDePSeedFit.ModuleSettings.ComboHitCollection : "makeSH"
 physics.producers.KKDePSeedFit.ModuleSettings.StrawHitFlagCollection : "FlagBkgHits:StrawHits"
 
 outputs: {
-   Output: {
-      SelectEvents: [
-         "RecoPath"
-      ]
-      fileName: "mcs.owner.val-reco.dsconf.seq.art"
-      module_type: "RootOutput"
-      outputCommands: [
-         "drop *_*_*_*",
-         "keep mu2e::TriggerInfo_*_*_*",
-         "keep art::TriggerResults_*_*_*",
-         "keep mu2e::KalSeeds_TT*_*_*",
-         "keep mu2e::HelixSeeds_TT*_*_*",
-         "keep mu2e::TimeClusters_TT*_*_*",
-         "keep mu2e::CaloClusters_CaloClusterFast_*_*",
-         "keep mu2e::KalSeeds_KFF*_*_*",
-         "keep mu2e::KalSeeds_KSF*_*_*",
-         "keep mu2e::KalSeeds_KK*_*_*",
-         "keep mu2e::HelixSeeds_MH*_*_*",
-         "keep mu2e::TimeClusters_MH*_*_*",
-         "keep mu2e::CaloClusters_CaloClusterMaker_*_*",
-         "keep mu2e::EventWindowMarker_*_*_*",
-         "keep mu2e::ProtonBunchTime_*_*_*",
-         "keep *_SelectRecoMC_*_*",
-         "keep *_genCounter_*_*",
-         "keep mu2e::PrimaryParticle_*_*_*",
-         "keep mu2e::StatusG4_*_*_*",
-         "keep mu2e::ProtonBunchIntensity_*_*_*",
-         "keep mu2e::ProtonBunchTimeMC_*_*_*",
-         "keep mu2e::EventWeight_*_*_*",
-         "keep *_compressRecoMCs_*_*",
-	 "drop *_*UeM_*_*",
-	 "drop *_*UeP_*_*",
-	 "drop *_*DmuP_*_*",
-	 "drop *_*DmuM_*_*",
-	 "drop *_*UmuP_*_*",
-	 "drop *_*UmuM_*_*"
-      ]
-   }
+  Output: {
+    SelectEvents: [
+      "RecoPath"
+    ]
+    fileName: "mcs.owner.val-reco.dsconf.seq.art"
+    module_type: "RootOutput"
+    outputCommands: [
+      "drop *_*_*_*",
+      "keep mu2e::TriggerInfo_*_*_*",
+      "keep art::TriggerResults_*_*_*",
+      "keep mu2e::KalSeeds_TT*_*_*",
+      "keep mu2e::HelixSeeds_TT*_*_*",
+      "keep mu2e::TimeClusters_TT*_*_*",
+      "keep mu2e::CaloClusters_CaloClusterFast_*_*",
+      "keep mu2e::KalSeeds_KFF*_*_*",
+      "keep mu2e::KalSeeds_KSF*_*_*",
+      "keep mu2e::KalSeeds_KK*_*_*",
+      "keep mu2e::HelixSeeds_MH*_*_*",
+      "keep mu2e::TimeClusters_MH*_*_*",
+      "keep mu2e::CaloClusters_CaloClusterMaker_*_*",
+      "keep mu2e::EventWindowMarker_*_*_*",
+      "keep mu2e::ProtonBunchTime_*_*_*",
+      "keep *_SelectRecoMC_*_*",
+      "keep *_genCounter_*_*",
+      "keep mu2e::PrimaryParticle_*_*_*",
+      "keep mu2e::StatusG4_*_*_*",
+      "keep mu2e::ProtonBunchIntensity_*_*_*",
+      "keep mu2e::ProtonBunchTimeMC_*_*_*",
+      "keep mu2e::EventWeight_*_*_*",
+      "keep *_compressRecoMCs_*_*",
+      "drop *_*UeM_*_*",
+      "drop *_*UeP_*_*",
+      "drop *_*DmuP_*_*",
+      "drop *_*DmuM_*_*",
+      "drop *_*UmuP_*_*",
+      "drop *_*UmuM_*_*"
+    ]
+  }
 }
 
 # print summaries

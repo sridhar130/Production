@@ -28,7 +28,7 @@ physics: {
     @table::Primary.filters
     @table::Digitize.filters
     @table::Reconstruction.filters
-# override the DetStep filter to select CRV
+    # override the DetStep filter to select CRV
     PrimaryFilter : {
       module_type : DetectorStepFilter
       StrawGasSteps : [ ]
@@ -134,6 +134,6 @@ outputs.Output.fileName : "mcs.owner.val-cosmicSimReco.dsconf.seq.art"
 # run 1h by default
 source.maxEvents: 50000
 
-// Initialze seeding of random engines
+# Initialze seeding of random engines
 services.SeedService.baseSeed         :  8
-
+#include "Production/Validation/database.fcl"
