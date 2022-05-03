@@ -82,7 +82,7 @@ fi
 # setup database access for digi parameters
 echo services.DbService.purpose: $dbpurpose >> digitize.fcl
 echo services.DbService.version: $dbver >> digitize.fcl
-echo services.DbService.verbose : 1 >> digitize.fcl
+echo services.DbService.verbose : 2 >> digitize.fcl
 
 generate_fcl --dsconf="$conf" --dsowner=mu2e --description="${digout}Digi" --embed digitize.fcl \
   --inputs="$name.txt" --merge-factor=$merge

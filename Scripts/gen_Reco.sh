@@ -33,20 +33,36 @@ files will have the MDC2020m description.'
     echo "$usage"
     exit 0
 fi
-samweb list-file-locations --schema=root --defname="dig.mu2e.$1.$2$3.art"  | cut -f1 > Digis.txt
+primary=$1
+digconf=$2$3
+dbpurpose=$2_$5
+dbver=$6
+outconf=$2$4_$5_$6
+merge=$7
+
+
+echo "Generating reco scripts for $primary conf $digconf output $outconf  database purpose, version $dbpurpose $dbver"
+
+samweb list-file-locations --schema=root --defname="dig.mu2e.$primary.$digconf.art"  | cut -f1 > Digis.txt
 
 echo '#include "Production/JobConfig/reco/Reco.fcl"' > template.fcl
-echo 'services.DbService.purpose:' $5 >> template.fcl
-echo 'services.DbService.version:' $6 >> template.fcl
+echo 'services.DbService.purpose:' $dbpurpose >> template.fcl
+echo 'services.DbService.version:' $dbver >> template.fcl
+echo 'services.DbService.verbose : 2' >> template.fcl
 
-generate_fcl --dsowner=mu2e --override-outputs --auto-description --embed template.fcl --dsconf "$2$4_$5_$6" \
---inputs "Digis.txt" --merge-factor=$7
+generate_fcl --dsowner=mu2e --override-outputs --auto-description --embed template.fcl --dsconf "$outconf" \
+--inputs "Digis.txt" --merge-factor=$merge
 
+base=${primary}Reco_
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
  if test -d $dirname; then
-  echo "found dir $dirname"
-  rm -rf $1Reco$4_$dirname
-  mv $dirname $1Reco$4_$dirname
- fi
+   echo "found dir $dirname"
+   if test -d ${base}${dirname}; then
+     echo "removing ${base}${dirname}"
+     rm -rf ${base}${dirname}
+   fi
+  echo "moving $dirname to ${base}Reco_${dirname}"
+  mv $dirname ${base}${dirname}
+fi
 done
 

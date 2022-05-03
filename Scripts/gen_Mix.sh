@@ -127,7 +127,7 @@ echo physics.filters.MuStopPileupMixer.mu2e.MaxEventsToSkip: ${nskip_MuStopPileu
 # setup database access, for SimEfficiences and digi parameters
 echo services.DbService.purpose: $dbpurpose >> mix.fcl
 echo services.DbService.version: $dbver >> mix.fcl
-echo services.DbService.verbose : 1 >> digitize.fcl
+echo services.DbService.verbose : 2 >> mix.fcl
 # overwrite the outputs
 echo outputs.SignalOutput.fileName: \"dig.owner.${mixout}Signal.version.sequencer.art\" >> mix.fcl
 echo outputs.DiagOutput.fileName: \"dig.owner.${mixout}Diag.version.sequencer.art\" >> mix.fcl
