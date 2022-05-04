@@ -6,7 +6,7 @@ services.SeedService.baseSeed: 8
 
 source.maxEvents: 20
 source.fileNames : [
-  "/cvmfs/mu2e.opensciencegrid.org/DataFiles/Validation/dts.mu2e.Cosmic.CORSIKA-20210611v2.000001_00000000.art"
+  "/pnfs/mu2e/tape/phy-sim/dts/mu2e/CosmicCORSIKACat/MDC2020n_10h/art/f3/88/dts.mu2e.CosmicCORSIKACat.MDC2020n_10h.001205_00000005.art"
 ]
 outputs.SignalOutput.fileName : "dig.owner.cosmicOffSpill.seq.art"
 outputs.DiagOutput.fileName : "/dev/null"
