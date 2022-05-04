@@ -1,6 +1,6 @@
 #include "Production/JobConfig/primary/CeEndpoint.fcl"
 
-source.firstRun: 1000
+source.firstRun: 1200
 source.maxEvents: 20
 
 services.scheduler.wantSummary: true
