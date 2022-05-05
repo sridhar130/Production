@@ -12,7 +12,10 @@
 
 process_name : ceSimReco
 
-source : { module_type :EmptyEvent }
+source : {
+  module_type :EmptyEvent
+  firstRun: 1200
+}
 services : @local::Services.Sim
 
 physics: {
