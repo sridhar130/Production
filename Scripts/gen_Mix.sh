@@ -8,28 +8,31 @@
 # $3 is the campaign version of the mixin files.
 # $4 is the campaign version of the primary files.
 # $5 is the campaign version of the output files.
-# $6 is the database version
-# $7 is the proton beam intensity model: 1BB (1 booster batch), 2BB, Low (low intensity), or Seq (Sequence)
+# $6 is the database purpose
+# $7 is the database version
+# $8 is the proton beam intensity model: 1BB (1 booster batch), 2BB, Low (low intensity), or Seq (Sequence)
 
 # optional arguments:
-# $8 is a flag: if not null, Early pileup is mixed instead of cut
+# $9 is a flag: if not null, Early pileup is mixed instead of cut
 
 usage() { echo "Usage:
-  source Production/Scripts/gen_Mix.sh [primaryName] [datasetDescription] [mixin version] \
-    [primary version] [output version] [database version] [intensity]
+  source Production/Scripts/gen_Mix.sh [primaryName] [datasetDescription] [mixinVersion] \
+    [primaryVersion] [outputVersion] [databasePurpose] [databaseVersion] [intensity]
 
   This script will produce the fcl files needed for a mixing stage. You must provide in order:
   - the name of the primary [primaryName]
   - the dataset description [datasetDescription],
-  - the campaign version of the input file [campaignInput],
+  - the campaign version of the input file [mixinVersion],
   - the campaign version of the primary file [primaryVersion],
-  - the campaign version of the output file [campaignOutput],
-  - the database version
-  - the proton intensity (1BB, 2BB, Low)
+  - the campaign version of the output file [outputVersion],
+  - the database purpose [databasePurpose],
+  - the database version [databaseVersion],
+  - the proton intensity (1BB, 2BB, Low, Seq) [intensity]
   Example:
-  gen_Mix.sh CeEndpoint MDC2020 k m m v2_0 one
+  gen_Mix.sh CeEndpoint MDC2020 k m m perfect v2_0 1BB
   This will produce the fcl files for a mixing stage
   using the MDC2020m CeEndpoint primary as input and the MDC2020k pileup as mixins.
+  The database purpose will be 'MDC2020_perfect' and the version 'v2_0'.
   The output files will have the MDC2020m description."
 }
 
@@ -41,10 +44,10 @@ fi
 primary=$1
 mixinconf=$2$3
 primaryconf=$2$4
-outconf=$2$5
-dbpurpose=$2_DIGI
-dbver=$6
-nbb=$7
+outconf=$2$5_$6_$7
+dbpurpose=$2_$6
+dbver=$7
+nbb=$8
 eventsperjob=-1
 njobs=-1
 moveit=
@@ -53,7 +56,7 @@ neutnmixin=50
 elenmixin=25
 mustopnmixin=2
 mubeamnmixin=1
-if [[ $# -ge 8 ]]; then
+if [[ $# -ge 9 ]]; then
   early=Early
   neutnmixin=1
   elenmixin=1
@@ -69,7 +72,7 @@ if [[ "${primary}" == *"Extracted" || "${primary}" == *"NoField" ]]; then
   return 1
 fi
 
-echo "Generating mixing scripts for $primary conf $primaryconf mixin conf $mixinconf output conf $outconf database puppose, version $dbpurpose, $dbver $early with $nbb proton intensity"
+echo "Generating mixing scripts for $primary conf $primaryconf mixin conf $mixinconf output conf $outconf database purpose, version $dbpurpose, $dbver $early with $nbb proton intensity"
 
 # create the mixin input lists.  Note there is no early MuStopPileup
 samweb list-file-locations --schema=root --defname="dts.mu2e.${early}MuBeamFlashCat.$mixinconf.art"  | cut -f1 > MuBeamFlashCat$mixinconf.txt
@@ -124,7 +127,7 @@ echo physics.filters.MuStopPileupMixer.mu2e.MaxEventsToSkip: ${nskip_MuStopPileu
 # setup database access, for SimEfficiences and digi parameters
 echo services.DbService.purpose: $dbpurpose >> mix.fcl
 echo services.DbService.version: $dbver >> mix.fcl
-echo services.DbService.verbose : 1 >> digitize.fcl
+echo services.DbService.verbose : 2 >> mix.fcl
 # overwrite the outputs
 echo outputs.SignalOutput.fileName: \"dig.owner.${mixout}Signal.version.sequencer.art\" >> mix.fcl
 echo outputs.DiagOutput.fileName: \"dig.owner.${mixout}Diag.version.sequencer.art\" >> mix.fcl

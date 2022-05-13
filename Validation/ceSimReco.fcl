@@ -12,7 +12,10 @@
 
 process_name : ceSimReco
 
-source : { module_type :EmptyEvent }
+source : {
+  module_type :EmptyEvent
+  firstRun: 1200
+}
 services : @local::Services.Sim
 
 physics: {
@@ -29,10 +32,10 @@ physics: {
     @table::Digitize.producers
     @table::Reconstruction.producers
   }
-  filters : { 
+  filters : {
     @table::Common.filters
     @table::Primary.filters
-    @table::Digitize.filters 
+    @table::Digitize.filters
     @table::Reconstruction.filters
   }
   analyzers: {
@@ -44,7 +47,7 @@ physics: {
 
   TriggerPath : [
     TargetStopResampler,
-    @sequence::Common.generateSequence, 
+    @sequence::Common.generateSequence,
     @sequence::Common.g4Sequence,
     @sequence::Primary.PrimarySequence,
     @sequence::Digitize.DigitizeSequence,
@@ -65,31 +68,31 @@ physics: {
   end_paths : [ EndPath ]
 }
 
-outputs : { 
+outputs : {
   Output : {
-     module_type : RootOutput
-     SelectEvents : [ TriggerPath ]
-     fileName    : @nil
-     outputCommands : [
-	 @sequence::Reconstruction.HighRecoProducts,
-	 @sequence::Reconstruction.MCRecoProducts,
-	 @sequence::Digitize.DigiProducts,
-	 @sequence::Primary.KeptProducts,
-	 # drop reco products which be empty
-	 "drop mu2e::Crv*_*_*_*",
-	 "drop *_*_cosmicTimeMap_*",
-	 "drop *_g4run_*_*",
-	 "drop mu2e::StepPointMCs_*_CRV_*",
-	 "drop mu2e::SimParticleart::Ptrmu2e::MCTrajectorystd::map_*_*_*", 
-	 "drop *_*DeP_*_*",
-	 "drop *_compressDetStepMCs_*_*",
-	 "drop *_compressDigiMCs_*_*",
-	 "drop mu2e::CaloDigis_CaloDigiMaker_*_*",
-         "drop mu2e::StrawDigiADCWaveforms_makeSD_*_*",
-         "drop mu2e::StrawDigis_makeSD_*_*",
-	 "keep mu2e::CaloShowerSteps_compressDigiMCs_*_*",
-	 "keep mu2e::StatusG4_*_*_*"
-     ]
+    module_type : RootOutput
+    SelectEvents : [ TriggerPath ]
+    fileName    : @nil
+    outputCommands : [
+      @sequence::Reconstruction.HighRecoProducts,
+      @sequence::Reconstruction.MCRecoProducts,
+      @sequence::Digitize.DigiProducts,
+      @sequence::Primary.KeptProducts,
+      # drop reco products which be empty
+      "drop mu2e::Crv*_*_*_*",
+      "drop *_*_cosmicTimeMap_*",
+      "drop *_g4run_*_*",
+      "drop mu2e::StepPointMCs_*_CRV_*",
+      "drop mu2e::SimParticleart::Ptrmu2e::MCTrajectorystd::map_*_*_*",
+      "drop *_*DeP_*_*",
+      "drop *_compressDetStepMCs_*_*",
+      "drop *_compressDigiMCs_*_*",
+      "drop mu2e::CaloDigis_CaloDigiMaker_*_*",
+      "drop mu2e::StrawDigiADCWaveforms_makeSD_*_*",
+      "drop mu2e::StrawDigis_makeSD_*_*",
+      "keep mu2e::CaloShowerSteps_compressDigiMCs_*_*",
+      "keep mu2e::StatusG4_*_*_*"
+    ]
   }
 }
 #include "Production/JobConfig/primary/epilog.fcl"
@@ -111,7 +114,7 @@ services.TimeTracker.printSummary: true
 
 # histogram file
 services.TFileService.fileName: "/dev/null"
-# art file 
+# art file
 outputs.Output.fileName : "mcs.owner.val-ceSimReco.dsconf.seq.art"
 
 # run 1h by default
@@ -121,15 +124,15 @@ source.maxEvents: 5000
 services.SeedService.baseSeed         :  8
 # setup the resampler g4 config.  for questions, ask A. Gaponenko
 physics.producers.g4run.inputs: {
-   primaryType: StageParticles
-   primaryTag: "generate"
-   inputMCTrajectories: ""
-   simStageOverride: 2
-   inputPhysVolumeMultiInfo: "TargetStopResampler"
-   updateEventLevelVolumeInfos: {
-      input: "TargetStopResampler:eventlevel"
-      outInstance: "eventlevel"
-   }
+  primaryType: StageParticles
+  primaryTag: "generate"
+  inputMCTrajectories: ""
+  simStageOverride: 2
+  inputPhysVolumeMultiInfo: "TargetStopResampler"
+  updateEventLevelVolumeInfos: {
+    input: "TargetStopResampler:eventlevel"
+    outInstance: "eventlevel"
+  }
 }
 # muon stops file from MDC2020 validation
 physics.filters.TargetStopResampler.fileNames : [
@@ -139,3 +142,4 @@ physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip: 0
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eCeMinusEndpoint"
 
 services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_current.txt"
+#include "Production/Validation/database.fcl"

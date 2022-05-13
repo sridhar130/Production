@@ -37,4 +37,4 @@ physics.producers.g4run.inputs: {
 }
 
 # use reduced BField for these jobs
-services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_tsu_ps.txt"
+services.GeometryService.bFieldFile : "Offline/Mu2eG4/geom/bfgeom_no_tsu_ps_v01.txt"

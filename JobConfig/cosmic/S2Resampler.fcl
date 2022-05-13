@@ -63,3 +63,4 @@ physics.producers.compressDetStepMCs.compressionOptions.mcTrajectoryCompressionL
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/primary/epilog.fcl"
+#include "Production/JobConfig/cosmic/resampling_epilog.fcl"

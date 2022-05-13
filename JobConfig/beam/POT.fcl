@@ -76,7 +76,7 @@ physics.producers.g4run.physics.minRangeCut : 1. # mm  coarse range for this sta
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/beam/epilog.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
-services.GeometryService.inputFile      : "Offline/Mu2eG4/geom/geom_common_no_ds.txt"
+services.GeometryService.bFieldFile : "Offline/Mu2eG4/geom/bfgeom_no_ds_v01.txt"
 # the following is overwritten by generate_fcl
 services.SeedService.baseSeed          : @local::Common.BaseSeed
 
