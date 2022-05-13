@@ -7,12 +7,11 @@
 # $2 is the output primary production version
 # $3 is the number of jobs
 # $4 is the number of events/job
-# $5 is added to the primary (PBISequence)
 if [[ $# -lt 4 ]]; then
   echo "Missing arguments, provided $# but there should be 5"
   return 1
 fi
-primary=NoPrimary$5
+primary=NoPrimary
 primaryconf=$1$2
 njobs=$3
 eventsperjob=$4
