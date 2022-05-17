@@ -117,7 +117,7 @@ if [ "$early" == "Early" ]; then
 fi
 # NoPrimary needs a special filter
 if [ "${primary}" == "NoPrimary" ]; then
-  echo '#include "Production/JobConfig/mixing/${primary}.fcl"' >> mix.fcl
+  echo '#include "Production/JobConfig/mixing/NoPrimary.fcl"' >> mix.fcl
 fi
 # set the skips
 echo physics.filters.MuBeamFlashMixer.mu2e.MaxEventsToSkip: ${nskip_MuBeamFlash} >> mix.fcl
