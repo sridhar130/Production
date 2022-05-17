@@ -106,7 +106,7 @@ elif [ $nbb == "2BB" ]; then
 elif [ $nbb == "Low" ]; then
   echo '#include "Production/JobConfig/mixing/LowIntensity.fcl"' >> mix.fcl
 elif [ $nbb == "Seq" ]; then
-  echo '#include "Production/JobConfig/mixing/PBISequence.fcl"' >> mix.fcl
+  echo '#include "Production/JobConfig/mixing/NoPrimaryPBISequence.fcl"' >> mix.fcl
 else
   echo "Unknown proton beam intensity $nbb; aborting"
   return 1;
@@ -116,8 +116,8 @@ if [ "$early" == "Early" ]; then
   echo '#include "Production/JobConfig/mixing/EarlyMixins.fcl"' >> mix.fcl
 fi
 # NoPrimary needs a special filter
-if [ "${primary}" == "NoPrimary*" ]; then
-  echo '#include "Production/JobConfig/mixing/NoPrimary.fcl"' >> mix.fcl
+if [ "${primary}" == "NoPrimary" ]; then
+  echo '#include "Production/JobConfig/mixing/${primary}.fcl"' >> mix.fcl
 fi
 # set the skips
 echo physics.filters.MuBeamFlashMixer.mu2e.MaxEventsToSkip: ${nskip_MuBeamFlash} >> mix.fcl
