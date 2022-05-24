@@ -101,7 +101,7 @@ Primary: {
       }
     }
 
-    IPAStopResampler : {
+    IPAMuminusStopResampler : {
       module_type: ResamplingMixer
       readMode            : sequential
       wrapFiles           : true
