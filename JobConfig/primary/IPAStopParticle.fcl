@@ -5,14 +5,14 @@
 #
 #include "Production/JobConfig/primary/StopParticle.fcl"
 
-physics.PrimaryPath : [ IPAStopResampler, @sequence::Common.generateSequence, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence ]
+physics.PrimaryPath : [ IPAMuminusStopResampler, @sequence::Common.generateSequence, @sequence::Common.g4Sequence, @sequence::Primary.PrimarySequence ]
 physics.trigger_paths : [ PrimaryPath ]
 outputs : { PrimaryOutput :@local::Primary.PrimaryOutput }
 physics.EndPath : [ @sequence::Primary.EndSequence, PrimaryOutput ]
 physics.end_paths : [ EndPath ]
 
-physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "IPAStopResampler"
+physics.producers.g4run.inputs.inputPhysVolumeMultiInfo: "IPAMuminusStopResampler"
 physics.producers.g4run.inputs.updateEventLevelVolumeInfos: {
-  input: "IPAStopResampler:eventlevel"
+  input: "IPAMuminusStopResampler:eventlevel"
   outInstance: "eventlevel"
 }
