@@ -1,7 +1,5 @@
 #
-# Re-sample pions and associated particles entering the DS, propagate them to the detectors or stopping target, and write out the corresponding flash DetectorSteps and target Pistops.
-# Note the main flash stream has a time cut to avoid energy far outside the digitization window.  A prescaled but otherwise uncut stream is used to
-# record the flash peak
+# Re-sample pions and create stops.  Uses infinite pion lifetime
 #
 # original author: Sophie Middleton , 2021, based on code by: Yuri Oksuzkian
 # Updated for MDC2020 (DetectorSteps): D. Brown
@@ -32,10 +30,10 @@ physics: {
   }
   # setup paths
   targetStopPath : [ @sequence::Pileup.beamResamplerSequence, @sequence::Common.g4Sequence, TargetPionFinder, TargetPiStopFilter, compressPVTargetPiStops]
-  
+
   trigger_paths: [ targetStopPath ]
   outPath : [ TargetPiStopOutput ]
-  end_paths: [outPath]
+ end_paths: [outPath]
 }
 
 outputs: {
@@ -50,9 +48,6 @@ outputs: {
     fileName : "sim.owner.PiTargetStops.version.sequencer.art"
   }
 }
-# set prescale factors
-physics.filters.TargetStopPrescaleFilter.nPrescale         : 1 #@local::Pileup.PiminusTargetStopPrescale
-physics.filters.EarlyPrescaleFilter.nPrescale         : 1 #@local::Pileup.EarlyPiBeamFlashPrescale
 
 # Point Mu2eG4 to the pre-simulated data
 physics.producers.g4run.inputs: {
@@ -66,6 +61,7 @@ physics.producers.g4run.inputs: {
     outInstance: "eventlevel"
   }
 }
+physics.producers.g4run.physics.noDecay     : [ 211, -211 ] # Added for Pion Infinite Lifetime for both charges
 # copy over VD hits
 physics.producers.g4run.SDConfig.preSimulatedHits:  ["beamResampler:virtualdetector"]
 #include "Production/JobConfig/common/MT.fcl"

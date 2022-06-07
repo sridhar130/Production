@@ -11,10 +11,10 @@ physics.producers.FindMCPrimary.PrimaryProcess : "mu2eFlateMinus"
 
 physics.producers.generate : {
   module_type: FlatMuonDaughterGenerator
-  inputSimParticles: IPAStopResampler
+  inputSimParticles: IPAMuminusStopResampler
   stoppingTargetMaterial : "IPA"
   verbosity : 1
   pdgId : 11
 }
 
-outputs.PrimaryOutput.fileName: "dts.owner.IPAFlat.version.sequencer.art"
+outputs.PrimaryOutput.fileName: "dts.owner.IPAMuminusFlateMinus.version.sequencer.art"

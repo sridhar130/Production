@@ -12,7 +12,7 @@ physics.producers.FindMCPrimary.PrimaryProcess : "mu2eMuonDecayAtRest"
 physics.producers.generate : {
   module_type : Pileup
   verbosity : 10
-  inputSimParticles: IPAStopResampler
+  inputSimParticles: IPAMuminusStopResampler
   captureProducts : []
   decayProducts : [ @local::Pileup.dioGenTool ]
   stoppingTargetMaterial : "IPA"

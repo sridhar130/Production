@@ -7,7 +7,7 @@
 # $2 is the production (ie MDC2020)
 # $3 is the stops production version
 # $4 is the output primary production version
-# $5 is the kind of input stops (Muminus, Muplus, IPA or Cosmic)
+# $5 is the kind of input stops (Muminus, Muplus, IPAMuminus, IPAMuplus, or Cosmic)
 # $6 is the number of jobs
 # $7 is the number of events/job
 if [[ $# -lt 7 ]]; then
