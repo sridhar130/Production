@@ -1,10 +1,9 @@
-#include "Production/JobConfig/primary/IPAStopsMichel.fcl"
+#include "Production/JobConfig/primary/IPAMuminusMichel.fcl"
 source.firstRun: 501 #TODO
-physics.filters.IPAStopResampler.fileNames : [
-  //"/pnfs/mu2e/scratch/datasets/phy-sim/sim/mu2e/IPAStopsCat/MDC2020i/art/6b/10/sim.mu2e.IPAStopsCat.MDC2020i.001202_00000000.art"
-  "root://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/mu2e/scratch/datasets/phy-sim/sim/mu2e/IPAStopsCat/MDC2020i/art/6b/10/sim.mu2e.IPAStopsCat.MDC2020i.001202_00000000.art"
+physics.filters.IPAMuminusStopResampler.fileNames : [
+  "/pnfs/mu2e/tape/phy-sim/sim/mu2e/IPAMuminusStopsCat/MDC2020r/art/45/08/sim.mu2e.IPAMuminusStopsCat.MDC2020r.001201_00000000.art"
 ]
-physics.filters.IPAStopResampler.mu2e.MaxEventsToSkip: 4143
-outputs.Output.fileName : "dts.tester.IPAMichel.Test.1.art"
+physics.filters.IPAMuminusStopResampler.mu2e.MaxEventsToSkip: 18875
+outputs.Output.fileName : "dts.tester.IPAMuminusMichel.Test.1.art"
 services.scheduler.wantSummary: true
 services.TFileService.fileName: "nts.owner.IPAgen.version.sequencer.root"
