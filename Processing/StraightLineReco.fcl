@@ -1,0 +1,68 @@
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardProducers.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Production/JobConfig/reco/prolog.fcl"
+#include "Offline/CosmicReco/fcl/prolog.fcl"
+#
+process_name : cosmicslfit
+
+source : { module_type : RootInput }
+
+services : @local::Services.Reco
+
+physics :
+{
+  producers : {
+    @table::Reconstruction.producers
+    @table::CosmicTracking.producers
+  }
+  filters :  {
+    @table::Reconstruction.filters
+    @table::CosmicTracking.filters
+  }
+  analyzers: {
+    @table::Reconstruction.analyzers
+    @table::CosmicTracking.analyzers
+  }
+  RecoPath : [ @sequence::TrkHitReco.PrepareHits, SimpleTimeCluster, LineFinder, CosmicTrackFinderTimeFit ]
+  EndPath : [ CosmicTrackDiag  ]
+}
+
+outputs : {
+  Output :@local::Reconstruction.Output
+}
+
+# My epilog
+#include "Production/JobConfig/reco/epilog.fcl"
+outputs.Output.SelectEvents : [ "RecoPath" ]
+#
+# the following need to be overwritten for the specific channel
+services.TFileService.fileName: "nts.owner.RecoMCTrig.version.sequencer.root"
+
+physics.end_paths : [ EndPath ] # needed for generate_fcl
+
+services.scheduler.wantSummary: true
+
+services.ProditionsService.strawResponse.useParameterizedDriftErrors : true
+services.ProditionsService.strawResponse.truncateLongitudinal : false
+services.ProditionsService.strawResponse.rmsLongErrors : false
+
+physics.producers.makePH.MaxDS : 1
+physics.producers.makePH.TestRadius : false
+physics.producers.makePH.TestFlag : false
+
+physics.producers.SimpleTimeCluster.TestFlag : false
+physics.producers.SimpleTimeCluster.minNStrawHits : 10
+physics.producers.SimpleTimeCluster.maxNStrawHits : 100
+
+physics.producers.CosmicTrackFinderTimeFit.DoDrift : true
+physics.producers.CosmicTrackFinderTimeFit.UseTime : true
+physics.producers.CosmicTrackFinderTimeFit.UseChiFit : false
+physics.producers.CosmicTrackFinderTimeFit.UseLineFinder : true
+physics.producers.CosmicTrackFinderTimeFit.minNStrawHits : 2
+physics.producers.CosmicTrackFinderTimeFit.minNComboHits : 2
+physics.producers.CosmicTrackFinderTimeFit.minNHitsTimeCluster : 0
+
+physics.analyzers.CosmicTrackDiag.shdiag : true
+physics.analyzers.CosmicTrackDiag.ubresids : true
+physics.analyzers.CosmicTrackDiag.CosmicTrackSeedCollection : CosmicTrackFinderTimeFit

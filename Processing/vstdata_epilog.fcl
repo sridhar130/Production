@@ -11,10 +11,9 @@ physics.producers.makeSH.minimumTime : 0
 physics.producers.makeSH.maximumTime : 25600
 
 services.DbService.purpose : TRACKER_VST
-services.DbService.version : v1_2
+services.DbService.version : v1_3
 services.DbService.dbName : "mu2e_conditions_prd"
 services.DbService.verbose : 3
 
 services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_trackerVST.txt"
-
 
