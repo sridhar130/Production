@@ -1,6 +1,6 @@
 #
-# split cosmic primarys prior to OnSpill or OffSpill digitization.  OnSpill (mixing)
-# requires there be a signal-like particle, Offspill is simply prescaled
+# select cosmic primarys for digitization.  OnSpill (mixing) requires a signal
+# or calibration-like track, # Offspill is simply prescaled
 #
 #include "Offline/fcl/standardServices.fcl"
 #include "Production/JobConfig/common/prolog.fcl"
@@ -12,36 +12,22 @@ services.SeedService.baseSeed : @local::Common.BaseSeed
 physics: {
   filters : {
     OnSpillSignalFilter : { # select particles in the Ce signal momentum band, with no cut on the hits
-      module_type : DetectorStepFilter
-      CaloShowerSteps : [ ]  # don't allow calo clusters themselves to pass
-      CrvSteps : [ ] # dont filter on CRV since that can't trigger
-      StrawGasSteps : [ "compressDetStepMCs" ]
-      KeepPDG : [ ] # Loop at steps from all particle types
-      #      KeepPDG : [ 11,-11, 13, -13] # e+-, mu+-
-      MinimumPartMom : 80
-      MaximumPartMom : 120
-      MinimumTrkSteps : 20
-      #      TimeCutConfig : {
-      #        MinimumTime : 400
-      #        MaximumTime : 1700
-      #      }
-    }
-    OnSpillCalibFilter : { # select particles with many hits (large multi-loop helices)
-      module_type : DetectorStepFilter
-      CaloShowerSteps : [ ]  # don't allow calo clusters themselves to pass
-      CrvSteps : [ ] # dont filter on CRV since that can't trigger
-      StrawGasSteps : [ "compressDetStepMCs" ]
-      KeepPDG : [ ] # Loop at steps from all particle types
-      MinimumPartMom : 45
+      # this selection is 100% efficient for Ces, and accepts 98% of cosmics
+      # which pass an OnSpill triggers
+      module_type : CosmicMixingFilter
+      StrawGasSteps : "compressDetStepMCs"
+      MinimumPartMom : 50
       MaximumPartMom : 250
-      MinimumTrkSteps: 60
+      MinimumTrkSteps : 15
+      MinimumTrkPlanes : 7
+      MinimumTrkPlaneSpan : 18
+      MaxImpact : 250.0
     }
-
   }
+  # Eventually add calibration paths and OffSpill paths TODO
   OnSpillSignalPath : [OnSpillSignalFilter ]
-  OnSpillCalibPath : [OnSpillCalibFilter ]
-  trigger_paths : [ OnSpillSignalPath, OnSpillCalibPath ]
-  outpath: [ OnSpillOutput ]
+  trigger_paths : [ OnSpillSignalPath ]
+  outpath: [ OnSpillOutput]
   end_paths: [outpath]
 }
 outputs: {
@@ -49,7 +35,7 @@ outputs: {
     module_type: RootOutput
     fileName : "dts.owner.CosmicOnSpill.version.sequencer.art"
     outputCommands:   [ "keep *_*_*_*" ]
-    SelectEvents: [OnSpillSignalPath, OnSpillCalibPath]
+    SelectEvents: [OnSpillSignalPath]
   }
 }
 #include "Production/JobConfig/common/epilog.fcl"
