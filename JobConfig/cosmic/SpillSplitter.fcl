@@ -1,6 +1,5 @@
 #
-# select cosmic primarys for digitization.  OnSpill (mixing) requires a signal
-# or calibration-like track, # Offspill is simply prescaled
+# select cosmic primarys for digitization.   (mixing) requires a signal
 #
 #include "Offline/fcl/standardServices.fcl"
 #include "Production/JobConfig/common/prolog.fcl"
@@ -11,31 +10,47 @@ services : @local::Services.Sim
 services.SeedService.baseSeed : @local::Common.BaseSeed
 physics: {
   filters : {
-    OnSpillSignalFilter : { # select particles in the Ce signal momentum band, with no cut on the hits
+    SignalFilter : { # select particles in the Ce signal momentum band, with no cut on the hits
       # this selection is 100% efficient for Ces, and accepts 98% of cosmics
-      # which pass an OnSpill triggers
+      # which pass an  triggers
       module_type : CosmicMixingFilter
       StrawGasSteps : "compressDetStepMCs"
       MinimumPartMom : 50
       MaximumPartMom : 250
       MinimumTrkSteps : 15
       MinimumTrkPlanes : 7
-      MinimumTrkPlaneSpan : 18
-      MaxImpact : 250.0
+      MinimumTrkPlaneSpan : 16
+      MaxImpact : 100.0
+    }
+    CalibFilter : { # select events interesting for calibration: reflecting cosmics, etc
+      module_type : CosmicMixingFilter
+      StrawGasSteps : "compressDetStepMCs"
+      MinimumPartMom : 50
+      MaximumPartMom : 300
+      MinimumTrkSteps : 60
+      MinimumTrkPlanes : 30
+      MinimumTrkPlaneSpan : 30
+      MaxImpact : 1000.0 # no cut on impact
     }
   }
-  # Eventually add calibration paths and OffSpill paths TODO
-  OnSpillSignalPath : [OnSpillSignalFilter ]
-  trigger_paths : [ OnSpillSignalPath ]
-  outpath: [ OnSpillOutput]
+  SignalPath : [SignalFilter ]
+  CalibPath : [CalibFilter ]
+  trigger_paths : [ CalibPath,  SignalPath ]
+  outpath: [ SignalOutput]
   end_paths: [outpath]
 }
 outputs: {
-  OnSpillOutput: {
+  SignalOutput: {
     module_type: RootOutput
-    fileName : "dts.owner.CosmicOnSpill.version.sequencer.art"
+    fileName : "dts.owner.CosmicSignal.version.sequencer.art"
     outputCommands:   [ "keep *_*_*_*" ]
-    SelectEvents: [OnSpillSignalPath]
+    SelectEvents: [SignalPath]
+  }
+  CalibOutput: {
+    module_type: RootOutput
+    fileName : "dts.owner.CosmicCalib.version.sequencer.art"
+    outputCommands:   [ "keep *_*_*_*" ]
+    SelectEvents: [CalibPath]
   }
 }
 #include "Production/JobConfig/common/epilog.fcl"
