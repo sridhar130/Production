@@ -18,18 +18,18 @@ physics: {
       MinimumPartMom : 50
       MaximumPartMom : 250
       MinimumTrkSteps : 15
-      MinimumTrkPlanes : 7
+      MinimumTrkPlanes : 0
       MinimumTrkPlaneSpan : 16
-      MaxImpact : 100.0
+      MaxImpact : 150.0
     }
     CalibFilter : { # select events interesting for calibration: reflecting cosmics, etc
       module_type : CosmicMixingFilter
       StrawGasSteps : "compressDetStepMCs"
       MinimumPartMom : 50
       MaximumPartMom : 300
-      MinimumTrkSteps : 60
-      MinimumTrkPlanes : 30
-      MinimumTrkPlaneSpan : 30
+      MinimumTrkSteps : 100
+      MinimumTrkPlanes : 32
+      MinimumTrkPlaneSpan : 32
       MaxImpact : 1000.0 # no cut on impact
     }
   }
