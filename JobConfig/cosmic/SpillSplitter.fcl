@@ -1,8 +1,8 @@
 #
-# split cosmic primarys prior to OnSpill or OffSpill digitization.  OnSpill (mixing)
-# requires there be a signal-like particle, Offspill is simply prescaled
+# select cosmic primarys for digitization.   (mixing) requires a signal
 #
 #include "Offline/fcl/standardServices.fcl"
+#include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/primary/prolog.fcl"
 process_name: cosmicsplitter
 source: { module_type: RootInput }
@@ -10,44 +10,47 @@ services : @local::Services.Sim
 services.SeedService.baseSeed : @local::Common.BaseSeed
 physics: {
   filters : {
-    OnSpillSignalFilter : { # select particles in the Ce signal momentum band, with no cut on the hits
-      @table::Primary.filters.PrimaryFilter
-      MinimumPartMom : 80
-      MaximumPartMom : 120
-      CaloShowerSteps : [ ]
-      StrawGasSteps : [ "compressDetStepMCs" ]
+    SignalFilter : { # select particles in the Ce signal momentum band, with no cut on the hits
+      # this selection is 100% efficient for Ces, and accepts 98% of cosmics
+      # which pass an  triggers
+      module_type : CosmicMixingFilter
+      StrawGasSteps : "compressDetStepMCs"
+      MinimumPartMom : 50
+      MaximumPartMom : 250
+      MinimumTrkSteps : 15
+      MinimumTrkPlanes : 0
+      MinimumTrkPlaneSpan : 16
+      MaxImpact : 150.0
     }
-    OnSpillCalibFilter : { # select particles with many hits (large multi-loop helices)
-      @table::Primary.filters.PrimaryFilter
-      CaloShowerSteps : [ ]
-      StrawGasSteps : [ "compressDetStepMCs" ]
-      MinimumTrkSteps: 60
+    CalibFilter : { # select events interesting for calibration: reflecting cosmics, etc
+      module_type : CosmicMixingFilter
+      StrawGasSteps : "compressDetStepMCs"
+      MinimumPartMom : 50
+      MaximumPartMom : 300
+      MinimumTrkSteps : 100
+      MinimumTrkPlanes : 32
+      MinimumTrkPlaneSpan : 32
+      MaxImpact : 1000.0 # no cut on impact
     }
-    OffSpillFilter : {
-      module_type : RandomPrescaleFilter
-      nPrescale : 0 # Not sure if this is necessary.  Maybe this should only apply to straight tracks??
-    }
-
   }
-  OnSpillSignalPath : [OnSpillSignalFilter ]
-  OnSpillCalibPath : [OnSpillCalibFilter ]
-  OffSpillPath : [ OffSpillFilter ]
-  trigger_paths : [ OnSpillSignalPath, OnSpillCalibPath, OffSpillPath ]
-  outpath: [ OnSpillOutput, OffSpillOutput ]
+  SignalPath : [SignalFilter ]
+  CalibPath : [CalibFilter ]
+  trigger_paths : [ CalibPath,  SignalPath ]
+  outpath: [ SignalOutput]
   end_paths: [outpath]
 }
 outputs: {
-  OnSpillOutput: {
+  SignalOutput: {
     module_type: RootOutput
-    fileName : "dts.owner.CosmicOnSpill.version.sequencer.art"
+    fileName : "dts.owner.CosmicSignal.version.sequencer.art"
     outputCommands:   [ "keep *_*_*_*" ]
-    SelectEvents: [OnSpillSignalPath, OnSpillCalibPath]
+    SelectEvents: [SignalPath]
   }
-  OffSpillOutput: {
+  CalibOutput: {
     module_type: RootOutput
-    fileName : "dts.owner.CosmicOffSpill.version.sequencer.art"
+    fileName : "dts.owner.CosmicCalib.version.sequencer.art"
     outputCommands:   [ "keep *_*_*_*" ]
-    SelectEvents: [OffSpillPath]
+    SelectEvents: [CalibPath]
   }
 }
 #include "Production/JobConfig/common/epilog.fcl"
