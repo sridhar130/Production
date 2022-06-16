@@ -14,7 +14,7 @@ physics.producers.generate : {
   endMom   : 70.001
 }
 
-physics.producers.FindMCPrimary.PrimaryProcess : "mu2ePiPlusenuDS70"
+physics.producers.FindMCPrimary.PrimaryProcess : "mu2eFlatePlus"
 outputs.PrimaryOutput.fileName: "dts.owner.FlatePlus.version.sequencer.art"
 
 
