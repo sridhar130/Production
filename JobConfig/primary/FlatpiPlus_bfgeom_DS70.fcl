@@ -4,19 +4,11 @@
 # original author: S Middleton
 #
 #include "Production/JobConfig/primary/TargetStopParticle.fcl"
-physics.producers.generate : {
-  module_type : FlatMuonDaughterGenerator
-  inputSimParticles: TargetStopResampler
-  stoppingTargetMaterial : "Al"
-  pdgId : 211
-  verbosity : 0
-  startMom : 50.
-  endMom : 100.
-}
+#include "Production/JobConfig/primary/FlatePlus.fcl"
 
-physics.producers.FindMCPrimary.PrimaryProcess : "mu2eFlatePlus"
-outputs.PrimaryOutput.fileName: "dts.owner.FlatePlus.version.sequencer.art"
-
+ physics.producers.generate.pdgId : 211
+ physics.producers.generate.startMom : 50.
+ physics.producers.generate.endMom : 100.
 
 # use reduced BField for these jobs
 services.GeometryService.bFieldFile : "Offline/Mu2eG4/geom/bfgeom_DS70_no_tsu_ps_v01.txt"
