@@ -14,13 +14,13 @@
 # $5 is the kind of input stops (Muminus, Muplus, IPAMuminus, IPAMuplus, or Cosmic)
 # $6 is the number of jobs
 # $7 is the number of events/job
-# $8 is the pdgId of the paritcle to generate
+# $8 is the pdgId of the particle to generate
 # $9 is the startMom
 # $10 is the endMom
 # $11 is the name of the BField file
 #
 # example for running this script:
-#        source Production/Scripts/gen_FlatMuDaugther.sh FlatePlus MDC2020 k v01 Muminus 2 100 -11 30 100 "Offline/Mu2eG4/geom/bfgeom_DS70_no_tsu_ps_v01.txt"
+#        source Production/Scripts/gen_FlatMuDaugther.sh FlatePlus MDC2020 k s Muminus 2 100 -11 30 100 "Offline/Mu2eG4/geom/bfgeom_DS70_no_tsu_ps_v01.txt"
 
 if [[ $# -lt 7 ]]; then
   echo "Missing arguments, provided $# but there should be 7"
@@ -34,10 +34,13 @@ njobs=$6
 eventsperjob=$7
 pdg=$8
 startMom=$9
-endMom=$10
-bFieldFile=$11
+endMom=${10}
+bFieldFile=${11}
 
 echo PDG=$pdg
+echo startMom=$startMom
+echo endMom=$endMom
+echo bField=$bFieldFile
 
 if [[ "${stype}" == "Muminus" ]] ||  [[ "${stype}" == "Muplus" ]]; then
   dataset=sim.mu2e.${stype}StopsCat.${stopsconf}.art
@@ -63,11 +66,17 @@ else
   echo "#include \"Production/JobConfig/primary/${primary}.fcl\"" >> primary.fcl
 fi
 echo physics.filters.${resampler}.mu2e.MaxEventsToSkip: ${nskip} >> primary.fcl
+echo physics.filters.${resampler}.mu2e.MaxEventsToSkip: ${nskip} >> primary.fcl
+echo physics.producers.generate.pdgId: ${pdg}            >> primary.fcl
+echo physics.producers.generate.startMom: ${startMom}    >> primary.fcl
+echo physics.producers.generate.endMom: ${endMom}        >> primary.fcl
+echo services.GeometryService.bFieldFile: \"${bFieldFile}\">> primary.fcl
+
 #
 # now generate the fcl
 #
 generate_fcl --dsconf=${primaryconf} --dsowner=mu2e --run-number=1202 --description=${primary} --events-per-job=${eventsperjob} --njobs=${njobs} \
-  --embed primary.fcl --auxinput=1:physics.filters.${resampler}.fileNames:Stops.txt --auxinput=1:physics.producers.generate.pdgId:${pdg} --auxinput=1:physics.producers.generate.startMom:${startMom} --auxinput=1:physics.producers.generate.endMom:${endMom} --auxinput=1:services.GeometryService.bFieldFile:${bFieldFile}
+  --embed primary.fcl --auxinput=1:physics.filters.${resampler}.fileNames:Stops.txt 
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
  if test -d $dirname; then
   echo "found dir $dirname"
