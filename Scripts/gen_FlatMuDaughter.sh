@@ -20,7 +20,7 @@
 # $11 is the name of the BField file
 #
 # example for running this script:
-#        source Production/Scripts/gen_FlatMuDaugther.sh FlatePlus MDC2020 k s Muminus 2 100 -11 30 100 "Offline/Mu2eG4/geom/bfgeom_DS70_no_tsu_ps_v01.txt"
+#        source Production/Scripts/gen_FlatMuDaughter.sh FlatePlus MDC2020 k s Muminus 2 100 -11 30 100 "Offline/Mu2eG4/geom/bfgeom_DS70_no_tsu_ps_v01.txt"
 
 if [[ $# -lt 7 ]]; then
   echo "Missing arguments, provided $# but there should be 7"
