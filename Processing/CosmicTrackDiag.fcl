@@ -1,0 +1,47 @@
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardProducers.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Production/JobConfig/reco/prolog.fcl"
+#include "Offline/CosmicReco/fcl/prolog.fcl"
+#
+process_name : cosmicdiag
+
+source : { module_type : RootInput }
+
+services : @local::Services.Reco
+
+physics :
+{
+  producers : {
+    @table::Reconstruction.producers
+    @table::CosmicTracking.producers
+  }
+  filters :  {
+    @table::Reconstruction.filters
+    @table::CosmicTracking.filters
+  }
+  analyzers: {
+    @table::Reconstruction.analyzers
+    @table::CosmicTracking.analyzers
+  }
+  RecoPath : [  ]
+  EndPath : [ CosmicTrackDiag  ]
+}
+
+# My epilog
+#include "Production/JobConfig/reco/epilog.fcl"
+#
+# the following need to be overwritten for the specific channel
+services.TFileService.fileName: "nts.owner.RecoMCTrig.version.sequencer.root"
+
+physics.end_paths : [ EndPath ] # needed for generate_fcl
+
+services.scheduler.wantSummary: true
+
+services.ProditionsService.strawResponse.useParameterizedDriftErrors : true
+services.ProditionsService.strawResponse.truncateLongitudinal : false
+services.ProditionsService.strawResponse.rmsLongErrors : false
+
+physics.analyzers.CosmicTrackDiag.shdiag : true
+physics.analyzers.CosmicTrackDiag.ubresids : true
+physics.analyzers.CosmicTrackDiag.CosmicTrackSeedCollection : CosmicTrackFinderTimeFit
