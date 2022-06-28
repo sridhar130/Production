@@ -1,3 +1,4 @@
+#include "Production/JobConfig/digitize/Digitize.fcl"
 #include "Production/JobConfig/digitize/OffSpill.fcl"
 
 services.scheduler.wantSummary: true
@@ -5,10 +6,11 @@ services.SeedService.baseSeed: 8
 
 source.maxEvents: 20
 source.fileNames : [
-"/cvmfs/mu2e.opensciencegrid.org/DataFiles/Validation/dts.mu2e.Cosmic.CORSIKA-20210611v2.000001_00000000.art"
+  "/cvmfs/mu2e.opensciencegrid.org/DataFiles/Validation/dts.mu2e.CosmicCORSIKACat.MDC2020n_10h.001205_00000005.art"
 ]
-outputs.TriggeredOutput.fileName : "dig.owner.cosmicOffSpill.seq.art"
+outputs.SignalOutput.fileName : "dig.owner.cosmicOffSpill.seq.art"
+outputs.DiagOutput.fileName : "/dev/null"
 outputs.UntriggeredOutput.fileName : "/dev/null"
 outputs.TrkOutput.fileName : "/dev/null"
 outputs.CaloOutput.fileName : "/dev/null"
-
+#include "Production/Validation/database.fcl"

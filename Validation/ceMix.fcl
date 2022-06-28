@@ -7,7 +7,7 @@ source.fileNames : [ "dts.owner.ceSteps.dsconf.seq.art" ]
 physics.filters.MuStopPileupMixer.mu2e.simStageEfficiencyTags: []
 physics.filters.MuStopPileupMixer.fileNames : [ "dts.owner.muDauSteps.dsconf.seq.art" ]
 physics.filters.MuStopPileupMixer.mu2e.MaxEventsToSkip: 0
-physics.filters.MuStopPileupMixer.mu2e.meanEventsPerProton :   .00003592456 
+physics.filters.MuStopPileupMixer.mu2e.meanEventsPerProton :   .00003592456
 physics.filters.EleBeamFlashMixer.mu2e.simStageEfficiencyTags: []
 physics.filters.EleBeamFlashMixer.fileNames : [ "dts.owner.muDauSteps.dsconf.seq.art" ] # needed for art but not used
 physics.filters.EleBeamFlashMixer.mu2e.MaxEventsToSkip: 0
@@ -21,6 +21,12 @@ physics.filters.NeutralsFlashMixer.fileNames : [ "dts.owner.muDauSteps.dsconf.se
 physics.filters.NeutralsFlashMixer.mu2e.MaxEventsToSkip: 0
 physics.filters.NeutralsFlashMixer.mu2e.meanEventsPerProton : 0.0
 physics.producers.PBISim.SDF: 0.6
-physics.producers.PBISim.extendedMean: 1.0e5 
+physics.producers.PBISim.extendedMean: 1.0e5
 physics.producers.PBISim.cutMax: 2.0e5
-outputs.Output.fileName : "dig.owner.ce.dsconf.seq.art"
+
+outputs.SignalOutput.fileName: "dig.owner.ceMix.dsconf.seq.art"
+outputs.DiagOutput.fileName: "/dev/null"
+outputs.TrkOutput.fileName: "/dev/null"
+outputs.CaloOutput.fileName: "/dev/null"
+outputs.UntriggeredOutput.fileName: "/dev/null"
+#include "Production/Validation/database.fcl"

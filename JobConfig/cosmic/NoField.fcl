@@ -53,4 +53,4 @@ physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
 # need to offset the GenParticles
 
 physics.end_paths : [ EndPath ]
-services.SeedService.baseSeed         :  773651
+services.SeedService.baseSeed : @local::Common.BaseSeed

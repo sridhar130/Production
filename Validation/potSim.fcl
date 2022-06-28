@@ -4,18 +4,18 @@
 #include "Production/JobConfig/beam/POT_validation.fcl"
 
 outputs: {
-   fullOutput: {
-      module_type: "RootOutput"
-      outputCommands: [
-         "drop *_*_*_*",
-         "keep art::EventIDs_*_*_*",
-         "keep mu2e::GenParticles_*_*_*",
-         "keep mu2e::GenEventCount_*_*_*",
-         "keep mu2e::StatusG4_*_*_*",
-         "keep *_*Filter_*_*",
-         "keep *_compressPV*_*_*"
-      ]
-   }
+  fullOutput: {
+    module_type: "RootOutput"
+    outputCommands: [
+      "drop *_*_*_*",
+      "keep art::EventIDs_*_*_*",
+      "keep mu2e::GenParticles_*_*_*",
+      "keep mu2e::GenEventCount_*_*_*",
+      "keep mu2e::StatusG4_*_*_*",
+      "keep *_*Filter_*_*",
+      "keep *_compressPV*_*_*"
+    ]
+  }
 }
 physics.OutputPath: [ "fullOutput" ]
 

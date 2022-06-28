@@ -45,11 +45,6 @@ Mixing : {
       extendedMean: @nil
       cutMax:@nil
     }
-# null MCPrimary 'finder', used in NoPrimary
-    NullMCPrimary : {
-      module_type: NullMCPrimary
-      ExtraSteps : [ "virtualdetector", "stoppingtarget", "protonabsorber" ]
-    }
   }
   filters : {
     # mixers for muon stop pileup, beamflash pileup, and neutrals flash pileup
@@ -60,6 +55,8 @@ Mixing : {
   }
 
   StepMixSequence : [ MuStopPileupMixer, EleBeamFlashMixer, MuBeamFlashMixer, NeutralsFlashMixer ]
+  # when mixing early events the intensity must be scaled down
+  EarlyReductionFactor : 1.0e-2
 }
 Mixing.PileupMixSequence : [ PBISim, @sequence::Mixing.StepMixSequence ]
 Mixing.MixSequence : [ @sequence::Mixing.PileupMixSequence, @sequence::Digitize.DigitizeSequence ]

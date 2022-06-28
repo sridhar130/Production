@@ -1,6 +1,7 @@
 #
 #  Mix pileup.  This is a form of OnSpill digitization
 #
+#include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/digitize/prolog.fcl"
 #include "Production/JobConfig/mixing/prolog.fcl"
 process_name: Mix
@@ -19,14 +20,22 @@ physics : {
   }
   analyzers: { @table::Digitize.analyzers }
   MixPath : [ @sequence::Mixing.MixSequence ]
-  Untriggered : [ @sequence::Mixing.MixSequence, Triggerable ]
-  EndPath : [ @sequence::Digitize.EndSequence, TriggeredOutput, UntriggeredOutput ]
+  UntriggeredPath : [ @sequence::Mixing.MixSequence, @sequence::Digitize.UntriggeredSequence ]
 }
-
+outputs : {
+  SignalOutput : @local::Digitize.SignalOutput
+  DiagOutput :  @local::Digitize.DiagOutput
+  TrkOutput :  @local::Digitize.TrkOutput
+  CaloOutput : @local::Digitize.CaloOutput
+  UntriggeredOutput : @local::Digitize.UntriggeredOutput
+}
+physics.trigger_paths[0] : MixPath
+physics.trigger_paths[1] : UntriggeredPath
+#
 # Final configuration
 #
+#include "Production/JobConfig/digitize/OnSpill.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/digitize/epilog.fcl"
 #include "Production/JobConfig/mixing/epilog.fcl"
-#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 

@@ -7,7 +7,7 @@
 # $2 is the production (ie MDC2020)
 # $3 is the stops production version
 # $4 is the output primary production version
-# $5 is the kind of input stops (Muminus, Muplus, IPA or Cosmic)
+# $5 is the kind of input stops (Muminus, Muplus, IPAMuminus, IPAMuplus, Piminus, Piplus, or Cosmic)
 # $6 is the number of jobs
 # $7 is the number of events/job
 if [[ $# -lt 7 ]]; then
@@ -21,14 +21,16 @@ stype=$5
 njobs=$6
 eventsperjob=$7
 
+dataset=sim.mu2e.${stype}StopsCat.${stopsconf}.art
+
 if [[ "${stype}" == "Muminus" ]] ||  [[ "${stype}" == "Muplus" ]]; then
-  dataset=sim.mu2e.${stype}StopsCat.${stopsconf}.art
   resampler=TargetStopResampler
+elif [[ "${stype}" == "Piminus" ]] ||  [[ "${stype}" == "Piplus" ]]; then
+  resampler=TargetPiStopResampler
 elif [[ "${stype}" == "Cosmic" ]]; then
   dataset=sim.mu2e.${stype}DSStops${primary}.${stopsconf}.art   # should have Cat FIXME!
   resampler=${stype}Resampler
 else
-  dataset=sim.mu2e.${stype}StopsCat.${stopsconf}.art
   resampler=${stype}StopResampler
 fi
 
@@ -48,7 +50,7 @@ echo physics.filters.${resampler}.mu2e.MaxEventsToSkip: ${nskip} >> primary.fcl
 #
 # now generate the fcl
 #
-generate_fcl --dsconf=${primaryconf} --dsowner=brownd --run-number=1202 --description=${primary} --events-per-job=${eventsperjob} --njobs=${njobs} \
+generate_fcl --dsconf=${primaryconf} --dsowner=mu2e --run-number=1202 --description=${primary} --events-per-job=${eventsperjob} --njobs=${njobs} \
   --embed primary.fcl --auxinput=1:physics.filters.${resampler}.fileNames:Stops.txt
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
  if test -d $dirname; then

@@ -11,7 +11,10 @@
 
 process_name : cosmicSimReco
 
-source : { module_type :EmptyEvent }
+source : {
+  module_type :EmptyEvent
+  firstRun: 1200
+}
 services : @local::Services.Sim
 
 physics: {
@@ -28,7 +31,7 @@ physics: {
     @table::Primary.filters
     @table::Digitize.filters
     @table::Reconstruction.filters
-# override the DetStep filter to select CRV
+    # override the DetStep filter to select CRV
     PrimaryFilter : {
       module_type : DetectorStepFilter
       StrawGasSteps : [ ]
@@ -97,7 +100,7 @@ physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY"]
 physics.producers.EWMProducer.SpillType : 0
 # override the Untriggered filter to just prescale
 # nofield geometry
-services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_no_field.txt"
+services.GeometryService.bFieldFile : "Offline/Mu2eG4/geom/bfgeom_no_field.txt"
 # print summaries
 services.scheduler.wantSummary: true
 services.TimeTracker.printSummary: true
@@ -134,6 +137,6 @@ outputs.Output.fileName : "mcs.owner.val-cosmicSimReco.dsconf.seq.art"
 # run 1h by default
 source.maxEvents: 50000
 
-// Initialze seeding of random engines
+# Initialze seeding of random engines
 services.SeedService.baseSeed         :  8
-
+#include "Production/Validation/database.fcl"
