@@ -17,11 +17,8 @@ physics :
     @table::CosmicTracking.producers
   }
   filters :  {
-    @table::Reconstruction.filters
-    @table::CosmicTracking.filters
   }
   analyzers: {
-    @table::Reconstruction.analyzers
     @table::CosmicTracking.analyzers
   }
   RecoPath : [  ]

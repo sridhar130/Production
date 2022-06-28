@@ -17,20 +17,10 @@ physics :
     @table::CosmicTracking.producers
   }
   filters :  {
-    @table::Reconstruction.filters
-    @table::CosmicTracking.filters
-    CosmicRecoFilter : {
-      module_type : CosmicSeedFilter
-      CosmicTrackSeedCollection : CosmicTrackFinderTimeFit
-      debugLevel : 0
-      minnsh : 0
-    }
   }
   analyzers: {
-    @table::Reconstruction.analyzers
-    @table::CosmicTracking.analyzers
   }
-  RecoPath : [ @sequence::TrkHitReco.PrepareHits, SimpleTimeCluster, LineFinder, CosmicTrackFinderTimeFit, CosmicRecoFilter ]
+  RecoPath : [ @sequence::TrkHitReco.PrepareHits, SimpleTimeCluster, LineFinder, CosmicTrackFinderTimeFit ]
   EndPath : [ Output  ]
 }
 

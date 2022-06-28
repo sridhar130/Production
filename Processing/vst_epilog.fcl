@@ -1,4 +1,4 @@
-physics.RecoPath : [ @sequence::TrkHitReco.PrepareHits, SimpleTimeCluster, CosmicShowerFilter, LineFinder, CosmicTrackFinderTimeFit, CosmicRecoFilter ]
+physics.RecoPath : [ @sequence::TrkHitReco.PrepareHits, SimpleTimeCluster, CosmicShowerFilter, LineFinder, CosmicTrackFinderTimeFit ]
 
 physics.producers.makeSH.FilterHits : true
 physics.producers.makeSH.minimumEnergy : 0.0002
