@@ -1,0 +1,38 @@
+#
+# split the Beam stream into muon and 'electrons' (everything else, but mostly electrons)
+# This is run during POT job output concatenation
+#
+#include "Offline/fcl/minimalMessageService.fcl"
+process_name: mubeamsplitter
+source: { module_type: RootInput }
+services: { message: @local::default_message }
+physics: {
+  filters : {
+    muPlusSelector: {
+      module_type: ParticleCodeFilter
+      SimParticles : BeamFilter
+      PrintLevel : 0
+      ParticleCodes : [
+        [ -13, "uninitialized" , "mu2eKillerVolume" ] # mu+, *,  Manually stopped
+      ]
+    }
+  }
+  selectMuPlus : [ muPlusSelector ]
+  trigger_paths : [ selectMuPlus ]
+  outpath: [ muplusout, muminusout ]
+  end_paths: [ outpath ]
+}
+outputs: {
+  muplusout: {
+    module_type: RootOutput
+    fileName : "sim.owner.MuPlusBeamCat.version.sequencer.art"
+    outputCommands:   [ "keep *_*_*_*" ]
+    SelectEvents: [ selectMuPlus ]
+  }
+  muminusout: {
+    module_type: RootOutput
+    fileName : "sim.owner.MuMinusBeamCat.version.sequencer.art"
+    outputCommands:   [ "keep *_*_*_*" ]
+    RejectEvents: [ selectMuPlus ]
+  }
+}
