@@ -5,20 +5,6 @@
 #include "Production/JobConfig/beam/BeamSplitter.fcl"
 process_name: mubeamsplitter
 
-outputs: {
-  muplusout: {
-    module_type: RootOutput
-    fileName : "sim.owner.MuPlusBeamCat.version.sequencer.art"
-    outputCommands:   [ "keep *_*_*_*" ]
-    SelectEvents: [ selectMuons ]
-  }
-  muminusout: {
-    module_type: RootOutput
-    fileName : "sim.owner.MuMinusBeamCat.version.sequencer.art"
-    outputCommands:   [ "keep *_*_*_*" ]
-    RejectEvents: [ selectMuons ]
-  }
-}
-
+outputs.muonout.fileName : "sim.owner.MuPlusBeamCat.version.sequencer.art"
 physics.filters.muonSelector.ParticleCodes : [ [-13, "uninitialized" , "mu2eKillerVolume" ] ]
-physics.outpath: [ muplusout, muminusout ]
+physics.outpath: [ muonout ]
