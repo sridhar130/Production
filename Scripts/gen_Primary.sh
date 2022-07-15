@@ -65,7 +65,7 @@ for dirname in 000 001 002 003 004 005 006 007 008 009; do
   echo "found dir $dirname"
   rm -rf ${primary}\_$dirname
   mv $dirname ${primary}\_$dirname
-  echo "moving $dirname to ${primar}_${dirname}"
+  echo "moving $dirname to ${primary}_${dirname}"
  fi
 done
 
