@@ -1,0 +1,6 @@
+#include "Production/Processing/CosmicTrackDiag.fcl"
+#include "Production/Processing/vstdata_epilog.fcl"
+#
+#include "Production/Processing/calibration.fcl"
+
+physics.analyzers.CosmicTrackDiag.TimeClusterCollection : "CosmicShowerFilter"
