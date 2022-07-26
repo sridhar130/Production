@@ -23,7 +23,8 @@ dbver=$8
 #
 usage() { echo "Usage:
   source Production/Scripts/gen_Digitize.sh [primaryName] [datasetDescription] \
-    [campaignInput] [campaignOutput] [nmerge] [digitype] [dbpurpose] [dbversion]
+    [campaignInput] [campaignOutput] [nmerge] [digitype] [dbpurpose] [dbversion] \
+    [dsowner]
 
   This script will produce the fcl files needed for a digitization stage. You must provide in order:
   - the name of the primary [primaryName]
@@ -34,6 +35,7 @@ usage() { echo "Usage:
   - the digitization type (OnSpill, OffSpill, NoField, Extracted) [digitype],
   - the database purpose (perfect, best, startup) [dbpurpose],
   - the database version [dbversion]
+  - the dsowner of the FCL files (optional, default to mu2e)
   Example:
   gen_Digitize.sh CeEndpoint MDC2020 m m 1 OnSpill perfect v2_0
   This will produce the fcl files for digitizing CeEndpoint primaries
@@ -41,9 +43,15 @@ usage() { echo "Usage:
   for digitization parameters"
 }
 
-if [[ $# -lt 7 ]] ; then
+if [[ $# -lt 8 ]] ; then
   usage
   return 1
+fi
+
+if [[ -z "$9" ]] ; then
+    dsowner="mu2e"
+else
+    dsowner=$9
 fi
 
 if [[ "${digitype}" == "Extracted" || "${digitype}" == "NoField" ]]; then
@@ -84,7 +92,7 @@ echo services.DbService.purpose: $dbpurpose >> digitize.fcl
 echo services.DbService.version: $dbver >> digitize.fcl
 echo services.DbService.verbose : 2 >> digitize.fcl
 
-generate_fcl --dsconf="$conf" --dsowner=mu2e --description="${digout}Digi" --embed digitize.fcl \
+generate_fcl --dsconf="$conf" --dsowner=$dsowner --description="${digout}Digi" --embed digitize.fcl \
   --inputs="$name.txt" --merge-factor=$merge
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
   if test -d $dirname; then
