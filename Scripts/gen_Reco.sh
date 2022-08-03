@@ -8,11 +8,13 @@
 # $5 is the database purpose
 # $6 is the database version
 # $7 is the number of input collections to merge (merge factor)
+# $8 is the dsowner for the FCL files (optional, default to mu2e)
 
 if [[ $# -eq 0 ]] ; then
     usage='Usage:
 gen_Reco.sh [primaryName] [datasetDescription] [digiInput] \
-           [recoOutput] [purpose] [version] [mergeFactor]
+            [recoOutput] [purpose] [version] [mergeFactor] \
+            [dsowner] [digiOwner]
 
 This script will produce the fcl files needed for a mixing stage. It
 is necessary to provide, in order:
@@ -23,6 +25,8 @@ is necessary to provide, in order:
 - the name of the DB purpose (perfect, best, startup) [purpose]
 - the DB version [version]
 - the number of input collections to merge into 1 output [mergeFactor]
+- the dsowner for the output FCL files [dsowner] (optional, default mu2e)
+- the owner of the digi files [digiOwner] (optional, default mu2e)
 
 Example:
     gen_Reco.sh CeEndpointMixSignal MDC2020 k m perfect v1_0 10
@@ -39,18 +43,27 @@ dbpurpose=$2_$5
 dbver=$6
 outconf=$2$4_$5_$6
 merge=$7
-
+if [[ -z "$8" ]] ; then
+    dsowner="mu2e"
+else
+    dsowner=$8
+fi
+if [[ -z "$9" ]] ; then
+    digiowner="mu2e"
+else
+    digiowner=$9
+fi
 
 echo "Generating reco scripts for $primary conf $digconf output $outconf  database purpose, version $dbpurpose $dbver"
 
-samweb list-file-locations --schema=root --defname="dig.mu2e.$primary.$digconf.art"  | cut -f1 > Digis.txt
+samweb list-file-locations --schema=root --defname="dig.$digiowner.$primary.$digconf.art"  | cut -f1 > Digis.txt
 
 echo '#include "Production/JobConfig/reco/Reco.fcl"' > template.fcl
 echo 'services.DbService.purpose:' $dbpurpose >> template.fcl
 echo 'services.DbService.version:' $dbver >> template.fcl
 echo 'services.DbService.verbose : 2' >> template.fcl
 
-generate_fcl --dsowner=mu2e --override-outputs --auto-description --embed template.fcl --dsconf "$outconf" \
+generate_fcl --dsowner=$dsowner --override-outputs --auto-description --embed template.fcl --dsconf "$outconf" \
 --inputs "Digis.txt" --merge-factor=$merge
 
 base=${primary}Reco_
