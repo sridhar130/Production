@@ -45,6 +45,14 @@ Beam: {
 
   filters: {
 
+    PionSelector: {
+      module_type: ParticleCodeFilter
+      SimParticles : BeamFilter
+      PrintLevel : 0
+      ParticleCodes : [ [211, "uninitialized", "mu2eKillerVolume" ], # mu-, * , Manually stopped
+      [-211, "uninitialized" , "mu2eKillerVolume" ] ] # mu+, *,  Manually stopped
+    }
+
     BeamFilter: {
       module_type: FilterG4Out
       mainHitInputs : [ "g4run:Beam" ]

@@ -4,6 +4,9 @@
 #include "Production/JobConfig/beam/POT.fcl"
 process_name :  POTinfinitepion
 
+physics.filters.PionFilter : @local::Beam.filters.PionSelector
+physics.BeamPath : [ @sequence::Common.generateSequence, @sequence::Common.g4Sequence, BeamFilter, compressPVBeam, PionFilter ]
+
 physics.trigger_paths  : [BeamPath]
 physics.OutputPath : [BeamOutput]
 physics.end_paths: [OutputPath, LogPath ]
