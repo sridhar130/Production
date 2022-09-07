@@ -19,7 +19,7 @@ nfiles=`samCountFiles.sh $dataset`
 nevts=`samCountEvents.sh $dataset`
 let nskip=nevts/nfiles
 # write the mubeamresampler.fcl
-rm mubeamresampler.fcl
+rm -f mubeamresampler.fcl
 echo '#include "Production/JobConfig/pileup/MuBeamResampler.fcl"' >> mubeamresampler.fcl
 echo physics.filters.beamResampler.mu2e.MaxEventsToSkip: ${nskip} >> mubeamresampler.fcl
 #

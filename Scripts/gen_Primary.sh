@@ -45,9 +45,7 @@ nfiles=`samCountFiles.sh $dataset`
 nevts=`samCountEvents.sh $dataset`
 let nskip=nevts/nfiles
 # write the template
-if [[ -f "primary.fcl" ]]; then
-  rm primary.fcl
-fi
+rm -f primary.fcl
 if [[ "${stype}" == "Cosmic" ]]; then
   echo "#include \"Production/JobConfig/cosmic/S2Resampler${primary}.fcl\"" >> primary.fcl
 else

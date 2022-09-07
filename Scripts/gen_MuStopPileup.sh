@@ -19,7 +19,7 @@ nfiles=`samCountFiles.sh $dataset`
 nevts=`samCountEvents.sh $dataset`
 let nskip=nevts/nfiles
 # write the targetstopresampler.fcl
-rm targetstopresampler.fcl
+rm -f targetstopresampler.fcl
 echo '#include "Production/JobConfig/pileup/MuStopPileup.fcl"' >> targetstopresampler.fcl
 echo physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip: ${nskip} >> targetstopresampler.fcl
 #
