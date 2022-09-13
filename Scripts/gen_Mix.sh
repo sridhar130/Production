@@ -93,7 +93,7 @@ nfiles=`samCountFiles.sh "dts.mu2e.MuStopPileupCat.$mixinconf.art"`
 nevts=`samCountEvents.sh "dts.mu2e.MuStopPileupCat.$mixinconf.art"`
 let nskip_MuStopPileup=nevts/nfiles
 # write the mix.fcl
-rm mix.fcl
+rm -f mix.fcl
 # create a template file, starting from the basic Mix
 echo '#include "Production/JobConfig/mixing/Mix.fcl"' >> mix.fcl
 # locate the primary collection

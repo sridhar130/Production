@@ -6,7 +6,7 @@
 # $2 is the input production version
 # $3 is the output production version
 # $4 is the number of jobs
-# Written by Sophie Middleton 
+# Written by Sophie Middleton
 if [[ ${4} == "" ]]; then
   echo "Missing arguments!"
   return -1
@@ -20,7 +20,7 @@ nfiles=`samCountFiles.sh $dataset`
 nevts=`samCountEvents.sh $dataset`
 let nskip=nevts/nfiles
 # write the pibeamresampler.fcl
-rm pibeamresampler.fcl
+rm -f pibeamresampler.fcl
 echo '#include "Production/JobConfig/pileup/PiBeamResampler.fcl"' >> pibeamresampler.fcl
 echo physics.filters.beamResampler.mu2e.MaxEventsToSkip: ${nskip} >> pibeamresampler.fcl
 #
