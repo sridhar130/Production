@@ -94,48 +94,68 @@ Reconstruction : {
       SeedCollection             : MHUmuP
     }
     # KinKal fits
-    KKSDeM : {
-      @table::Mu2eKinKal.producers.KKDeMSeedFit
-      ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDeMSeedFit.ModuleSettings
-        HelixSeedCollections : [ "MHDeM" ]
-        ComboHitCollection : "makeSH"
-        StrawHitFlagCollection : "FlagBkgHits:StrawHits"
-        CaloClusterCollection : "CaloClusterMaker"
-        PrintLevel : 0
-      }
-    }
-    KKSDeP : {
-      @table::Mu2eKinKal.producers.KKDePSeedFit
-      ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDePSeedFit.ModuleSettings
-        HelixSeedCollections : [ "MHDeP" ]
-        ComboHitCollection : "makeSH"
-        StrawHitFlagCollection : "FlagBkgHits:StrawHits"
-        CaloClusterCollection : "CaloClusterMaker"
-        PrintLevel : 0
-      }
-    }
-    KKFDeM : {
+    KKDeM : {
       @table::Mu2eKinKal.producers.KKDeMDriftFit
       ModuleSettings : {
         @table::Mu2eKinKal.producers.KKDeMDriftFit.ModuleSettings
+        @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHDeM" ]
-        ComboHitCollection : "makeSH"
-        StrawHitFlagCollection : "FlagBkgHits:StrawHits"
-        CaloClusterCollection : "CaloClusterMaker"
-        PrintLevel : 0
       }
     }
-    KKFDeP : {
+    KKDeP : {
       @table::Mu2eKinKal.producers.KKDePDriftFit
       ModuleSettings : {
         @table::Mu2eKinKal.producers.KKDePDriftFit.ModuleSettings
+        @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHDeP" ]
-        ComboHitCollection : "makeSH"
-        StrawHitFlagCollection : "FlagBkgHits:StrawHits"
-        CaloClusterCollection : "CaloClusterMaker"
-        PrintLevel : 0
+      }
+    }
+   KKUeM : {
+      @table::Mu2eKinKal.producers.KKUeMDriftFit
+      ModuleSettings : {
+        @table::Mu2eKinKal.producers.KKDeMDriftFit.ModuleSettings
+        @table::Mu2eKinKal.KKPrecursors
+        HelixSeedCollections : [ "MHUeM" ]
+      }
+    }
+    KKUeP : {
+      @table::Mu2eKinKal.producers.KKUePDriftFit
+      ModuleSettings : {
+        @table::Mu2eKinKal.producers.KKDePDriftFit.ModuleSettings
+        @table::Mu2eKinKal.KKPrecursors
+        HelixSeedCollections : [ "MHUeP" ]
+      }
+    }
+    KKDmuM : {
+      @table::Mu2eKinKal.producers.KKDmuMDriftFit
+      ModuleSettings : {
+        @table::Mu2eKinKal.producers.KKDmuMDriftFit.ModuleSettings
+        @table::Mu2eKinKal.KKPrecursors
+        HelixSeedCollections : [ "MHDmuM" ]
+      }
+    }
+    KKDmuP : {
+      @table::Mu2eKinKal.producers.KKDmuPDriftFit
+      ModuleSettings : {
+        @table::Mu2eKinKal.producers.KKDmuPDriftFit.ModuleSettings
+        @table::Mu2eKinKal.KKPrecursors
+        HelixSeedCollections : [ "MHDmuP" ]
+      }
+    }
+   KKUmuM : {
+      @table::Mu2eKinKal.producers.KKUmuMDriftFit
+      ModuleSettings : {
+        @table::Mu2eKinKal.producers.KKDmuMDriftFit.ModuleSettings
+        @table::Mu2eKinKal.KKPrecursors
+        HelixSeedCollections : [ "MHUmuM" ]
+      }
+    }
+    KKUmuP : {
+      @table::Mu2eKinKal.producers.KKUmuPDriftFit
+      ModuleSettings : {
+        @table::Mu2eKinKal.producers.KKDmuPDriftFit.ModuleSettings
+        @table::Mu2eKinKal.KKPrecursors
+        HelixSeedCollections : [ "MHUmuP" ]
       }
     }
 
@@ -160,8 +180,11 @@ Reconstruction : {
       CrvCoincidenceClusterCollection : "CrvCoincidenceClusterFinder"
       StrawDigiMCCollection : "compressDigiMCs"
       CrvDigiMCCollection : "compressDigiMCs"
-      KalSeedCollections  : ["KFFDeM", "KFFDeP", "KFFDmuM", "KFFDmuP",
-        "KFFUeM", "KFFUeP", "KFFUmuM", "KFFUmuP" ]
+      KalSeedCollections  : [
+        "KFFDeM", "KFFDeP", "KFFDmuM", "KFFDmuP",
+        "KFFUeM", "KFFUmuP", "KFFUmuM", "KFFUmuP" ,
+        "KKDeM", "KKDeP", "KKDmuM", "KKDmuP",
+        "KKUeM", "KKUmuP", "KKUmuM", "KKUmuP" ]
       HelixSeedCollections  : ["MHDeM", "MHDeP", "MHDmuM", "MHDmuP",
         "MHUeM", "MHUeP", "MHUmuM", "MHUmuP" ]
       VDSPCollection : "compressDigiMCs:virtualdetector"
@@ -223,8 +246,7 @@ Reconstruction : {
     MHDeM, MHDeP, # helix merging
     KSFDeM, KSFDeP, # Seed fit (chisquared, no drift)
     KFFDeM, KFFDeP, # final Kalman filter fit
-    KKSDeM, KKSDeP, # KinKal seed fits
-    KKFDeM, KKFDeP # KinKal drift fits
+    KKDeM, KKDeP # KinKal drift fits
   ]
   # Upstream electron sequence (plus and minus): TrkPatRec only
   UeReco : [
@@ -232,7 +254,7 @@ Reconstruction : {
     MHUeM, MHUeP, # helix merging
     KSFUeM, KSFUeP, # Seed fit (chisquared, no drift)
     KFFUeM, KFFUeP, # final Kalman filter fit
-    KKFUeM, KKFUeP # KinKal drift fits
+    KKUeM, KKUeP # KinKal drift fits
   ]
   # Downstream muon sequence (plus and minus)
   DmuReco : [
@@ -241,7 +263,7 @@ Reconstruction : {
     MHDmuM, MHDmuP, # helix merging
     KSFDmuM, KSFDmuP, # Seed fit (chisquared, no drift)
     KFFDmuM, KFFDmuP, # final Kalman filter fit
-    KKFDmuM, KKFDmuP # KinKal drift fits
+    KKDmuM, KKDmuP # KinKal drift fits
   ]
   # Upstream muon sequence (plus and minus)
   UmuReco : [
@@ -249,7 +271,7 @@ Reconstruction : {
     MHUmuM, MHUmuP, # helix merging
     KSFUmuM, KSFUmuP, # Seed fit (chisquared, no drift)
     KFFUmuM, KFFUmuP, # final Kalman filter fit
-    KKFUmuM, KKFUmuP # KinKal drift fits
+    KKUmuM, KKUmuP # KinKal drift fits
  ]
   # add protons for calibration TODO!
 
