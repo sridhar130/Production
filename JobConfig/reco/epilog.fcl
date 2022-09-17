@@ -1,6 +1,5 @@
 # patch CRV
 physics.producers.CrvCoincidenceClusterMatchMC.crvWaveformsModuleLabel : "compressDigiMCs"
-physics.producers.compressRecoMCs.extraStepPointMCTags : ["compressDigiMCs:virtualdetector", "compressDigiMCs:stoppingtarget", "compressDigiMCs:protonabsorber" ]
 # setup proditions; as new proditions are added to the database this file MUST be updated or reco won't see them
 services.ProditionsService.alignedTracker.useDb: true
 services.ProditionsService.alignedTracker.verbose: 0

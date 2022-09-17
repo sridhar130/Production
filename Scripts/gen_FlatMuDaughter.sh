@@ -2,7 +2,7 @@
 #
 # create fcl for producing primaries from stopped particles
 # starting from a given primary that allows to set:
-# pdgID, startMom and endMom. 
+# pdgID, startMom and endMom.
 # Tested with the FlateMinus/Plus primaries
 #
 # this script requires mu2etools and dhtools be setup
@@ -59,7 +59,7 @@ nfiles=`samCountFiles.sh $dataset`
 nevts=`samCountEvents.sh $dataset`
 let nskip=nevts/nfiles
 # write the template
-rm primary.fcl
+rm -f primary.fcl
 if [[ "${stype}" == "Cosmic" ]]; then
   echo "#include \"Production/JobConfig/cosmic/S2Resampler${primary}.fcl\"" >> primary.fcl
 else
@@ -76,7 +76,7 @@ echo services.GeometryService.bFieldFile: \"${bFieldFile}\">> primary.fcl
 # now generate the fcl
 #
 generate_fcl --dsconf=${primaryconf} --dsowner=mu2e --run-number=1202 --description=${primary} --events-per-job=${eventsperjob} --njobs=${njobs} \
-  --embed primary.fcl --auxinput=1:physics.filters.${resampler}.fileNames:Stops.txt 
+  --embed primary.fcl --auxinput=1:physics.filters.${resampler}.fileNames:Stops.txt
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
  if test -d $dirname; then
   echo "found dir $dirname"

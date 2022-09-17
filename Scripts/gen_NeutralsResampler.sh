@@ -19,7 +19,7 @@ nfiles=`samCountFiles.sh $dataset`
 nevts=`samCountEvents.sh $dataset`
 let nskip=nevts/nfiles
 # write the neutralsresampler.fcl
-rm neutralsresampler.fcl
+rm -f neutralsresampler.fcl
 echo '#include "Production/JobConfig/pileup/NeutralsResampler.fcl"' >> neutralsresampler.fcl
 echo physics.filters.neutralsResampler.mu2e.MaxEventsToSkip: ${nskip} >> neutralsresampler.fcl
 #

@@ -15,7 +15,7 @@ eventsperjob=$5
 njobs=$6
 s2out=Cosmic$cosmic
 #
-rm stage2.fcl
+rm -f stage2.fcl
 samweb list-file-locations --schema=root --defname="sim.mu2e.${name}.art"  | cut -f1 > CosmicDSStops.txt
 # calucate the max skip from the dataset
 nfiles=`samCountFiles.sh $dataset`
