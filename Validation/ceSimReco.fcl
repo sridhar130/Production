@@ -142,4 +142,6 @@ physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip: 0
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eCeMinusEndpoint"
 
 services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_current.txt"
+services.GeometryService.bFieldFile: "Offline/Mu2eG4/geom/bfgeom_v01.txt"
+
 #include "Production/Validation/database.fcl"
