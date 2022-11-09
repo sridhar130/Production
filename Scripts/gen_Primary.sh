@@ -26,12 +26,12 @@ primaryconf=$2$4
 stype=$5
 njobs=$6
 eventsperjob=$7
-pdg=$8
-startMom=$9
-endMom=${10}
+pdg=$9
+startMom=${10}
+endMom=${11}
 bfield="Offline/Mu2eG4/geom/bfgeom_no_tsu_ps_v01.txt"
-if [[ $# -eq 12 ]]; then
-  bfield="Offline/Mu2eG4/geom/${12}"
+if [[ $# -eq 8 ]]; then
+  bfield="Offline/Mu2eG4/geom/$8"
 fi
 
 dataset=sim.mu2e.${stype}StopsCat.${stopsconf}.art
