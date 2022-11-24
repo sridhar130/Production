@@ -10,7 +10,12 @@
 # $5 is the kind of input stops (Muminus, Muplus, IPAMuminus, IPAMuplus, Piminus, Piplus, or Cosmic)
 # $6 is the number of jobs
 # $7 is the number of events/job
-# $8 is the (optional) BField file.  Ddfault is Offline/Mu2eG4/geom/bfgeom_no_tsu_ps_v01.txt
+# $8 is the pdgId of the particle to generate
+# $9 is the startMom
+# $10 is the endMom
+# $11 is the name of the BField file
+# $12 is the (optional) BField file.  Ddfault is Offline/Mu2eG4/geom/bfgeom_no_tsu_ps_v01.txt
+
 if [[ $# -lt 7 ]]; then
   echo "Missing arguments, provided $# but there should be 7"
   return 1
@@ -21,6 +26,9 @@ primaryconf=$2$4
 stype=$5
 njobs=$6
 eventsperjob=$7
+pdg=$9
+startMom=${10}
+endMom=${11}
 bfield="Offline/Mu2eG4/geom/bfgeom_no_tsu_ps_v01.txt"
 if [[ $# -eq 8 ]]; then
   bfield="Offline/Mu2eG4/geom/$8"
@@ -53,6 +61,11 @@ else
 fi
 echo physics.filters.${resampler}.mu2e.MaxEventsToSkip: ${nskip} >> primary.fcl
 echo "services.GeometryService.bFieldFile : \"$bfield\"" >> primary.fcl
+
+if [[ "${stype}" == "FlatMuDaughter" ]]; then
+  echo physics.producers.generate.pdgId: ${pdg}            >> primary.fcl
+  echo physics.producers.generate.startMom: ${startMom}    >> primary.fcl
+  echo physics.producers.generate.endMom: ${endMom}        >> primary.fcl
 #
 # now generate the fcl
 #
