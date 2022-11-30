@@ -12,6 +12,7 @@
 #include "Offline/CaloMC/fcl/prolog.fcl"
 #include "Offline/CalPatRec/fcl/prolog.fcl"
 #include "Offline/CRVResponse/fcl/prolog.fcl"
+#include "Offline/CosmicReco/fcl/prolog.fcl"
 #include "Offline/Filters/fcl/prolog.fcl"
 #
 BEGIN_PROLOG
@@ -24,6 +25,7 @@ Reconstruction : {
     @table::CaloCluster.producers
     @table::CaloMC.TruthProducers
     @table::CrvResponsePackage.producers
+    @table::CosmicTracking.producers
 
     # instantiate explicit helix merger modules
     # NB: positive here refers to helicity, not charge!
@@ -158,6 +160,14 @@ Reconstruction : {
         HelixSeedCollections : [ "MHUmuP" ]
       }
     }
+    KKLine : {
+      @table::Mu2eKinKal.producers.KKLineDriftFit
+      ModuleSettings : {
+        @table::Mu2eKinKal.producers.KKLineDriftFit.ModuleSettings
+        @table::Mu2eKinKal.KKPrecursors
+        CosmicTrackSeedCollections : ["LineFinder"]
+      }
+    }
 
     # Implicit TrkPatRec config for Final Fits and upstream fits (no merging)
     #
@@ -184,7 +194,8 @@ Reconstruction : {
         "KFFDeM", "KFFDeP", "KFFDmuM", "KFFDmuP",
         "KFFUeM", "KFFUmuP", "KFFUmuM", "KFFUmuP" ,
         "KKDeM", "KKDeP", "KKDmuM", "KKDmuP",
-        "KKUeM", "KKUmuP", "KKUmuM", "KKUmuP" ]
+        "KKUeM", "KKUmuP", "KKUmuM", "KKUmuP",
+        "KKLine"]
       HelixSeedCollections  : ["MHDeM", "MHDeP", "MHDmuM", "MHDmuP",
         "MHUeM", "MHUeP", "MHUmuM", "MHUmuP" ]
       VDSPCollection : "compressDigiMCs:virtualdetector"
@@ -225,13 +236,13 @@ Reconstruction : {
       TrkTags : [ "KFFDeM", "KFFDeP",
         "KFFUeM", "KFFUeP",
         "KFFDmuM", "KFFDmuP",
-        "KFFUmuM", "KFFUmuP"
+        "KFFUmuM", "KFFUmuP","KKLine"
       ]
       # // set low cutoffs
       MomentumCutoff : [ 60.0, 60.0,
         60.0, 60.0,
         60.0, 60.0,
-        60.0, 60.0 ]
+        60.0, 60.0, 60.0 ]
     }
   }
 
@@ -272,6 +283,10 @@ Reconstruction : {
     KSFUmuM, KSFUmuP, # Seed fit (chisquared, no drift)
     KFFUmuM, KFFUmuP, # final Kalman filter fit
     KKUmuM, KKUmuP # KinKal drift fits
+ ]
+ # NoField straight line
+ LineReco : [
+   SimpleTimeCluster, LineFinder, KKLine
  ]
   # add protons for calibration TODO!
 
@@ -341,6 +356,20 @@ Reconstruction.RecoMCPath : [
   @sequence::Reconstruction.MCReco,
   RecoFilter
 ]
+# No Field reco path
+Reconstruction.LineRecoPath : [
+  @sequence::Reconstruction.CaloReco,
+  @sequence::Reconstruction.TrkReco,
+  @sequence::Reconstruction.CrvReco,
+  @sequence::Reconstruction.LineReco
+]
+# No Field reco path with MC
+Reconstruction.LineRecoMCPath : [
+  @sequence::Reconstruction.LineRecoPath,
+  @sequence::Reconstruction.MCReco,
+  RecoFilter
+]
+
 # default output
 Reconstruction.Output : {
   module_type : RootOutput
