@@ -1,0 +1,8 @@
+#include "Production/JobConfig/reco/NoField.fcl"
+services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
+services.GeometryService.bFieldFile: "Offline/Mu2eG4/geom/bfgeom_no_field.txt"
+services.ProditionsService.strawResponse.useParameterizedDriftErrors : true
+services.ProditionsService.strawResponse.truncateLongitudinal : false
+services.ProditionsService.strawResponse.rmsLongErrors : true
+
+#include "Offline/CRVResponse/fcl/epilog_extracted_v02.fcl"
