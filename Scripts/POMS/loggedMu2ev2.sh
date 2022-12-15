@@ -3,8 +3,19 @@ echo mu2e "$@"
 pwd
 ls
 # file name is taken as input arguement:
-filename=`basename ${@: -1}` 
+filespec=${@: -1}
+filename=`basename $filespec`
 echo $filename
+# New code:
+INURL=$( fhicl-get physics.filters.CosmicResampler.fileNames $filespec --sequence-of string )
+echo "INURL" $INURL
+INFN=$(basename $INURL)
+echo "INFN" $INFN
+ifdh cp $INURL ./$INFN
+sed -i 's|'$INURL'|'$INFN'|' $filespec
+cat $filespec
+ls -al
+# end New code:
 logFilename=${filename/cnf./log.}
 logExtension=${logFilename/.fcl/.txt}
 tbzFilename=${filename/cnf./bck.}
