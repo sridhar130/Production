@@ -3,10 +3,10 @@
 //
 // Because this is intended to be used on different datasets, we can not set
 // the correct output filename here.   Instead, the template file
-// for generate_fcl should #include this code, than have  a line that
+// for generate_fcl should include this code, than have  a line that
 // sets a suitable file name.  For example:
 //
-//     #include "JobConfig/common/artcat.fcl"
+//     #include "Production/JobConfig/common/artcat.fcl"
 //     outputs.out.fileName: "sim.mu2e.pbar-cs1.DSCONF.SEQ.art"
 //
 // if data product schema has evolved since the production of input

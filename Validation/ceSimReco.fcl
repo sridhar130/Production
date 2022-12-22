@@ -106,7 +106,7 @@ physics.producers.EWMProducer.SpillType : 1
 # add trigger paths
 # This doesn't currently work, as the step filter stops processing before digis are made, and
 # the digis are required for trigger FIXME!
-##include "gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+##include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 
 # print summaries
 services.scheduler.wantSummary: true
