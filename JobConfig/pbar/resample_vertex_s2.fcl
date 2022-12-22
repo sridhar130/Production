@@ -1,9 +1,9 @@
 // Andrei Gaponenko, 2013
 // Jake Colston & Joseph Brock, 2015 (edit for cd3)--> rhb adapts for antiprotons
 //starts at VD91 and propagates to Coll31Out, use to study collar collimator and then TS3 central window
-#include "minimalMessageService.fcl"
-#include "standardProducers.fcl"
-#include "standardServices.fcl"
+#include "Offline/fcl/minimalMessageService.fcl"
+#include "Offline/fcl/standardProducers.fcl"
+#include "Offline/fcl/standardServices.fcl"
 
 BEGIN_PROLOG
 
