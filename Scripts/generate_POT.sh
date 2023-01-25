@@ -55,7 +55,14 @@ while getopts ":c:v:o:r:e:j:d:" options; do
   esac
 done
 
-# Test: run a test to check the campaign verion exists TODO 
+# Test: run a test to check the SimJob for this campaign verion exists TODO 
+DIR=/cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${CAMPAIGN}${VERSION}
+if [ -d "$DIR" ];
+  then
+    echo "$DIR directory exists."
+  else
+	  echo "$DIR directory does not exist."
+fi
 # Run: run generate fcl with input from user
 generate_fcl --dsconf=${NAME}${VERSION} --dsowner=${OWNER} --run-number=${RUN} --events-per-job=${EVENTS} --njobs=${JOBS} --include Production/JobConfig/beam/POT.fcl --description=${DESC}
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
