@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# usage: bash Scripts/generate_POT.sh -n MDC2020 -v u -o mu2e -r 1202 -e 2000 -j 1000 -d POT
+# usage: bash Scripts/generate_POT.sh -c MDC2020 -v u -o mu2e -r 1202 -e 2000 -j 1000 -d POT
 
 
 # placeholder for the MDC name and version
 VERSION=""
-NAME=""
+CAMPAIGN=""
 OWNER=""
 # default arguments set, user can override 
 RUN=1202
@@ -14,7 +14,7 @@ JOBS=1000
 DESC=POT
 # Function: Print a help message.
 usage() {                                 
-  echo "Usage: $0 [ -n NAME ] [ -v VERSION ] [ -o OWNER ] [ -r RUN ] [ -e EVENTS ][ -j JOBS ][ -d DESC ]" 1>&2 
+  echo "Usage: $0 [ -c NAME ] [ -v VERSION ] [ -o OWNER ] [ -r RUN ] [ -e EVENTS ][ -j JOBS ][ -d DESC ]" 1>&2 
 }
 # Function: Exit with error.
 exit_abnormal() {                         
@@ -22,10 +22,10 @@ exit_abnormal() {
   exit 1
 }
 # Loop: Get the next option;
-while getopts ":n:v:o:r:e:j:d:" options; do         
+while getopts ":c:v:o:r:e:j:d:" options; do         
   case "${options}" in                    
-    n)                                  # If the option is n,
-      NAME=${OPTARG}                      # set $NAME to specified value.
+    c)                                  # If the option is n,
+      CAMPAIGN=${OPTARG}                      # set $CAMPAIGN to specified value.
       ;;
     v)                                    # If the option is v,
       VERSION=${OPTARG}                     # Set $VERSION to specified value.
