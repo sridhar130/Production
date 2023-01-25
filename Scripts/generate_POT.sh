@@ -2,12 +2,12 @@
 
 # usage: bash Scripts/generate_POT.sh -c MDC2020 -v u -o mu2e -r 1202 -e 2000 -j 1000 -d POT
 
-
 # placeholder for the MDC name and version
 VERSION=""
 CAMPAIGN=""
-OWNER=""
+
 # default arguments set, user can override 
+OWNER=mu2e
 RUN=1202
 EVENTS=2000
 JOBS=1000
@@ -54,6 +54,8 @@ while getopts ":c:v:o:r:e:j:d:" options; do
       ;;
   esac
 done
+
+# Test: run a test to check the campaign verion exists TODO 
 # Run: run generate fcl with input from user
 generate_fcl --dsconf=${NAME}${VERSION} --dsowner=${OWNER} --run-number=${RUN} --events-per-job=${EVENTS} --njobs=${JOBS} --include Production/JobConfig/beam/POT.fcl --description=${DESC}
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
