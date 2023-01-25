@@ -61,7 +61,8 @@ if [ -d "$DIR" ];
   then
     echo "$DIR directory exists."
   else
-	  echo "$DIR directory does not exist."
+    echo "$DIR directory does not exist."
+    exit 1
 fi
 # Run: run generate fcl with input from user
 generate_fcl --dsconf=${NAME}${VERSION} --dsowner=${OWNER} --run-number=${RUN} --events-per-job=${EVENTS} --njobs=${JOBS} --include Production/JobConfig/beam/POT.fcl --description=${DESC}
