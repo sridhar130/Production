@@ -19,7 +19,7 @@ while getopts ":n:v:" options; do
     n)                                  # If the option is n,
       NAME=${OPTARG}                      # set $NAME to specified value.
       ;;
-    v)                                    # If the option is t,
+    v)                                    # If the option is v,
       VERSION=${OPTARG}                     # Set $VERSION to specified value.
       ;;
     :)                                    # If expected argument omitted:
