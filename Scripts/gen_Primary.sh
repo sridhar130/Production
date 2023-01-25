@@ -16,7 +16,7 @@
 # $11 (optional) is the name of the BField file
 echo "in mu2epro version"
 if [[ $# -lt 10 ]]; then
-  echo "Missing arguments, provided $# but there should be 7"
+  echo "Missing arguments, provided $# but there should be 10"
   return 1
 fi
 primary=$1
