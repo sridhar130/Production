@@ -14,7 +14,7 @@
 # $9 is the startMom
 # $10 is the endMom
 # $11 (optional) is the name of the BField file
-echo "in mu2epro version"
+
 if [[ $# -lt 10 ]]; then
   echo "Missing arguments, provided $# but there should be 10"
   return 1
