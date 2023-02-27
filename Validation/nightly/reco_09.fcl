@@ -1,0 +1,3 @@
+#include "Production/Validation/reco.fcl"
+source.fileNames : ["root://fndcadoor.fnal.gov:1094/pnfs/fnal.gov/usr/mu2e/persistent/users/mu2epro/valjob/reco_031021/dig.brownd.CeEndpointMixTriggered.MDC2020k.001210_00000009.art" ]
+outputs.Output.fileName: "reco_09.art"
