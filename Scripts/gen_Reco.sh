@@ -1,72 +1,78 @@
 #!/usr/bin/bash
 
-# this script requires mu2etools and dhtools be setup
-# $1 is the name of the digi (ie CeEndpointMixSignal, etc) file.
-# $2 is the dataset description (ie MDC2020).
-# $3 is the campaign version of the input (digi) file.
-# $4 is the campaign version of the output (reco) file.
-# $5 is the database purpose
-# $6 is the database version
-# $7 is the number of input collections to merge (merge factor)
-# $8 is the dsowner for the FCL files (optional, default to mu2e)
+# Function: Exit with error.
+exit_abnormal() {
+  usage
+  exit 1
+}
 
-if [[ $# -eq 0 ]] ; then
-    usage='Usage:
-gen_Reco.sh [primaryName] [datasetDescription] [digiInput] \
-            [recoOutput] [purpose] [version] [mergeFactor] \
-            [dsowner] [digiOwner]
+usage() { echo "Usage:
+  e.g.  bash generate_Reco.sh --primary CeEndpoint --release MDC2020 --dcamp MDC2020t --rcamp MDC2020t  --dbpurpose perfect --dbversion v1_0 --merge 10"
+}
 
-This script will produce the fcl files needed for a mixing stage. It
-is necessary to provide, in order:
-- the name of the primary [primaryName]
-- the dataset description [datasetDescription],
-- the campaign version of the input digi file [digiInput],
-- the campaign version of the output reco file [recoOutput],
-- the name of the DB purpose (perfect, best, startup) [purpose]
-- the DB version [version]
-- the number of input collections to merge into 1 output [mergeFactor]
-- the dsowner for the output FCL files [dsowner] (optional, default mu2e)
-- the owner of the digi files [digiOwner] (optional, default mu2e)
+PRIMARY="" # name of primary
+RELEASE="" # e.g. MDC2020
+DIGI_CAMPAIGN="" # digi (input) campaign name
+RECO_CAMPAIGN="" # reco (output) campaign name
+DB_PURPOSE="" # db purpose  
+DB_VERSION="" # db version
+MERGE="" # merge factor
+OWNER=mu2e
 
-Example:
-    gen_Reco.sh CeEndpointMixSignal MDC2020 k m perfect v1_0 10
 
-This will produce the fcl files for a reco stage
-on CeEndpointMixSignal digis, merging 10 inputs per output. The output
-files will have the MDC2020m description.'
-    echo "$usage"
-    exit 0
-fi
-primary=$1
-digconf=$2$3_$5_$6
-dbpurpose=$2_$5
-dbver=$6
-outconf=$2$4_$5_$6
-merge=$7
-if [[ -z "$8" ]] ; then
-    dsowner="mu2e"
-else
-    dsowner=$8
-fi
-if [[ -z "$9" ]] ; then
-    digiowner="mu2e"
-else
-    digiowner=$9
-fi
+# Loop: Get the next option;
+while getopts ":-:" options; do
+  case "${options}" in      
+    -)                                   
+      case "${OPTARG}" in               
+        primary)                                  
+          PRIMARY=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))      
+          ;;
+        release)                                  
+          RELEASE=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))      
+          ;;
+        dcamp)                                   
+          DIGI_CAMPAIGN=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))                
+          ;;
+        rcamp)                                    
+          RECO_CAMPAIGN=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))                  
+          ;;
+        dbpurpose)                                   
+          DB_PURPOSE=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))                   
+          ;;
+        dbversion)                                   
+          DB_VERSION=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))                  
+          ;;
+        merge)                                   
+          MERGE=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))                   
+          ;;
+        owner)                                   
+          OWNER=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))                     
+          ;;                                   
+        esac;;             
+    :)                                    # If expected argument omitted:
+      echo "Error: -${OPTARG} requires an argument."
+      exit_abnormal                       # Exit abnormally.
+      ;;
+    *)                                    # If unknown (any other) option:
+      exit_abnormal                       # Exit abnormally.
+      ;;
+    esac
+done
 
-echo "Generating reco scripts for $primary conf $digconf output $outconf  database purpose, version $dbpurpose $dbver"
+echo "Generating reco scripts for ${PRIMARY} conf ${DIGI_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION} output ${RECO_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION}  database purpose, version ${RECO_CAMPAIGN}_${DB_PURPOSE} ${DB_VERSION}"
 
-samweb list-file-locations --schema=root --defname="dig.$digiowner.$primary.$digconf.art"  | cut -f1 > Digis.txt
+samweb list-file-locations --schema=root --defname="dig.${OWNER}.${PRIMARY}.${DIGI_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION}.art"  | cut -f1 > Digis.txt
 
 echo '#include "Production/JobConfig/reco/Reco.fcl"' > template.fcl
-echo 'services.DbService.purpose:' $dbpurpose >> template.fcl
-echo 'services.DbService.version:' $dbver >> template.fcl
+echo 'services.DbService.purpose:' ${RELEASE}'_'${DB_PURPOSE} >> template.fcl
+echo 'services.DbService.version:' ${DB_VERSION} >> template.fcl
 echo 'services.DbService.verbose : 2' >> template.fcl
 
-generate_fcl --dsowner=$dsowner --override-outputs --auto-description --embed template.fcl --dsconf "$outconf" \
---inputs "Digis.txt" --merge-factor=$merge
+generate_fcl --dsowner=${OWNER} --override-outputs --auto-description --embed template.fcl --dsconf "${RECO_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION}" \
+--inputs "Digis.txt" --merge-factor=${MERGE}
 
-base=${primary}Reco_
+base=${PRIMARY}Reco_
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
  if test -d $dirname; then
    echo "found dir $dirname"
