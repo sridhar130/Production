@@ -24,8 +24,23 @@ OWNER=mu2e
 RUN=1202
 DESC=${PRIMARY} # can override if more detailed tag is needed
 
+# Function: Print a help message.
+usage() {
+  echo "Usage: $0 [ --primary primary physics name ] 
+  [ --pcamp primary campaign name ]
+  [ --scamp stops campaign name ]
+  [ --type stopped particle type ]
+  [ --njobs number of jobs ]
+  [ --events events per job ]
+  [ --pdg (opt) for Flat spectra ]
+  [ --start (opt) for Flat spectra ]
+  [ --end (opt) for Flat spectra ]
+  [ --field (opt) for special runs ]" 1>&2 
+}
+
 # Function: Exit with error.
 exit_abnormal() {
+  usage
   exit 1
 }
 

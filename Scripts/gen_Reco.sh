@@ -1,13 +1,21 @@
 #!/usr/bin/bash
 
+usage() { echo "Usage: $0 [ --primary primary physics name ] 
+  [ --release primary release name ]
+  [ --dcamp digi campaign name ]
+  [ --rcamp reco campaign name ]
+  [ --merge merge factor ]
+  [ --dbpurpose purpose of db e.g. perfect, startup, best  ]
+  [ --dbversion db version ]
+  [ --owner (opt) default mu2e ]
+  [ --run (opt) default 1202 ]
+  e.g.  bash generate_Reco.sh --primary CeEndpoint --release MDC2020 --dcamp MDC2020t --rcamp MDC2020t  --dbpurpose perfect --dbversion v1_0 --merge 10"
+}
+
 # Function: Exit with error.
 exit_abnormal() {
   usage
   exit 1
-}
-
-usage() { echo "Usage:
-  e.g.  bash generate_Reco.sh --primary CeEndpoint --release MDC2020 --dcamp MDC2020t --rcamp MDC2020t  --dbpurpose perfect --dbversion v1_0 --merge 10"
 }
 
 PRIMARY="" # name of primary
