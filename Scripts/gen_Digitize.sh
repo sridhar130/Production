@@ -19,10 +19,6 @@ OWNER=mu2e
 FIELD="Offline/Mu2eG4/geom/bfgeom_no_tsu_ps_v01.txt" #optional (for changing field map)
 RUN=1202
 
-# Function: Exit with error.
-exit_abnormal() {
-  exit 1
-}
 
 usage() { echo "Usage: $0 [ --primary primary physics name ] 
   [ --release primary release name ]
@@ -37,6 +33,13 @@ usage() { echo "Usage: $0 [ --primary primary physics name ]
   [ --run (opt) default 1202 ]
   e.g.  bash generate_Digitization.sh --primary CeEndpoint --pcamp MDC2020t --dcamp MDC2020t --njobs 1000 --events 100 --merge 10 --digitype OnSpill --dbpurpose perfect --dbversion v1_0"
 }
+
+# Function: Exit with error.
+exit_abnormal() {
+  usage
+  exit 1
+}
+
 
 # Loop: Get the next option;
 while getopts ":-:" options; do

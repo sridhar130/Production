@@ -15,6 +15,12 @@ usage() {
   [ --mubeammix (opt) electron mixing factor ]" 1>&2
 }
 
+# Function: Exit with error.
+exit_abnormal() {
+  usage
+  exit 1
+}
+
 PRIMARY="" # e.g. CeEndpoint
 MIXCAMP="" # e.g MDC2020p
 PCAMP=""  # e.g. MDC2020v
