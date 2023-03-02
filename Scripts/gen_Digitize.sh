@@ -30,7 +30,6 @@ usage() { echo "Usage: $0 [ --primary primary physics name ]
   [ --dbversion db version ]
   [ --owner (opt) default mu2e ]
   [ --field (opt) override for special runs ]
-  [ --run (opt) default 1202 ]
   e.g.  bash generate_Digitization.sh --primary CeEndpoint --pcamp MDC2020t --dcamp MDC2020t --njobs 1000 --events 100 --merge 10 --digitype OnSpill --dbpurpose perfect --dbversion v1_0"
 }
 
@@ -75,9 +74,6 @@ while getopts ":-:" options; do
           ;;
         field)                                   
           FIELD=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))                    
-          ;;
-        run)                                   
-          RUN=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))                    
           ;;
         desc)                                   
           DESC=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))                 
