@@ -26,7 +26,7 @@ DESC=${PRIMARY} # can override if more detailed tag is needed
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ --primary NAME ] 
+  echo "Usage: $0 [ --primary primary physics name ] 
   [ --pcamp primary campaign name ]
   [ --scamp stops campaign name ]
   [ --type stopped particle type ]

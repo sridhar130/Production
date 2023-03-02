@@ -1,6 +1,18 @@
 #!/usr/bin/bash
-usage() { echo "Usage:
-  ..."
+# Function: Print a help message.
+usage() {
+  echo "Usage: $0 [ --primary NAME ] 
+  [ --mcamp mixing campaign name ]
+  [ --pcamp primary campaign name ]
+  [ --dbpurpose purpose of db e.g. perfect, startup, best  ]
+  [ --dbversion db version ]
+  [ --nbb beam mode ]
+  [ --early (opt) for early run ]
+  [ --merge (opt) merge factor, default 10 ]
+  [ --neutmix (opt) neutral mixing factor ]
+  [ --elemix (opt) electron mixing factor ]
+  [ --mustopmix (opt) electron mixing factor ]
+  [ --mubeammix (opt) electron mixing factor ]" 1>&2
 }
 
 PRIMARY="" # e.g. CeEndpoint

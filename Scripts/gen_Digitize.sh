@@ -24,7 +24,17 @@ exit_abnormal() {
   exit 1
 }
 
-usage() { echo "Usage:
+usage() { echo "Usage: $0 [ --primary primary physics name ] 
+  [ --release primary release name ]
+  [ --pcamp primary campaign name ]
+  [ --dcamp digi campaign name ]
+  [ --type stopped particle type ]
+  [ --merge merge factor ]
+  [ --dbpurpose purpose of db e.g. perfect, startup, best  ]
+  [ --dbversion db version ]
+  [ --owner (opt) default mu2e ]
+  [ --field (opt) override for special runs ]
+  [ --run (opt) default 1202 ]
   e.g.  bash generate_Digitization.sh --primary CeEndpoint --pcamp MDC2020t --dcamp MDC2020t --njobs 1000 --events 100 --merge 10 --digitype OnSpill --dbpurpose perfect --dbversion v1_0"
 }
 
