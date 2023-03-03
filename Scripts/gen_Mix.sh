@@ -122,7 +122,8 @@ done
 
 
 # basic tests
-if [[ ${CAMPAIGN} == ""  || ${PRIMARY} == "" || ${PRIMARY_VERSION} == "" || ${MIXIN_VERSION} == "" || ${OUTPUT_VERSION} == "" ||${PBEAM} == "" || ${DBVERSION} == "" || ${DBPURPOSE} == "" ]]; then
+#echo "${CAMPAIGN} ${PRIMARY} ${PRIMARY_VERSION} ${MIXIN_VERSION} ${OUTPUT_VERSION} ${PBEAM} ${DBVERSION} ${DBPURPOSE}"
+if [[ ${CAMPAIGN} == ""  || ${PRIMARY} == "" || ${PRIMARY_VERSION} == "" || ${MIXIN_VERSION} == "" || ${OUTPUT_VERSION} == "" || ${PBEAM} == "" || ${DBVERSION} == "" || ${DBPURPOSE} == "" ]]; then
   echo "Missing arguments: exit"
   exit_abnormal
 fi
@@ -164,11 +165,23 @@ fi
 
 echo "Generating mixing scripts for ${PRIMARY} conf ${PRIMARYCONF} mixin conf ${MIXINCONF} output config, description ${OUTCONF} ${OUTDESC}"
 
-# create the mixin input lists.  Note there is no early MuStopPileup
-samListLocations ${SAMOPT} --defname="dts.mu2e.${EARLY}MuBeamFlashCat.${MIXINCONF}.art"  > MuBeamFlashCat${MIXINCONF}.txt
-samListLocations ${SAMOPT} --defname="dts.mu2e.${EARLY}EleBeamFlashCat.${MIXINCONF}.art"  > EleBeamFlashCat${MIXINCONF}.txt
-samListLocations ${SAMOPT} --defname="dts.mu2e.${EARLY}NeutralsFlashCat.${MIXINCONF}.art" > NeutralsFlashCat${MIXINCONF}.txt
-samListLocations ${SAMOPT} --defname="dts.mu2e.MuStopPileupCat.${MIXINCONF}.art" > MuStopPileupCat${MIXINCONF}.txt
+# create the mixin input lists.  Note there is no early MuStopPileup.  Reuse the files if they exist
+MUBEAMPILEUP=${EARLY}MuBeamFlashCat${MIXINCONF}.txt
+EBEAMPILEUP=${EARLY}EleBeamFlashCat${MIXINCONF}.txt
+NPILEUP=${EARLY}NeutralsFlashCat${MIXINCONF}.txt
+MUSTOPPILEUP=MuStopPileupCat${MIXINCONF}.txt
+if [[ ! -f ${MUBEAMPILEUP} ]]; then
+  samListLocations ${SAMOPT} --defname="dts.mu2e.${EARLY}MuBeamFlashCat.${MIXINCONF}.art"  > ${MUBEAMPILEUP}
+fi
+if [[ ! -f ${EBEAMPILEUP} ]]; then
+  samListLocations ${SAMOPT} --defname="dts.mu2e.${EARLY}EleBeamFlashCat.${MIXINCONF}.art"  >${EBEAMPILEUP}
+fi
+if [[ ! -f ${NPILEUP} ]]; then
+  samListLocations ${SAMOPT} --defname="dts.mu2e.${EARLY}NeutralsFlashCat.${MIXINCONF}.art" >${NPILEUP}
+fi
+if [[ ! -f ${MUSTOPPILEUP} ]]; then
+  samListLocations ${SAMOPT} --defname="dts.mu2e.MuStopPileupCat.${MIXINCONF}.art" > ${MUSTOPPILEUP}
+fi
 
 # calucate the max skip from the dataset
 nfiles=`samCountFiles.sh "dts.mu2e.MuBeamFlashCat.${MIXINCONF}.art"`
@@ -218,7 +231,7 @@ echo physics.filters.EleBeamFlashMixer.mu2e.MaxEventsToSkip: ${nskip_EleBeamFlas
 echo physics.filters.NeutralsFlashMixer.mu2e.MaxEventsToSkip: ${nskip_NeutralsFlash} >> mix.fcl
 echo physics.filters.MuStopPileupMixer.mu2e.MaxEventsToSkip: ${nskip_MuStopPileup} >> mix.fcl
 # setup database access, for SimEfficiences and digi parameters
-echo services.DbService.purpose: ${DBPURPOSE} >> mix.fcl
+echo services.DbService.purpose: ${CAMPAIGN}_${DBPURPOSE} >> mix.fcl
 echo services.DbService.version: ${DBVERSION} >> mix.fcl
 echo services.DbService.verbose : 2 >> mix.fcl
 echo "services.GeometryService.bFieldFile : \"${FIELD}\"" >> mix.fcl
@@ -232,10 +245,10 @@ echo outputs.UntriggeredOutput.fileName: \"dig.owner.${OUTDESC}Untriggered.versi
 # run generate_fcl
 generate_fcl --dsconf="${OUTCONF}" --dsowner=${OWNER} --description="${OUTDESC}" --embed mix.fcl \
   --inputs="${PRIMARY}.txt" --merge-factor=${MERGE} \
-  --auxinput=${MUSTOPNMIXIN}:physics.filters.MuStopPileupMixer.fileNames:MuStopPileupCat${MIXINCONF}.txt \
-  --auxinput=${ELENMIXIN}:physics.filters.EleBeamFlashMixer.fileNames:EleBeamFlashCat${MIXINCONF}.txt \
-  --auxinput=${MUBEAMNMIXIN}:physics.filters.MuBeamFlashMixer.fileNames:MuBeamFlashCat${MIXINCONF}.txt \
-  --auxinput=${NEUTNMIXIN}:physics.filters.NeutralsFlashMixer.fileNames:NeutralsFlashCat${MIXINCONF}.txt
+  --auxinput=${MUSTOPNMIXIN}:physics.filters.MuStopPileupMixer.fileNames:${MUSTOPPILEUP}  \
+  --auxinput=${ELENMIXIN}:physics.filters.EleBeamFlashMixer.fileNames:${EBEAMPILEUP} \
+  --auxinput=${MUBEAMNMIXIN}:physics.filters.MuBeamFlashMixer.fileNames:${MUBEAMPILEUP} \
+  --auxinput=${NEUTNMIXIN}:physics.filters.NeutralsFlashMixer.fileNames:${NPILEUP}
 #  move to an appropriate directory
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
   if test -d $dirname; then
