@@ -59,7 +59,7 @@ Digitize: {
       MinParticleMom : 80.0
       MaxParticleMom : 200.0
       StrawDigiMCCollection : compressDigiMCs
-      particleTypes : [ 11,-11, 13, -13] # e+-, mu+-
+      particleTypes : [ 11,-11, 13, -13, 211, -211] # e+-, mu+-, pi+-
     }
     # Untriggered stream prescaler; stream-dependent
     UntriggeredPrescale : {
