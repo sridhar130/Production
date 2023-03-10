@@ -12,6 +12,7 @@ usage() { echo "Usage: $0 [ --primary primary physics name ]
   [ --mix Mix if mixed, blank otherwise]
   [ --owner (opt) default mu2e ]
   [ --run (opt) default 1202 ]
+  [ --samopt (opt) Options to samListLocation default "-f --schema=root" ]
   e.g.  bash gen_Reco.sh --primary CeEndpoint --release MDC2020 --dcamp MDC2020v --rcamp MDC2020v  --dbpurpose perfect --dbversion v1_0 --merge 10 --digitype OnSpill --stream Signal --beam 1BB --mix Mix
 "
 }
@@ -33,7 +34,7 @@ MIX=""
 MERGE=10 # merge factor
 OWNER=mu2e
 STREAM=Signal
-
+SAMOPT="-f --schema=root"
 
 # Loop: Get the next option;
 while getopts ":-:" options; do
@@ -72,6 +73,9 @@ while getopts ":-:" options; do
           ;; 
         mix)                                   
           MIX=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))                     
+          ;; 
+        samopt)                                   
+          SAMOPT=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))                     
           ;;                                    
         esac;;             
     :)                                    # If expected argument omitted:
@@ -86,7 +90,7 @@ done
 
 echo "Generating reco scripts for ${PRIMARY} conf ${DIGI_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION} output ${RECO_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION}  database purpose, version ${RECO_CAMPAIGN}_${DB_PURPOSE} ${DB_VERSION}"
 
-samweb list-file-locations --schema=root --defname="dig.${OWNER}.${PRIMARY}${DIGITYPE}${MIX}${STREAM}.${DIGI_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION}.art"  | cut -f1 > Digis.txt
+samListLocations ${SAMOPT} --defname="dig.${OWNER}.${PRIMARY}${DIGITYPE}${MIX}${STREAM}.${DIGI_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION}.art"  | cut -f1 > Digis.txt
 
 echo '#include "Production/JobConfig/reco/Reco.fcl"' > template.fcl
 echo 'services.DbService.purpose:' ${RELEASE}'_'${DB_PURPOSE} >> template.fcl
