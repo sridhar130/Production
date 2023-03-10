@@ -20,7 +20,7 @@ usage() { echo "Usage: $0 [ --primary primary physics process name ]
   [ --elemix (opt) # of electron pileup files ]
   [ --mustopmix (opt) # of mustop daughter pileup files ]
   [ --mubeammix (opt) # of mubeam pileup files ]
-    e.g.  Production/Scripts/gen_Mix.sh --primary CeEndpoint --campaign MDC2020 --pver t --mver p --over v --beam 1BB --dbpurpose perfect --dbversion v1_0"
+    e.g.  Production/Scripts/gen_Mix.sh --primary CeEndpoint --campaign MDC2020 --pver t --mver p --over v --pbeam 1BB --dbpurpose perfect --dbversion v1_0"
 }
 
 # Function: Exit with error.
