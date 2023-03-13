@@ -1,7 +1,10 @@
 # Expand ranges for OffSpill
-physics.producers.makeSH.minimumTime : 0.0
-physics.producers.makeSH.maximumTime : 100.0e3
-physics.producers.makeSH.minimumRho : 0.0
-physics.producers.makeSH.maximumRho : 800.0
-physics.producers.makeSH.minimumEnergy : 0.0
-physics.producers.makeSH.maximumEnergy : 0.01
+physics.producers.makeSH.MinimumTime : 0.0
+physics.producers.makeSH.MaximumTime : 100.0e3
+physics.producers.makeSH.MinimumRadius : 0.0
+physics.producers.makeSH.MaximumRadius : 800.0
+#physics.producers.makeSH.MinimumEnergy : 0.0
+#physics.producers.makeSH.MaximumEnergy : 0.01
+
+physics.producers.makePH.MinimumTime : 0.0
+physics.producers.makePH.MaximumTime : 100.0e3

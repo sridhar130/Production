@@ -1,8 +1,8 @@
 physics.RecoPath : [ @sequence::TrkHitReco.PrepareHits, SimpleTimeCluster, CosmicShowerFilter, LineFinder, CosmicTrackFinderTimeFit ]
 
 physics.producers.makeSH.FilterHits : true
-physics.producers.makeSH.minimumEnergy : 0.0002
-physics.producers.makeSH.maximumEnergy : 0.01
+physics.producers.makeSH.MinimumEnergy : 0.0002
+physics.producers.makeSH.MaximumEnergy : 0.01
 
 physics.producers.SimpleTimeCluster.UseOnlyOnePlane : true
 
@@ -15,3 +15,9 @@ physics.producers.CosmicShowerFilter.cutSingleLayer : true
 physics.producers.LineFinder.TimeClusterCollection : "CosmicShowerFilter"
 physics.producers.CosmicTrackFinderTimeFit.TimeClusterCollection : "CosmicShowerFilter"
 physics.analyzers.CosmicTrackDiag.TimeClusterCollection : "CosmicShowerFilter"
+
+physics.producers.LineFinder.NSteps : 2
+physics.producers.LineFinder.NTSteps : 2
+physics.producers.LineFinder.maxDOCA : 3
+physics.producers.LineFinder.minPeak : 3
+
