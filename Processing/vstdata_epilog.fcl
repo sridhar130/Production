@@ -2,13 +2,14 @@ physics.producers.PBTFSD.StrawDigiTag : FromTrackerPrototypeData
 physics.producers.makeSH.StrawDigiCollectionTag : FromTrackerPrototypeData
 physics.producers.makeSH.StrawDigiADCWaveformCollectionTag : FromTrackerPrototypeData
 
-# FIXME there's a bug I need to find
-# physics.producers.makePH.IsVSTData : true
+physics.producers.makePH.Unsorted : true
 
 physics.analyzers.CosmicTrackDiag.mcdiag : false
 
-physics.producers.makeSH.minimumTime : 0
-physics.producers.makeSH.maximumTime : 25600
+physics.producers.makeSH.MinimumTime : 0
+physics.producers.makeSH.MaximumTime : 256000
+physics.producers.makePH.MinimumTime : 0
+physics.producers.makePH.MaximumTime : 256000
 
 services.DbService.purpose : TRACKER_VST
 services.DbService.version : v1_3
