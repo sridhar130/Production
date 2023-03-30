@@ -112,6 +112,7 @@ Digitize: {
     "keep mu2e::HelixSeeds_TT*_*_*",
     "keep mu2e::TimeClusters_TT*_*_*",
     "keep mu2e::CaloClusters_CaloClusterFast_*_*",
+    "keep mu2e::CosmicLivetime_*_*_*",
     "keep mu2e::ProtonBunchIntensity*_*_*_*"
   ]
   #
