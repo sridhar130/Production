@@ -179,7 +179,6 @@ Reconstruction : {
       SaveEnergySteps : false
       SaveUnusedDigiMCs : true
       SaveAllUnusedDigiMCs : false
-      TimeOffsets : []
       PrimaryParticle : "compressDigiMCs"
       StrawDigiCollection : "makeSD"
       StrawHitFlagCollection : "FlagBkgHits:StrawHits"
@@ -319,7 +318,8 @@ Reconstruction : {
     "keep mu2e::ProtonBunchIntensity_*_*_*",
     "keep mu2e::ProtonBunchTimeMC_*_*_*",
     "keep mu2e::EventWeight_*_*_*",
-    "keep *_compressRecoMCs_*_*"
+    "keep *_compressRecoMCs_*_*",
+    "keep mu2e::CosmicLivetime_*_*_*"
   ]
   EndSequence : [ recoCompressionCheck ]
 }
