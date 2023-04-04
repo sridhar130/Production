@@ -29,4 +29,4 @@ physics.producers.CrvCoincidence.PEthresholds : [  8 ,  8 ,  8 ]
 physics.producers.CrvCoincidence.adjacentPulseTimeDifferences  : [ 10 , 10 , 10 ]
 physics.producers.CrvCoincidence.maxTimeDifferences            : [ 10 , 10 , 10 ]
 physics.producers.CrvCoincidence.coincidenceLayers             : [  3 ,  3 ,  3 ]
-
+#include "Production/JobConfig/digitize/offspill_epilog.fcl"
