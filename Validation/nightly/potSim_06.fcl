@@ -1,0 +1,4 @@
+#include "Production/Validation/potSim.fcl"
+services.SeedService.baseSeed: 1006
+source.maxEvents: 500
+outputs.fullOutput.fileName : "potSim_06.art"

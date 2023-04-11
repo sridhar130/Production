@@ -8,7 +8,7 @@ source.firstSubRun: 4
 source.maxEvents: 400000
 services.SeedService.baseSeed: 8481692510445666305
 physics.filters.TargetStopResampler.fileNames : [
-"root://fndcadoor.fnal.gov:1094/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/sim/mu2e/TargetStopsCat/MDC2020k/art/63/9d/sim.mu2e.TargetStopsCat.MDC2020k.001201_00000000.art"
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/sim/mu2e/TargetStopsCat/MDC2020p/art/ab/57/sim.mu2e.TargetStopsCat.MDC2020p.001201_00000000.art"
 ]
 outputs.Output.fileName : "dts.MU2EGRIDDSOWNER.MuStopPileup.MU2EGRIDDSCONF.001202_00000004.art"
 mu2emetadata.fcl.prologkeys: [  ]
@@ -16,7 +16,7 @@ mu2emetadata.fcl.inkeys: [ "physics.filters.TargetStopResampler.fileNames" ]
 mu2emetadata.fcl.outkeys: [ "outputs.Output.fileName" ]
 # End code added by generate_fcl:
 #----------------------------------------------------------------
-#include "Production/Validation/nightly/pileup_common.fcl"
+#include "Production/Validation/nightly/pileup_epilog.fcl"
 
 outputs.valCombo.SelectEvents: [ "PileupPath"]
 physics.producers.compressDetStepMCs.compressionOptions.keepNGenerations : 0

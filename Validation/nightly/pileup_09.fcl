@@ -8,7 +8,7 @@ source.firstSubRun: 4
 source.maxEvents: 400000
 services.SeedService.baseSeed: 2988434984596176897
 physics.filters.beamResampler.fileNames : [
-"root://fndcadoor.fnal.gov:1094/pnfs/fnal.gov/usr/mu2e/scratch/datasets/phy-sim/sim/mu2e/MuBeamCat/MDC2020k/art/87/c4/sim.mu2e.MuBeamCat.MDC2020k.001201_00000000.art"
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/sim/mu2e/MuBeamCat/MDC2020p/art/f1/82/sim.mu2e.MuBeamCat.MDC2020p.001201_00000000.art"
 ]
 outputs.EarlyFlashOutput.fileName : "dts.MU2EGRIDDSOWNER.EarlyMuBeamFlash.MU2EGRIDDSCONF.001202_00000004.art"
 outputs.FlashOutput.fileName : "dts.MU2EGRIDDSOWNER.MuBeamFlash.MU2EGRIDDSCONF.001202_00000004.art"
@@ -19,7 +19,7 @@ mu2emetadata.fcl.inkeys: [ "physics.filters.beamResampler.fileNames" ]
 mu2emetadata.fcl.outkeys: [ "outputs.EarlyFlashOutput.fileName", "outputs.FlashOutput.fileName", "outputs.IPAStopOutput.fileName", "outputs.TargetStopOutput.fileName" ]
 # End code added by generate_fcl:
 #----------------------------------------------------------------
-#include "Production/Validation/nightly/pileup_common.fcl"
+#include "Production/Validation/nightly/pileup_epilog.fcl"
 outputs.valCombo.SelectEvents: [ "earlyFlashPath", "targetStopPath" ]
 physics.filters.TargetStopPrescaleFilter.nPrescale : 1
 physics.filters.EarlyPrescaleFilter.nPrescale : 1
