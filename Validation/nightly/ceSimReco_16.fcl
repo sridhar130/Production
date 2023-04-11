@@ -1,0 +1,4 @@
+#include "Production/Validation/ceSimReco.fcl"
+services.SeedService.baseSeed: 1016
+source.maxEvents: 5000
+outputs.Output.fileName : "ceSimReco_16.art"
