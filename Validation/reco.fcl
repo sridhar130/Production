@@ -30,9 +30,9 @@ physics.RecoPath : [
   RecoFilter
 ]
 #
-physics.producers.SelectRecoMC.KalSeedCollections : [ "KFFDeM", "KFFDeP", "KKDeM", "KKDeP"]
+physics.producers.SelectRecoMC.KalSeedCollections : [ "KKDeM", "KKDeP"]
 physics.producers.SelectRecoMC.HelixSeedCollections  : ["MHDeM", "MHDeP" ]
-physics.filters.RecoFilter.TrkTags : [ "KFFDeM", "KFFDeP","KKDeM", "KKDeP"]
+physics.filters.RecoFilter.TrkTags : [ "KKDeM", "KKDeP"]
 physics.filters.RecoFilter.MomentumCutoff : [ 60.0, 60.0, 60.0, 60.0 ]
 
 #include "Production/JobConfig/reco/epilog.fcl"
@@ -48,12 +48,6 @@ outputs: {
       "drop *_*_*_*",
       "keep mu2e::TriggerInfo_*_*_*",
       "keep art::TriggerResults_*_*_*",
-      "keep mu2e::KalSeeds_TT*_*_*",
-      "keep mu2e::HelixSeeds_TT*_*_*",
-      "keep mu2e::TimeClusters_TT*_*_*",
-      "keep mu2e::CaloClusters_CaloClusterFast_*_*",
-      "keep mu2e::KalSeeds_KFF*_*_*",
-      "keep mu2e::KalSeeds_KSF*_*_*",
       "keep mu2e::KalSeeds_KK*_*_*",
       "keep mu2e::HelixSeeds_MH*_*_*",
       "keep mu2e::TimeClusters_MH*_*_*",
