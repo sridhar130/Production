@@ -186,7 +186,7 @@ Reconstruction : {
       CaloDigiCollection : "CaloDigiMaker"
       CrvDigiCollection : "CrvDigi"
       CaloClusterCollection : "CaloClusterMaker"
-      CrvCoincidenceClusterCollection : "CrvCoincidenceClusterFinder"
+      CrvCoincidenceClusterCollections : [ "CrvCoincidenceClusterFinder" ]
       StrawDigiMCCollection : "compressDigiMCs"
       CrvDigiMCCollection : "compressDigiMCs"
       KalSeedCollections  : [
@@ -214,7 +214,7 @@ Reconstruction : {
       strawDigiMCIndexMapTag : "SelectRecoMC:StrawDigiMap"
       crvDigiMCIndexMapTag : "SelectRecoMC:CrvDigiMap"
       keepAllGenParticles : false
-      crvCoincClusterMCTag : "CrvCoincidenceClusterMatchMC"
+      crvCoincClusterMCTags : [ "CrvCoincidenceClusterMatchMC" ]
       primaryParticleTag : "compressDigiMCs"
       mcTrajectoryTag : "compressDigiMCs"
       rekeySimParticleCollection : false

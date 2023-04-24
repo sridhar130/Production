@@ -39,7 +39,7 @@ Digitize: {
       strawDigiMCIndexMapTag : ""
       crvDigiMCIndexMapTag : ""
       caloClusterMCTag : ""
-      crvCoincClusterMCTag : ""
+      crvCoincClusterMCTags : [  ]
     }
     PBISim : {
       module_type: ProtonBunchIntensityFlat
