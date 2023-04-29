@@ -97,7 +97,7 @@ if [ -z "$PRIMARY" ] || [ -z "$RELEASE" ] || [ -z "$RECO_CAMPAIGN" ]; then
   exit_abnormal
 fi
 
-echo "Generating reco scripts for ${PRIMARY} conf ${DIGI_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION} output ${RECO_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION}  database purpose, version ${RECO_CAMPAIGN}_${DB_PURPOSE} ${DB_VERSION}"
+echo "Generating reco scripts for ${PRIMARY} conf ${DIGI_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION} output ${RELEASE}${RECO_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION}  database purpose, version ${RELEASE}${RECO_CAMPAIGN}_${DB_PURPOSE} ${DB_VERSION}"
 
 rm Digis.txt
 if [[ -n $DIGIS ]];
@@ -105,7 +105,7 @@ then
   echo "Using user-provided input list of digs $DIGIS"
   ln -s $DIGIS Digis.txt
 else
-  samListLocations ${SAMOPT} --defname="dig.${OWNER}.${PRIMARY}${DIGITYPE}${STREAM}.${DIGI_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION}.art"  | cut -f1 > Digis.txt
+  samListLocations ${SAMOPT} --defname="dig.${OWNER}.${PRIMARY}${DIGITYPE}${STREAM}.${RELEASE}${DIGI_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION}.art"  | cut -f1 > Digis.txt
 fi
 
 echo '#include "Production/JobConfig/reco/Reco.fcl"' > template.fcl
@@ -113,7 +113,7 @@ echo 'services.DbService.purpose:' ${RELEASE}'_'${DB_PURPOSE} >> template.fcl
 echo 'services.DbService.version:' ${DB_VERSION} >> template.fcl
 echo 'services.DbService.verbose : 2' >> template.fcl
 
-generate_fcl --dsowner=${OWNER} --override-outputs --auto-description --embed template.fcl --dsconf "${RECO_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION}" \
+generate_fcl --dsowner=${OWNER} --override-outputs --auto-description --embed template.fcl --dsconf "${RELEASE}${RECO_CAMPAIGN}_${DB_PURPOSE}_${DB_VERSION}" \
 --inputs "Digis.txt" --merge-factor=${MERGE}
 
 base=${PRIMARY}Reco_

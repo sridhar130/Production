@@ -63,38 +63,6 @@ Reconstruction : {
       @table::TrkReco.producers.MergeHelices
       HelixFinders : [ "HelixFinderUmu:Positive" ]
     }
-    KSFDeM : {
-      @table::Tracking.producers.KSFDeM
-      SeedCollection             : MHDeM
-    }
-    KSFDeP : {
-      @table::Tracking.producers.KSFDeP
-      SeedCollection             : MHDeP
-    }
-    KSFDmuM : {
-      @table::Tracking.producers.KSFDmuM
-      SeedCollection             : MHDmuM
-    }
-    KSFDmuP : {
-      @table::Tracking.producers.KSFDmuP
-      SeedCollection             : MHDmuP
-    }
-    KSFUeM : {
-      @table::Tracking.producers.KSFUeM
-      SeedCollection             : MHUeM
-    }
-    KSFUeP : {
-      @table::Tracking.producers.KSFUeP
-      SeedCollection             : MHUeP
-    }
-    KSFUmuM : {
-      @table::Tracking.producers.KSFUmuM
-      SeedCollection             : MHUmuM
-    }
-    KSFUmuP : {
-      @table::Tracking.producers.KSFUmuP
-      SeedCollection             : MHUmuP
-    }
     # KinKal fits
     KKDeM : {
       @table::Mu2eKinKal.producers.KKDeMDriftFit
@@ -190,8 +158,6 @@ Reconstruction : {
       StrawDigiMCCollection : "compressDigiMCs"
       CrvDigiMCCollection : "compressDigiMCs"
       KalSeedCollections  : [
-        "KFFDeM", "KFFDeP", "KFFDmuM", "KFFDmuP",
-        "KFFUeM", "KFFUmuP", "KFFUmuM", "KFFUmuP" ,
         "KKDeM", "KKDeP", "KKDmuM", "KKDmuP",
         "KKUeM", "KKUmuP", "KKUmuM", "KKUmuP",
         "KKLine"]
@@ -232,10 +198,10 @@ Reconstruction : {
     RecoFilter : {
       module_type   : RecoMomFilter
       KalFinalTagRoot : ""
-      TrkTags : [ "KFFDeM", "KFFDeP",
-        "KFFUeM", "KFFUeP",
-        "KFFDmuM", "KFFDmuP",
-        "KFFUmuM", "KFFUmuP","KKLine"
+      TrkTags : [ "KKDeM", "KKDeP",
+        "KKUeM", "KKUeP",
+        "KKDmuM", "KKDmuP",
+        "KKUmuM", "KKUmuP","KKLine"
       ]
       # // set low cutoffs
       MomentumCutoff : [ 60.0, 60.0,
@@ -254,16 +220,12 @@ Reconstruction : {
     TimeClusterFinderDe, HelixFinderDe,  # TrkPatRec
     CalTimePeakFinder, CalHelixFinderDe,  # CalPatRec
     MHDeM, MHDeP, # helix merging
-    KSFDeM, KSFDeP, # Seed fit (chisquared, no drift)
-    KFFDeM, KFFDeP, # final Kalman filter fit
     KKDeM, KKDeP # KinKal drift fits
   ]
   # Upstream electron sequence (plus and minus): TrkPatRec only
   UeReco : [
     TimeClusterFinderUe, HelixFinderUe,
     MHUeM, MHUeP, # helix merging
-    KSFUeM, KSFUeP, # Seed fit (chisquared, no drift)
-    KFFUeM, KFFUeP, # final Kalman filter fit
     KKUeM, KKUeP # KinKal drift fits
   ]
   # Downstream muon sequence (plus and minus)
@@ -271,16 +233,12 @@ Reconstruction : {
     TimeClusterFinderDmu, HelixFinderDmu,  # TrkPatRec
     CalTimePeakFinderMu, CalHelixFinderDmu,  # CalPatRec
     MHDmuM, MHDmuP, # helix merging
-    KSFDmuM, KSFDmuP, # Seed fit (chisquared, no drift)
-    KFFDmuM, KFFDmuP, # final Kalman filter fit
     KKDmuM, KKDmuP # KinKal drift fits
   ]
   # Upstream muon sequence (plus and minus)
   UmuReco : [
     TimeClusterFinderUmu, HelixFinderUmu,
     MHUmuM, MHUmuP, # helix merging
-    KSFUmuM, KSFUmuP, # Seed fit (chisquared, no drift)
-    KFFUmuM, KFFUmuP, # final Kalman filter fit
     KKUmuM, KKUmuP # KinKal drift fits
  ]
  # NoField straight line
