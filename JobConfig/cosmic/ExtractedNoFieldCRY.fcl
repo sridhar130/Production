@@ -1,8 +1,11 @@
 #include "Production/JobConfig/cosmic/NoField.fcl"
 
 source.module_type: EmptyEvent
-physics.producers.generate : @local::Cosmic.generateCRY
-physics.producers.generate.inputFile    : "Offline/EventGenerator/defaultConfigs/extractedCRYconfig.txt"
-outputs.PrimaryOutput.fileName : "dts.owner.CosmicCRYNoFieldExtracted.version.sequencer.art"
+source.firstRun : 1205
+physics.producers.generate : {
+  @table::Cosmic.generateCRY
+  inputFile    : "Offline/EventGenerator/defaultConfigs/extractedCRYconfig.txt"
+}
+outputs.PrimaryOutput.fileName : "dts.owner.CosmicCRYExtracted.version.sequencer.art"
 services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_cosmic_extracted.txt"
 services.GeometryService.bFieldFile: "Offline/Mu2eG4/geom/bfgeom_no_field.txt"
