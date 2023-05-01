@@ -33,7 +33,7 @@ physics.RecoPath : [
 physics.producers.SelectRecoMC.KalSeedCollections : [ "KKDeM", "KKDeP"]
 physics.producers.SelectRecoMC.HelixSeedCollections  : ["MHDeM", "MHDeP" ]
 physics.filters.RecoFilter.TrkTags : [ "KKDeM", "KKDeP"]
-physics.filters.RecoFilter.MomentumCutoff : [ 60.0, 60.0, 60.0, 60.0 ]
+physics.filters.RecoFilter.MomentumCutoff : [ 60.0, 60.0 ]
 
 #include "Production/JobConfig/reco/epilog.fcl"
 
