@@ -169,8 +169,12 @@ generate_fcl --dsconf="${OUTCONF}" --dsowner=${OWNER} --description="${DIGOUT}" 
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
   if test -d $dirname; then
     echo "found dir $dirname"
-    rm -rf "${DIGOUT}_$dirname"
-    echo "moving $dirname to ${DIGOUT}_${dirname}"
-    mv $dirname "${DIGOUT}_$dirname"
+    MDIR="${DIGOUT}Digitize_$dirname"
+    if test -d $MDIR; then
+      echo "removing $MDIR"
+      rm -rf $MDIR
+    fi
+    echo "moving $dirname to $MDIR"
+    mv $dirname $MDIR
   fi
 done
