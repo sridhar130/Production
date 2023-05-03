@@ -11,6 +11,6 @@ physics.producers.generate : {
   @table::Cosmic.CORSIKA.generate
   targetBoxYmax : 9880
 }
-outputs.PrimaryOutput.fileName : "dts.owner.CosmicCORSIKAExtractedNoField.version.sequencer.art"
+outputs.PrimaryOutput.fileName : "dts.owner.CosmicCORSIKAExtracted.version.sequencer.art"
 services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_cosmic_extracted.txt"
 services.GeometryService.bFieldFile: "Offline/Mu2eG4/geom/bfgeom_no_field.txt"

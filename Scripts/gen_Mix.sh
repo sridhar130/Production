@@ -3,7 +3,8 @@
 # this script requires mu2etools, mu2efiletools and dhtools be setup
 # It also requires the SimEfficiencies for the beam campaign be entered in the database
 # Function: Print a help message.
-usage() { echo "Usage: $0 [ --primary primary physics process name ]
+usage() { echo "Usage: $0
+  [ --primary primary physics process name ]
   [ --campaign campaign name e.g. MDC2020 ]
   [ --pver primary campaign version e.g 'r']
   [ --mver mixin (input) campaign version e.g. 'p' ]
@@ -163,7 +164,7 @@ if [ -d "$DIR" ];
 fi
 
 
-echo "Generating mixing scripts for ${PRIMARY} conf ${PRIMARYCONF} mixin conf ${MIXINCONF} output config, description ${OUTCONF} ${OUTDESC}"
+echo "Generating mixing scripts for ${PRIMARY} primary version ${PRIMARY_VERSION} mixin version ${MIXIN_VERSION} output version, description ${OUTPUT_VERSION} ${OUTDESC}"
 
 # create the mixin input lists.  Note there is no early MuStopPileup.  Reuse the files if they exist
 MUBEAMPILEUP=${EARLY}MuBeamFlashCat${MIXINCONF}.txt
@@ -253,11 +254,12 @@ generate_fcl --dsconf="${OUTCONF}" --dsowner=${OWNER} --description="${OUTDESC}"
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
   if test -d $dirname; then
     echo "found dir $dirname"
-    if test -d ${OUTDESC}_${dirname}; then
-      echo "removing ${OUTDESC}_${dirname}"
-      rm -rf "${OUTDESC}_${dirname}"
+    MDIR="${OUTDESC}Mix_${dirname}"
+    if test -d $MDIR; then
+      echo "removing $MDIR"
+      rm -rf $MDIR
     fi
-    echo "moving $dirname to ${OUTDESC}_${dirname}"
-    mv $dirname ${OUTDESC}\_$dirname
+    echo "moving $dirname to $MDIR"
+    mv $dirname $MDIR
   fi
 done
