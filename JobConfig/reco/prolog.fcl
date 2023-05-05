@@ -65,73 +65,73 @@ Reconstruction : {
     }
     # KinKal fits
     KKDeM : {
-      @table::Mu2eKinKal.producers.KKDeMDriftFit
+      @table::Mu2eKinKal.producers.KKDeM
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDeMDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDeM.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHDeM" ]
       }
     }
     KKDeP : {
-      @table::Mu2eKinKal.producers.KKDePDriftFit
+      @table::Mu2eKinKal.producers.KKDeP
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDePDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDeP.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHDeP" ]
       }
     }
    KKUeM : {
-      @table::Mu2eKinKal.producers.KKUeMDriftFit
+      @table::Mu2eKinKal.producers.KKUeM
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDeMDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDeM.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHUeM" ]
       }
     }
     KKUeP : {
-      @table::Mu2eKinKal.producers.KKUePDriftFit
+      @table::Mu2eKinKal.producers.KKUeP
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDePDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDeP.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHUeP" ]
       }
     }
     KKDmuM : {
-      @table::Mu2eKinKal.producers.KKDmuMDriftFit
+      @table::Mu2eKinKal.producers.KKDmuM
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDmuMDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDmuM.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHDmuM" ]
       }
     }
     KKDmuP : {
-      @table::Mu2eKinKal.producers.KKDmuPDriftFit
+      @table::Mu2eKinKal.producers.KKDmuP
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDmuPDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDmuP.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHDmuP" ]
       }
     }
    KKUmuM : {
-      @table::Mu2eKinKal.producers.KKUmuMDriftFit
+      @table::Mu2eKinKal.producers.KKUmuM
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDmuMDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDmuM.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHUmuM" ]
       }
     }
     KKUmuP : {
-      @table::Mu2eKinKal.producers.KKUmuPDriftFit
+      @table::Mu2eKinKal.producers.KKUmuP
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDmuPDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDmuP.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHUmuP" ]
       }
     }
     KKLine : {
-      @table::Mu2eKinKal.producers.KKLineDriftFit
+      @table::Mu2eKinKal.producers.KKLine
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKLineDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKLine.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         CosmicTrackSeedCollections : ["LineFinder"]
       }
