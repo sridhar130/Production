@@ -4,7 +4,7 @@ source.module_type: EmptyEvent
 source.firstRun : 1205
 physics.producers.generate : {
   @table::Cosmic.generateCRY
-  inputFile    : "Offline/EventGenerator/defaultConfigs/extractedCRYconfig.txt"
+  inputFile    : "Production/JobConfig/cosmic/extractedCRYconfig.txt"
 }
 outputs.PrimaryOutput.fileName : "dts.owner.CosmicCRYExtracted.version.sequencer.art"
 services.GeometryService.inputFile: "Production/JobConfig/cosmic/geom_cosmic_extracted.txt"
