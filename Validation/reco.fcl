@@ -14,10 +14,8 @@ source.inputCommands: ["keep *",
 ]
 # add KinKal fits
 #
-physics.producers : {
-  @table::physics.producers
-  @table::Mu2eKinKal.producers
-}
+physics.producers : @local::Reconstruction.producers
+physics.filters : @local::Reconstruction.filters
 #
 # only run DeM and DeP
 #
