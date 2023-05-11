@@ -16,6 +16,7 @@ JOBS="" # is the number of jobs
 EVENTS="" # is the number of events/job
 
 # The following can be overridden if needed
+FLAT=""
 PDG=11 #is the pdgId of the particle to generate (for flat only)
 FIELD="Offline/Mu2eG4/geom/bfgeom_no_tsu_ps_v01.txt" #optional (for changing field map)
 STARTMOM=0 # optional (for flat only)
@@ -32,6 +33,7 @@ usage() {
   [ --type stopped particle type ]
   [ --njobs number of jobs ]
   [ --events events per job ]
+  [ --flat (opt) set to flat type ]
   [ --pdg (opt) for Flat spectra ]
   [ --start (opt) for Flat spectra ]
   [ --end (opt) for Flat spectra ]
@@ -66,6 +68,9 @@ while getopts ":-:" options; do
           ;;
         events)
           EVENTS=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+          ;;
+        flat)
+          FLAT=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         pdg)
           PDG=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
@@ -139,7 +144,7 @@ fi
 echo physics.filters.${resampler}.mu2e.MaxEventsToSkip: ${nskip} >> primary.fcl
 echo "services.GeometryService.bFieldFile : \"${FIELD}\"" >> primary.fcl
 echo "finsihed primary loop"
-if [[ "${TYPE}" == "FlatMuDaughter" ]]; then
+if [[ "${FLAT}" == "FlatMuDaughter" ]]; then
   echo physics.producers.generate.pdgId: ${PDG}            >> primary.fcl
   echo physics.producers.generate.startMom: ${STARTMOM}    >> primary.fcl
   echo physics.producers.generate.endMom: ${ENDMOM}        >> primary.fcl
