@@ -15,4 +15,4 @@ physics.producers.generate : {
 }
 
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eFlatPhoton"
-outputs.PrimaryOutput.fileName: "dts.owner.FlatPhoton.version.sequencer.art"
+outputs.PrimaryOutput.fileName: "dts.owner.FlatGamma.version.sequencer.art"
