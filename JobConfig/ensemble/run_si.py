@@ -12,27 +12,33 @@ max_events_per_subrun = 1000000
 
 dirname = sys.argv[1]
 outpath = sys.argv[2]
+
+# live time in seconds
 livetime = float(open(os.path.join(dirname,"livetime")).readline())/365./24./60./60.
+
+# r mue and rmup rates
 rue = float(open(os.path.join(dirname,"rue")).readline())
 rup = float(open(os.path.join(dirname,"rup")).readline())
+
+# for RMC backgrounds
 kmax = float(open(os.path.join(dirname,"kmax")).readline())
 
 fin = open(os.path.join(dirname,"settings"))
 lines = fin.readlines()
 
+# minimum momentum and time
 dem_emin = float(lines[0])
 dep_emin = float(lines[1])
 tmin = float(lines[2])
+# maximum live time
 max_livetime = float(lines[3])/365./24./60./60.
 run = int(lines[4])
 samplingseed = int(lines[5])
 
-#use_dayabay = 0
-#if len(sys.argv) > 2:
-#  use_dayabay = int(sys.argv[2])
 
 ROOT.gRandom.SetSeed(0)
 
+# extract normalization of each background/signal process:
 norms = {
   "DIOLeadingLog": dio_normalization(livetime,dem_emin),
   "CeMLeadingLog": ce_normalization(livetime,rue),
