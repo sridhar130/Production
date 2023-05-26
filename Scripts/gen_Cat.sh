@@ -6,7 +6,7 @@
 NAME="" # is the primary
 VERSION=""
 CAMP=""
-FILETYPE="dts"
+FILETYPE=""
 OWNER="mu2e"
 MERGE=1
 SAMOPT="--schema=root"
