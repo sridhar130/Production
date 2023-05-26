@@ -104,7 +104,7 @@ if [[ ${CAMPAIGN} == ""  || ${PRIMARY} == "" || ${PRIMARY_VERSION} == "" || ${OU
   exit_abnormal
 fi
 
-PRIMARYCONF=${CAMPAIGN}${PRIMARY_VERSION}
+PRIMARYCONF=${CAMPAIGN}${PRIMARY_VERSION}_${DBPURPOSE}_${DBVERSION}
 
 # Test: run a test to check the SimJob for this campaign verion exists
 DIR=/cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${CAMPAIGN}${OUTPUT_VERSION}
