@@ -71,7 +71,7 @@ done
 CONF=${CAMP}${VERSION}
 OUTFILENAME="${FILETYPE}.DSOWNER.${NAME}Cat.DSCONF.SEQ.art"
 
-samweb list-file-locations ${SAMOPT} --defname=${FILETYPE}.${OWNER}.${NAME}.${CONF}_perfect_v1_1.art  | cut -f1  > inputs.txt
+samweb list-file-locations ${SAMOPT} --defname=${FILETYPE}.${OWNER}.${NAME}.${CONF}.art  | cut -f1  > inputs.txt
 echo '#include "Production/JobConfig/common/artcat.fcl"' >> template.fcl
 echo 'outputs.out.fileName: "'${OUTFILENAME}'"' >> template.fcl
 
