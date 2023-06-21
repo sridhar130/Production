@@ -104,8 +104,6 @@ if [[ ${CAMPAIGN} == ""  || ${PRIMARY} == "" || ${PRIMARY_VERSION} == "" || ${OU
   exit_abnormal
 fi
 
-PRIMARYCONF=${CAMPAIGN}${PRIMARY_VERSION}_${DBPURPOSE}_${DBVERSION}
-
 # Test: run a test to check the SimJob for this campaign verion exists
 DIR=/cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${CAMPAIGN}${OUTPUT_VERSION}
 if [ -d "$DIR" ];
@@ -138,7 +136,7 @@ then
   echo "Using user-provided input list of detector steps $DSTEPS"
   ln -s $DSTEPS ${PRIMARY}.txt
 else
-  samListLocations ${SAMOPT} --defname="dts.mu2e.${PRIMARY}.${PRIMARYCONF}.art" > ${PRIMARY}.txt
+  samListLocations ${SAMOPT} --defname="dts.mu2e.${PRIMARY}.${CAMPAIGN}${PRIMARY_VERSION}.art" > ${PRIMARY}.txt
 fi
 echo \#include \"Production/JobConfig/digitize/Digitize.fcl\" >> digitize.fcl
 echo \#include \"Production/JobConfig/digitize/${DIGITYPE}.fcl\" >> digitize.fcl
