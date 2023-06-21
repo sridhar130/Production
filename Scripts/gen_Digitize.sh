@@ -117,7 +117,7 @@ if [ -d "$DIR" ];
 fi
 
 
-if [[ "${DIGITYPE}" == "Extracted" || "${DIGITYPE}" == "NoField" || "${DIGITYPE}" == "ExtractedNoField" ]]; then
+if [[ "${DIGITYPE}" == "Extracted" || "${DIGITYPE}" == "NoField"  ]]; then
   if [[ "${PRIMARY}" != *"${DIGITYPE}"* ]]; then
     echo "PRIMARY ${PRIMARY} doesn't match digitization type ${DIGITYPE}; aborting"
     exit_abnormal
@@ -147,11 +147,6 @@ echo \#include \"Production/JobConfig/digitize/${DIGITYPE}.fcl\" >> digitize.fcl
 DIGOUT=""
 if [[ "${DIGITYPE}" == "Extracted" || "${DIGITYPE}" == "NoField" ]]; then
   DIGOUT=${PRIMARY}Digi # TODO need to understand why this is the same name as the primary, throws error as name is same as previous stage
-  echo outputs.TrkOutput.fileName: \"dig.owner.${DIGOUT}Trk.version.sequencer.art\" >> digitize.fcl
-  echo outputs.CaloOutput.fileName: \"dig.owner.${DIGOUT}Calo.version.sequencer.art\" >> digitize.fcl
-  echo outputs.UntriggeredOutput.fileName: \"dig.owner.${DIGOUT}Untriggered.version.sequencer.art\" >> digitize.fcl
-elif [[ "${DIGITYPE}" == "ExtractedNoField"  ]]; then
-  DIGOUT=${PRIMARY}Digi
   echo outputs.TrkOutput.fileName: \"dig.owner.${DIGOUT}Trk.version.sequencer.art\" >> digitize.fcl
   echo outputs.CaloOutput.fileName: \"dig.owner.${DIGOUT}Calo.version.sequencer.art\" >> digitize.fcl
   echo outputs.UntriggeredOutput.fileName: \"dig.owner.${DIGOUT}Untriggered.version.sequencer.art\" >> digitize.fcl
