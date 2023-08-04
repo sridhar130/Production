@@ -291,8 +291,6 @@ Reconstruction.filters.CalHelixFinderDmu.StrawHitFlagCollectionLabel            
 
 Reconstruction.producers.CaloHitTruthMatch.caloShowerSimCollection : "compressDigiMCs"
 Reconstruction.producers.CaloHitTruthMatch.primaryParticle : "compressDigiMCs"
-# fix time map lookup
-Reconstruction.producers.CrvCoincidenceClusterMatchMC.timeOffsets.inputs :  [ @sequence::DigiCompression.TimeMaps ]
 
 # all production tracks
 Reconstruction.TrackReco : [
