@@ -115,7 +115,7 @@ if [ -d "$DIR" ];
 fi
 
 
-if [[ "${DIGITYPE}" == "Extracted" || "${DIGITYPE}" == "NoField" ]]; then
+if [[ "${DIGITYPE}" == "Extracted" || "${DIGITYPE}" == "NoField"  ]]; then
   if [[ "${PRIMARY}" != *"${DIGITYPE}"* ]]; then
     echo "PRIMARY ${PRIMARY} doesn't match digitization type ${DIGITYPE}; aborting"
     exit_abnormal
@@ -137,13 +137,14 @@ then
   ln -s $DSTEPS ${PRIMARY}.txt
 else
   samListLocations ${SAMOPT} --defname="dts.mu2e.${PRIMARY}.${CAMPAIGN}${PRIMARY_VERSION}.art" > ${PRIMARY}.txt
+
 fi
 echo \#include \"Production/JobConfig/digitize/Digitize.fcl\" >> digitize.fcl
 echo \#include \"Production/JobConfig/digitize/${DIGITYPE}.fcl\" >> digitize.fcl
 # turn off streams according to the digitization type.
 DIGOUT=""
 if [[ "${DIGITYPE}" == "Extracted" || "${DIGITYPE}" == "NoField" ]]; then
-  DIGOUT=${PRIMARY}
+  DIGOUT=${PRIMARY} # TODO need to understand why this is the same name as the primary, throws error as name is same as previous stage
   echo outputs.TrkOutput.fileName: \"dig.owner.${DIGOUT}Trk.version.sequencer.art\" >> digitize.fcl
   echo outputs.CaloOutput.fileName: \"dig.owner.${DIGOUT}Calo.version.sequencer.art\" >> digitize.fcl
   echo outputs.UntriggeredOutput.fileName: \"dig.owner.${DIGOUT}Untriggered.version.sequencer.art\" >> digitize.fcl
@@ -162,6 +163,8 @@ echo services.DbService.version: ${DBVERSION} >> digitize.fcl
 echo services.DbService.verbose : 2 >> digitize.fcl
 echo "services.GeometryService.bFieldFile : \"${FIELD}\"" >> digitize.fcl
 OUTCONF=${CAMPAIGN}${OUTPUT_VERSION}_${DBPURPOSE}_${DBVERSION}
+
+
 generate_fcl --dsconf="${OUTCONF}" --dsowner=${OWNER} --description="${DIGOUT}" --embed digitize.fcl \
   --inputs="${PRIMARY}.txt" --merge-factor=${MERGE}
 for dirname in 000 001 002 003 004 005 006 007 008 009; do

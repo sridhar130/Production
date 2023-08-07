@@ -71,11 +71,11 @@ done
 CONF=${CAMP}${VERSION}
 OUTFILENAME="${FILETYPE}.DSOWNER.${NAME}Cat.DSCONF.SEQ.art"
 
-samweb list-file-locations ${SAMOPT} --defname=${FILETYPE}.${OWNER}.${NAME}.${CONF}.art  | cut -f1 > inputs.txt
+samweb list-file-locations ${SAMOPT} --defname=${FILETYPE}.${OWNER}.${NAME}.${CONF}.art  | cut -f1  > inputs.txt
 echo '#include "Production/JobConfig/common/artcat.fcl"' >> template.fcl
 echo 'outputs.out.fileName: "'${OUTFILENAME}'"' >> template.fcl
 
-generate_fcl --dsconf=${CONF} --dsowner=${OWNER} --description=${NAME}  --inputs=inputs.txt --embed template.fcl --merge=${MERGE}
+generate_fcl --dsconf=${CONF} --dsowner=${OWNER} --description=${NAME}Cat  --inputs=inputs.txt --embed template.fcl --merge=${MERGE}
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
   if test -d $dirname; then
     echo "found dir $dirname"
