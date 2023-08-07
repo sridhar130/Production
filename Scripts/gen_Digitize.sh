@@ -144,7 +144,7 @@ echo \#include \"Production/JobConfig/digitize/${DIGITYPE}.fcl\" >> digitize.fcl
 # turn off streams according to the digitization type.
 DIGOUT=""
 if [[ "${DIGITYPE}" == "Extracted" || "${DIGITYPE}" == "NoField" ]]; then
-  DIGOUT=${PRIMARY}Digi # TODO need to understand why this is the same name as the primary, throws error as name is same as previous stage
+  DIGOUT=${PRIMARY} # TODO need to understand why this is the same name as the primary, throws error as name is same as previous stage
   echo outputs.TrkOutput.fileName: \"dig.owner.${DIGOUT}Trk.version.sequencer.art\" >> digitize.fcl
   echo outputs.CaloOutput.fileName: \"dig.owner.${DIGOUT}Calo.version.sequencer.art\" >> digitize.fcl
   echo outputs.UntriggeredOutput.fileName: \"dig.owner.${DIGOUT}Untriggered.version.sequencer.art\" >> digitize.fcl
