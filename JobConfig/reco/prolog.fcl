@@ -80,7 +80,7 @@ Reconstruction : {
         HelixSeedCollections : [ "MHDeP" ]
       }
     }
-   KKUeM : {
+    KKUeM : {
       @table::Mu2eKinKal.producers.KKUeM
       ModuleSettings : {
         @table::Mu2eKinKal.producers.KKDeM.ModuleSettings
@@ -112,7 +112,7 @@ Reconstruction : {
         HelixSeedCollections : [ "MHDmuP" ]
       }
     }
-   KKUmuM : {
+    KKUmuM : {
       @table::Mu2eKinKal.producers.KKUmuM
       ModuleSettings : {
         @table::Mu2eKinKal.producers.KKDmuM.ModuleSettings
@@ -240,11 +240,11 @@ Reconstruction : {
     TimeClusterFinderUmu, HelixFinderUmu,
     MHUmuM, MHUmuP, # helix merging
     KKUmuM, KKUmuP # KinKal drift fits
- ]
- # NoField straight line
- LineReco : [
-   SimpleTimeCluster, LineFinder, KKLine
- ]
+  ]
+  # NoField straight line
+  LineReco : [
+    SimpleTimeCluster, LineFinder, KKLine
+  ]
   # add protons for calibration TODO!
 
   # Track reco sequence
