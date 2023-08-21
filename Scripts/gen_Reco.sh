@@ -10,6 +10,7 @@ usage() { echo "Usage: $0
   [ --digitype OnSpill, OffSpill, Mix1BB, Mix2BB, etc. ]
   [ --stream Signal, Trk, Diag, Calo etc. ]
   [ --merge merge factor (opt) default 10]
+  [ --recodbversion (opt) db version to use for reco]
   [ --owner (opt) default mu2e ]
   [ --samopt (opt) Options to samListLocation default "-f --schema=root" ]
   [ --cat (opt) If non-null, optionally add 'Cat' to the input digi collection name
@@ -29,7 +30,8 @@ CAMPAIGN="" # e.g. MDC2020
 DIGI_VERSION="" # digi (input) campaign version
 RECO_VERSION="" # reco (output) campaign resion
 DB_PURPOSE="" # db purpose
-DB_VERSION="" # db version
+DIGIDB_VERSION="" # db version
+RECODB_VERSION="" # db version
 DIGITYPE="" # digitype
 MERGE=10 # merge factor
 OWNER=mu2e
@@ -59,7 +61,10 @@ while getopts ":-:" options; do
           DB_PURPOSE=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         dbversion)
-          DB_VERSION=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+          DIGIDB_VERSION=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+          ;;
+        recodbversion)
+          RECODB_VERSION=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         digitype)
           DIGITYPE=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
@@ -97,12 +102,15 @@ while getopts ":-:" options; do
     esac
 done
 
-if [ -z "$PRIMARY" ] || [ -z "$CAMPAIGN" ] || [ -z "$RECO_VERSION" ]; then
+if [ -z "$PRIMARY" ] || [ -z "$CAMPAIGN" ] || [ -z "$DIGI_VERSION" ] || [ -z "$RECO_VERSION" ] || [ -z "$DB_PURPOSE" ] || [ -z "$DIGITYPE" ] || [ -z "$DIGIDB_VERSION" ]; then
   echo " Missing Arguments"
   exit_abnormal
 fi
+if [ -z "$RECODB_VERSION"] && ![ -z "$DIGIDB_VERSION"]; then
+  RECODB_VERSION=DIGIDB_VERSION
+fi
 
-echo "Generating reco scripts for ${PRIMARY} digi type ${DIGITYPE} digi version ${DIGI_VERSION} output version ${RECO_VERSION} database purpose, version ${DB_PURPOSE} ${DB_VERSION}"
+echo "Generating reco scripts for ${PRIMARY} digi type ${DIGITYPE} digi version ${DIGI_VERSION} output version ${RECO_VERSION} database purpose, version (digi, reco) ${DB_PURPOSE} ${DIGIDB_VERSION} ${RECODB_VERSION}"
 
 rm Digis.txt
 if [[ -n $DIGIS ]];
@@ -110,7 +118,7 @@ then
   echo "Using user-provided input list of digs $DIGIS"
   ln -s $DIGIS Digis.txt
 else
-  samListLocations ${SAMOPT} --defname="dig.${OWNER}.${PRIMARY}${DIGITYPE}${CAT}${STREAM}.${CAMPAIGN}${DIGI_VERSION}_${DB_PURPOSE}_${DB_VERSION}.art" > Digis.txt
+  samListLocations ${SAMOPT} --defname="dig.${OWNER}.${PRIMARY}${DIGITYPE}${CAT}${STREAM}.${CAMPAIGN}${DIGI_VERSION}_${DB_PURPOSE}_${DIGIDB_VERSION}.art" > Digis.txt
 fi
 
 if [[ "${DIGITYPE}" == "Extracted" || "${DIGITYPE}" == "NoField" ]]; then
@@ -121,10 +129,10 @@ fi
 
 
 echo 'services.DbService.purpose:' ${CAMPAIGN}'_'${DB_PURPOSE} >> template.fcl
-echo 'services.DbService.version:' ${DB_VERSION} >> template.fcl
+echo 'services.DbService.version:' ${RECODB_VERSION} >> template.fcl
 echo 'services.DbService.verbose : 2' >> template.fcl
 
-generate_fcl --dsowner=${OWNER} --override-outputs --auto-description --embed template.fcl --dsconf "${CAMPAIGN}${RECO_VERSION}_${DB_PURPOSE}_${DB_VERSION}" \
+generate_fcl --dsowner=${OWNER} --override-outputs --auto-description --embed template.fcl --dsconf "${CAMPAIGN}${RECO_VERSION}_${DB_PURPOSE}_${RECODB_VERSION}" \
 --inputs "Digis.txt" --merge-factor=${MERGE}
 
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
