@@ -253,7 +253,7 @@ Reconstruction : {
   # CRV reco
   CrvReco : [ @sequence::CrvRecoPackage.CrvRecoSequence ]
   # full MC sequence; form the Calo and CRV matching, and compress based on reco content
-  MCReco :  [@sequence::CaloMC.TruthMatch,  CrvCoincidenceClusterMatchMC, SelectRecoMC, compressRecoMCs ]
+  MCReco :  [@sequence::CaloMC.TruthMatch,  CrvCoincidenceClusterMatchMC, SelectRecoMC, compressRecoMCs, CrvCoincidenceClusterMCAssns ]
 
   # define products to keep
   # First, high-level reco products, and associated sub-products
@@ -276,7 +276,8 @@ Reconstruction : {
     "keep mu2e::ProtonBunchTimeMC_*_*_*",
     "keep mu2e::EventWeight_*_*_*",
     "keep *_compressRecoMCs_*_*",
-    "keep mu2e::CosmicLivetime_*_*_*"
+    "keep mu2e::CosmicLivetime_*_*_*",
+    "keep *_CrvCoincidenceClusterMCAssns_*_*"
   ]
   EndSequence : [ recoCompressionCheck ]
 }
