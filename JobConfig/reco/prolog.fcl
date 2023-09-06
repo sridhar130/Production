@@ -149,7 +149,6 @@ Reconstruction : {
       SaveAllUnusedDigiMCs : false
       PrimaryParticle : "compressDigiMCs"
       StrawDigiCollection : "makeSD"
-      StrawHitFlagCollection : "FlagBkgHits:StrawHits"
       ComboHitCollection : "makeSH"
       CaloDigiCollection : "CaloDigiMaker"
       CrvDigiCollection : "CrvDigi"
@@ -282,10 +281,6 @@ Reconstruction : {
   EndSequence : [ recoCompressionCheck ]
 }
 Reconstruction.EndPath : [ @sequence::Reconstruction.EndSequence, Output  ]
-
-# override CalPatRec defaults: FIXME!
-Reconstruction.filters.CalHelixFinderDe.StrawHitFlagCollectionLabel                 : "FlagBkgHits:ComboHits"
-Reconstruction.filters.CalHelixFinderDmu.StrawHitFlagCollectionLabel                 : "FlagBkgHits:ComboHits"
 
 # override CaloMC Truth matching provenance for compression
 
