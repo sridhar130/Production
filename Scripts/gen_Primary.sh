@@ -37,7 +37,10 @@ usage() {
   [ --pdg (opt) for Flat spectra ]
   [ --start (opt) for Flat spectra ]
   [ --end (opt) for Flat spectra ]
-  [ --field (opt) for special runs ]" 1>&2
+  [ --field (opt) for special runs ]
+  
+  bash gen_Primary.sh --primary DIOTail --type MuMinus--pcamp MDC2020z_sm3 --scamp MDC2020p --njobs 100 --events 100 --start 75 --end 95
+  " 1>&2
 }
 
 # Function: Exit with error.
@@ -115,7 +118,7 @@ else
 fi
 
 dataset=sim.mu2e.${TYPE}StopsCat.${STOPS_CAMPAIGN}.art
-
+echo $dataset
 if [[ "${TYPE}" == "Muminus" ]] ||  [[ "${TYPE}" == "Muplus" ]]; then
   resampler=TargetStopResampler
 elif [[ "${TYPE}" == "Piminus" ]] ||  [[ "${TYPE}" == "Piplus" ]]; then
@@ -143,12 +146,18 @@ else
 fi
 echo physics.filters.${resampler}.mu2e.MaxEventsToSkip: ${nskip} >> primary.fcl
 echo "services.GeometryService.bFieldFile : \"${FIELD}\"" >> primary.fcl
-echo "finsihed primary loop"
+echo "finished primary loop"
 if [[ "${FLAT}" == "FlatMuDaughter" ]]; then
   echo physics.producers.generate.pdgId: ${PDG}            >> primary.fcl
   echo physics.producers.generate.startMom: ${STARTMOM}    >> primary.fcl
   echo physics.producers.generate.endMom: ${ENDMOM}        >> primary.fcl
 fi
+
+if [[ "${PRIMARY}" == "DIOTail" ]]; then
+  echo physics.producers.generate.decayProducts.spectrum.ehi: ${ENDMOM}        >> primary.fcl
+  echo physics.producers.generate.decayProducts.spectrum.elow: ${STARTMOM}    >> primary.fcl
+fi
+
 #
 # now generate the fcl
 #
