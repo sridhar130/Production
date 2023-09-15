@@ -118,7 +118,7 @@ else
 fi
 
 dataset=sim.mu2e.${TYPE}StopsCat.${STOPS_CAMPAIGN}.art
-echo $dataset
+
 if [[ "${TYPE}" == "Muminus" ]] ||  [[ "${TYPE}" == "Muplus" ]]; then
   resampler=TargetStopResampler
 elif [[ "${TYPE}" == "Piminus" ]] ||  [[ "${TYPE}" == "Piplus" ]]; then
