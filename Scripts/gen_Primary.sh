@@ -144,18 +144,19 @@ if [[ "${TYPE}" == "Cosmic" ]]; then
 else
   echo "#include \"Production/JobConfig/primary/${PRIMARY}.fcl\"" >> primary.fcl
 fi
+
 echo physics.filters.${resampler}.mu2e.MaxEventsToSkip: ${nskip} >> primary.fcl
 echo "services.GeometryService.bFieldFile : \"${FIELD}\"" >> primary.fcl
-echo "finished primary loop"
+
+if [[ "${PRIMARY}" == "DIOtail" ]]; then
+  echo physics.producers.generate.decayProducts.spectrum.ehi: ${ENDMOM}        >> primary.fcl
+  echo physics.producers.generate.decayProducts.spectrum.elow: ${STARTMOM}    >> primary.fcl
+fi
+
 if [[ "${FLAT}" == "FlatMuDaughter" ]]; then
   echo physics.producers.generate.pdgId: ${PDG}            >> primary.fcl
   echo physics.producers.generate.startMom: ${STARTMOM}    >> primary.fcl
   echo physics.producers.generate.endMom: ${ENDMOM}        >> primary.fcl
-fi
-
-if [[ "${PRIMARY}" == "DIOTail" ]]; then
-  echo physics.producers.generate.decayProducts.spectrum.ehi: ${ENDMOM}        >> primary.fcl
-  echo physics.producers.generate.decayProducts.spectrum.elow: ${STARTMOM}    >> primary.fcl
 fi
 
 #
