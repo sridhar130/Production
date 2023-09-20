@@ -3,7 +3,6 @@
 #
 # original author: S Middleton
 #
-
 #include "Production/JobConfig/primary/TargetStopParticle.fcl"
 
 physics.producers.generate : {
@@ -22,7 +21,6 @@ physics.producers.generate : {
       elow             : 100.
     }
   }
-
   verbosity : 0
 }
 
