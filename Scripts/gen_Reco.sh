@@ -106,7 +106,7 @@ if [ -z "$PRIMARY" ] || [ -z "$CAMPAIGN" ] || [ -z "$DIGI_VERSION" ] || [ -z "$R
   echo " Missing Arguments"
   exit_abnormal
 fi
-if [ -z "$RECODB_VERSION"] && ![ -z "$DIGIDB_VERSION"]; then
+if [ -z "$RECODB_VERSION" ] && ![ -z "$DIGIDB_VERSION" ]; then
   RECODB_VERSION=DIGIDB_VERSION
 fi
 
