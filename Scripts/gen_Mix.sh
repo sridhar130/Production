@@ -48,7 +48,7 @@ MUSTOPNMIXIN=2
 MUBEAMNMIXIN=1
 SAMOPT="-f --schema=root"
 FIELD="Offline/Mu2eG4/geom/bfgeom_no_tsu_ps_v01.txt"
-
+CAT=""
 
 # Loop: Get the next option;
 while getopts ":-:" options; do
@@ -108,6 +108,9 @@ while getopts ":-:" options; do
           ;;
         mubeammix)
           MUBEAMNMIXIN=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+          ;;
+        cat)
+          CAT=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         esac;;
     :)                                    # If expected argument omitted:
@@ -202,7 +205,7 @@ rm -f mix.fcl
 # create a template file, starting from the basic Mix
 echo '#include "Production/JobConfig/mixing/Mix.fcl"' >> mix.fcl
 # locate the primary collection
-samListLocations ${SAMOPT} --defname="dts.mu2e.${PRIMARY}.${PRIMARYCONF}.art" > ${PRIMARY}.txt
+samListLocations ${SAMOPT} --defname="dts.mu2e.${PRIMARY}${CAT}.${PRIMARYCONF}.art" > ${PRIMARY}.txt
 
 # Setup the beam intensity model
 if [ ${PBEAM} == "1BB" ]; then

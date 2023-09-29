@@ -41,6 +41,7 @@ SAMOPT="-f --schema=root"
 FIELD="Offline/Mu2eG4/geom/bfgeom_no_tsu_ps_v01.txt" #optional (for changing field map)
 OUTDESC=""
 DSTEPS=""
+CAT=""
 
 # Loop: Get the next option;
 while getopts ":-:" options; do
@@ -85,6 +86,9 @@ while getopts ":-:" options; do
           ;;
         desc)
           OUTDESC=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+          ;;
+        cat)
+          CAT=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         esac;;
     :)                                    # If expected argument omitted:
@@ -136,7 +140,7 @@ then
   echo "Using user-provided input list of detector steps $DSTEPS"
   ln -s $DSTEPS ${PRIMARY}.txt
 else
-  samListLocations ${SAMOPT} --defname="dts.mu2e.${PRIMARY}.${CAMPAIGN}${PRIMARY_VERSION}.art" > ${PRIMARY}.txt
+  samListLocations ${SAMOPT} --defname="dts.mu2e.${PRIMARY}${CAT}.${CAMPAIGN}${PRIMARY_VERSION}.art" > ${PRIMARY}.txt
 
 fi
 echo \#include \"Production/JobConfig/digitize/Digitize.fcl\" >> digitize.fcl
