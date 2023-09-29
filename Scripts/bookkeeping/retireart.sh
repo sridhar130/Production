@@ -62,22 +62,8 @@ while getopts ":-:" options; do
     esac
 done
 echo ${NFILES}
-if [ ${NFILES} -lt 10 ]
-then
-  for i in {1..9}; do samweb retire-file ${TYPE}.mu2e.${PROCESSNAME}.${CAMPAIGN}.00${RUN}_0000000$i.art; done
-fi
+for i in for i in {00000001..00010000}; do samweb retire-file ${TYPE}.mu2e.${PROCESSNAME}.${CAMPAIGN}.00${RUN}_$i.art; done
 
-if  [ ${NFILES} -gt 10 ] && [ ${NFILES} -lt 100 ]  || [ ${NFILES} -eq 10 ]
-then
-  for i in {10..99}; do samweb retire-file ${TYPE}.mu2e.${PROCESSNAME}.${CAMPAIGN}.00${RUN}_000000$i.art; done
-fi
+#
 
-if [ ${NFILES} -gt 100 ] &&  [ ${NFILES} -lt 1000 ] || [ ${NFILES} -eq 1000 ] 
-then
-  for i in {100..999}; do samweb retire-file ${TYPE}.mu2e.${PROCESSNAME}.${CAMPAIGN}.00${RUN}_00000$i.art; done
-fi
 
-if [ ${NFILES} -gt 1000 ] &&  [ ${NFILES} -lt 10000 ] || [ ${NFILES} -eq 10000 ]
-then
-  for i in {1000..9999}; do samweb retire-file ${TYPE}.mu2e.${PROCESSNAME}.${CAMPAIGN}.00${RUN}_0000$i.art; done
-fi
