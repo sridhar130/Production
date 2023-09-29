@@ -62,7 +62,7 @@ while getopts ":-:" options; do
     esac
 done
 echo ${NFILES}
-for i in for i in {00000001..00010000}; do samweb retire-file ${TYPE}.mu2e.${PROCESSNAME}.${CAMPAIGN}.00${RUN}_$i.art; done
+for i in {00000001..00010000}; do samweb retire-file ${TYPE}.mu2e.${PROCESSNAME}.${CAMPAIGN}.00${RUN}_$i.art; done
 
 #
 
