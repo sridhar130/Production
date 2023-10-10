@@ -1,0 +1,25 @@
+#include "Production/JobConfig/common/prolog.fcl"
+#include "Production/JobConfig/digitize/prolog.fcl"
+
+process_name: PrimaryFilterDTS
+source : { module_type : RootInput }
+services : @local::Services.SimAndReco # reco is needed for the trigger
+physics : {
+  producers : {
+    @table::Digitize.producers
+    @table::Trigger.producers
+  }
+  filters: {
+    @table::Digitize.filters
+    @table::Trigger.filters
+  }
+  analyzers: { @table::Digitize.analyzers }
+  # define the digitization paths.  Trigger paths are added specific to digitization type
+  //DigitizePath : @local::Digitize.DigitizeSequence
+  //UntriggeredPath : [ @sequence::Digitize.DigitizeSequence, @sequence::Digitize.UntriggeredSequence ]
+}
+
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/digitize/epilog.fcl"
+
+

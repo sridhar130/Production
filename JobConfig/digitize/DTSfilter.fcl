@@ -1,12 +1,12 @@
 #
-#  Digitization simulations
+#  to filter DTS
 #
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/digitize/prolog.fcl"
 # name all processes the same, to mask any provenance in ensemble creation
 process_name: Digitize
 source : { module_type : RootInput }
-services : @local::Services.SimAndReco # reco is needed for the trigger
+services : @local::Services.SimAndReco 
 physics : {
   producers : {
     @table::Digitize.producers
@@ -19,21 +19,20 @@ physics : {
   analyzers: { @table::Digitize.analyzers }
   # define the digitization paths.  Trigger paths are added specific to digitization type
   DigitizePath : @local::Digitize.DigitizeSequence
-  UntriggeredPath : [ @sequence::Digitize.DigitizeSequence, @sequence::Digitize.UntriggeredSequence ]
 }
 physics.trigger_paths[0] : DigitizePath
-physics.trigger_paths[1] : UntriggeredPath
 # define all outputs: not all digitization types will use all of
 outputs : {
   DTSOutput : @local::Digitize.DTSOutput
-  SignalOutput : @local::Digitize.SignalOutput
-  DiagOutput :  @local::Digitize.DiagOutput
-  TrkOutput :  @local::Digitize.TrkOutput
-  CaloOutput : @local::Digitize.CaloOutput
-  UntriggeredOutput : @local::Digitize.UntriggeredOutput
 }
+
+#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+physics.producers.EWMProducer.SpillType : 1
+physics.EndPath : [ @sequence::Digitize.EndSequence, DTSOutput]
+physics.end_paths : [ EndPath ]
 #
 # Final configuration
 #
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/digitize/epilog.fcl"
+
