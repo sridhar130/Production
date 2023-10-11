@@ -12,4 +12,3 @@ physics.producers.TTmakePH.MaximumTime : 100.0e3
 physics.producers.CrvSiPMCharges.ThermalRate : 0
 # same for calorimeter
 physics.producers.CaloDigiMaker.addNoise : false
-physics.producers.CaloDigiMaker.generateSpotNoise : false
