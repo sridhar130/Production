@@ -9,5 +9,11 @@ physics.producers.EWMProducer.SpillType : 0
 physics.EndPath : [ @sequence::Digitize.EndSequence, SignalOutput, DiagOutput, TrkOutput, CaloOutput, UntriggeredOutput ]
 physics.end_paths : [ EndPath ]
 # override the untriggered filter
-physics.filters.UntriggeredPrescale.prescaleFactor : 1 # record 100% of the untriggered
+physics.filters.UntriggeredPrescale.prescaleFactor : 10 # record 10% of the untriggered
+# prescale the calo and trk triggers.  This should be in the trigger scripts FIXME
+physics.filters.cstTimeClusterEventPrescale.nPrescale: 1000
+physics.filters.cstEventPrescale.nPrescale: 1000
+physics.filters.caloFastCosmicEventPrescale.nPrescale: 1000
+physics.filters.caloFastMVANNCEEventPrescale.nPrescale: 1000
+physics.filters.caloFastPhotonEventPrescale.nPrescale: 1000
 #include "Production/JobConfig/digitize/offspill_epilog.fcl"
