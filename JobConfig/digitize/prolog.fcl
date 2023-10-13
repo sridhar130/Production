@@ -39,6 +39,7 @@ Digitize: {
       crvDigiMCIndexMapTag : ""
       caloClusterMCTag : ""
       crvCoincClusterMCTags : [  ]
+      crvStepsToKeep : [ ]
     }
     PBISim : {
       module_type: ProtonBunchIntensityFlat
