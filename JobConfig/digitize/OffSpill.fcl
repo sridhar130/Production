@@ -16,4 +16,6 @@ physics.filters.cstEventPrescale.nPrescale: 1000
 physics.filters.caloFastCosmicEventPrescale.nPrescale: 1000
 physics.filters.caloFastMVANNCEEventPrescale.nPrescale: 1000
 physics.filters.caloFastPhotonEventPrescale.nPrescale: 1000
+physics.filters.caloFastRMCEventPrescale.nPrescale: 10
+
 #include "Production/JobConfig/digitize/offspill_epilog.fcl"
