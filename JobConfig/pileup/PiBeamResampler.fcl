@@ -67,4 +67,3 @@ physics.producers.g4run.SDConfig.preSimulatedHits:  ["beamResampler:virtualdetec
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/pileup/epilog.fcl"
-
