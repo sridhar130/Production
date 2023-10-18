@@ -92,6 +92,9 @@ Digitize: {
     "keep mu2e::CaloClusters_CaloClusterFast_*_*",
     "keep mu2e::ProtonBunchIntensity*_*_*_*"
   ]
+  DTSProducts : [
+    "keep *", "drop *_*_*_DTSFilter"  ]
+  
   #
   DigiProducts : [
     "keep mu2e::StrawDigis_*_*_*",
@@ -119,6 +122,12 @@ Digitize: {
   # Untriggered is for trigger algorithm improvement
   # Trk and Calo are for calibration and alignment
   #
+  # Stream for dts filter
+  DTSOutput : {
+    module_type : RootOutput
+    SelectEvents : [ "*_highP_*_trigger" ]
+    fileName    : @nil
+  }
   # Stream for events passing any 'physics signal' trigger; at the moment, just high-momentum tracks
   SignalOutput : {
     module_type : RootOutput
@@ -155,6 +164,10 @@ Digitize: {
 }
 # override the Trigger sequence to prepare digis
 Trigger.PrepareDigis: [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
+
+Digitize.DTSOutput.outputCommands : [
+  @sequence::Digitize.DTSProducts]
+  
 Digitize.SignalOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.DigiProducts]
 
@@ -171,6 +184,7 @@ Digitize.UntriggeredOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.DigiProducts]
 
 Digitize.Outputs : {
+  DTSOutput : @local::Digitize.DTSOutput
   SignalOutput : @local::Digitize.SignalOutput
   DiagOutput : @local::Digitize.DiagOutput
   TrkOutput : @local::Digitize.TrkOutput
