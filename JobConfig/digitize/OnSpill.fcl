@@ -11,5 +11,4 @@ physics.producers.EWMProducer.SpillType : 1
 physics.EndPath : [ @sequence::Digitize.EndSequence, SignalOutput, DiagOutput, TrkOutput, CaloOutput, UntriggeredOutput ]
 physics.end_paths : [ EndPath ]
 # override the untriggered filter
-physics.filters.UntriggeredPrescale.prescaleFactor : 10 # record 10% of the untriggered 'triggerable' events
-
+physics.filters.UntriggeredPrescale.prescaleFactor : 1 # record 100% of the untriggered 'triggerable' events
