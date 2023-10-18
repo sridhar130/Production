@@ -165,7 +165,7 @@ Digitize: {
 # override the Trigger sequence to prepare digis
 Trigger.PrepareDigis: [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
 
-Digitize.DTSOutput.outputCommands : [ "drop *_*_*_*",
+Digitize.DTSOutput.outputCommands : [
   @sequence::Digitize.DTSProducts]
   
 Digitize.SignalOutput.outputCommands : [ "drop *_*_*_*",
