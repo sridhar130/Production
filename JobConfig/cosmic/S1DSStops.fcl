@@ -6,7 +6,8 @@
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/cosmic/prolog.fcl"
 
-process_name : CosmicS1
+# NB: the process name is hard-coded into the S2 config and cannot be changed
+process_name : Primary
 
 services: @local::Services.Sim
 
@@ -25,7 +26,6 @@ physics: {
   }
 
   analyzers: {
-    genCountLogger: { module_type: GenEventCountReader makeHistograms: false }
   }
 
   # Here we moved the genCounter at the end in order to get a correct scaling of the
@@ -34,8 +34,7 @@ physics: {
   S1Path :  [generate, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, compressPV, genCounter]
   # path for 'low' resampling
   S1LowPath : [generate, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, S1LowFilter,  compressPV, genCounterLow]
-
-  # GenCountLoger throws if there are more than instance, so we can't use it TODO
+  # GenCountLoger throws if there are more than one instance, so we can't use it TODO
   EndPath : [ S1Output, S1LowOutput ]
 }
 
@@ -46,7 +45,8 @@ outputs : {
     fileName :  @nil
     outputCommands : [
       "drop *_*_*_*",
-      @sequence::Cosmic.S1KeptProducts
+      @sequence::Cosmic.S1KeptProducts,
+      "keep mu2e::GenEventCount_genCounter_*_*"
     ]
   }
 
@@ -56,7 +56,8 @@ outputs : {
     fileName :  @nil
     outputCommands : [
       "drop *_*_*_*",
-      @sequence::Cosmic.S1KeptProducts
+      @sequence::Cosmic.S1KeptProducts,
+      "keep mu2e::GenEventCount_genCounterLow_*_*"
     ]
   }
 }
