@@ -56,6 +56,18 @@ physics : {
           tool_type: "MuCapPhotonGenerator"
         }
       ]
+      decayProducts: [
+        {
+          spectrum: {
+            elow: 1
+            ehi: 75
+            pdgId: 11
+            spectrumResolution: 1e-1
+            spectrumShape: "Czarnecki"
+          }
+          tool_type: "DIOGenerator"
+        }
+      ]
     }
   }
   filters : {
