@@ -132,6 +132,7 @@ Cosmic: {
     module_type: FilterCosmicsStage1
     inputs : [ "g4run:CRV" ]
     cutEDepMax: 16  # Filter events that deposit lower than 16 MeV in CRV
+    DSStepPointMCs : "g4run:crvStage1" # only sum energy deposits earlier than the earliest DS entrance
   }
   cosmicFilter: {
   module_type: FilterG4Out
@@ -220,11 +221,10 @@ Cosmic: {
     ]
   }
 
-    S2KeptProducts : [
-      "keep mu2e::CosmicLivetime_*_mixed_*",
-      "keep mu2e::CrvSteps_*_*_CosmicS2"
-    ]
-    #S2KeptProducts : [ "keep *_*_*_*" ]
+  S2KeptProducts : [
+    "keep mu2e::CosmicLivetime_*_mixed_*",
+    "keep mu2e::StepPointMCs_CosmicResampler_crvStage1_*"
+  ]
 
   S1KeptProducts : [
     "keep art::TriggerResults_*_*_*",

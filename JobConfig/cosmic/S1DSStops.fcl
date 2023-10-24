@@ -71,7 +71,6 @@ physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS1
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 
-#physics.trigger_paths : [ S1Path ]
 physics.trigger_paths : [ S1Path, S1LowPath ]
 physics.end_paths : [ EndPath ]
 services.SeedService.baseSeed : @local::Common.BaseSeed
