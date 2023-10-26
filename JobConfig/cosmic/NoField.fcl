@@ -42,6 +42,8 @@ physics.producers.g4run.TrajectoryControl: @local::mu2eg4DefaultTrajectories
 physics.producers.g4run.inputs.primaryTag : cosmicTimeOffset
 physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicNoField
 physics.producers.FindMCPrimary.PrimaryGenIds: ["CosmicCRY", "CosmicCORSIKA"]
+// since these data aren't resampled we have to apply the cosmic time offset here
+physics.producers.cosmicTimeOffset.cosmicModuleLabel : "generate"
 
 #
 # final configuration
