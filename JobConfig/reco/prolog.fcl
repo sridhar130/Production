@@ -276,7 +276,8 @@ Reconstruction : {
     "keep mu2e::EventWeight_*_*_*",
     "keep *_compressRecoMCs_*_*",
     "keep mu2e::CosmicLivetime_*_*_*",
-    "keep *_CrvCoincidenceClusterMCAssns_*_*"
+    "keep *_CrvCoincidenceClusterMCAssns_*_*",
+    "keep mu2e::StepPointMCs_CosmicResampler_crvStage1_*"
   ]
   EndSequence : [ recoCompressionCheck ]
 }

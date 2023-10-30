@@ -13,15 +13,15 @@ SAMOPT="--schema=root"
 
 # Function: Print a help message.
 usage() {
-  echo "Usage: $0 [ --primary primary physics name ]
-  [ 
-   --name name of the campaign;
-  --camp primary campaign name;
-  --version MDCVersion;
-  --filetype dts,dig,mcs,sim etc;
-  --owner default mu2e;
-  --samopt for listing files;
-  --merge is 1 for Cat
+  echo "Usage: $0
+  [ --primary primary physics name ]
+  [ --name name of the campaign]
+  [ --camp primary campaign name]
+  [ --version MDCVersion]
+  [ --filetype dts,dig,mcs,sim etc ]
+  [ --owner default mu2e ]
+  [ --samopt for listing files ]
+  [ --merge is 1 for Cat ]
   e.g. gen_Cat.sh --name CosmicCRYExtractedNoField --camp MDC2020 --version x --owner mu2e ]" 1>&2
 }
 

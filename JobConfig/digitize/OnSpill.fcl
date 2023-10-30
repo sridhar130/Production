@@ -12,4 +12,3 @@ physics.EndPath : [ @sequence::Digitize.EndSequence, SignalOutput, DiagOutput, T
 physics.end_paths : [ EndPath ]
 # override the untriggered filter
 physics.filters.UntriggeredPrescale.prescaleFactor : 1 # record 100% of the untriggered 'triggerable' events
-

@@ -141,8 +141,8 @@ then
   ln -s $DSTEPS ${PRIMARY}.txt
 else
   samListLocations ${SAMOPT} --defname="dts.mu2e.${PRIMARY}${CAT}.${CAMPAIGN}${PRIMARY_VERSION}.art" > ${PRIMARY}.txt
-
 fi
+
 echo \#include \"Production/JobConfig/digitize/Digitize.fcl\" >> digitize.fcl
 echo \#include \"Production/JobConfig/digitize/${DIGITYPE}.fcl\" >> digitize.fcl
 # turn off streams according to the digitization type.

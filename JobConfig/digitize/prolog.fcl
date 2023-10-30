@@ -115,7 +115,8 @@ Digitize: {
     "keep mu2e::TimeClusters_TT*_*_*",
     "keep mu2e::CaloClusters_CaloClusterFast_*_*",
     "keep mu2e::CosmicLivetime_*_*_*",
-    "keep mu2e::ProtonBunchIntensity*_*_*_*"
+    "keep mu2e::ProtonBunchIntensity*_*_*_*",
+    "keep mu2e::StepPointMCs_CosmicResampler_crvStage1_*"
   ]
   #
   # different streams for different end uses:  Signal is for physics studies, background studies, and calibration and alignment

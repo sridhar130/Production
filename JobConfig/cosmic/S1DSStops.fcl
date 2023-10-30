@@ -6,6 +6,7 @@
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/cosmic/prolog.fcl"
 
+# NB: the process name is hard-coded into the S2 config and cannot be changed
 process_name : Primary
 
 services: @local::Services.Sim
@@ -14,22 +15,27 @@ physics: {
   producers : {
     compressPV: @local::Cosmic.compressPV
     @table::Common.producers
+    genCounterLow: { module_type: GenEventCounter }
   }
 
   filters : {
     @table::Common.filters
     stepPointMomentumFilter : @local::Cosmic.stepPointMomentumFilter
     cosmicFilter : @local::Cosmic.cosmicFilter
+    S1LowFilter : @local::Cosmic.S1LowFilter
   }
 
   analyzers: {
-    genCountLogger: { module_type: GenEventCountReader makeHistograms: false }
   }
 
   # Here we moved the genCounter at the end in order to get a correct scaling of the
   # cosmic livetime after resampling
+  # inclusive path
   S1Path :  [generate, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, compressPV, genCounter]
-  EndPath : [ genCountLogger, S1Output ]
+  # path for 'low' resampling
+  S1LowPath : [generate, @sequence::Common.g4Sequence, stepPointMomentumFilter, cosmicFilter, S1LowFilter,  compressPV, genCounterLow]
+  # GenCountLoger throws if there are more than one instance, so we can't use it TODO
+  EndPath : [ S1Output, S1LowOutput ]
 }
 
 outputs : {
@@ -39,16 +45,22 @@ outputs : {
     fileName :  @nil
     outputCommands : [
       "drop *_*_*_*",
-      "keep art::TriggerResults_*_*_*",
-      "keep mu2e::StatusG4_*_*_*",
-      "keep mu2e::GenEventCount_*_*_*",
-      "keep mu2e::CosmicLivetime_*_*_*",
-      "keep *_compressPV_*_*",
-      "keep mu2e::GenParticles_*_*_*",
-      "keep *_cosmicFilter_*_*"]
+      @sequence::Cosmic.S1KeptProducts,
+      "keep mu2e::GenEventCount_genCounter_*_*"
+    ]
+  }
+
+  S1LowOutput : {
+    module_type : RootOutput
+    SelectEvents : [ S1LowPath ]
+    fileName :  @nil
+    outputCommands : [
+      "drop *_*_*_*",
+      @sequence::Cosmic.S1KeptProducts,
+      "keep mu2e::GenEventCount_genCounterLow_*_*"
+    ]
   }
 }
-
 
 physics.producers.g4run.TrajectoryControl: @local::mu2eg4DefaultTrajectories
 physics.producers.g4run.SDConfig.enableSD: [ CRV ]
@@ -59,7 +71,7 @@ physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicS1
 #include "Production/JobConfig/common/MT.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 
-physics.trigger_paths : [ S1Path ]
+physics.trigger_paths : [ S1Path, S1LowPath ]
 physics.end_paths : [ EndPath ]
 services.SeedService.baseSeed : @local::Common.BaseSeed
 # set a coarse range for stepping through dirt and CRV
