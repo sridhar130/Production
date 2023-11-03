@@ -193,6 +193,7 @@ Reconstruction : {
       mcTrajectoryTag : "compressDigiMCs"
       rekeySimParticleCollection : false
       noCompression : false
+      crvStepsToKeep : [ ]
     }
 
 
