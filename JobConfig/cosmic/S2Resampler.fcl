@@ -46,6 +46,8 @@ outputs.PrimaryOutput.outputCommands : [
 services.GeometryService.inputFile : "Production/JobConfig/cosmic/geom_cosmic.txt"
 # allow MCTrajectories to save their own SimParticles
 physics.producers.compressDetStepMCs.compressionOptions.mcTrajectoryCompressionLevel: "noCompression"
+# in this stage only, record neutral particles as (0 energy?) steps
+physics.producers.CrvSteps.removeNeutralParticles : false
 #
 # final configuration
 #
