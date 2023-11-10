@@ -58,6 +58,7 @@ Primary: {
       KeepPDG : [ ] # Loop at steps from all particle types
       MinimumTrkSteps : 12 # primary must produce at least this many TrkSteps
       MinimumSumCaloStepE : 45.0 # or at least this much calo energy
+      SkipSelection : false
     }
 
     TargetStopResampler : {
@@ -117,6 +118,27 @@ Primary: {
           stepPointMCMixer: { mixingMap: [ [ "IPAStopFilter:virtualdetector", ":" ] ] }
           volumeInfoMixer: {
             srInput: "compressPVIPAStops"
+            evtOutInstanceName: "eventlevel"
+          }
+        }
+      }
+    }
+
+    WireGammaStopResampler : {
+      module_type: ResamplingMixer
+      readMode            : sequential
+      wrapFiles           : true
+      fileNames: @nil
+      mu2e: {
+        writeEventIDs : true
+        MaxEventsToSkip: @nil
+        debugLevel : 0
+        products: {
+          genParticleMixer: { mixingMap: [ [ "TargetStopResampler", "" ] ] }
+          simParticleMixer: { mixingMap: [ [ "WireStopFilter", "" ] ] }
+          stepPointMCMixer: { mixingMap: [ [ "WireStopFilter:virtualdetector", ":" ] ] }
+          volumeInfoMixer: {
+            srInput: "compressPVWireStops"
             evtOutInstanceName: "eventlevel"
           }
         }
