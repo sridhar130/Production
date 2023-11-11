@@ -58,7 +58,6 @@ Primary: {
       KeepPDG : [ ] # Loop at steps from all particle types
       MinimumTrkSteps : 12 # primary must produce at least this many TrkSteps
       MinimumSumCaloStepE : 45.0 # or at least this much calo energy
-      SkipSelection : false
     }
 
     TargetStopResampler : {
