@@ -136,6 +136,16 @@ Reconstruction : {
         CosmicTrackSeedCollections : ["LineFinder"]
       }
     }
+    KKOffSpill : {
+      @table::Mu2eKinKal.producers.KKOffSpill
+      ModuleSettings : {
+        @table::Mu2eKinKal.producers.KKOffSpill.ModuleSettings
+        @table::Mu2eKinKal.KKPrecursors
+        PanelHitCollection : "makePH"
+        TimeClusterCollection : "SimpleTimeCluster"
+      }
+
+                 }
 
     # Implicit TrkPatRec config for Final Fits and upstream fits (no merging)
     #
@@ -159,7 +169,7 @@ Reconstruction : {
       KalSeedCollections  : [
         "KKDeM", "KKDeP", "KKDmuM", "KKDmuP",
         "KKUeM", "KKUmuP", "KKUmuM", "KKUmuP",
-        "KKLine"]
+        "KKLine","KKOffSpill"]
       HelixSeedCollections  : ["MHDeM", "MHDeP", "MHDmuM", "MHDmuP",
         "MHUeM", "MHUeP", "MHUmuM", "MHUmuP" ]
       VDSPCollection : "compressDigiMCs:virtualdetector"
@@ -183,6 +193,7 @@ Reconstruction : {
       mcTrajectoryTag : "compressDigiMCs"
       rekeySimParticleCollection : false
       noCompression : false
+      crvStepsToKeep : [ ]
     }
 
 
@@ -199,13 +210,13 @@ Reconstruction : {
       TrkTags : [ "KKDeM", "KKDeP",
         "KKUeM", "KKUeP",
         "KKDmuM", "KKDmuP",
-        "KKUmuM", "KKUmuP","KKLine"
+        "KKUmuM", "KKUmuP","KKLine","KKOffSpill"
       ]
       # // set low cutoffs
       MomentumCutoff : [ 60.0, 60.0,
         60.0, 60.0,
         60.0, 60.0,
-        60.0, 60.0, 60.0 ]
+        60.0, 60.0, 60.0, 60.0 ]
     }
   }
 
@@ -243,6 +254,11 @@ Reconstruction : {
   LineReco : [
     SimpleTimeCluster, LineFinder, KKLine
   ]
+  # OffSpill
+  OffSpillReco : [
+    SimpleTimeCluster, KKOffSpill
+  ]
+
   # add protons for calibration TODO!
 
   # Track reco sequence
@@ -321,6 +337,20 @@ Reconstruction.LineRecoMCPath : [
   @sequence::Reconstruction.MCReco,
   RecoFilter
 ]
+# OffSpill reco path
+Reconstruction.OffSpillRecoPath : [
+  @sequence::Reconstruction.CaloReco,
+  @sequence::Reconstruction.TrkReco,
+  @sequence::Reconstruction.CrvReco,
+  @sequence::Reconstruction.OffSpillReco
+]
+# OffSpill reco path with MC
+Reconstruction.OffSpillRecoMCPath : [
+  @sequence::Reconstruction.OffSpillRecoPath,
+  @sequence::Reconstruction.MCReco,
+  RecoFilter
+]
+
 
 # default output
 Reconstruction.Output : {
