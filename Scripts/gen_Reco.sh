@@ -131,7 +131,7 @@ fi
 echo 'services.DbService.purpose:' ${CAMPAIGN}'_'${DB_PURPOSE} >> reco.fcl
 echo 'services.DbService.version:' ${RECODB_VERSION} >> reco.fcl
 echo 'services.DbService.verbose : 2' >> reco.fcl
-
+echo ${CAMPAIGN}${RECO_VERSION}_${DB_PURPOSE}_${RECODB_VERSION}
 generate_fcl --dsowner=${OWNER} --override-outputs --auto-description --embed reco.fcl --dsconf "${CAMPAIGN}${RECO_VERSION}_${DB_PURPOSE}_${RECODB_VERSION}" \
 --inputs "Digis.txt" --merge-factor=${MERGE}
 
