@@ -23,7 +23,10 @@ physics: {
     @table::Primary.producers
     @table::Digitize.producers
     @table::Reconstruction.producers
-    cosmicTimeOffset : @local::Cosmic.cosmicTimeOffset
+    cosmicTimeOffset : {
+      @table::Cosmic.cosmicTimeOffset
+      cosmicModuleLabel : "generate"
+    }
     generate : @local::Cosmic.generateCRY
   }
   filters : {

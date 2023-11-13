@@ -68,7 +68,7 @@ Pileup: {
       module_type: SimParticleDaughterSelector
       particleInput: "TargetMuonFinder"
       # EMCascade should not be vetoed because we do not re-simulate it
-      processes: [ "DIO", "NuclearCapture" ]
+      processes: [ "DIO", "NuclearCapture" ] //TODO
     }
 
     compressPVTargetStops: {

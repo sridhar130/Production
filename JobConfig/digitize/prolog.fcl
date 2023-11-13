@@ -39,6 +39,7 @@ Digitize: {
       crvDigiMCIndexMapTag : ""
       caloClusterMCTag : ""
       crvCoincClusterMCTags : [  ]
+      crvStepsToKeep : [ ]
     }
     PBISim : {
       module_type: ProtonBunchIntensityFlat
@@ -115,7 +116,8 @@ Digitize: {
     "keep mu2e::TimeClusters_TT*_*_*",
     "keep mu2e::CaloClusters_CaloClusterFast_*_*",
     "keep mu2e::CosmicLivetime_*_*_*",
-    "keep mu2e::ProtonBunchIntensity*_*_*_*"
+    "keep mu2e::ProtonBunchIntensity*_*_*_*",
+    "keep mu2e::StepPointMCs_CosmicResampler_crvStage1_*"
   ]
   #
   # different streams for different end uses:  Signal is for physics studies, background studies, and calibration and alignment
@@ -165,7 +167,7 @@ Digitize: {
 # override the Trigger sequence to prepare digis
 Trigger.PrepareDigis: [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
 
-Digitize.DTSOutput.outputCommands : [ "drop *_*_*_*",
+Digitize.DTSOutput.outputCommands : [
   @sequence::Digitize.DTSProducts]
   
 Digitize.SignalOutput.outputCommands : [ "drop *_*_*_*",
