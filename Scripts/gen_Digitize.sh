@@ -145,6 +145,10 @@ fi
 
 echo \#include \"Production/JobConfig/digitize/Digitize.fcl\" >> digitize.fcl
 echo \#include \"Production/JobConfig/digitize/${DIGITYPE}.fcl\" >> digitize.fcl
+if [[ "${PRIMARY}" == *"Cosmic"* ]]; then
+    echo \#include \"Production/JobConfig/digitize/cosmic_epilog.fcl\" >> digitize.fcl
+fi
+
 # turn off streams according to the digitization type.
 DIGOUT=""
 if [[ "${DIGITYPE}" == "Extracted" || "${DIGITYPE}" == "NoField" ]]; then
