@@ -148,7 +148,7 @@ echo \#include \"Production/JobConfig/digitize/DTSfilter.fcl\" >> digitize.fcl
 DIGOUT=""
 DIGOUT=${PRIMARY} 
 echo outputs.DTSOutput.fileName: \"dts.owner.${DIGOUT}Filtered.version.sequencer.art\" >> digitize.fcl
-fi
+
 # setup database access for digi parameters
 echo services.DbService.purpose: ${CAMPAIGN}_${DBPURPOSE} >> digitize.fcl
 echo services.DbService.version: ${DBVERSION} >> digitize.fcl

@@ -92,23 +92,26 @@ rm -f ResampleS1.fcl
 echo "#include \"Production/JobConfig/cosmic/S2Resampler.fcl\"" >> ResampleS1.fcl
 
 S2OUT="Cosmic${S1NAME}${LOW}"
+echo ${S2OUT}
+echo $LOW
 if [[ $LOW == "Low" ]]; then
   let RUNNUM=$RUNNUM+1
   echo "Resampling Low, run number = ${RUNNUM}"
   # add epilog to use the 'Low' GenEventCount object for livetime accounting
   echo '#include "Production/JobConfig/cosmic/S2ResamplerLow.fcl"' >> ResampleS1.fcl
-  echo "outputs.PrimaryOutput.fileName        : \"dts.owner.Cosmic${S1NAME}Low.version.sequencer.art\"" >> ResampleS1.fcl
+  echo "outputs.PrimaryOutput.fileName        : \"dts.owner.Cosmic${S1NAME}$LOW.version.sequencer.art\"" >> ResampleS1.fcl
 else
-  echo "outputs.PrimaryOutput.fileName        : \"dts.owner.Cosmic${S1NAME}.version.sequencer.art\"" >> ResampleS1.fcl
+  echo "outputs.PrimaryOutput.fileName        : \"dts.owner.Cosmic${S1NAME}$LOW.version.sequencer.art\"" >> ResampleS1.fcl
 fi
 
 OUTCONF=${CAMPAIGN}${OUTPUT_VERSION}
 S1CONF=${CAMPAIGN}${S1_VERSION}
+
 if [[ -n $DSSTOPS ]]; then
   echo "Using user-provided input list of DS Stops $DSSTOPS"
 else
   DSSTOPS="CosmicDSStops.txt"
-  samListLocations ${SAMOPT} --defname="sim.mu2e.CosmicDSStops${S1NAME}.${S1CONF}.art"  > ${DSSTOPS}
+  samListLocations ${SAMOPT} --defname="sim.mu2e.CosmicDSStops${S1NAME}$LOW.${S1CONF}.art"  > ${DSSTOPS}
 fi
 
 if [ ! -f $DSSTOPS ]; then

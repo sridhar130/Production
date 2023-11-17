@@ -43,6 +43,15 @@ Pileup: {
       stoppingMaterial: "StoppingTarget_Al"
       verbosityLevel: 1
     }
+    WireGammaFinder: {
+      module_type: "StoppedParticlesFinder"
+      particleInput: "g4run"
+      particleTypes: [ 22 ]
+      physVolInfoInput: "g4run:eventlevel"
+      useEventLevelVolumeInfo: true
+      stoppingMaterial: "ST_Wires"
+      verbosityLevel: 1
+    }
     
     TargetPionFinder: {
       module_type: "StoppedParticlesFinder"
@@ -76,6 +85,12 @@ Pileup: {
       volumesInput : "g4run"
       hitInputs : []
       particleInputs : [ "TargetStopFilter" ]
+    }
+    compressPVWireStops: {
+      module_type: CompressPhysicalVolumes
+      volumesInput : "g4run"
+      hitInputs : []
+      particleInputs : [ "WireStopFilter" ]
     }
     compressPVTargetPiStops: {
       module_type: CompressPhysicalVolumes
@@ -118,6 +133,12 @@ Pileup: {
       mainHitInputs: []
       extraHitInputs: [ "g4run:virtualdetector" ]
       mainSPPtrInputs: [ "TargetMuonFinder" ]
+    }
+    WireStopFilter: {
+      module_type: FilterG4Out
+      mainHitInputs: []
+      extraHitInputs: [ "g4run:virtualdetector" ]
+      mainSPPtrInputs: [ "WireGammaFinder" ]
     }
 
     TargetPiStopFilter: {

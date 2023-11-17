@@ -122,6 +122,27 @@ Primary: {
         }
       }
     }
+
+    WireGammaStopResampler : {
+      module_type: ResamplingMixer
+      readMode            : sequential
+      wrapFiles           : true
+      fileNames: @nil
+      mu2e: {
+        writeEventIDs : true
+        MaxEventsToSkip: @nil
+        debugLevel : 0
+        products: {
+          genParticleMixer: { mixingMap: [ [ "TargetStopResampler", "" ] ] }
+          simParticleMixer: { mixingMap: [ [ "WireStopFilter", "" ] ] }
+          stepPointMCMixer: { mixingMap: [ [ "WireStopFilter:virtualdetector", ":" ] ] }
+          volumeInfoMixer: {
+            srInput: "compressPVWireStops"
+            evtOutInstanceName: "eventlevel"
+          }
+        }
+      }
+    }
   }
   # sequence to create DetectorSteps
   DetStepSequence : [
