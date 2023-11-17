@@ -45,7 +45,7 @@ usage() {
   [ --run (opt) default 1202 ]
   [ --cat(opt) default Cat ]
 
-  bash gen_Primary.sh --primary DIOTail --type MuMinus --campaign MDC2020 -pver z_sm3 --sver p --njobs 100 --events 100 --start 75 --end 95
+  bash gen_Primary.sh --primary DIOTail --type MuMinus --campaign MDC2020 -pver MDC2020z_sm3 --sver MDC2020p --njobs 100 --events 100 --start 75 --end 95
   " 1>&2
 }
 
