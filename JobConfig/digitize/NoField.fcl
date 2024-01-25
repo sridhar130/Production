@@ -2,7 +2,8 @@
 #  Digitization specialization for no-field simulation.  This is a form of OffSpill
 #
 # add trigger paths; for now use the Extracted trigger menu, as these assume no field (should become renamed TODO
-#include "Offline/gen/fcl/Trigger/ExtrPosTrigMenu/ExtrPosTrigMenu.fcl"
+#include "mu2e_trig_config/gen/trig_extrPosPSConfig_OffSpill.fcl"
+#include "mu2e_trig_config/gen/trig_extrPos_OffSpill.fcl"
 # set the event timing for OffSpill
 physics.producers.EWMProducer.SpillType : 0
 # no-field
@@ -13,3 +14,5 @@ physics.end_paths : [ EndPath ]
 # override the untriggered filter
 physics.filters.UntriggeredPrescale.prescaleFactor : 100 # only record 1% of the untriggered
 physics.filters.Triggerable.MaxParticleMom : 1e10
+physics.trigger_paths : [@sequence::Trig_extrPos.trigger_paths]
+#include "mu2e_trig_config/core/trigDigiInputsEpilog.fcl"

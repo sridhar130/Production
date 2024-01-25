@@ -4,11 +4,16 @@
 #
 # enable OnSpill trigger menu
 #
-#include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+#include "mu2e_trig_config/gen/trig_physMenuPSConfig_OnSpill.fcl"
+#include "mu2e_trig_config/gen/trig_physMenu_OnSpill.fcl"
 # set the event timing for OnSpill
 physics.producers.EWMProducer.SpillType : 1
 # keep all streams
 physics.EndPath : [ @sequence::Digitize.EndSequence, SignalOutput, DiagOutput, TrkOutput, CaloOutput, UntriggeredOutput ]
 physics.end_paths : [ EndPath ]
+physics.trigger_paths : [@sequence::Trig_physMenu.trigger_paths]
+#include "mu2e_trig_config/core/trigDigiInputsEpilog.fcl"
+
 # override the untriggered filter
 physics.filters.UntriggeredPrescale.prescaleFactor : 1 # record 100% of the untriggered 'triggerable' events
+
