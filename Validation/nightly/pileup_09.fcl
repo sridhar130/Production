@@ -1,0 +1,26 @@
+#include "Production/JobConfig/pileup/MuBeamResampler.fcl"
+physics.filters.beamResampler.mu2e.MaxEventsToSkip: 8934
+
+#----------------------------------------------------------------
+# Code added by generate_fcl:
+source.firstRun: 1202
+source.firstSubRun: 4
+source.maxEvents: 400000
+services.SeedService.baseSeed: 2988434984596176897
+physics.filters.beamResampler.fileNames : [
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/sim/mu2e/MuBeamCat/MDC2020p/art/f1/82/sim.mu2e.MuBeamCat.MDC2020p.001201_00000000.art"
+]
+outputs.EarlyFlashOutput.fileName : "dts.MU2EGRIDDSOWNER.EarlyMuBeamFlash.MU2EGRIDDSCONF.001202_00000004.art"
+outputs.FlashOutput.fileName : "dts.MU2EGRIDDSOWNER.MuBeamFlash.MU2EGRIDDSCONF.001202_00000004.art"
+outputs.IPAStopOutput.fileName : "sim.MU2EGRIDDSOWNER.IPAStops.MU2EGRIDDSCONF.001202_00000004.art"
+outputs.TargetStopOutput.fileName : "sim.MU2EGRIDDSOWNER.TargetStops.MU2EGRIDDSCONF.001202_00000004.art"
+mu2emetadata.fcl.prologkeys: [  ]
+mu2emetadata.fcl.inkeys: [ "physics.filters.beamResampler.fileNames" ]
+mu2emetadata.fcl.outkeys: [ "outputs.EarlyFlashOutput.fileName", "outputs.FlashOutput.fileName", "outputs.IPAStopOutput.fileName", "outputs.TargetStopOutput.fileName" ]
+# End code added by generate_fcl:
+#----------------------------------------------------------------
+#include "Production/Validation/nightly/pileup_epilog.fcl"
+outputs.valCombo.SelectEvents: [ "earlyFlashPath", "targetStopPath" ]
+physics.filters.TargetStopPrescaleFilter.nPrescale : 1
+physics.filters.EarlyPrescaleFilter.nPrescale : 1
+outputs.valCombo.fileName: "pileup_09.art"

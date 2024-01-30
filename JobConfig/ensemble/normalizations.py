@@ -32,7 +32,7 @@ def ce_normalization(livetime, rue):
 
 def dio_normalization(livetime, emin):
   # calculate fraction of spectrum being generated
-  spec = open(os.path.join(os.environ["MU2E_BASE_RELEASE"],"Offline/ConditionsService/data/czarnecki_szafron_Al_2016.tbl"))
+  spec = open(os.path.join(os.environ["MUSE_WORK_DIR"],"Offline/ConditionsService/data/czarnecki_szafron_Al_2016.tbl"))
   energy = []
   val = []
   for line in spec:
@@ -53,7 +53,7 @@ def dio_normalization(livetime, emin):
 
 def rpc_normalization(livetime, emin, tmin, internal):
   # calculate fraction of spectrum being generated
-  spec = open("JobConfig/ensemble/RPCspectrum.dat") # Bistirlich spectrum from 0.05 to 139.95 in steps of 0.1
+  spec = open("Production/JobConfig/ensemble/RPCspectrum.dat") # Bistirlich spectrum from 0.05 to 139.95 in steps of 0.1
   energy = []
   val = []
   for line in spec:

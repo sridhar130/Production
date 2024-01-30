@@ -26,7 +26,6 @@ Digitize: {
       simParticleTags : [ @local::DigiCompressionTags.primarySimParticleTag ]
       mcTrajectoryTag : @local::DigiCompressionTags.primarySimParticleTag
       extraStepPointMCTags : @local::DigiCompressionTags.commonExtraStepPointMCTags
-      timeMapTags : [ ]
       caloShowerStepTags : @local::DigiCompressionTags.primaryCaloShowerStepTags
       caloShowerSimTag : @local::DigiCompressionTags.commonCaloShowerSimTag
       caloShowerROTag : @local::DigiCompressionTags.commonCaloShowerROTag
@@ -39,7 +38,8 @@ Digitize: {
       strawDigiMCIndexMapTag : ""
       crvDigiMCIndexMapTag : ""
       caloClusterMCTag : ""
-      crvCoincClusterMCTag : ""
+      crvCoincClusterMCTags : [  ]
+      crvStepsToKeep : [ ]
     }
     PBISim : {
       module_type: ProtonBunchIntensityFlat
@@ -59,7 +59,7 @@ Digitize: {
       MinParticleMom : 80.0
       MaxParticleMom : 200.0
       StrawDigiMCCollection : compressDigiMCs
-      particleTypes : [ 11,-11, 13, -13] # e+-, mu+-
+      particleTypes : [ 11,-11, 13, -13, 211, -211] # e+-, mu+-, pi+-
     }
     # Untriggered stream prescaler; stream-dependent
     UntriggeredPrescale : {
@@ -93,6 +93,9 @@ Digitize: {
     "keep mu2e::CaloClusters_CaloClusterFast_*_*",
     "keep mu2e::ProtonBunchIntensity*_*_*_*"
   ]
+  DTSProducts : [
+    "keep *", "drop *_*_*_DTSFilter"  ]
+  
   #
   DigiProducts : [
     "keep mu2e::StrawDigis_*_*_*",
@@ -112,13 +115,21 @@ Digitize: {
     "keep mu2e::HelixSeeds_TT*_*_*",
     "keep mu2e::TimeClusters_TT*_*_*",
     "keep mu2e::CaloClusters_CaloClusterFast_*_*",
-    "keep mu2e::ProtonBunchIntensity*_*_*_*"
+    "keep mu2e::CosmicLivetime_*_*_*",
+    "keep mu2e::ProtonBunchIntensity*_*_*_*",
+    "keep mu2e::StepPointMCs_CosmicResampler_crvStage1_*"
   ]
   #
   # different streams for different end uses:  Signal is for physics studies, background studies, and calibration and alignment
   # Untriggered is for trigger algorithm improvement
   # Trk and Calo are for calibration and alignment
   #
+  # Stream for dts filter
+  DTSOutput : {
+    module_type : RootOutput
+    SelectEvents : [ "*_highP_*_trigger" ]
+    fileName    : @nil
+  }
   # Stream for events passing any 'physics signal' trigger; at the moment, just high-momentum tracks
   SignalOutput : {
     module_type : RootOutput
@@ -155,6 +166,10 @@ Digitize: {
 }
 # override the Trigger sequence to prepare digis
 Trigger.PrepareDigis: [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
+
+Digitize.DTSOutput.outputCommands : [
+  @sequence::Digitize.DTSProducts]
+  
 Digitize.SignalOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.DigiProducts]
 
@@ -171,6 +186,7 @@ Digitize.UntriggeredOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.DigiProducts]
 
 Digitize.Outputs : {
+  DTSOutput : @local::Digitize.DTSOutput
   SignalOutput : @local::Digitize.SignalOutput
   DiagOutput : @local::Digitize.DiagOutput
   TrkOutput : @local::Digitize.TrkOutput

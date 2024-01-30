@@ -1,0 +1,129 @@
+#include "Production/JobConfig/mixing/Mix.fcl"
+#include "Production/JobConfig/mixing/OneBB.fcl"
+physics.filters.MuBeamFlashMixer.mu2e.MaxEventsToSkip: 1113148
+physics.filters.EleBeamFlashMixer.mu2e.MaxEventsToSkip: 25650
+physics.filters.NeutralsFlashMixer.mu2e.MaxEventsToSkip: 91132
+physics.filters.MuStopPileupMixer.mu2e.MaxEventsToSkip: 872769
+services.DbService.purpose: MDC2020_best
+services.DbService.version: v1_0
+services.DbService.verbose : 2
+services.GeometryService.bFieldFile : "Offline/Mu2eG4/geom/bfgeom_no_tsu_ps_v01.txt"
+outputs.SignalOutput.fileName: "dig.owner.FlateMinusMix1BBSignal.version.sequencer.art"
+outputs.DiagOutput.fileName: "dig.owner.FlateMinusMix1BBDiag.version.sequencer.art"
+outputs.TrkOutput.fileName: "dig.owner.FlateMinusMix1BBTrk.version.sequencer.art"
+outputs.CaloOutput.fileName: "dig.owner.FlateMinusMix1BBCalo.version.sequencer.art"
+outputs.UntriggeredOutput.fileName: "dig.owner.FlateMinusMix1BBUntriggered.version.sequencer.art"
+
+#----------------------------------------------------------------
+# Code added by generate_fcl:
+services.SeedService.baseSeed: 838119182648082433
+source.fileNames : [
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/FlateMinus/MDC2020r/art/27/11/dts.mu2e.FlateMinus.MDC2020r.001210_00000109.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/FlateMinus/MDC2020r/art/32/4e/dts.mu2e.FlateMinus.MDC2020r.001210_00000110.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/FlateMinus/MDC2020r/art/50/ae/dts.mu2e.FlateMinus.MDC2020r.001210_00000111.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/FlateMinus/MDC2020r/art/96/d6/dts.mu2e.FlateMinus.MDC2020r.001210_00000112.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/FlateMinus/MDC2020r/art/b7/52/dts.mu2e.FlateMinus.MDC2020r.001210_00000113.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/FlateMinus/MDC2020r/art/1b/05/dts.mu2e.FlateMinus.MDC2020r.001210_00000114.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/FlateMinus/MDC2020r/art/8c/1f/dts.mu2e.FlateMinus.MDC2020r.001210_00000115.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/FlateMinus/MDC2020r/art/27/9b/dts.mu2e.FlateMinus.MDC2020r.001210_00000116.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/FlateMinus/MDC2020r/art/84/8f/dts.mu2e.FlateMinus.MDC2020r.001210_00000117.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/FlateMinus/MDC2020r/art/1f/5a/dts.mu2e.FlateMinus.MDC2020r.001210_00000118.art"
+]
+physics.filters.MuStopPileupMixer.fileNames : [
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/MuStopPileupCat/MDC2020p/art/bc/f2/dts.mu2e.MuStopPileupCat.MDC2020p.001201_00000013.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/MuStopPileupCat/MDC2020p/art/e7/50/dts.mu2e.MuStopPileupCat.MDC2020p.001201_00000058.art"
+]
+physics.filters.EleBeamFlashMixer.fileNames : [
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/86/6a/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00008988.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/7a/10/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00004298.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/92/ef/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00002516.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/6f/51/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00002390.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/a1/4c/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00004189.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/40/d4/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00001816.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/e9/47/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00002330.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/b2/2a/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00004514.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/af/b1/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00000709.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/be/0b/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00003118.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/39/a3/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00005417.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/07/f3/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00000440.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/32/50/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00003033.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/a3/af/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00006459.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/86/4d/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00006670.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/a5/60/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00008347.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/19/20/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00006502.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/08/40/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00006337.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/25/3c/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00005881.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/e2/34/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00008377.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/8b/78/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00006319.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/88/18/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00004151.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/38/6d/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00005767.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/d0/d2/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00008541.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/EleBeamFlashCat/MDC2020p/art/68/fd/dts.mu2e.EleBeamFlashCat.MDC2020p.001201_00003678.art"
+]
+physics.filters.MuBeamFlashMixer.fileNames : [
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/MuBeamFlashCat/MDC2020p/art/c9/67/dts.mu2e.MuBeamFlashCat.MDC2020p.001201_00000008.art"
+]
+physics.filters.NeutralsFlashMixer.fileNames : [
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/b4/c8/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00006636.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/18/fa/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00001749.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/56/ab/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00003481.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/c8/8b/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00002267.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/ab/81/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00008496.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/ad/0e/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00008996.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/b0/1f/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00002463.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/46/19/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00008714.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/dc/25/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00003544.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/cc/cd/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00007933.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/ad/a7/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00001119.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/bf/7f/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00006689.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/6b/35/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00003642.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/98/ce/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00002685.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/7e/0f/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00000172.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/ee/94/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00005248.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/79/15/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00007732.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/ba/a2/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00007675.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/de/fa/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00008860.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/f5/92/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00003551.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/18/0d/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00008340.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/db/2d/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00002065.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/09/08/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00003659.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/8d/d7/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00001520.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/10/44/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00007267.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/94/a6/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00008207.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/84/78/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00008572.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/6c/7f/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00002636.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/e8/28/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00008723.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/33/03/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00009120.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/65/1c/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00001294.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/f4/60/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00007364.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/4c/d2/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00007616.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/56/af/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00004212.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/77/77/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00002185.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/96/55/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00004379.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/15/55/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00001278.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/62/47/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00004633.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/b6/16/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00006451.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/bc/b4/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00006106.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/83/b9/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00006756.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/da/da/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00002149.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/ce/5a/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00001637.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/7d/f3/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00002514.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/46/37/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00006917.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/b2/f7/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00000265.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/47/df/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00002470.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/c9/6d/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00003267.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/2a/a6/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00003801.art",
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/dts/mu2e/NeutralsFlashCat/MDC2020p/art/46/4b/dts.mu2e.NeutralsFlashCat.MDC2020p.001201_00008482.art"
+]
+outputs.CaloOutput.fileName : "dig.MU2EGRIDDSOWNER.FlateMinusMix1BBCalo.MU2EGRIDDSCONF.001210_00000109.art"
+outputs.DiagOutput.fileName : "dig.MU2EGRIDDSOWNER.FlateMinusMix1BBDiag.MU2EGRIDDSCONF.001210_00000109.art"
+outputs.SignalOutput.fileName : "dig.MU2EGRIDDSOWNER.FlateMinusMix1BBSignal.MU2EGRIDDSCONF.001210_00000109.art"
+outputs.TrkOutput.fileName : "dig.MU2EGRIDDSOWNER.FlateMinusMix1BBTrk.MU2EGRIDDSCONF.001210_00000109.art"
+outputs.UntriggeredOutput.fileName : "dig.MU2EGRIDDSOWNER.FlateMinusMix1BBUntriggered.MU2EGRIDDSCONF.001210_00000109.art"
+mu2emetadata.fcl.prologkeys: [  ]
+mu2emetadata.fcl.inkeys: [ "source.fileNames", "physics.filters.MuStopPileupMixer.fileNames", "physics.filters.EleBeamFlashMixer.fileNames", "physics.filters.MuBeamFlashMixer.fileNames", "physics.filters.NeutralsFlashMixer.fileNames" ]
+mu2emetadata.fcl.outkeys: [ "outputs.CaloOutput.fileName", "outputs.DiagOutput.fileName", "outputs.SignalOutput.fileName", "outputs.TrkOutput.fileName", "outputs.UntriggeredOutput.fileName" ]
+# End code added by generate_fcl:
+#----------------------------------------------------------------
+#include "Production/Validation/nightly/ceMix_epilog.fcl"
+outputs.SignalOutput.fileName : "ceMix_12.art"

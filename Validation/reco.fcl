@@ -14,10 +14,8 @@ source.inputCommands: ["keep *",
 ]
 # add KinKal fits
 #
-physics.producers : {
-  @table::physics.producers
-  @table::Mu2eKinKal.producers
-}
+physics.producers : @local::Reconstruction.producers
+physics.filters : @local::Reconstruction.filters
 #
 # only run DeM and DeP
 #
@@ -30,16 +28,12 @@ physics.RecoPath : [
   RecoFilter
 ]
 #
-physics.producers.SelectRecoMC.KalSeedCollections : [ "KFFDeM", "KFFDeP", "KKSDeM", "KKSDeP","KKFDeM", "KKFDeP"]
+physics.producers.SelectRecoMC.KalSeedCollections : [ "KKDeM", "KKDeP"]
 physics.producers.SelectRecoMC.HelixSeedCollections  : ["MHDeM", "MHDeP" ]
-physics.filters.RecoFilter.TrkTags : [ "KFFDeM", "KFFDeP","KKFDeM", "KKFDeP"]
-physics.filters.RecoFilter.MomentumCutoff : [ 60.0, 60.0, 60.0, 60.0 ]
-physics.producers.KKDeMSeedFit.ModuleSettings.HelixSeedCollections : [ "MHDeM" ]
-physics.producers.KKDeMSeedFit.ModuleSettings.ComboHitCollection : "makeSH"
-physics.producers.KKDeMSeedFit.ModuleSettings.StrawHitFlagCollection : "FlagBkgHits:StrawHits"
-physics.producers.KKDePSeedFit.ModuleSettings.HelixSeedCollections : [ "MHDeP" ]
-physics.producers.KKDePSeedFit.ModuleSettings.ComboHitCollection : "makeSH"
-physics.producers.KKDePSeedFit.ModuleSettings.StrawHitFlagCollection : "FlagBkgHits:StrawHits"
+physics.filters.RecoFilter.TrkTags : [ "KKDeM", "KKDeP"]
+physics.filters.RecoFilter.MomentumCutoff : [ 60.0, 60.0 ]
+
+#include "Production/JobConfig/reco/epilog.fcl"
 
 outputs: {
   Output: {
@@ -52,12 +46,6 @@ outputs: {
       "drop *_*_*_*",
       "keep mu2e::TriggerInfo_*_*_*",
       "keep art::TriggerResults_*_*_*",
-      "keep mu2e::KalSeeds_TT*_*_*",
-      "keep mu2e::HelixSeeds_TT*_*_*",
-      "keep mu2e::TimeClusters_TT*_*_*",
-      "keep mu2e::CaloClusters_CaloClusterFast_*_*",
-      "keep mu2e::KalSeeds_KFF*_*_*",
-      "keep mu2e::KalSeeds_KSF*_*_*",
       "keep mu2e::KalSeeds_KK*_*_*",
       "keep mu2e::HelixSeeds_MH*_*_*",
       "keep mu2e::TimeClusters_MH*_*_*",

@@ -3,7 +3,6 @@
 #
 # original author: S Middleton
 #
-
 #include "Production/JobConfig/primary/TargetStopParticle.fcl"
 
 physics.producers.generate : {
@@ -22,9 +21,8 @@ physics.producers.generate : {
       elow             : 100.
     }
   }
-
   verbosity : 0
 }
 
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eMuonDecayAtRest"
-outputs.PrimaryOutput.fileName: "dts.owner.mu2eDIOLeadingLog.version.sequencer.art"
+outputs.PrimaryOutput.fileName: "dts.owner.DIOtail.version.sequencer.art"

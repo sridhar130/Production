@@ -12,6 +12,7 @@
 #include "Offline/CaloMC/fcl/prolog.fcl"
 #include "Offline/CalPatRec/fcl/prolog.fcl"
 #include "Offline/CRVResponse/fcl/prolog.fcl"
+#include "Offline/CosmicReco/fcl/prolog.fcl"
 #include "Offline/Filters/fcl/prolog.fcl"
 #
 BEGIN_PROLOG
@@ -24,6 +25,7 @@ Reconstruction : {
     @table::CaloCluster.producers
     @table::CaloMC.TruthProducers
     @table::CrvResponsePackage.producers
+    @table::CosmicTracking.producers
 
     # instantiate explicit helix merger modules
     # NB: positive here refers to helicity, not charge!
@@ -61,103 +63,89 @@ Reconstruction : {
       @table::TrkReco.producers.MergeHelices
       HelixFinders : [ "HelixFinderUmu:Positive" ]
     }
-    KSFDeM : {
-      @table::Tracking.producers.KSFDeM
-      SeedCollection             : MHDeM
-    }
-    KSFDeP : {
-      @table::Tracking.producers.KSFDeP
-      SeedCollection             : MHDeP
-    }
-    KSFDmuM : {
-      @table::Tracking.producers.KSFDmuM
-      SeedCollection             : MHDmuM
-    }
-    KSFDmuP : {
-      @table::Tracking.producers.KSFDmuP
-      SeedCollection             : MHDmuP
-    }
-    KSFUeM : {
-      @table::Tracking.producers.KSFUeM
-      SeedCollection             : MHUeM
-    }
-    KSFUeP : {
-      @table::Tracking.producers.KSFUeP
-      SeedCollection             : MHUeP
-    }
-    KSFUmuM : {
-      @table::Tracking.producers.KSFUmuM
-      SeedCollection             : MHUmuM
-    }
-    KSFUmuP : {
-      @table::Tracking.producers.KSFUmuP
-      SeedCollection             : MHUmuP
-    }
     # KinKal fits
     KKDeM : {
-      @table::Mu2eKinKal.producers.KKDeMDriftFit
+      @table::Mu2eKinKal.producers.KKDeM
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDeMDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDeM.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHDeM" ]
       }
     }
     KKDeP : {
-      @table::Mu2eKinKal.producers.KKDePDriftFit
+      @table::Mu2eKinKal.producers.KKDeP
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDePDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDeP.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHDeP" ]
       }
     }
-   KKUeM : {
-      @table::Mu2eKinKal.producers.KKUeMDriftFit
+    KKUeM : {
+      @table::Mu2eKinKal.producers.KKUeM
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDeMDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDeM.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHUeM" ]
       }
     }
     KKUeP : {
-      @table::Mu2eKinKal.producers.KKUePDriftFit
+      @table::Mu2eKinKal.producers.KKUeP
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDePDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDeP.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHUeP" ]
       }
     }
     KKDmuM : {
-      @table::Mu2eKinKal.producers.KKDmuMDriftFit
+      @table::Mu2eKinKal.producers.KKDmuM
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDmuMDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDmuM.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHDmuM" ]
       }
     }
     KKDmuP : {
-      @table::Mu2eKinKal.producers.KKDmuPDriftFit
+      @table::Mu2eKinKal.producers.KKDmuP
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDmuPDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDmuP.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHDmuP" ]
       }
     }
-   KKUmuM : {
-      @table::Mu2eKinKal.producers.KKUmuMDriftFit
+    KKUmuM : {
+      @table::Mu2eKinKal.producers.KKUmuM
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDmuMDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDmuM.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHUmuM" ]
       }
     }
     KKUmuP : {
-      @table::Mu2eKinKal.producers.KKUmuPDriftFit
+      @table::Mu2eKinKal.producers.KKUmuP
       ModuleSettings : {
-        @table::Mu2eKinKal.producers.KKDmuPDriftFit.ModuleSettings
+        @table::Mu2eKinKal.producers.KKDmuP.ModuleSettings
         @table::Mu2eKinKal.KKPrecursors
         HelixSeedCollections : [ "MHUmuP" ]
       }
     }
+    KKLine : {
+      @table::Mu2eKinKal.producers.KKLine
+      ModuleSettings : {
+        @table::Mu2eKinKal.producers.KKLine.ModuleSettings
+        @table::Mu2eKinKal.KKPrecursors
+        CosmicTrackSeedCollections : ["LineFinder"]
+      }
+    }
+    KKOffSpill : {
+      @table::Mu2eKinKal.producers.KKOffSpill
+      ModuleSettings : {
+        @table::Mu2eKinKal.producers.KKOffSpill.ModuleSettings
+        @table::Mu2eKinKal.KKPrecursors
+        PanelHitCollection : "makePH"
+        TimeClusterCollection : "SimpleTimeCluster"
+      }
+
+                 }
 
     # Implicit TrkPatRec config for Final Fits and upstream fits (no merging)
     #
@@ -169,22 +157,19 @@ Reconstruction : {
       SaveEnergySteps : false
       SaveUnusedDigiMCs : true
       SaveAllUnusedDigiMCs : false
-      TimeOffsets : []
       PrimaryParticle : "compressDigiMCs"
       StrawDigiCollection : "makeSD"
-      StrawHitFlagCollection : "FlagBkgHits:StrawHits"
       ComboHitCollection : "makeSH"
       CaloDigiCollection : "CaloDigiMaker"
       CrvDigiCollection : "CrvDigi"
       CaloClusterCollection : "CaloClusterMaker"
-      CrvCoincidenceClusterCollection : "CrvCoincidenceClusterFinder"
+      CrvCoincidenceClusterCollections : [ "CrvCoincidenceClusterFinder" ]
       StrawDigiMCCollection : "compressDigiMCs"
       CrvDigiMCCollection : "compressDigiMCs"
       KalSeedCollections  : [
-        "KFFDeM", "KFFDeP", "KFFDmuM", "KFFDmuP",
-        "KFFUeM", "KFFUmuP", "KFFUmuM", "KFFUmuP" ,
         "KKDeM", "KKDeP", "KKDmuM", "KKDmuP",
-        "KKUeM", "KKUmuP", "KKUmuM", "KKUmuP" ]
+        "KKUeM", "KKUmuP", "KKUmuM", "KKUmuP",
+        "KKLine","KKOffSpill"]
       HelixSeedCollections  : ["MHDeM", "MHDeP", "MHDmuM", "MHDmuP",
         "MHUeM", "MHUeP", "MHUmuM", "MHUmuP" ]
       VDSPCollection : "compressDigiMCs:virtualdetector"
@@ -196,7 +181,6 @@ Reconstruction : {
       crvDigiMCTag : "compressDigiMCs"
       simParticleTags : [ "compressDigiMCs" ]
       extraStepPointMCTags : ["compressDigiMCs:virtualdetector", "compressDigiMCs:stoppingtarget", "compressDigiMCs:protonabsorber" ]
-      timeMapTags : [ ]
       caloShowerStepTags : [ ]
       caloShowerSimTag : ""
       caloShowerROTag : ""
@@ -204,11 +188,12 @@ Reconstruction : {
       strawDigiMCIndexMapTag : "SelectRecoMC:StrawDigiMap"
       crvDigiMCIndexMapTag : "SelectRecoMC:CrvDigiMap"
       keepAllGenParticles : false
-      crvCoincClusterMCTag : "CrvCoincidenceClusterMatchMC"
+      crvCoincClusterMCTags : [ "CrvCoincidenceClusterMatchMC" ]
       primaryParticleTag : "compressDigiMCs"
       mcTrajectoryTag : "compressDigiMCs"
       rekeySimParticleCollection : false
       noCompression : false
+      crvStepsToKeep : [ ]
     }
 
 
@@ -222,16 +207,16 @@ Reconstruction : {
     RecoFilter : {
       module_type   : RecoMomFilter
       KalFinalTagRoot : ""
-      TrkTags : [ "KFFDeM", "KFFDeP",
-        "KFFUeM", "KFFUeP",
-        "KFFDmuM", "KFFDmuP",
-        "KFFUmuM", "KFFUmuP"
+      TrkTags : [ "KKDeM", "KKDeP",
+        "KKUeM", "KKUeP",
+        "KKDmuM", "KKDmuP",
+        "KKUmuM", "KKUmuP","KKLine","KKOffSpill"
       ]
       # // set low cutoffs
       MomentumCutoff : [ 60.0, 60.0,
         60.0, 60.0,
         60.0, 60.0,
-        60.0, 60.0 ]
+        60.0, 60.0, 60.0, 60.0 ]
     }
   }
 
@@ -244,16 +229,12 @@ Reconstruction : {
     TimeClusterFinderDe, HelixFinderDe,  # TrkPatRec
     CalTimePeakFinder, CalHelixFinderDe,  # CalPatRec
     MHDeM, MHDeP, # helix merging
-    KSFDeM, KSFDeP, # Seed fit (chisquared, no drift)
-    KFFDeM, KFFDeP, # final Kalman filter fit
     KKDeM, KKDeP # KinKal drift fits
   ]
   # Upstream electron sequence (plus and minus): TrkPatRec only
   UeReco : [
     TimeClusterFinderUe, HelixFinderUe,
     MHUeM, MHUeP, # helix merging
-    KSFUeM, KSFUeP, # Seed fit (chisquared, no drift)
-    KFFUeM, KFFUeP, # final Kalman filter fit
     KKUeM, KKUeP # KinKal drift fits
   ]
   # Downstream muon sequence (plus and minus)
@@ -261,18 +242,23 @@ Reconstruction : {
     TimeClusterFinderDmu, HelixFinderDmu,  # TrkPatRec
     CalTimePeakFinderMu, CalHelixFinderDmu,  # CalPatRec
     MHDmuM, MHDmuP, # helix merging
-    KSFDmuM, KSFDmuP, # Seed fit (chisquared, no drift)
-    KFFDmuM, KFFDmuP, # final Kalman filter fit
     KKDmuM, KKDmuP # KinKal drift fits
   ]
   # Upstream muon sequence (plus and minus)
   UmuReco : [
     TimeClusterFinderUmu, HelixFinderUmu,
     MHUmuM, MHUmuP, # helix merging
-    KSFUmuM, KSFUmuP, # Seed fit (chisquared, no drift)
-    KFFUmuM, KFFUmuP, # final Kalman filter fit
     KKUmuM, KKUmuP # KinKal drift fits
- ]
+  ]
+  # NoField straight line
+  LineReco : [
+    SimpleTimeCluster, LineFinder, KKLine
+  ]
+  # OffSpill
+  OffSpillReco : [
+    SimpleTimeCluster, KKOffSpill
+  ]
+
   # add protons for calibration TODO!
 
   # Track reco sequence
@@ -282,7 +268,7 @@ Reconstruction : {
   # CRV reco
   CrvReco : [ @sequence::CrvRecoPackage.CrvRecoSequence ]
   # full MC sequence; form the Calo and CRV matching, and compress based on reco content
-  MCReco :  [@sequence::CaloMC.TruthMatch,  CrvCoincidenceClusterMatchMC, SelectRecoMC, compressRecoMCs ]
+  MCReco :  [@sequence::CaloMC.TruthMatch,  CrvCoincidenceClusterMatchMC, SelectRecoMC, compressRecoMCs, CrvCoincidenceClusterMCAssns ]
 
   # define products to keep
   # First, high-level reco products, and associated sub-products
@@ -304,22 +290,19 @@ Reconstruction : {
     "keep mu2e::ProtonBunchIntensity_*_*_*",
     "keep mu2e::ProtonBunchTimeMC_*_*_*",
     "keep mu2e::EventWeight_*_*_*",
-    "keep *_compressRecoMCs_*_*"
+    "keep *_compressRecoMCs_*_*",
+    "keep mu2e::CosmicLivetime_*_*_*",
+    "keep *_CrvCoincidenceClusterMCAssns_*_*",
+    "keep mu2e::StepPointMCs_CosmicResampler_crvStage1_*"
   ]
   EndSequence : [ recoCompressionCheck ]
 }
 Reconstruction.EndPath : [ @sequence::Reconstruction.EndSequence, Output  ]
 
-# override CalPatRec defaults: FIXME!
-Reconstruction.filters.CalHelixFinderDe.StrawHitFlagCollectionLabel                 : "FlagBkgHits:ComboHits"
-Reconstruction.filters.CalHelixFinderDmu.StrawHitFlagCollectionLabel                 : "FlagBkgHits:ComboHits"
-
 # override CaloMC Truth matching provenance for compression
 
 Reconstruction.producers.CaloHitTruthMatch.caloShowerSimCollection : "compressDigiMCs"
 Reconstruction.producers.CaloHitTruthMatch.primaryParticle : "compressDigiMCs"
-# fix time map lookup
-Reconstruction.producers.CrvCoincidenceClusterMatchMC.timeOffsets.inputs :  [ @sequence::DigiCompression.TimeMaps ]
 
 # all production tracks
 Reconstruction.TrackReco : [
@@ -341,6 +324,34 @@ Reconstruction.RecoMCPath : [
   @sequence::Reconstruction.MCReco,
   RecoFilter
 ]
+# No Field reco path
+Reconstruction.LineRecoPath : [
+  @sequence::Reconstruction.CaloReco,
+  @sequence::Reconstruction.TrkReco,
+  @sequence::Reconstruction.CrvReco,
+  @sequence::Reconstruction.LineReco
+]
+# No Field reco path with MC
+Reconstruction.LineRecoMCPath : [
+  @sequence::Reconstruction.LineRecoPath,
+  @sequence::Reconstruction.MCReco,
+  RecoFilter
+]
+# OffSpill reco path
+Reconstruction.OffSpillRecoPath : [
+  @sequence::Reconstruction.CaloReco,
+  @sequence::Reconstruction.TrkReco,
+  @sequence::Reconstruction.CrvReco,
+  @sequence::Reconstruction.OffSpillReco
+]
+# OffSpill reco path with MC
+Reconstruction.OffSpillRecoMCPath : [
+  @sequence::Reconstruction.OffSpillRecoPath,
+  @sequence::Reconstruction.MCReco,
+  RecoFilter
+]
+
+
 # default output
 Reconstruction.Output : {
   module_type : RootOutput

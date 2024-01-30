@@ -1,0 +1,22 @@
+#include "Production/JobConfig/pileup/NeutralsResampler.fcl"
+physics.filters.neutralsResampler.mu2e.MaxEventsToSkip: 1331172
+
+#----------------------------------------------------------------
+# Code added by generate_fcl:
+source.firstRun: 1202
+source.firstSubRun: 1
+source.maxEvents: 400000
+services.SeedService.baseSeed: 6842164283368898561
+physics.filters.neutralsResampler.fileNames : [
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/sim/mu2e/NeutralsCat/MDC2020p/art/cc/6f/sim.mu2e.NeutralsCat.MDC2020p.001201_00000000.art"
+]
+outputs.EarlyFlashOutput.fileName : "dts.MU2EGRIDDSOWNER.EarlyNeutralsFlash.MU2EGRIDDSCONF.001202_00000001.art"
+outputs.FlashOutput.fileName : "dts.MU2EGRIDDSOWNER.NeutralsFlash.MU2EGRIDDSCONF.001202_00000001.art"
+mu2emetadata.fcl.prologkeys: [  ]
+mu2emetadata.fcl.inkeys: [ "physics.filters.neutralsResampler.fileNames" ]
+mu2emetadata.fcl.outkeys: [ "outputs.EarlyFlashOutput.fileName", "outputs.FlashOutput.fileName" ]
+# End code added by generate_fcl:
+#----------------------------------------------------------------
+#include "Production/Validation/nightly/pileup_epilog.fcl"
+physics.filters.EarlyPrescaleFilter.nPrescale : 1
+outputs.valCombo.fileName: "pileup_11.art"

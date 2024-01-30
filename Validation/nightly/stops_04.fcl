@@ -1,0 +1,4 @@
+#include "Production/JobConfig/validation/stoppedMuonsSingleStage.fcl"
+services.SeedService.baseSeed: 1004
+source.maxEvents: 50000
+outputs.tgtStopOutput.fileName : "stops_04.art"

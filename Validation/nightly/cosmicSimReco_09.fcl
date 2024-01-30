@@ -1,0 +1,4 @@
+#include "Production/Validation/cosmicSimReco.fcl"
+services.SeedService.baseSeed: 1009
+source.maxEvents: 8000
+outputs.Output.fileName : "cosmicSimReco_09.art"

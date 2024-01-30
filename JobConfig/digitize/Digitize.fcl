@@ -25,6 +25,7 @@ physics.trigger_paths[0] : DigitizePath
 physics.trigger_paths[1] : UntriggeredPath
 # define all outputs: not all digitization types will use all of
 outputs : {
+  DTSOutput : @local::Digitize.DTSOutput
   SignalOutput : @local::Digitize.SignalOutput
   DiagOutput :  @local::Digitize.DiagOutput
   TrkOutput :  @local::Digitize.TrkOutput

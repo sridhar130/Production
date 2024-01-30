@@ -6,14 +6,14 @@
 #
 #include "Production/JobConfig/primary/IPAStopParticle.fcl"
 
-physics.filters.DetStepFilter.MinimumPartMom : 10.0 // MeV/c TODO - tweak this parameter to get more DetSteps
+physics.filters.PrimaryFilter.MinimumPartMom : 30.0 // MeV/c TODO - tweak this parameter to get more DetSteps
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eFlateMinus"
 
 physics.producers.generate : {
   module_type: FlatMuonDaughterGenerator
   inputSimParticles: IPAMuminusStopResampler
   stoppingTargetMaterial : "IPA"
-  verbosity : 1
+  verbosity : 0
   pdgId : 11
 }
 

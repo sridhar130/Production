@@ -75,7 +75,7 @@ physics : {
         }
         readVirtualDetector : {
              module_type : ReadVirtualDetector
-             savePDG : [-2212]
+             savePDG : [anti_proton]
              saveVD  : [91,92]
         }
         readAntiProtonSteps : {

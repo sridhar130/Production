@@ -51,7 +51,8 @@ Primary: {
       CrvSteps : [ ] # dont filter on CRV since that can't trigger
       MinimumTrkStepEnergy : 1.0e-6 # 1 ev
       MinimumCaloStepEnergy : 0.0
-      MinimumCrvStepEnergy : 1.0e-6 # get a real value from CRV experts FIXME!
+      MinimumCrvStepEnergy : 0.1
+      MinimumCrvSteps : 1
       MinimumPartMom : 50.0 # MeV/c
       MaximumPartMom : 1.0e6 # MeV/c
       KeepPDG : [ ] # Loop at steps from all particle types
@@ -116,6 +117,27 @@ Primary: {
           stepPointMCMixer: { mixingMap: [ [ "IPAStopFilter:virtualdetector", ":" ] ] }
           volumeInfoMixer: {
             srInput: "compressPVIPAStops"
+            evtOutInstanceName: "eventlevel"
+          }
+        }
+      }
+    }
+
+    WireGammaStopResampler : {
+      module_type: ResamplingMixer
+      readMode            : sequential
+      wrapFiles           : true
+      fileNames: @nil
+      mu2e: {
+        writeEventIDs : true
+        MaxEventsToSkip: @nil
+        debugLevel : 0
+        products: {
+          genParticleMixer: { mixingMap: [ [ "TargetStopResampler", "" ] ] }
+          simParticleMixer: { mixingMap: [ [ "WireStopFilter", "" ] ] }
+          stepPointMCMixer: { mixingMap: [ [ "WireStopFilter:virtualdetector", ":" ] ] }
+          volumeInfoMixer: {
+            srInput: "compressPVWireStops"
             evtOutInstanceName: "eventlevel"
           }
         }

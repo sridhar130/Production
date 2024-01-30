@@ -1,0 +1,22 @@
+#include "Production/JobConfig/pileup/EleBeamResampler.fcl"
+physics.filters.beamResampler.mu2e.MaxEventsToSkip: 328981
+
+#----------------------------------------------------------------
+# Code added by generate_fcl:
+source.firstRun: 1202
+source.firstSubRun: 5
+source.maxEvents: 400000
+services.SeedService.baseSeed: 7165138646933536769
+physics.filters.beamResampler.fileNames : [
+"root://fndcadoor.fnal.gov/pnfs/fnal.gov/usr/mu2e/tape/phy-sim/sim/mu2e/EleBeamCat/MDC2020p/art/49/76/sim.mu2e.EleBeamCat.MDC2020p.001201_00000000.art"
+]
+outputs.EarlyFlashOutput.fileName : "dts.MU2EGRIDDSOWNER.EarlyEleBeamFlash.MU2EGRIDDSCONF.001202_00000005.art"
+outputs.FlashOutput.fileName : "dts.MU2EGRIDDSOWNER.EleBeamFlash.MU2EGRIDDSCONF.001202_00000005.art"
+mu2emetadata.fcl.prologkeys: [  ]
+mu2emetadata.fcl.inkeys: [ "physics.filters.beamResampler.fileNames" ]
+mu2emetadata.fcl.outkeys: [ "outputs.EarlyFlashOutput.fileName", "outputs.FlashOutput.fileName" ]
+# End code added by generate_fcl:
+#----------------------------------------------------------------
+#include "Production/Validation/nightly/pileup_epilog.fcl"
+physics.filters.EarlyPrescaleFilter.nPrescale : 1
+outputs.valCombo.fileName: "pileup_05.art"

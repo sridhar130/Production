@@ -74,11 +74,12 @@ outputs : {
     SelectEvents : [ TriggerPath ]
     fileName    : @nil
     outputCommands : [
+      "drop *_*_*_*",
       @sequence::Reconstruction.HighRecoProducts,
       @sequence::Reconstruction.MCRecoProducts,
       @sequence::Digitize.DigiProducts,
       @sequence::Primary.KeptProducts,
-      # drop reco products which be empty
+      # drop reco products which are empty
       "drop mu2e::Crv*_*_*_*",
       "drop *_*_cosmicTimeMap_*",
       "drop *_g4run_*_*",
@@ -87,6 +88,7 @@ outputs : {
       "drop *_*DeP_*_*",
       "drop *_compressDetStepMCs_*_*",
       "drop *_compressDigiMCs_*_*",
+      "drop *_FindMCPrimary_*_*",
       "drop mu2e::CaloDigis_CaloDigiMaker_*_*",
       "drop mu2e::StrawDigiADCWaveforms_makeSD_*_*",
       "drop mu2e::StrawDigis_makeSD_*_*",
@@ -106,7 +108,7 @@ physics.producers.EWMProducer.SpillType : 1
 # add trigger paths
 # This doesn't currently work, as the step filter stops processing before digis are made, and
 # the digis are required for trigger FIXME!
-##include "gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
+##include "Offline/gen/fcl/Trigger/OnSpillTrigMenu/OnSpillTrigMenu.fcl"
 
 # print summaries
 services.scheduler.wantSummary: true
@@ -142,4 +144,6 @@ physics.filters.TargetStopResampler.mu2e.MaxEventsToSkip: 0
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eCeMinusEndpoint"
 
 services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_current.txt"
+services.GeometryService.bFieldFile: "Offline/Mu2eG4/geom/bfgeom_no_tsu_ps_v01.txt"
+
 #include "Production/Validation/database.fcl"

@@ -6,7 +6,7 @@
 #include "Offline/fcl/standardProducers.fcl"
 #include "Offline/fcl/standardServices.fcl"
 #include "Production/JobConfig/reco/prolog.fcl"
-##include "JobConfig/ensemble/prolog_reco.fcl"
+##include "Production/JobConfig/ensemble/prolog_reco.fcl"
 #
 process_name : recomcdigistrig
 
@@ -24,10 +24,10 @@ physics :
     RecoFilter : {
       module_type   : RecoMomFilter
       KalFinalTagRoot : ""
-      TrkTags : [ "KFFDeM", "KFFDeP",
-                  "KFFUeM", "KFFUeP",
-                  "KFFDmuM", "KFFDmuP",
-                  "KFFUmuM", "KFFUmuP"
+      TrkTags : [ "KKDeM", "KKDeP",
+                  "KKUeM", "KKUeP",
+                  "KKDmuM", "KKDmuP",
+                  "KKUmuM", "KKUmuP"
                 ]
                 # // set low cutoffs
       MomentumCutoff : [ 95.0, 85.0,
@@ -43,12 +43,12 @@ physics :
   EndPath : [ Output, RecoCheck  ]
 }
 
-outputs : { 
+outputs : {
   Output :@local::Reconstruction.Output
 }
 
 # My epilog
-##include "JobConfig/ensemble/epilog_reco.fcl"
+##include "Production/JobConfig/ensemble/epilog_reco.fcl"
 #include "Production/JobConfig/reco/epilog.fcl"
 # trigger epilog
 outputs.Output.SelectEvents : [ "RecoPath" ]
