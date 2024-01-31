@@ -4,33 +4,40 @@
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/digitize/prolog.fcl"
 #include "Production/JobConfig/mixing/prolog.fcl"
+#include "mu2e_trig_config/gen/trig_physMenuPSConfig_OnSpill.fcl"
+#include "mu2e_trig_config/gen/trig_physMenu_OnSpill.fcl"
+
 process_name: Mix
 source : { module_type : RootInput }
 services : @local::Services.SimAndReco # reco is needed for the trigger
 physics : {
-  producers : {
-    @table::Digitize.producers
-    @table::Trigger.producers
-    @table::Mixing.producers
-  }
-  filters: {
-    @table::Digitize.filters
-    @table::Trigger.filters
-    @table::Mixing.filters
-  }
-  analyzers: { @table::Digitize.analyzers }
-  MixPath : [ @sequence::Mixing.MixSequence ]
-  UntriggeredPath : [ @sequence::Mixing.MixSequence, @sequence::Digitize.UntriggeredSequence ]
+   @table::TrigSequences
+   producers : {
+      @table::Digitize.producers
+      @table::TrigProducers.producers
+      @table::Mixing.producers
+   }
+   filters: {
+      @table::Digitize.filters
+      @table::TrigFilters.filters
+      @table::Trig_physMenuPSConfig
+      @table::Mixing.filters
+   }
+   analyzers: { @table::Digitize.analyzers }
+   MixPath : [ @sequence::Mixing.MixSequence ]
+   UntriggeredPath : [ @sequence::Mixing.MixSequence, @sequence::Digitize.UntriggeredSequence ]
 }
 outputs : {
-  SignalOutput : @local::Digitize.SignalOutput
-  DiagOutput :  @local::Digitize.DiagOutput
-  TrkOutput :  @local::Digitize.TrkOutput
-  CaloOutput : @local::Digitize.CaloOutput
-  UntriggeredOutput : @local::Digitize.UntriggeredOutput
+   SignalOutput : @local::Digitize.SignalOutput
+   DiagOutput :  @local::Digitize.DiagOutput
+   TrkOutput :  @local::Digitize.TrkOutput
+   CaloOutput : @local::Digitize.CaloOutput
+   UntriggeredOutput : @local::Digitize.UntriggeredOutput
 }
 physics.trigger_paths[0] : MixPath
 physics.trigger_paths[1] : UntriggeredPath
+physics.trigger_paths : [@sequence::Trig_physMenu.trigger_paths]
+#include "mu2e_trig_config/core/trigDigiInputsEpilog.fcl"
 #
 # Final configuration
 #

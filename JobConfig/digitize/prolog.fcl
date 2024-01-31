@@ -8,7 +8,6 @@
 #include "Offline/CRVResponse/fcl/prolog.fcl"
 #include "Offline/Filters/fcl/prolog.fcl"
 #include "Offline/Compression/fcl/prolog.fcl"
-#include "Offline/Trigger/fcl/prolog_trigger.fcl"
 #
 BEGIN_PROLOG
 
@@ -165,7 +164,7 @@ Digitize: {
   EndSequence : [digiCompressionCheck]
 }
 # override the Trigger sequence to prepare digis
-Trigger.PrepareDigis: [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
+TrigRecoSequences.artFragmentsGen : [ @sequence::CommonMC.DigiSim, @sequence::TrackerMC.DigiSim, @sequence::CaloMC.DigiSim ]
 
 Digitize.DTSOutput.outputCommands : [
   @sequence::Digitize.DTSProducts]

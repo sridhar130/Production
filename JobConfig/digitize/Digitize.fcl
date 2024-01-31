@@ -10,11 +10,9 @@ services : @local::Services.SimAndReco # reco is needed for the trigger
 physics : {
   producers : {
     @table::Digitize.producers
-    @table::Trigger.producers
   }
   filters: {
     @table::Digitize.filters
-    @table::Trigger.filters
   }
   analyzers: { @table::Digitize.analyzers }
   # define the digitization paths.  Trigger paths are added specific to digitization type
