@@ -1,5 +1,7 @@
 #include "Production/JobConfig/pileup/MuStopPileup.fcl"
 source.maxEvents : 1000
+source.firstRun: 1200
+source.firstSubRun: 0
 
 services.scheduler.wantSummary: true
 services.TimeTracker.printSummary: true
