@@ -1,9 +1,23 @@
 #include "Production/JobConfig/digitize/prolog.fcl"
-#include "Offline/Trigger/fcl/OnSpillTrigger.fcl"
-#include "Production/JobConfig/reco/drop_trigger.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "mu2e_trig_config/gen/trig_physMenuPSConfig_OnSpill.fcl"
+#include "mu2e_trig_config/gen/trig_physMenu_OnSpill.fcl"
+process_name : OnSpillTrigger
+services : @local::Services.Reco
 services.DbService.purpose: MDC2020_best
 services.DbService.version: v1_1
 services.DbService.verbose : 2
+
+source : { module_type : RootInput }
+physics : {
+   @table::TrigSequences
+   producers : { @table::TrigProducers.producers }
+   filters :  {
+      @table::TrigFilters.filters
+      @table::Trig_physMenuPSConfig
+   }
+}
+
 outputs : {
   Output : {
     module_type : RootOutput
@@ -18,3 +32,11 @@ physics.Outpath : [ Output ]
 physics.end_paths : [ Outpath ]
 
 outputs.Output.fileName : "dig.owner.val-trigger.dsconf.seq.art"
+
+
+physics.trigger_paths : [@sequence::Trig_physMenu.trigger_paths]
+#include "mu2e_trig_config/core/trigDigiInputsEpilog.fcl"
+
+physics.producers.EWMProducer.SpillType : 1
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/reco/drop_trigger.fcl"

@@ -1,4 +1,3 @@
-#include "Production/JobConfig/digitize/Digitize.fcl"
 #include "Production/JobConfig/digitize/OnSpill.fcl"
 
 services.scheduler.wantSummary: true

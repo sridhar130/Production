@@ -2,10 +2,53 @@
 #  Digitization specialization for off-spill simulations
 #
 # add trigger paths
+#include "Production/JobConfig/digitize/prolog.fcl"
+#include "Production/JobConfig/common/prolog.fcl"
+#include "mu2e_trig_config/core/trigProducers.fcl"
+#include "mu2e_trig_config/core/trigFilters.fcl"
+#include "mu2e_trig_config/core/trigMCProductionSequence.fcl"
+#include "mu2e_trig_config/core/trigSequences.fcl"
 #include "mu2e_trig_config/gen/trig_physMenuPSConfig_OffSpill.fcl"
 #include "mu2e_trig_config/gen/trig_physMenu_OffSpill.fcl"
+
+
+process_name : OffSpillTrigger
+source : { module_type : RootInput }
+services : @local::Services.SimAndReco # reco is needed for the trigger
+physics : {
+   @table::TrigRecoSequences
+   @table::TrigSequences
+   producers : {
+      @table::Digitize.producers
+      @table::TrigProducers.producers   
+   }
+   filters: {
+      @table::Digitize.filters
+      @table::TrigFilters.filters
+      @table::Trig_physMenuPSConfig      
+   }
+   analyzers: { @table::Digitize.analyzers }
+   # define the digitization paths.  Trigger paths are added specific to digitization type
+   DigitizePath : @local::Digitize.DigitizeSequence
+   UntriggeredPath : [ @sequence::Digitize.DigitizeSequence, @sequence::Digitize.UntriggeredSequence ]
+}
+# define all outputs: not all digitization types will use all of
+outputs : {
+   DTSOutput : @local::Digitize.DTSOutput
+   SignalOutput : @local::Digitize.SignalOutput
+   DiagOutput :  @local::Digitize.DiagOutput
+   TrkOutput :  @local::Digitize.TrkOutput
+   CaloOutput : @local::Digitize.CaloOutput
+   UntriggeredOutput : @local::Digitize.UntriggeredOutput
+}
+
+physics.trigger_paths : [ "0:DigitizePath", "1:UntriggeredPath", @sequence::Trig_physMenu.trigger_paths]
+#include "mu2e_trig_config/core/trigDigiInputsEpilog.fcl"
+
 # set the event timing for OffSpill
 physics.producers.EWMProducer.SpillType : 0
+###include "Production/JobConfig/common/epilog.fcl"
+
 # keep all streams
 physics.EndPath : [ @sequence::Digitize.EndSequence, SignalOutput, DiagOutput, TrkOutput, CaloOutput, UntriggeredOutput ]
 physics.end_paths : [ EndPath ]
@@ -18,7 +61,9 @@ physics.filters.caloFastCosmicEventPrescale.nPrescale: 1000
 physics.filters.caloFastMVANNCEEventPrescale.nPrescale: 1000
 physics.filters.caloFastPhotonEventPrescale.nPrescale: 1000
 
-physics.trigger_paths : [@sequence::Trig_physMenu.trigger_paths]
-#include "mu2e_trig_config/core/trigDigiInputsEpilog.fcl"
-
 #include "Production/JobConfig/digitize/offspill_epilog.fcl"
+#
+# Final configuration
+#
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/digitize/epilog.fcl"
