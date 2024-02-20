@@ -1,5 +1,9 @@
 #include "Production/JobConfig/digitize/prolog.fcl"
 #include "Offline/fcl/standardServices.fcl"
+#include "mu2e_trig_config/core/trigProducers.fcl"
+#include "mu2e_trig_config/core/trigFilters.fcl"
+#include "mu2e_trig_config/core/trigRecoSequences.fcl"
+#include "mu2e_trig_config/core/trigSequences.fcl"
 #include "mu2e_trig_config/gen/trig_physMenuPSConfig_OnSpill.fcl"
 #include "mu2e_trig_config/gen/trig_physMenu_OnSpill.fcl"
 process_name : OnSpillTrigger
