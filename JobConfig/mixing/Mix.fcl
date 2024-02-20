@@ -3,38 +3,58 @@
 #
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/digitize/prolog.fcl"
+#include "mu2e_trig_config/core/trigProducers.fcl"
+#include "mu2e_trig_config/core/trigFilters.fcl"
+#include "mu2e_trig_config/core/trigMCProductionSequences.fcl"
 #include "Production/JobConfig/mixing/prolog.fcl"
+#include "mu2e_trig_config/core/trigSequences.fcl"
+#include "mu2e_trig_config/gen/trig_physMenuPSConfig_OnSpill.fcl"
+#include "mu2e_trig_config/gen/trig_physMenu_OnSpill.fcl"
+
 process_name: Mix
 source : { module_type : RootInput }
 services : @local::Services.SimAndReco # reco is needed for the trigger
 physics : {
-  producers : {
-    @table::Digitize.producers
-    @table::Trigger.producers
-    @table::Mixing.producers
-  }
-  filters: {
-    @table::Digitize.filters
-    @table::Trigger.filters
-    @table::Mixing.filters
-  }
-  analyzers: { @table::Digitize.analyzers }
-  MixPath : [ @sequence::Mixing.MixSequence ]
-  UntriggeredPath : [ @sequence::Mixing.MixSequence, @sequence::Digitize.UntriggeredSequence ]
+   @table::TrigRecoSequences
+   @table::TrigSequences
+   producers : {
+      @table::Digitize.producers
+      @table::TrigProducers.producers
+      @table::Mixing.producers
+   }
+   filters: {
+      @table::Digitize.filters
+      @table::TrigFilters.filters
+      @table::Trig_physMenuPSConfig
+      @table::Mixing.filters
+   }
+   analyzers: { @table::Digitize.analyzers }
+   MixPath : [ @sequence::Mixing.MixSequence ]
+   UntriggeredPath : [ @sequence::Mixing.MixSequence, @sequence::Digitize.UntriggeredSequence ]
 }
 outputs : {
-  SignalOutput : @local::Digitize.SignalOutput
-  DiagOutput :  @local::Digitize.DiagOutput
-  TrkOutput :  @local::Digitize.TrkOutput
-  CaloOutput : @local::Digitize.CaloOutput
-  UntriggeredOutput : @local::Digitize.UntriggeredOutput
+   SignalOutput : @local::Digitize.SignalOutput
+   DiagOutput :  @local::Digitize.DiagOutput
+   TrkOutput :  @local::Digitize.TrkOutput
+   CaloOutput : @local::Digitize.CaloOutput
+   UntriggeredOutput : @local::Digitize.UntriggeredOutput
 }
-physics.trigger_paths[0] : MixPath
-physics.trigger_paths[1] : UntriggeredPath
+
+physics.trigger_paths : [ "0:MixPath", "1:UntriggeredPath", @sequence::Trig_physMenu.trigger_paths]
+#include "mu2e_trig_config/core/trigDigiInputsEpilog.fcl"
+# set the event timing for OnSpill
+physics.producers.EWMProducer.SpillType : 1
+# keep all streams
+physics.EndPath : [ @sequence::Digitize.EndSequence, SignalOutput, DiagOutput, TrkOutput, CaloOutput, UntriggeredOutput ]
+physics.end_paths : [ EndPath ]
+
+# override the untriggered filter
+physics.filters.UntriggeredPrescale.prescaleFactor : 1 # record 100% of the untriggered 'triggerable' events
+
 #
 # Final configuration
 #
-#include "Production/JobConfig/digitize/OnSpill.fcl"
+##include "Production/JobConfig/digitize/OnSpill.fcl"
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/digitize/epilog.fcl"
 #include "Production/JobConfig/mixing/epilog.fcl"

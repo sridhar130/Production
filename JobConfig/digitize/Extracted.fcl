@@ -2,7 +2,8 @@
 #  Digitize signals from extracted position cosmics, and trigger based on the extracted position trigger menu
 #
 # add trigger paths
-#include "Offline/gen/fcl/Trigger/ExtrPosTrigMenu/ExtrPosTrigMenu.fcl"
+#include "mu2e_trig_config/gen/trig_extrPosPSConfig_OffSpill.fcl"
+#include "mu2e_trig_config/gen/trig_extrPos_OffSpill.fcl"
 # set the event timing for OffSpill
 physics.producers.EWMProducer.SpillType : 0
 # override the Untriggered filter
@@ -14,6 +15,8 @@ services.GeometryService.bFieldFile: "Offline/Mu2eG4/geom/bfgeom_no_field.txt"
 # produce only calibration streams
 physics.EndPath : [ @sequence::Digitize.EndSequence, TrkOutput, CaloOutput, UntriggeredOutput ]
 physics.end_paths : [ EndPath ]
+physics.trigger_paths : [@sequence::Trig_extrPos.trigger_paths]
+#include "mu2e_trig_config/core/trigDigiInputsEpilog.fcl"
 # setup CRV lookup tables to follow
 physics.producers.CrvPhotons.CRVSectors : ["EX","T1","T2"] # used only to match the vector entries below
 physics.producers.CrvPhotons.reflectors : [  0 ,  1 ,  0 ]
@@ -29,4 +32,6 @@ physics.producers.CrvCoincidence.PEthresholds : [  8 ,  8 ,  8 ]
 physics.producers.CrvCoincidence.adjacentPulseTimeDifferences  : [ 10 , 10 , 10 ]
 physics.producers.CrvCoincidence.maxTimeDifferences            : [ 10 , 10 , 10 ]
 physics.producers.CrvCoincidence.coincidenceLayers             : [  3 ,  3 ,  3 ]
+physics.trigger_paths : [@sequence::Trig_extrPos.trigger_paths]
+#include "mu2e_trig_config/core/trigDigiInputsEpilog.fcl"
 #include "Production/JobConfig/digitize/offspill_epilog.fcl"
