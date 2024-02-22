@@ -22,7 +22,7 @@ physics :
       module_type : TriggerResultsFilter
       PrintFirst : false
       ProcessName : "recomcdigistrig"
-      TriggerNames : ["tprSeedDeM_trigger", "tprSeedDeP_trigger", "cprSeedDeM_trigger", "cprSeedDeP_trigger" ]
+      TriggerNames : ["tprDeM_highP_stopTarg", "tprDeP_highP_stopTarg", "cprDeM_highP_stopTarg", "cprDeP_highP_stopTarg" ]
     }
   }
 

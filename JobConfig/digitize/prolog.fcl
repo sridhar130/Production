@@ -126,37 +126,37 @@ Digitize: {
   # Stream for dts filter
   DTSOutput : {
     module_type : RootOutput
-    SelectEvents : [ "*_highP_*_trigger" ]
+    SelectEvents : [ "*_highP_*" ]
     fileName    : @nil
   }
   # Stream for events passing any 'physics signal' trigger; at the moment, just high-momentum tracks
   SignalOutput : {
     module_type : RootOutput
-    SelectEvents : [ "*_highP_*_trigger" ]
+    SelectEvents : [ "*_highP_*" ]
     fileName    : @nil
   }
   # Stream for diagnostic events; random and (prescaled) signal precursors
   DiagOutput : {
     module_type : RootOutput
-    SelectEvents : [ "minBias_*_trigger" , "*Helix*M_trigger", "*Helix*P_trigger"]
+    SelectEvents : [ "minBias_*" , "*Helix*M", "*Helix*P"]
     fileName    : @nil
   }
   # Stream for events useful for tracker calibration and alignment
   TrkOutput : {
     module_type : RootOutput
-    SelectEvents : [ "*_lowP_*_trigger","*_ipa_*_trigger", "cst*_trigger" ]
+    SelectEvents : [ "*_lowP_*","*_ipa_*", "cst*" ]
     fileName    : @nil
   }
   # Stream for events useful for calorimeter calibration
   CaloOutput : {
     module_type : RootOutput
-    SelectEvents : [ "calo*_trigger" ] # selects events passing calorimeter calibration trigger
+    SelectEvents : [ "calo*" ] # selects events passing calorimeter calibration trigger
     fileName    : @nil
   }
   # Stream for MC only: Stream for events which 'should have' triggered, but didnt, useful for studying trigger efficiency
   UntriggeredOutput : {
     module_type : RootOutput
-    RejectEvents : [ "*_trigger" ] # reject events passing any trigger
+    RejectEvents : [ "tpr*","cpr*","calo*","cst*" ] # reject events passing any trigger
     SelectEvents : [ "UntriggeredPath" ] # require events pass 'Triggerable' filter
     fileName    : @nil
   }
