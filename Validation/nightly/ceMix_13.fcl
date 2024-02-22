@@ -1,4 +1,4 @@
-#include "Production/JobConfig/mixing/Mix.fcl"
+#include "Production/JobConfig/mixing/MixTrigVal.fcl"
 #include "Production/JobConfig/mixing/OneBB.fcl"
 physics.filters.MuBeamFlashMixer.mu2e.MaxEventsToSkip: 1113148
 physics.filters.EleBeamFlashMixer.mu2e.MaxEventsToSkip: 25650
