@@ -143,7 +143,6 @@ else
   samListLocations ${SAMOPT} --defname="dts.mu2e.${PRIMARY}${CAT}.${CAMPAIGN}${PRIMARY_VERSION}.art" > ${PRIMARY}.txt
 fi
 
-echo \#include \"Production/JobConfig/digitize/Digitize.fcl\" >> digitize.fcl
 echo \#include \"Production/JobConfig/digitize/${DIGITYPE}.fcl\" >> digitize.fcl
 if [[ "${PRIMARY}" == *"Cosmic"* ]]; then
     echo \#include \"Production/JobConfig/digitize/cosmic_epilog.fcl\" >> digitize.fcl

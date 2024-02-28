@@ -1,5 +1,5 @@
 #
-# Prolog for digitizing detector steps.  These scripts can be run as-is, or in conjunction with mixing
+# Prolog for digitizing detector steps
 #
 #include "Offline/fcl/TrkCaloDt.fcl"
 #include "Offline/fcl/standardServices.fcl"
@@ -9,6 +9,13 @@
 #include "Offline/Filters/fcl/prolog.fcl"
 #include "Offline/Compression/fcl/prolog.fcl"
 #
+# core trigger
+#
+#include "mu2e_trig_config/core/trigProducers.fcl"
+#include "mu2e_trig_config/core/trigFilters.fcl"
+#include "mu2e_trig_config/core/trigMCProductionSequences.fcl"
+#include "mu2e_trig_config/core/trigSequences.fcl"
+#
 BEGIN_PROLOG
 
 Digitize: {
@@ -17,7 +24,7 @@ Digitize: {
     @table::TrackerMC.DigiProducers
     @table::CaloMC.DigiProducers
     @table::CrvDAQPackage.producers
-
+    @table::TrigProducers.producers
     compressDigiMCs : {
       module_type : CompressDigiMCs
       strawDigiMCTag : @local::DigiCompressionTags.commonStrawDigiMCTag
@@ -66,7 +73,8 @@ Digitize: {
       prescaleFactor : @nil
       prescaleOffset : 0
     }
-  }
+    @table::TrigFilters.filters
+}
 
   analyzers: {
     digiCompressionCheck : @local::DigiCompression.Check
@@ -94,7 +102,7 @@ Digitize: {
   ]
   DTSProducts : [
     "keep *", "drop *_*_*_DTSFilter"  ]
-  
+
   #
   DigiProducts : [
     "keep mu2e::StrawDigis_*_*_*",
@@ -168,7 +176,7 @@ TrigRecoSequences.artFragmentsGen : [ @sequence::CommonMC.DigiSim, @sequence::Tr
 
 Digitize.DTSOutput.outputCommands : [
   @sequence::Digitize.DTSProducts]
-  
+
 Digitize.SignalOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.DigiProducts]
 
@@ -192,5 +200,6 @@ Digitize.Outputs : {
   CaloOutput : @local::Digitize.CaloOutput
   UntriggeredOutput : @local::Digitize.UntriggeredOutput
 }
+Digitize.EndPath : [ @sequence::Digitize.EndSequence, SignalOutput, DiagOutput, TrkOutput, CaloOutput, UntriggeredOutput ]
 
 END_PROLOG
