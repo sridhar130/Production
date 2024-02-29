@@ -4,17 +4,20 @@
 #include "mu2e_trig_config/gen/trig_physMenu_OffSpill.fcl"
 # then generic digitization
 #include "Production/JobConfig/digitize/Digitize.fcl"
-# final overrides
+# set OffSpill timing
 #include "Production/JobConfig/digitize/OffSpill_epilog.fcl"
 # add trigger filters
 physics.filters : { @table::physics.filters @table::Trig_physMenuPSConfig }
 # add the trigger paths
-physics.trigger_paths : [ "0:DigitizePath", "1:UntriggeredPath", @sequence::Trig_physMenu.trigger_paths]
-# keep all streams
-physics.EndPath : @local::Digitize.EndPath
-physics.end_paths : [ EndPath ]
-# override prescales: it's not clear how to adapt this to the external trigconfig TODO
-physics.filters.UntriggeredPrescale.prescaleFactor : 10 # record 10% of the untriggered
+physics.trigger_paths : [ @sequence::Digitize.trigger_paths, @sequence::Trig_physMenu.trigger_paths]
+# configure 'Triggered' output to be signal plus calibration triggers
+outputs.TriggeredOutput.SelectEvents : [
+  @sequence::Digitize.SignalTriggers,
+  @sequence::Digitize.TrkTriggers,
+  @sequence::Digitize.CaloTriggers ]
+physics.filters.TriggerablePrescale.prescaleFactor : 10 # reduce untriggered
+# override prescales to avoid saturating the Triggered stream with straight tracks and calo clusters.
+# It's not clear how to adapt this to the external trigconfig TODO
 physics.filters.cstTimeClusterEventPrescale.nPrescale: 1000
 physics.filters.cstEventPrescale.nPrescale: 1000
 physics.filters.caloFastCosmicEventPrescale.nPrescale: 1000

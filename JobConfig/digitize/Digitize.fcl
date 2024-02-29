@@ -14,20 +14,18 @@ physics : {
   analyzers: { @table::Digitize.analyzers }
   # define the digitization paths.  Trigger paths are added specific to digitization type
   DigitizePath : @local::Digitize.DigitizeSequence
-  UntriggeredPath : [ @sequence::Digitize.DigitizeSequence, @sequence::Digitize.UntriggeredSequence ]
+  TriggerablePath : [ @sequence::Digitize.DigitizeSequence, @sequence::Digitize.TriggerableSequence ]
   # define the trigger sequences and paths
   @table::TrigRecoSequences
   @table::TrigSequences
 }
-# define all possible outputs: not all digitization types will use all of them
+# define output streams
 outputs : {
-  DTSOutput : @local::Digitize.DTSOutput
-  SignalOutput : @local::Digitize.SignalOutput
-  DiagOutput :  @local::Digitize.DiagOutput
-  TrkOutput :  @local::Digitize.TrkOutput
-  CaloOutput : @local::Digitize.CaloOutput
-  UntriggeredOutput : @local::Digitize.UntriggeredOutput
+  TriggeredOutput : @local::Digitize.TriggeredOutput
+  TriggerableOutput : @local::Digitize.TriggerableOutput
 }
+physics.EndPath : @local::Digitize.EndPath
+physics.end_paths : [ EndPath ]
 #
 # Final configuration
 #
