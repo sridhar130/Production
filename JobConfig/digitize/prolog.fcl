@@ -135,7 +135,7 @@ Digitize: {
   #
   SignalTriggers : [ "*_highP_*" ]  # events with conversion or conversion-like tracks
   TrkTriggers : [ "*_lowP_*","*_ipa_*", "cst*" ] # events useful only for tracker calibration
-  CaloTriggers : [ "*_lowP_*","*_ipa_*", "cst*" ] # events useful only for calo calibration
+  CaloTriggers : [ "calo*" ] # events useful only for calo calibration
   DiagTriggers : [ "minBias_*" , "*Helix*M", "*Helix*P"] # events useful for trigger diagnostics
 
   EndSequence : [digiCompressionCheck]

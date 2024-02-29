@@ -8,6 +8,8 @@
 #include "Production/JobConfig/digitize/OffSpill_epilog.fcl"
 # add trigger filters
 physics.filters : { @table::physics.filters @table::Trig_extrPosMenuPSConfig }
+# add the trigger paths
+physics.trigger_paths : [ @sequence::Digitize.trigger_paths, @sequence::Trig_extrPosMenu.trigger_paths]
 # configure 'Triggered' output to be calibration triggers
 outputs.TriggeredOutput.SelectEvents : [
   @sequence::Digitize.TrkTriggers,
