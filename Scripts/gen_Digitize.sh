@@ -125,11 +125,13 @@ if [[ "${DIGITYPE}" == "Extracted" || "${DIGITYPE}" == "NoField"  ]]; then
     exit_abnormal
   fi
   # check BFIELD here too: it must be 'null' TODO
+  DIGOUT=${PRIMARY} # dont double-up the name
 else
   if [[ "${PRIMARY}" == *"Extracted"* || "${PRIMARY}" == *"NoField"* ]]; then
     echo "PRIMARY ${PRIMARY} incompatible with digitization type ${DIGITYPE}; aborting"
     exit_abnormal
   fi
+  DIGOUT=${PRIMARY}${DIGITYPE}
 fi
 echo "Generating digitization scripts for campaign ${CAMPAIGN} primary $PRIMARY version ${PRIMARY_VERSION} musing version ${OUTPUT_VERSION} digitzation type ${DIGITYPE} database purpose, version  ${DBPURPOSE} ${DBVERSION}"
 
@@ -144,13 +146,12 @@ else
 fi
 
 echo \#include \"Production/JobConfig/digitize/${DIGITYPE}.fcl\" >> digitize.fcl
-if [[ "${PRIMARY}" == *"Cosmic"* ]]; then
+if [[ "${PRIMARY}" == *"Cosmic"* && "${DIGITYPE}" != "Extracted" ]]; then
     echo \#include \"Production/JobConfig/digitize/cosmic_epilog.fcl\" >> digitize.fcl
 fi
 
-  DIGOUT=${PRIMARY}${DIGITYPE}
-  echo outputs.TriggeredOutput.fileName: \"dig.owner.${DIGOUT}Triggered.version.sequencer.art\" >> digitize.fcl
-  echo outputs.TriggerableOutput.fileName: \"dig.owner.${DIGOUT}Triggerable.version.sequencer.art\" >> digitize.fcl
+echo outputs.TriggeredOutput.fileName: \"dig.owner.${DIGOUT}Triggered.version.sequencer.art\" >> digitize.fcl
+echo outputs.TriggerableOutput.fileName: \"dig.owner.${DIGOUT}Triggerable.version.sequencer.art\" >> digitize.fcl
 # setup database access for digi parameters
 echo services.DbService.purpose: ${CAMPAIGN}_${DBPURPOSE} >> digitize.fcl
 echo services.DbService.version: ${DBVERSION} >> digitize.fcl
