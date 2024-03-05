@@ -94,7 +94,8 @@ Digitize: {
   TriggerProducts : [
     "keep art::TriggerResults_*_*_*",
     "keep mu2e::KalSeeds_TT*_*_*",
-    "keep mu2e::CaloClusters_*_*_*"
+    "keep mu2e::CaloClusters_*_*_*",
+    "keep mu2e::TriggerInfo_*_*_*"
   ]
 
   GeneralProducts : [
@@ -146,12 +147,12 @@ TrigRecoSequences.artFragmentsGen : [ @sequence::CommonMC.DigiSim, @sequence::Tr
 Digitize.TriggeredOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.GeneralProducts,
   @sequence::Digitize.DigiProducts,
-  @sequence::Digitize.TriggerProducts]
+  @sequence::Digitize.TriggerProducts ]
 
 Digitize.TriggerableOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.GeneralProducts,
   @sequence::Digitize.DigiProducts,
-  @sequence::Digitize.TriggerProducts]
+  @sequence::Digitize.TriggerProducts ]
 
 Digitize.Outputs : {
   TriggeredOutput : @local::Digitize.TriggeredOutput
