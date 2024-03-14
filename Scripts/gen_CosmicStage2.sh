@@ -111,7 +111,7 @@ if [[ -n $DSSTOPS ]]; then
   echo "Using user-provided input list of DS Stops $DSSTOPS"
 else
   DSSTOPS="CosmicDSStops.txt"
-  samListLocations ${SAMOPT} --defname="sim.mu2e.CosmicDSStops${S1NAME}$LOW.${S1CONF}.art"  > ${DSSTOPS}
+  samListLocations ${SAMOPT} --defname="sim.mu2e.CosmicDSStops${S1NAME}${LOW}Cat.${S1CONF}.art"  > ${DSSTOPS}
 fi
 
 if [ ! -f $DSSTOPS ]; then
