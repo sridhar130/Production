@@ -62,7 +62,15 @@ Pileup: {
       stoppingMaterial: "StoppingTarget_Al"
       verbosityLevel: 1
     }
-
+    DegraderMuonFinder: {
+      module_type            : "StoppedParticlesFinder"
+      particleInput          : "g4run"
+      particleTypes          : [ 13, -13 ]
+      physVolInfoInput       : "g4run:eventlevel"
+      useEventLevelVolumeInfo: true
+      stoppingMaterial       : "G4_Ti"
+      verbosityLevel         : 1
+    }
     IPAMuonFinder : {
       module_type : StoppedParticlesFinder
       particleInput : "g4run"
@@ -91,6 +99,12 @@ Pileup: {
       volumesInput : "g4run"
       hitInputs : []
       particleInputs : [ "WireStopFilter" ]
+    }
+    compressPVDegraderStops: {
+      module_type: CompressPhysicalVolumes
+      volumesInput : "g4run"
+      hitInputs : []
+      particleInputs : [ "DegraderStopFilter" ]
     }
     compressPVTargetPiStops: {
       module_type: CompressPhysicalVolumes
@@ -133,6 +147,12 @@ Pileup: {
       mainHitInputs: []
       extraHitInputs: [ "g4run:virtualdetector" ]
       mainSPPtrInputs: [ "TargetMuonFinder" ]
+    }
+    DegraderStopFilter: {
+      module_type: FilterG4Out
+      mainHitInputs: []
+      extraHitInputs: [ "g4run:virtualdetector" ]
+      mainSPPtrInputs: [ "DegraderMuonFinder" ]
     }
     WireStopFilter: {
       module_type: FilterG4Out
