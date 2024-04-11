@@ -11,32 +11,36 @@ services.SeedService.baseSeed : @local::Common.BaseSeed
 physics: {
   filters : {
     SignalFilter : { # select particles in the Ce signal momentum band, with no cut on the hits
-      # this selection is 100% efficient for Ces, and accepts 98% of cosmics
+      # this selection is 100% efficient for Ces, and accepts >98% of cosmics
       # which pass an  triggers
       module_type : CosmicMixingFilter
       StrawGasSteps : "compressDetStepMCs"
       MinimumPartMom : 50
-      MaximumPartMom : 250
+      MaximumPartMom : 500
       MinimumTrkSteps : 15
       MinimumTrkPlanes : 0
       MinimumTrkPlaneSpan : 16
-      MaxImpact : 150.0
+      MaxImpact : 1000
     }
     CalibFilter : { # select events interesting for calibration: reflecting cosmics, etc
       module_type : CosmicMixingFilter
       StrawGasSteps : "compressDetStepMCs"
-      MinimumPartMom : 50
-      MaximumPartMom : 300
-      MinimumTrkSteps : 100
-      MinimumTrkPlanes : 32
-      MinimumTrkPlaneSpan : 32
+      MinimumPartMom : 1000
+      MaximumPartMom : 1E6
+      MinimumTrkSteps : 20
+      MinimumTrkPlanes : 0
+      MinimumTrkPlaneSpan : 0
       MaxImpact : 1000.0 # no cut on impact
     }
+    PrescaleFilter : {
+      module_type : RandomPrescaleFilter
+      nPrescale : 100
+    }
   }
-  SignalPath : [SignalFilter ]
-  CalibPath : [CalibFilter ]
+  SignalPath : [ SignalFilter ]
+  CalibPath : [ PrescaleFilter, CalibFilter ]
   trigger_paths : [ CalibPath,  SignalPath ]
-  outpath: [ SignalOutput]
+  outpath: [ CalibOutput, SignalOutput ]
   end_paths: [outpath]
 }
 outputs: {
