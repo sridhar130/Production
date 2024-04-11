@@ -7,7 +7,6 @@ CAMPAIGN=""
 OWNER="mu2e"
 S1_VERSION=""
 OUTPUT_VERSION=""
-SAMOPT="-f --schema=root"
 NJOBS=0
 NEVTS=0
 RUNNUM=1202
@@ -30,7 +29,6 @@ usage() {
   [ --njobs  N jobs ]
   [ --nevents  N events/job ]
   [ --low Resample 'Low' S1 output ]
-  [ --samopt (opt) samweb option for listing files, default --schema=root ]
   [ --owner (opt) default mu2e ]
   [ --dsstops (opt) expllicit list of DS stop files ]
   e.g. gen_CosmicStage2.sh --S1 CRY --campaign MDC2020 --s1ver z --over z --njobs 100 --nevents 100000 --owner mu2e ]" 1>&2
@@ -61,9 +59,6 @@ while getopts ":-:" options; do
           ;;
         owner)
           OWNER=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
-          ;;
-        samopt)
-          SAMOPT=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         low)
           LOW="Low"
@@ -112,7 +107,7 @@ if [[ -n $DSSTOPS ]]; then
   echo "Using user-provided input list of DS Stops $DSSTOPS"
 else
   DSSTOPS="CosmicDSStops.txt"
-  samListLocations ${SAMOPT} --defname="sim.mu2e.CosmicDSStops${S1NAME}${LOW}.${S1CONF}.art"  > ${DSSTOPS}
+  samweb list-definition-files sim.mu2e.CosmicDSStops${S1NAME}${LOW}.${S1CONF}.art  > ${DSSTOPS}
 fi
 
 if [ ! -f $DSSTOPS ]; then
@@ -120,15 +115,16 @@ if [ ! -f $DSSTOPS ]; then
   exit_abnormal
 fi
 
-cmd="generate_fcl --dsconf ${OUTCONF} --dsowner ${OWNER} --run-number ${RUNNUM} --description ${S2OUT} --embed ResampleS1.fcl
---events-per-job ${NEVTS} --njobs ${NJOBS} --auxinput=1:physics.filters.CosmicResampler.fileNames:${DSSTOPS}"
+cmd="mu2ejobdef --embed ResampleS1.fcl --setup /cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${S1CONF}/setup.sh --run-number=${RUNNUM} --events-per-job=${NEVTS} --desc ${S2OUT} --dsconf ${OUTCONF} --auxinput=1:physics.filters.CosmicResampler.fileNames:${DSSTOPS}"
+
 echo "Running: $cmd"
 $cmd
 
-for dirname in 000 001 002 003 004 005 006 007 008 009; do
-  if test -d $dirname; then
-    echo "Moving Output to ${S2OUT}S2_$dirname"
-    rm -rf "${S2OUT}S2_$dirname"
-    mv $dirname "${S2OUT}S2_$dirname"
-  fi
-done
+idx_format=$(printf "%07d" ${NJOBS})
+echo $idx
+
+echo "Creating index definiton with size: $idx"
+samweb create-definition mu2epro_index_${S2OUT}_${OUTCONF} "dh.dataset etc.mu2e.index.000.txt and dh.sequencer < ${idx_format}"
+
+echo "Created definiton: mu2epro_index_${S2OUT}_${OUTCONF}"
+samweb describe-definition mu2epro_index_${S2OUT}_${OUTCONF}
