@@ -1,4 +1,5 @@
 #!/bin/bash
+# Sctipt to run on the exisiting par file and index dataset
 echo "$(date) starting fclless submission"
 echo "args: $@"
 echo "fname=$fname"
@@ -18,10 +19,3 @@ echo "$(date) submit_fclless starting mu2e -c temp.fcl"
 mu2e -c temp.fcl
 echo "$(date) submit_fclless ending mu2e -c temp.fcl"
 
-#echo "$(date) find parents"
-#mu2ejobiodetail --jobdef $TARF --index $IND --inputs > $CONDOR_DIR_INPUT/parents.txt
-#echo "$(date) head of parents.txt"
-#head $CONDOR_DIR_INPUT/parents.txt
-#echo $CONDOR_DIR_INPUT
-#pwd
-#ls -ltr $CONDOR_DIR_INPUT/

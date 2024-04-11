@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Default values
+# Script to create par file and index dataset
 EMBED_FILE="template.fcl"
 INPUTS_FILE="inputs.txt"
 MERGE_FACTOR=10
