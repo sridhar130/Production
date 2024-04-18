@@ -23,17 +23,10 @@ physics : {
     filterS1: {
       module_type: FilterCosmicsStage1
       inputs : [ "cosmicFilter:CRV" ]
+      DSStepPointMCs : "CosmicResampler:crvStage1"
 
       # Events with the low energy deposition in CRV. Filters 1% from the total number of events from stage 1.
-      cutEDepMax: 14
-
-      #Upstream region
-      #	cutEDepMin: 14
-      #	cutZMax: 3000
-      #Downstream region
-      #	cutEDepMin: 14
-      #	cutZMin: 3000
-
+      cutEDepMax: 16
     }
   }
   trig: [filterS1]
