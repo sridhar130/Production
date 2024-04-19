@@ -3,15 +3,6 @@
 #
 #include "Offline/Mu2eKinKal/fcl/prolog.fcl"
 #include "Production/JobConfig/reco/Reco.fcl"
-
-# drop trigger products from input; these are static
-source.inputCommands: ["keep *",
-  "drop mu2e::KalSeeds_*_*_*",
-  "drop mu2e::TriggerInfo_*_*_*",
-  "drop mu2e::HelixSeeds_*_*_*",
-  "drop mu2e::TimeClusters_*_*_*",
-  "drop art::TriggerResults_*_*_*"
-]
 # add KinKal fits
 #
 physics.producers : @local::Reconstruction.producers
@@ -27,14 +18,13 @@ physics.RecoPath : [
   @sequence::Reconstruction.MCReco,
   RecoFilter
 ]
-#
 physics.producers.SelectRecoMC.KalSeedCollections : [ "KKDeM", "KKDeP"]
 physics.producers.SelectRecoMC.HelixSeedCollections  : ["MHDeM", "MHDeP" ]
 physics.filters.RecoFilter.TrkTags : [ "KKDeM", "KKDeP"]
 physics.filters.RecoFilter.MomentumCutoff : [ 60.0, 60.0 ]
 
 #include "Production/JobConfig/reco/epilog.fcl"
-
+#include "Production/JobConfig/reco/drop_trigger.fcl"
 outputs: {
   Output: {
     SelectEvents: [
