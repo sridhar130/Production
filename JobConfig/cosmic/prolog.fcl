@@ -223,8 +223,7 @@ Cosmic: {
 
   S2KeptProducts : [
     "keep mu2e::CosmicLivetime_*_mixed_*",
-    "keep mu2e::StepPointMCs_CosmicResampler_crvStage1_*",
-    "keep mu2e::StepPointMCs_CosmicResampler_CRV_*"
+    "keep mu2e::StepPointMCs_CosmicResampler_crvStage1_*"
   ]
 
   S1KeptProducts : [
