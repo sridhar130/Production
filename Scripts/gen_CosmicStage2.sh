@@ -12,6 +12,7 @@ NEVTS=0
 RUNNUM=1202
 LOW=""
 DSSTOPS=""
+SETUP=""
 
 # Function: Exit with error.
 exit_abnormal() {
@@ -31,6 +32,7 @@ usage() {
   [ --low Resample 'Low' S1 output ]
   [ --owner (opt) default mu2e ]
   [ --dsstops (opt) expllicit list of DS stop files ]
+  [ --setup (opt) expllicit simjob setup ]
   e.g. gen_CosmicStage2.sh --S1 CRY --campaign MDC2020 --s1ver z --over z --njobs 100 --nevents 100000 --owner mu2e ]" 1>&2
 }
 
@@ -61,10 +63,13 @@ while getopts ":-:" options; do
           OWNER=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         low)
-          LOW="Low"
+          LOW=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         dsstops)
           DSSTOPS=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+          ;;
+        setup)
+          SETUP=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         esac;;
     :)                                    # If expected argument omitted:
@@ -82,10 +87,16 @@ if [[ ${NJOBS} == 0  || ${NEVTS} == 0 ]]; then
   exit_abnormal
 fi
 
+if [[ ${LOW} != "Low" && ${LOW} != "All" ]]; then
+  echo "low option can only accept 'Low' or 'All'"
+  echo "Provided: ${LOW}"
+  exit_abnormal
+fi
+
 # create the fcl
 rm -f ResampleS1.fcl
 # create a template file, starting from the basic
-echo "#include \"Production/JobConfig/cosmic/S2Resampler.fcl\"" >> ResampleS1.fcl
+echo "#include \"Production/JobConfig/cosmic/S2Resampler.fcl\"" > ResampleS1.fcl
 
 S2OUT="Cosmic${S1NAME}${LOW}"
 echo ${S2OUT}
@@ -110,12 +121,18 @@ else
   samweb list-definition-files sim.mu2e.CosmicDSStops${S1NAME}${LOW}.${S1CONF}.art  > ${DSSTOPS}
 fi
 
+if [[ -n $SETUP ]]; then
+  echo "Using user-provided setup $SETUP"
+else
+  SETUP=/cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${S1CONF}/setup.sh
+fi
+
 if [ ! -f $DSSTOPS ]; then
   echo "Can't find DSStops"
   exit_abnormal
 fi
 
-cmd="mu2ejobdef --embed ResampleS1.fcl --setup /cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${S1CONF}/setup.sh --run-number=${RUNNUM} --events-per-job=${NEVTS} --desc ${S2OUT} --dsconf ${OUTCONF} --auxinput=1:physics.filters.CosmicResampler.fileNames:${DSSTOPS}"
+cmd="mu2ejobdef --embed ResampleS1.fcl --setup ${SETUP} --run-number=${RUNNUM} --events-per-job=${NEVTS} --desc ${S2OUT} --dsconf ${OUTCONF} --auxinput=1:physics.filters.CosmicResampler.fileNames:${DSSTOPS}"
 
 echo "Running: $cmd"
 $cmd
@@ -128,3 +145,6 @@ samweb create-definition mu2epro_index_${S2OUT}_${OUTCONF} "dh.dataset etc.mu2e.
 
 echo "Created definiton: mu2epro_index_${S2OUT}_${OUTCONF}"
 samweb describe-definition mu2epro_index_${S2OUT}_${OUTCONF}
+
+# Clean up
+rm ResampleS1.fcl ${DSSTOPS}
