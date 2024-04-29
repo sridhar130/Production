@@ -72,7 +72,10 @@ echo "  Job description: $DESC"
 echo "  Dataset configuration: $DS_CONF"
 echo "  Dataset owner: $DS_OWNER"
 
-mu2ejobdef --verbose --embed "$EMBED_FILE" --inputs "$INPUTS_FILE" --merge-factor "$MERGE_FACTOR" --setup "$SETUP_FILE" --desc "$DESC" --dsconf "$DS_CONF" --dsowner "$DS_OWNER"
+cmd="mu2ejobdef --verbose --embed $EMBED_FILE --inputs $INPUTS_FILE --merge-factor $MERGE_FACTOR --setup $SETUP_FILE --desc $DESC --dsconf $DS_CONF --dsowner $DS_OWNER"
+
+echo "Running: $cmd"
+$cmd
 
 idx=$(mu2ejobquery --njobs cnf.*.tar)
 idx_format=$(printf "%07d" $idx)
