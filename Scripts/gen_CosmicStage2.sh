@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 #
-# Script to run Stage2 (S2, resampling) S1NAME generation.  The output is Dts files ready for digitization
+# Script to run Stage2 (S2, resampling) S1GEN generation.  The output is Dts files ready for digitization
 
-S1NAME=$1
+S1GEN=$1
 CAMPAIGN=""
 OWNER="mu2e"
 S1_VERSION=""
@@ -10,8 +10,9 @@ OUTPUT_VERSION=""
 NJOBS=0
 NEVTS=0
 RUNNUM=1202
-LOW=""
+S1TYPE=""
 DSSTOPS=""
+SETUP=""
 
 # Function: Exit with error.
 exit_abnormal() {
@@ -22,16 +23,17 @@ exit_abnormal() {
 # Function: Print a help message.
 usage() {
    echo "Usage: $0
-  [ --S1 Cosmic S1 name (CRY, CORSIKA, ...) ]
+  [ --s1gen Cosmic S1 gen type (CRY, CORSIKA, ...)  ]
+  [ --s1type Cosmic S1 stream type ('Low' or 'All') ]
   [ --campaign name of the campaign]
   [ --s1ver campaign version of S1 input]
   [ --over campaign version of S2 output]
   [ --njobs  N jobs ]
   [ --nevents  N events/job ]
-  [ --low Resample 'Low' S1 output ]
   [ --owner (opt) default mu2e ]
   [ --dsstops (opt) expllicit list of DS stop files ]
-  e.g. gen_CosmicStage2.sh --S1 CRY --campaign MDC2020 --s1ver z --over z --njobs 100 --nevents 100000 --owner mu2e ]" 1>&2
+  [ --setup (opt) expllicit simjob setup ]
+  e.g. gen_CosmicStage2.sh --s1gen CRY --s1type All --campaign MDC2020 --s1ver z --over z --njobs 100 --nevents 100000 --owner mu2e ]" 1>&2
 }
 
 # Loop: Get the next option;
@@ -42,8 +44,8 @@ while getopts ":-:" options; do
         campaign)
           CAMPAIGN=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
-        S1)
-          S1NAME=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+        s1gen)
+          S1GEN=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         s1ver)
           S1_VERSION=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
@@ -60,11 +62,14 @@ while getopts ":-:" options; do
         owner)
           OWNER=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
-        low)
-          LOW="Low"
+        s1type)
+          S1TYPE=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         dsstops)
           DSSTOPS=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+          ;;
+        setup)
+          SETUP=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         esac;;
     :)                                    # If expected argument omitted:
@@ -72,7 +77,7 @@ while getopts ":-:" options; do
       exit_abnormal                       # Exit abnormally.
       ;;
     *)                                    # If unknown (any other) option:
-      echo "Unknown option ${OPTARG}"
+          echo "Unknown option ${OPTARG}"
       exit_abnormal                       # Exit abnormally.
       ;;
     esac
@@ -82,22 +87,28 @@ if [[ ${NJOBS} == 0  || ${NEVTS} == 0 ]]; then
   exit_abnormal
 fi
 
+if [[ ${S1TYPE} != "Low" && ${S1TYPE} != "All" ]]; then
+  echo "low option can only accept 'Low' or 'All'"
+  echo "Provided: ${S1TYPE}"
+  exit_abnormal
+fi
+
 # create the fcl
 rm -f ResampleS1.fcl
 # create a template file, starting from the basic
-echo "#include \"Production/JobConfig/cosmic/S2Resampler.fcl\"" >> ResampleS1.fcl
+echo "#include \"Production/JobConfig/cosmic/S2Resampler.fcl\"" > ResampleS1.fcl
 
-S2OUT="Cosmic${S1NAME}${LOW}"
+S2OUT="Cosmic${S1GEN}${S1TYPE}"
 echo ${S2OUT}
-echo $LOW
-if [[ $LOW == "Low" ]]; then
+echo $S1TYPE
+if [[ $S1TYPE == "Low" ]]; then
   let RUNNUM=$RUNNUM+1
   echo "Resampling Low, run number = ${RUNNUM}"
   # add epilog to use the 'Low' GenEventCount object for livetime accounting
   echo '#include "Production/JobConfig/cosmic/S2ResamplerLow.fcl"' >> ResampleS1.fcl
-  echo "outputs.PrimaryOutput.fileName        : \"dts.owner.Cosmic${S1NAME}$LOW.version.sequencer.art\"" >> ResampleS1.fcl
+  echo "outputs.PrimaryOutput.fileName        : \"dts.owner.Cosmic${S1GEN}${S1TYPE}.version.sequencer.art\"" >> ResampleS1.fcl
 else
-  echo "outputs.PrimaryOutput.fileName        : \"dts.owner.Cosmic${S1NAME}$LOW.version.sequencer.art\"" >> ResampleS1.fcl
+  echo "outputs.PrimaryOutput.fileName        : \"dts.owner.Cosmic${S1GEN}${S1TYPE}.version.sequencer.art\"" >> ResampleS1.fcl
 fi
 
 OUTCONF=${CAMPAIGN}${OUTPUT_VERSION}
@@ -107,7 +118,13 @@ if [[ -n $DSSTOPS ]]; then
   echo "Using user-provided input list of DS Stops $DSSTOPS"
 else
   DSSTOPS="CosmicDSStops.txt"
-  samweb list-definition-files sim.mu2e.CosmicDSStops${S1NAME}${LOW}.${S1CONF}.art  > ${DSSTOPS}
+  samweb list-definition-files sim.mu2e.CosmicDSStops${S1GEN}${S1TYPE}.${S1CONF}.art  > ${DSSTOPS}
+fi
+
+if [[ -n $SETUP ]]; then
+  echo "Using user-provided setup $SETUP"
+else
+  SETUP=/cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${S1CONF}/setup.sh
 fi
 
 if [ ! -f $DSSTOPS ]; then
@@ -115,7 +132,7 @@ if [ ! -f $DSSTOPS ]; then
   exit_abnormal
 fi
 
-cmd="mu2ejobdef --embed ResampleS1.fcl --setup /cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${S1CONF}/setup.sh --run-number=${RUNNUM} --events-per-job=${NEVTS} --desc ${S2OUT} --dsconf ${OUTCONF} --auxinput=1:physics.filters.CosmicResampler.fileNames:${DSSTOPS}"
+cmd="mu2ejobdef --embed ResampleS1.fcl --setup ${SETUP} --run-number=${RUNNUM} --events-per-job=${NEVTS} --desc ${S2OUT} --dsconf ${OUTCONF} --auxinput=1:physics.filters.CosmicResampler.fileNames:${DSSTOPS}"
 
 echo "Running: $cmd"
 $cmd
@@ -128,3 +145,6 @@ samweb create-definition mu2epro_index_${S2OUT}_${OUTCONF} "dh.dataset etc.mu2e.
 
 echo "Created definiton: mu2epro_index_${S2OUT}_${OUTCONF}"
 samweb describe-definition mu2epro_index_${S2OUT}_${OUTCONF}
+
+# Clean up
+rm ResampleS1.fcl ${DSSTOPS}

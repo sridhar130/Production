@@ -9,7 +9,7 @@ ls -al
 
 #IND=$( echo $fname | awk -F. '{print $5}' | sed 's/^0*//' )
 IND=$(echo $fname | awk -F. '{print $5}')
-IND=$((10#$IND)) // Remove leading zeros except the first one.
+IND=$((10#$IND)) # Remove leading zeros except the first one.
 TARF=$(ls $CONDOR_DIR_INPUT/*.tar)
 echo "IND=$IND TARF=$TARF"
 mu2ejobfcl --jobdef $TARF --index $IND --default-proto root --default-loc tape > temp.fcl
