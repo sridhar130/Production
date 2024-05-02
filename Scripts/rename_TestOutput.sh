@@ -1,6 +1,10 @@
 #!/usr/bin/bash
 # Script to insert a test field in the output
 
+if [ $1 == "prod" ]; then
+    exit
+fi
+
 for file in *.art cnf*.fcl cnf*.tar; do
     if [ -e "$file" ]; then
         # Extract the first four fields
