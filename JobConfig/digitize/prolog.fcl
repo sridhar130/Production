@@ -134,7 +134,7 @@ Digitize: {
   #
   # trigger selections that can be used to finalize the triggerOutput selection, depending on digitization mode and source
   #
-  SignalTriggers : [ "tprDe_highP_*", "cprDe_high_P*" ]  # events with 'high' momentum tracks with good KinKal fits
+  SignalTriggers : [ "tprDe_highP_*", "cprDe_highP_*" ]  # events with 'high' momentum tracks with good KinKal fits
   TrkTriggers : [ "*_lowP_*","*_ipa_*", "cst*" ] # events useful only for tracker calibration
   CaloTriggers : [ "calo*" ] # events useful only for calo calibration
   DiagTriggers : [ "minBias_*" , "*Helix*M", "*Helix*P"] # events useful for trigger diagnostics
