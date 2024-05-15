@@ -252,11 +252,9 @@ echo services.DbService.version: ${DBVERSION} >> mix.fcl
 echo services.DbService.verbose : 2 >> mix.fcl
 echo "services.GeometryService.bFieldFile : \"${FIELD}\"" >> mix.fcl
 # overwrite the outputs
-echo outputs.SignalOutput.fileName: \"dig.owner.${OUTDESC}Signal.version.sequencer.art\" >> mix.fcl
-echo outputs.DiagOutput.fileName: \"dig.owner.${OUTDESC}Diag.version.sequencer.art\" >> mix.fcl
-echo outputs.TrkOutput.fileName: \"dig.owner.${OUTDESC}Trk.version.sequencer.art\" >> mix.fcl
-echo outputs.CaloOutput.fileName: \"dig.owner.${OUTDESC}Calo.version.sequencer.art\" >> mix.fcl
-echo outputs.UntriggeredOutput.fileName: \"dig.owner.${OUTDESC}Untriggered.version.sequencer.art\" >> mix.fcl
+echo outputs.TriggeredOutput.fileName: \"dig.owner.${OUTDESC}Triggered.version.sequencer.art\" >> mix.fcl
+echo outputs.TriggerableOutput.fileName: \"dig.owner.${OUTDESC}Triggerable.version.sequencer.art\" >> mix.fcl
+
 
 # run generate_fcl
 generate_fcl --dsconf="${OUTCONF}" --dsowner=${OWNER} --description="${OUTDESC}" --embed mix.fcl \
