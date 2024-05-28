@@ -133,6 +133,13 @@ else
   fi
   DIGOUT=${PRIMARY}${DIGITYPE}
 fi
+
+if [[ -n $SETUP ]]; then
+  echo "Using user-provided setup $SETUP"
+else
+  SETUP=${DIR}/setup.sh
+fi
+
 echo "Generating digitization scripts for campaign ${CAMPAIGN} primary $PRIMARY version ${PRIMARY_VERSION} musing version ${OUTPUT_VERSION} digitzation type ${DIGITYPE} database purpose, version  ${DBPURPOSE} ${DBVERSION}"
 
 rm -f digitize.fcl
@@ -142,7 +149,7 @@ then
   echo "Using user-provided input list of detector steps $DSTEPS"
   ln -s $DSTEPS ${PRIMARY}.txt
 else
-  samListLocations ${SAMOPT} --defname="dts.mu2e.${PRIMARY}${CAT}.${CAMPAIGN}${PRIMARY_VERSION}.art" > ${PRIMARY}.txt
+  samweb list-definition-files "dts.mu2e.${PRIMARY}${CAT}.${CAMPAIGN}${PRIMARY_VERSION}.art" > ${PRIMARY}.txt
 fi
 
 echo \#include \"Production/JobConfig/digitize/${DIGITYPE}.fcl\" >> digitize.fcl
@@ -159,18 +166,20 @@ echo services.DbService.verbose : 2 >> digitize.fcl
 echo "services.GeometryService.bFieldFile : \"${FIELD}\"" >> digitize.fcl
 OUTCONF=${CAMPAIGN}${OUTPUT_VERSION}_${DBPURPOSE}_${DBVERSION}
 
+cmd="mu2ejobdef --embed digitize.fcl --setup ${SETUP} --desc ${DIGOUT} --dsconf ${OUTCONF} --inputs=${PRIMARY}.txt  --merge-factor=${MERGE}"
+echo "Running: $cmd"
+$cmd
 
-generate_fcl --dsconf="${OUTCONF}" --dsowner=${OWNER} --description="${DIGOUT}" --embed digitize.fcl \
-  --inputs="${PRIMARY}.txt" --merge-factor=${MERGE}
-for dirname in 000 001 002 003 004 005 006 007 008 009; do
-  if test -d $dirname; then
-    echo "found dir $dirname"
-    MDIR="${DIGOUT}Digitize_$dirname"
-    if test -d $MDIR; then
-      echo "removing $MDIR"
-      rm -rf $MDIR
-    fi
-    echo "moving $dirname to $MDIR"
-    mv $dirname $MDIR
-  fi
-done
+parfile=$(ls cnf.*.tar)
+# Remove cnf.
+index_dataset=${parfile:4}
+# Remove .0.tar
+index_dataset=${index_dataset::-6}
+
+idx=$(mu2ejobquery --njobs cnf.*.tar)
+idx_format=$(printf "%07d" $idx)
+echo $idx
+echo "Creating index definiton with size: $idx"
+samweb create-definition idx_${index_dataset} "dh.dataset etc.mu2e.index.000.txt and dh.sequencer < ${idx_format}"
+echo "Created definiton: idx_${index_dataset}"
+samweb describe-definition idx_${index_dataset}

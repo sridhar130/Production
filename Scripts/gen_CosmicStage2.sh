@@ -137,14 +137,18 @@ cmd="mu2ejobdef --embed ResampleS1.fcl --setup ${SETUP} --run-number=${RUNNUM} -
 echo "Running: $cmd"
 $cmd
 
+parfile=$(ls cnf.*.tar)
+# Remove cnf.
+index_dataset=${parfile:4}
+# Remove .0.tar
+index_dataset=${index_dataset::-6}
+
 idx_format=$(printf "%07d" ${NJOBS})
 echo $idx
-
 echo "Creating index definiton with size: $idx"
-samweb create-definition mu2epro_index_${S2OUT}_${OUTCONF} "dh.dataset etc.mu2e.index.000.txt and dh.sequencer < ${idx_format}"
-
-echo "Created definiton: mu2epro_index_${S2OUT}_${OUTCONF}"
-samweb describe-definition mu2epro_index_${S2OUT}_${OUTCONF}
+samweb create-definition idx_${index_dataset} "dh.dataset etc.mu2e.index.000.txt and dh.sequencer < ${idx_format}"
+echo "Created definiton: idx_${index_dataset}"
+samweb describe-definition idx_${index_dataset}
 
 # Clean up
 rm ResampleS1.fcl ${DSSTOPS}
