@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 #Script to create and/or submit multiple campaign using Project-py
-#Create ini files: ./Production/Scripts/projPy_digi.py --ini_file Production/CampaignConfig/mdc2020_mixing_projectpy.ini --cfg_file Production/CampaignConfig/mdc2020_digireco.cfg --comb_json Production/data/mix_dict.json --simjob MDC2020ae
-#Create, upload and submit all campaign: ./Production/Scripts/projPy_digi.py --ini_file Production/CampaignConfig/mdc2020_mixing_projectpy.ini --cfg_file Production/CampaignConfig/mdc2020_digireco.cfg --comb_json Production/data/mix_dict.json --simjob MDC2020ae --create_campaign --submit
+#Create ini files: ./ProjPy/gen_Campaigns.py --ini_file ProjPy/mdc2020_mixing.ini --cfg_file CampaignConfig/mdc2020_digireco.cfg --comb_json data/mix.json --simjob MDC2020ae
+#Create, upload and submit all campaign: ./ProjPy/gen_Campaigns.py --ini_file ProjPy/mdc2020_mixing.ini --cfg_file CampaignConfig/mdc2020_digireco.cfg --comb_json data/mix.json --simjob MDC2020ae --create_campaign --submit
 
 import os
 from itertools import product
@@ -20,12 +20,14 @@ requiredNamed.add_argument("--comb_json", type=str, help="JSON file that contain
 parser.add_argument("--create_campaign", action="store_true", help="Create campaigns")
 parser.add_argument("--submit", action="store_true", help="Submit campaigns")
 parser.add_argument("--test_run", action="store_true", help="Run in test run mode")
-parser.add_argument("--ini_version", action="store_true", help="Append version to the end of campaign name, i.e. v1")
+parser.add_argument("--ini_version", default="", type=str, help="Append version to the end of campaign name, i.e. _v1")
+
 args = parser.parse_args()
 ini_file = args.ini_file
 cfg_file = args.cfg_file
 simjob = args.simjob
 comb_json = args.comb_json
+ini_version = args.ini_version
 
 create_campaign = args.create_campaign
 submit = args.submit
@@ -48,7 +50,7 @@ list_keys = list(combo_dict.keys())
 for value in list_values:
     print(value)
 
-    campaign_name = f"{simjob}_{'_'.join(map(str, value))}_v0"
+    campaign_name = f"{simjob}_{'_'.join(map(str, value))}{ini_version}"
 
     out_ini_file = f"{campaign_name}.ini"
     os.system(f"cp {ini_file} {out_ini_file}")
