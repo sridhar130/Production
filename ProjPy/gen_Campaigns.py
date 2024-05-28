@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-import os
-from itertools import product
-import argparse
-#!/usr/bin/env python
+
+#Script to create and/or submit multiple campaign using Project-py
+#Create ini files: ./Production/Scripts/projPy_digi.py --ini_file Production/CampaignConfig/mdc2020_mixing_projectpy.ini --cfg_file Production/CampaignConfig/mdc2020_digireco.cfg --comb_json Production/data/mix_dict.json --simjob MDC2020ae
+#Create, upload and submit all campaign: ./Production/Scripts/projPy_digi.py --ini_file Production/CampaignConfig/mdc2020_mixing_projectpy.ini --cfg_file Production/CampaignConfig/mdc2020_digireco.cfg --comb_json Production/data/mix_dict.json --simjob MDC2020ae --create_campaign --submit
+
 import os
 from itertools import product
 import argparse
@@ -13,27 +14,29 @@ parser = argparse.ArgumentParser(description="Script to submit multiple POMS cam
 requiredNamed = parser.add_argument_group('required arguments')
 requiredNamed.add_argument("--ini_file", type=str, help="INI file", required=True)
 requiredNamed.add_argument("--cfg_file", type=str, help="CFG file", required=True)
+requiredNamed.add_argument("--simjob", type=str, help="SimJob version, i.e. MDC2020ae", required=True)
 requiredNamed.add_argument("--comb_json", type=str, help="JSON file that contains combinations to run over", required=True)
 
 parser.add_argument("--create_campaign", action="store_true", help="Create campaigns")
 parser.add_argument("--submit", action="store_true", help="Submit campaigns")
 parser.add_argument("--test_run", action="store_true", help="Run in test run mode")
+parser.add_argument("--ini_version", action="store_true", help="Append version to the end of campaign name, i.e. v1")
 args = parser.parse_args()
 ini_file = args.ini_file
 cfg_file = args.cfg_file
+simjob = args.simjob
 comb_json = args.comb_json
-test_run = args.test_run
+
 create_campaign = args.create_campaign
 submit = args.submit
-
-release_v_dts = "ae"
-release_v_dig = "ae"
-release_v_rec = "ae"
-release_v_o = "ae"
+test_run = args.test_run
+ini_version = args.ini_version
 
 # Load combo_dict from file
 with open(comb_json, "r") as file:
     combo_dict = json.load(file)
+
+print(os.path.basename(comb_json))
 
 if test_run:
     for key, values in combo_dict.items():
@@ -45,7 +48,8 @@ list_keys = list(combo_dict.keys())
 for value in list_values:
     print(value)
 
-    campaign_name = f"MDC2020{release_v_o}_digireco_{value[0]}_{value[1]}_{value[2]}_v0"
+    campaign_name = f"{simjob}_{'_'.join(map(str, value))}_v0"
+
     out_ini_file = f"{campaign_name}.ini"
     os.system(f"cp {ini_file} {out_ini_file}")
 
