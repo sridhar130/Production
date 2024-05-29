@@ -33,7 +33,7 @@ DB_PURPOSE="" # db purpose
 DIGIDB_VERSION="" # db version
 RECODB_VERSION="" # db version
 DIGITYPE="" # digitype
-MERGE=10 # merge factor
+MERGE=1 # merge factor
 OWNER=mu2e
 STREAM=Triggered
 SAMOPT="-f --schema=root"
@@ -110,6 +110,16 @@ if [ -z ${RECODB_VERSION} ] && ! [ -z ${DIGIDB_VERSION} ]; then
   RECODB_VERSION=$DIGIDB_VERSION
 fi
 
+# Test: run a test to check the SimJob for this campaign verion exists
+DIR=/cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${CAMPAIGN}${RECO_VERSION}
+if [ -d "$DIR" ];
+  then
+    echo "Musing $DIR exists."
+  else
+    echo "Musing $DIR does not exist."
+    exit_abnormal
+fi
+
 echo "Generating reco scripts for ${PRIMARY} digi type ${DIGITYPE} digi version ${DIGI_VERSION} output version ${RECO_VERSION} database purpose, version (digi, reco) ${DB_PURPOSE} ${DIGIDB_VERSION} ${RECODB_VERSION}"
 
 rm Digis.txt
@@ -117,8 +127,10 @@ if [[ -n $DIGIS ]];
 then
   echo "Using user-provided input list of digs $DIGIS"
   ln -s $DIGIS Digis.txt
+elif [[ "${DIGITYPE}" == "Extracted" || "${DIGITYPE}" == "NoField" ]]; then
+    samweb list-definition-files "dig.${OWNER}.${PRIMARY}${CAT}${STREAM}.${CAMPAIGN}${DIGI_VERSION}_${DB_PURPOSE}_${DIGIDB_VERSION}.art" > Digis.txt
 else
-  samListLocations ${SAMOPT} --defname="dig.${OWNER}.${PRIMARY}${DIGITYPE}${CAT}${STREAM}.${CAMPAIGN}${DIGI_VERSION}_${DB_PURPOSE}_${DIGIDB_VERSION}.art" > Digis.txt
+    samweb list-definition-files "dig.${OWNER}.${PRIMARY}${DIGITYPE}${CAT}${STREAM}.${CAMPAIGN}${DIGI_VERSION}_${DB_PURPOSE}_${DIGIDB_VERSION}.art" > Digis.txt
 fi
 
 if [[ "${DIGITYPE}" == "Extracted" || "${DIGITYPE}" == "NoField" ]]; then
@@ -127,23 +139,32 @@ else
   echo '#include "Production/JobConfig/reco/Reco.fcl"' > reco.fcl
 fi
 
+if [[ -n $SETUP ]]; then
+  echo "Using user-provided setup $SETUP"
+else
+  SETUP=${DIR}/setup.sh
+fi
 
 echo 'services.DbService.purpose:' ${CAMPAIGN}'_'${DB_PURPOSE} >> reco.fcl
 echo 'services.DbService.version:' ${RECODB_VERSION} >> reco.fcl
 echo 'services.DbService.verbose : 2' >> reco.fcl
-echo ${CAMPAIGN}${RECO_VERSION}_${DB_PURPOSE}_${RECODB_VERSION}
-generate_fcl --dsowner=${OWNER} --override-outputs --auto-description --embed reco.fcl --dsconf "${CAMPAIGN}${RECO_VERSION}_${DB_PURPOSE}_${RECODB_VERSION}" \
---inputs "Digis.txt" --merge-factor=${MERGE}
+DSCONF=${CAMPAIGN}${RECO_VERSION}_${DB_PURPOSE}_${RECODB_VERSION}
+echo ${DSCONF}
 
-for dirname in 000 001 002 003 004 005 006 007 008 009; do
-  if test -d $dirname; then
-    echo "found dir $dirname"
-    MDIR="${PRIMARY}${DIGITYPE}${CAT}${STREAM}Reco_${dirname}"
-    if test -d $MDIR; then
-      echo "removing $MDIR"
-      rm -rf $MDIR
-    fi
-    echo "moving $dirname to $MDIR"
-    mv $dirname $MDIR
-  fi
-done
+cmd="mu2ejobdef --embed reco.fcl --override-output-description --auto-description --setup ${SETUP} --auto-description --dsconf ${DSCONF} --inputs Digis.txt --merge-factor=${MERGE}"
+echo "Running: $cmd"
+$cmd
+
+parfile=$(ls cnf.*.tar)
+# Remove cnf.
+index_dataset=${parfile:4}
+# Remove .0.tar
+index_dataset=${index_dataset::-6}
+
+idx=$(mu2ejobquery --njobs cnf.*.tar)
+idx_format=$(printf "%07d" $idx)
+echo $idx
+echo "Creating index definiton with size: $idx"
+samweb create-definition idx_${index_dataset} "dh.dataset etc.mu2e.index.000.txt and dh.sequencer < ${idx_format}"
+echo "Created definiton: idx_${index_dataset}"
+samweb describe-definition idx_${index_dataset}
