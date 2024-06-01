@@ -1,0 +1,101 @@
+#
+# Re-sample StepPointMCs from VD101 to STM.
+#
+# original author: Yuri Oksuzian, 2019
+# Updated for MDC2020 (DetectorSteps): D. Brown
+# Updated for STM studies: Pawel Plesniak
+
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/CommonMC/fcl/prolog.fcl"
+#include "Production/JobConfig/common/prolog.fcl"
+#include "Production/JobConfig/pileup/prolog.fcl"
+#include "Offline/Analyses/fcl/prolog.fcl"
+
+process_name: STMResampler
+
+source: {
+  module_type : EmptyEvent
+}
+
+services : @local::Services.Sim
+physics: {
+  producers : {
+    @table::Common.producers
+    @table::Pileup.producers
+    # TODO BEFORE NEXT CAMPAIGN - add the CompressPhysicalVolumes module here keeping the output from the FilterG4Out module label.
+    extractVD101 : {
+      # Creates "mu2e::StepPointMCs_extractVD101__BeamToVD101" objects that only store StepPointMCs in VD101. Will create empty collections if no hits are found -> filter required.
+      module_type : STMResamplingProducer
+      VD101StepPointMCsTag : "stmResampler:virtualdetector"
+      verbose : false
+    }
+    STMDetHits : {
+      module_type : CompressDetStepMCs
+      strawGasStepTag : ""
+      caloShowerStepTag : ""
+      crvStepTag : ""
+      simParticleTags : [ "stmResampler", "g4run" ]
+      debugLevel : 0
+      stepPointMCTags : [ "g4run:STMDet" ]
+      compressionOptions : {
+        @table::DetStepCompression.extraCompression # remove some intermediate genealogy steps
+        stepPointMCCompressionLevel : "noCompression"
+        keepNGenerations : 1 # only keep SimParticles producing DetectorSteps and their direct parents
+      }
+      mcTrajectoryTag : "" # no MC Trajectories
+    }
+  }
+  filters : {
+    @table::Common.filters
+    @table::Pileup.filters
+  }
+  analyzers : {
+    @table::Common.analyzers
+    countVDs : {
+      module_type : CountVDHits
+      StepPointMCsTag : "g4run:virtualdetector"
+      enableVDs : [88, 89, 90, 101]
+      verbose : true
+    }
+  }
+  # TODO BEFORE NEXT CAMPAIGN - put extractVD101 and STMDetHits into stmResamplerSequence
+  STMCompressedPath : [ @sequence::Pileup.stmResamplerSequence, extractVD101, @sequence::Common.g4Sequence, STMDetHits ] # TODO - remove stmResampler from prolog.fcl
+  trigger_paths: [ STMCompressedPath ]
+  outPathCompressed : [ genCountLogger, countVDs, CompressedOutput ]
+  end_paths: [ outPathCompressed ]
+}
+
+outputs: {
+  CompressedOutput : {
+    module_type: RootOutput
+    outputCommands : [
+      "drop *_*_*_*",
+      "keep mu2e::GenEventCount_*_*_*", 
+      "keep mu2e::GenParticles_*_*_*",
+      "keep art::EventIDs_*_*_*", 
+      "keep mu2e::StepPointMCs_STMDetHits_*_*",
+      "keep mu2e::SimParticlemv_STMDetHits_*_*"
+    ]
+    fileName : @nil #"dts.owner.CompressedSTMData.version.sequencer.art"
+  }
+}
+# Point Mu2eG4 to the pre-simulated data
+physics.producers.g4run.inputs: {
+  primaryType: "StepPoints"
+  primaryTag: "extractVD101"
+  inputMCTrajectories: ""
+  simStageOverride: 2
+  inputPhysVolumeMultiInfo: "stmResampler"
+  updateEventLevelVolumeInfos: {
+    input: "stmResampler:eventlevel"
+    outInstance: "eventlevel"
+  }
+}
+# copy over VD hits
+physics.producers.g4run.SDConfig.preSimulatedHits:  ["stmResampler:virtualdetector"]
+#include "Production/JobConfig/common/MT.fcl"
+#include "Production/JobConfig/common/epilog.fcl"
+#include "Production/JobConfig/pileup/epilog.fcl"
+
+physics.producers.g4run.SDConfig.enableSD: [virtualdetector, STMDet]
+physics.producers.g4run.Mu2eG4CommonCut: {}

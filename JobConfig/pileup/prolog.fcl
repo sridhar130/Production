@@ -219,6 +219,28 @@ Pileup: {
         }
       }
     }
+    # TODO BEFORE NEXT CAMPAIGN - Review the changes below and test if they should be there or not.
+    stmResampler: {
+      module_type: ResamplingMixer
+      fileNames: @nil
+      readMode: "sequential"
+      wrapFiles: true
+      mu2e: {
+        writeEventIDs : true
+        MaxEventsToSkip: @nil
+        debugLevel : 1
+        products: {
+          genParticleMixer: { mixingMap: [ [ "compressDetStepMCsSTM", "" ] ] }
+          simParticleMixer: { mixingMap: [ [ "compressDetStepMCsSTM", "" ] ] }
+          stepPointMCMixer: { mixingMap: [ [ "compressDetStepMCsSTM:virtualdetector", ":" ] ] }
+          simTimeOffset : "protonTimeOffset"
+          volumeInfoMixer: {
+            srInput: "g4run" # ""
+            evtOutInstanceName: "eventlevel" # ""
+          }
+        }
+      }
+    }
   }
 
   Output : {
@@ -305,6 +327,7 @@ Pileup: {
   # define some common sequences
   beamResamplerSequence : [genCounter, protonTimeOffset, beamResampler]
   neutralsResamplerSequence : [genCounter, protonTimeOffset, neutralsResampler]
+  stmResamplerSequence : [genCounter, protonTimeOffset, stmResampler]
   flashSequence : [ TargetMuonFinder, stoppedMuonDaughters, FlashFilter ]
   DetStepSequence : [
     @sequence::TrackerMC.StepSim,
