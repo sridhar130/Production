@@ -7,15 +7,20 @@ echo "pwd=$PWD"
 echo "ls of default dir"
 ls -al
 
+cmd="ls -ltr $CONDOR_DIR_INPUT"
+echo "Running: $cmd"
+$cmd
+
 #IND=$( echo $fname | awk -F. '{print $5}' | sed 's/^0*//' )
 IND=$(echo $fname | awk -F. '{print $5}')
 IND=$((10#$IND)) # Remove leading zeros except the first one.
 TARF=$(ls $CONDOR_DIR_INPUT/*.tar)
 echo "IND=$IND TARF=$TARF"
-mu2ejobfcl --jobdef $TARF --index $IND --default-proto root --default-loc tape > temp.fcl
-echo "$(date) submit_fclless temp.fcl content"
-cat temp.fcl
-echo "$(date) submit_fclless starting mu2e -c temp.fcl"
-mu2e -c temp.fcl
-echo "$(date) submit_fclless ending mu2e -c temp.fcl"
+FCL=${TARF::-6}.${IND}.fcl
+mu2ejobfcl --jobdef $TARF --index $IND --default-proto root --default-loc tape > ${FCL}
+echo "$(date) submit_fclless ${FCL} content"
+cat ${FCL}
+echo "$(date) submit_fclless starting loggedMu2e.sh -c ${FCL}"
+loggedMu2e.sh -c ${FCL}
+echo "$(date) submit_fclless ending loggedMu2e.sh -c ${FCL}"
 

@@ -10,6 +10,6 @@ tbzFilename=${filename/cnf./bck.}
 tbzExtension=${tbzFilename/.fcl/.tbz}
 mu2e "$@" |& tee ${logExtension}
 mu2e_exit_status=${PIPESTATUS[0]}
-tar -cvjf ${tbzExtension} ${logExtension}
+tar -cvjf ${tbzExtension} ${logExtension} ${logFilename}
 tar_exit_status=${?}
 exit ${mu2e_exit_status}
