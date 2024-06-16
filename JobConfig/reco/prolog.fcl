@@ -23,7 +23,7 @@ Reconstruction : {
     @table::CalPatRec.producers
     @table::CaloReco.producers
     @table::CaloCluster.producers
-    @table::CaloMC.TruthProducers
+    @table::CaloMC.producers
     @table::CrvResponsePackage.producers
     @table::CosmicReco.producers
 
