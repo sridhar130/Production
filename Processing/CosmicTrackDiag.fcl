@@ -14,12 +14,12 @@ physics :
 {
   producers : {
     @table::Reconstruction.producers
-    @table::CosmicTracking.producers
+    @table::CosmicReco.producers
   }
   filters :  {
   }
   analyzers: {
-    @table::CosmicTracking.analyzers
+    @table::CosmicReco.analyzers
   }
   RecoPath : [  ]
   EndPath : [ CosmicTrackDiag  ]
