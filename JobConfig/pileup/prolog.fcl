@@ -12,7 +12,7 @@ BEGIN_PROLOG
 Pileup: {
   producers : {
     @table::TrackerMC.StepProducers
-    @table::CaloMC.StepProducers
+    @table::CaloMC.producers
     CrvSteps :{
       @table::CrvSteps
       stepPointsModuleLabels : ["g4run"]
