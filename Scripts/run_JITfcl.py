@@ -63,14 +63,16 @@ def main():
     FCL = os.path.basename(TARF)[:-6] + f".{IND}.fcl"
 
     if copy_input_mdh:
-        run_command(f"mu2ejobfcl --jobdef {TARF} --index {IND} --default-proto file --default-loc dir:{os.getcwd()} > {FCL}")
-        run_command(f"mu2ejobiodetail --jobdef {TARF} --index {IND} --inputs | mdh copy-file -e 3 -o -v -s tape -l local -")
+        run_command(f"mu2ejobfcl --jobdef {TARF} --index {IND} --default-proto file --default-loc dir:{os.getcwd()}/indir > {FCL}")
+        run_command(f"mu2ejobiodetail --jobdef {TARF} --index {IND} --inputs | tee /dev/tty | mdh copy-file -e 3 -o -v -s tape -l local -")
+        run_command(f"mkdir indir; mv *.art indir/")
     elif copy_input_ifdh:
-        run_command(f"mu2ejobfcl --jobdef {TARF} --index {IND} --default-proto file --default-loc dir:{os.getcwd()} > {FCL}")
-        infiles = run_command(f"mu2ejobiodetail --jobdef {TARF} --index {IND} --inputs| mdh print-url -s root -")
+        run_command(f"mu2ejobfcl --jobdef {TARF} --index {IND} --default-proto file --default-loc dir:{os.getcwd()}/indir > {FCL}")
+        infiles = run_command(f"mu2ejobiodetail --jobdef {TARF} --index {IND} --inputs| tee /dev/tty | mdh print-url -s root -")
         infiles = infiles.split()
         for f in infiles:
             run_command(f"ifdh cp {f} .")
+        run_command(f"mkdir indir; mv *.art indir/")
     else:
         run_command(f"mu2ejobfcl --jobdef {TARF} --index {IND} --default-proto root --default-loc tape > {FCL}")
 
