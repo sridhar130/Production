@@ -29,7 +29,7 @@ echo "Electrons: found $nEleEvts in $nEleFiles, skipping max of $nEleSkip events
 if [ -f beamToVD101Resampler.fcl ]; then
     rm -f beamToVD101Resampler.fcl
 fi
-echo '#include "Production/JobConfig/pileup/BeamToVD101.fcl"' >> beamToVD101Resampler.fcl
+echo '#include "Production/JobConfig/pileup/STM/BeamToVD101.fcl"' >> beamToVD101Resampler.fcl
 echo physics.filters.beamResampler.mu2e.MaxEventsToSkip: ${nEleSkip} >> beamToVD101Resampler.fcl
 # Generate the electrons fcl files
 generate_fcl --dsconf=$1$3 --dsowner=$USER --run-number=1204 --description=BeamToVD101EleResampler --events-per-job=$4 --njobs=$5 \
@@ -55,7 +55,7 @@ nMuSkip=$((nMuEvts/nMuFiles))
 echo "Muons: found $nMuEvts in $nMuFiles, skipping max of $nMuSkip events per job"
 # Write beamToVD101Resampler.fcl for muons
 rm -f beamToVD101Resampler.fcl
-echo '#include "Production/JobConfig/pileup/BeamToVD101.fcl"' >> beamToVD101Resampler.fcl
+echo '#include "Production/JobConfig/pileup/STM/BeamToVD101.fcl"' >> beamToVD101Resampler.fcl
 echo physics.filters.beamResampler.mu2e.MaxEventsToSkip: ${nMuSkip} >> beamToVD101Resampler.fcl
 # Generate the electrons fcl files
 generate_fcl --dsconf=$1$3 --dsowner=$USER --run-number=1205 --description=BeamToVD101MuResampler --events-per-job=$6 --njobs=$7 \
@@ -70,8 +70,8 @@ for dirname in 000 001 002 003 004 005 006 007 008 009; do
 done
 
 # Cleanup
-echo "Removing produced files"
-rm -f beamToVD101Resampler.fcl
-rm -f EleBeamCat.txt
-rm -f MuBeamCat.txt
-echo "Finished"
+#echo "Removing produced files"
+#rm -f beamToVD101Resampler.fcl
+#rm -f EleBeamCat.txt
+#rm -f MuBeamCat.txt
+#echo "Finished"

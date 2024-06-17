@@ -58,7 +58,6 @@ physics: {
       # Required as extractVD101 will create a StepPointMCCollection even if the collection is empty.
       module_type: STMResamplingFilter
       VD101StepPointMCsTag : "compressDetStepMCsSTM"
-      verbose : false
     }
   }
   analyzers : {
