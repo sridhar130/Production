@@ -19,13 +19,13 @@ BEGIN_PROLOG
 Reconstruction : {
   producers : {
     @table::TrkHitReco.producers
-    @table::Tracking.producers
+    @table::TrkPatRec.producers
     @table::CalPatRec.producers
     @table::CaloReco.producers
     @table::CaloCluster.producers
-    @table::CaloMC.TruthProducers
+    @table::CaloMC.producers
     @table::CrvResponsePackage.producers
-    @table::CosmicTracking.producers
+    @table::CosmicReco.producers
 
     # instantiate explicit helix merger modules
     # NB: positive here refers to helicity, not charge!
