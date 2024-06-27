@@ -5,14 +5,13 @@
 # original author: S Middleton
 #
 #include "Production/JobConfig/primary/IPAStopParticle.fcl"
-
 physics.filters.PrimaryFilter.MinimumPartMom : 1.0
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eMuonDecayAtRest"
 
-CompositeGenerator: {
+physics.producers.generate: {
   module_type: CompositeMaterialGenerator
-  tag: IPAMuminusStopResampler
-  process: "mu2eMuonDecayAtRest"
+  SimParticleCollection: IPAMuminusStopResampler
+  processCode: "mu2eMuonDecayAtRest"
   weighting: {
     tool_type: AtomicVolumeSamplerTool
     material: "IPAPolyethylene"
@@ -56,7 +55,5 @@ CompositeGenerator: {
     }
   ]
 }
-
-physics.producers.generate: @local::CompositeGenerator
 
 outputs.PrimaryOutput.fileName: "dts.owner.IPAMuminusMichel.version.sequencer.art"
