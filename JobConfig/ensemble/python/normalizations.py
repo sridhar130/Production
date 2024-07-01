@@ -35,7 +35,8 @@ for line in lines:
 print(f"Final stops rate muon {target_stopped_mu_per_POT}")
 
 # get number of target pions stops:
-target_stopped_mu_per_POT = 1.0
+"""
+target_stopped_pi_per_POT = 1.0
 rate = 1.0
 lines= rr.split("\n")
 for line in lines:
@@ -45,7 +46,7 @@ for line in lines:
         rate = rate * float(words[3])
         target_stopped_pi_per_POT = rate * 1000 
 print(f"Final stops rate pion {target_stopped_pi_per_POT}")
-
+"""
 
 # get number of POTs in given livetime
 def livetime_to_pot(livetime, run_mode = '1BB'): #livetime in seconds

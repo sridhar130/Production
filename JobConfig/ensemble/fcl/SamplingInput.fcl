@@ -32,3 +32,4 @@ outputs : {
 
 
 services.TimeTracker.printSummary: true
+physics.trigger_paths: []

@@ -20,23 +20,31 @@ This script is important. It calculates the normalization factors for each proce
 
 ### run_si.py
 
-Runs "SI" which is SamplingInput. This is the script which is run last of all and makes the ensemble samples. It takes two arguments: an input directory and an output directory. The input config directory is required to have the following files
+Runs "SI" which is SamplingInput. This is the script which is run last of all and makes the ensemble samples. It takes two arguments: 
 
-* livetime - one line containing livetime in seconds
-* rue/rup/kmax - one line containing value
-* settings:
-     - dem generation min energy
-     - dep generation max energy
-     - tmin used for RPC generation
-     - max livetime (???)
-     - run number
-     - seed for sampling input
-* filenames_\<sample name\> - one filename per line
+* livetime (in seconds)
+* BB (booster batch mode)
+* rue (Rmue chosen)
+* dem_emin (min energy for DIO)
+* prc (list of process being input)
+* tmin (time min cut)
 
 The script will then call normalizations.py to calculate expected number of events per input type, and the total number of events in the ensemble. It will then iteratively create and run SamplingInput.fcl jobs, keeping track of which events in which files have been used, until the full ensemble is generated.
 
 run_si.py is then ran on the command line in the following way: 
 
 ```
-run_si.py <full path to config directory> <full path to output directory>
+python run_si.py --stdpath=/pnfs/mu2e/scratch/users/sophie/filelists/ --BB=1BB --verbose=1 --rue=1e-13 --livetime=60 --run=1201 --dem_emin=75 --tmin=450 --samplingseed=1  --prc "CE" "DIO"
 ```
+
+### make_si.py
+
+Similar to the run_si script but it does not run the SI, it just makes a template fcl. The user can input any livetime by choosing the appropriate input files carefully.
+
+### genEnsemble.sh
+
+Resides in the Production/Scripts directory. Runs make_si.py for given set of input files.
+
+### getLivetime.sh
+
+Calculates livetime for given set of cosmic files.

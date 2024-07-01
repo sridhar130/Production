@@ -20,6 +20,7 @@ def main(args):
     print(" filelists located in ", args.stdpath)
     print(" Output passed to ", args.stdpath)
     print(" Signals ", args.prc)
+    print(" tag ", args.tag)
   
   # live time in seconds
   livetime = float(args.livetime)
@@ -44,7 +45,7 @@ def main(args):
   norms = {
           "DIO": dio_normalization(livetime,dem_emin, args.BB),
           "CE": ce_normalization(livetime,rue, args.BB),
-          "CELL": ce_normalization(livetime,rue, args.BB),
+          "CeMLL": ce_normalization(livetime,rue, args.BB),
           "CRYCosmic": cry_onspill_normalization(livetime, args.BB),
           "CORSIKACosmic": corsika_onspill_normalization(livetime, args.BB),
           }
@@ -153,7 +154,7 @@ def main(args):
   problem = False
 
   # this parameter controls how many events per fcl file:
-  max_events_per_subrun = 100000#10000
+  max_events_per_subrun = 10000000#10000
   while True:
       # split into "subruns" as requested by the max_events_per_subrun parameter
       events_this_run = max_events_per_subrun
@@ -173,8 +174,8 @@ def main(args):
 
       d = {}
       d["datasets"] = datasets
-      d["outnameMC"] = os.path.join(args.stdpath,"dts.mu2e.ensemble-"+str(args.BB)+"-"+str(processes)+"-"+str(int(livetime))+"s-p"+str(int(dem_emin))+"MeVc"+".MDC2024.%06d_%08d.art" % (run,subrun))
-      d["outnameData"] = os.path.join(args.stdpath,"dts.mu2e.ensemble-Data-"+str(args.BB)+"-"+str(processes)+"-"+str(int(livetime))+"s-p"+str(int(dem_emin))+"MeVc"+".MDC2024.%06d_%08d.art" % (run,subrun))
+      d["outnameMC"] = os.path.join("dts.mu2e.ensemble"+args.tag+".MDC2024.%06d_%08d.art" % (run,subrun))
+      d["outnameData"] = os.path.join("dts.mu2e.ensemble"+args.tag+".MDC2024.%06d_%08d.art" % (run,subrun))
       d["run"] = run
       d["subRun"] = subrun
       d["samplingSeed"] = samplingseed + subrun
@@ -186,48 +187,15 @@ def main(args):
       fout.write(t.substitute(d))
       fout.close()
 
-      # make a log file
-      flog = open(os.path.join(args.stdpath,"SamplingInput_sr%d.log" % (subrun)),"w")
-
-      # run the fcl file using mu2e -c
-      cmd = ["mu2e","-c",os.path.join(args.stdpath,"SamplingInput_sr%d.fcl" % (subrun)),"--nevts","%d" % (events_this_run)]
-      p = subprocess.Popen(cmd,stdout=subprocess.PIPE,universal_newlines=True)
-      ready = False
-      # loop over output of the process:
-      for line in p.stdout:
-          # write the files to log file TODO - time this effort
-          flog.write(line)
-          print(line)
-          if "Dataset" in line.split() and "Counts" in line.split() and "fraction" in line.split() and "Next" in line.split():
-              ready = True
-              print("READY",ready)
-          if ready:
-              if len(line.split()) > 1:
-                  signal = line.split()[0].strip()
-                  if signal in starting_event_num:
-
-                      if "no more available" in line:
-                          starting_event_num[signal] = [0,0,0]
-                          current_file[signal] += 1
-                          if current_file[signal] >= len(filenames[signal]):
-                              print("SIGNAL",signal,"HAS RUN OUT OF FILES!",current_file[signal])
-                              problem = True
-                      else:
-                          new_run = int(line.strip().split()[-5])
-                          new_subrun = int(line.strip().split()[-3])
-                          new_event = int(line.strip().split()[-1])
-                          starting_event_num[signal] = [new_run,new_subrun,new_event]
-      p.wait()
-
       num_events_already_sampled += events_this_run
-      print("Job done, return code: %d processed %d events out of %d" % (p.returncode,num_events_already_sampled,total_sample_events))
+    
       if problem:
           print("Error detected, exiting")
           sys.exit(1)
       if num_events_already_sampled >= total_sample_events:
           break
       subrun+=1
-      
+      return events_this_run
       
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -240,6 +208,7 @@ if __name__ == "__main__":
     parser.add_argument("--dem_emin", help="min energy cut")
     parser.add_argument("--run", help="run number")
     parser.add_argument("--samplingseed", help="samplingseed")
+    parser.add_argument("--tag", help="ouput file tag")
     parser.add_argument("--prc", help="list of signals e.g CE DIO Cosmic", nargs='+')
     args = parser.parse_args()
     (args) = parser.parse_args()

@@ -44,6 +44,7 @@ def main(args):
   norms = {
           "DIO": dio_normalization(livetime,dem_emin, args.BB),
           "CE": ce_normalization(livetime,rue, args.BB),
+          "CeMLL": ce_normalization(livetime,rue, args.BB),
           "CRYCosmic": cry_onspill_normalization(livetime, args.BB),
           "CORSIKACosmic": corsika_onspill_normalization(livetime, args.BB),
           }
@@ -152,7 +153,7 @@ def main(args):
   problem = False
 
   # this parameter controls how many events per fcl file:
-  max_events_per_subrun = 10000000
+  max_events_per_subrun = 10000000#10000
   while True:
       # split into "subruns" as requested by the max_events_per_subrun parameter
       events_this_run = max_events_per_subrun
