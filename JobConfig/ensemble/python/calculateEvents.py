@@ -3,13 +3,13 @@ from normalizations import *
 def main(args):
     Yield = 0
     if(args.prc == "CEMLL"):
-      Yield = ce_normalization(float(args.livetime), float(args.rue))
+      Yield = ce_normalization(float(args.livetime), float(args.rue), str(args.BB))
       print("CEMLL :", Yield)
     if(args.prc == "DIO"):
-      Yield = dio_normalization(float(args.livetime), float(args.dem_emin))
+      Yield = dio_normalization(float(args.livetime), float(args.dem_emin), str(args.BB))
       print("DIO :", Yield)
     if(args.prc == "CORSIKA"):
-      Yield = corsika_onspill_normalization(float(args.livetime))
+      Yield = corsika_onspill_normalization(float(args.livetime), str(args.BB))
       print("CORSIKA :", Yield)
     return (Yield)
     
@@ -19,7 +19,6 @@ if __name__ == '__main__':
     parser.add_argument("--BB", help="BB mode e.g. 1BB")
     parser.add_argument("--livetime", help="simulated livetime")
     parser.add_argument("--rue", help="signal branching rate")
-    parser.add_argument("--tmin", help="arrival time cut")
     parser.add_argument("--dem_emin", help="min energy cut")
     parser.add_argument("--prc", help="process")
     args = parser.parse_args()
