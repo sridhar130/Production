@@ -48,3 +48,27 @@ Resides in the Production/Scripts directory. Runs make_si.py for given set of in
 ### getLivetime.sh
 
 Calculates livetime for given set of cosmic files.
+
+### Making the input files
+
+We choose the Cosmic jobs to be the "standard" since we do not expect to remake them too frequently.
+
+The calculateJobs.py file takes input in the form of a set of cosmic files, calculates livetime and the number of expected other events for the same livetime, assuming a given BB mode.
+
+## Running on the Grid
+
+To make the template fcl file, first run genEnsemble.sh. The arguments are as follows:
+
+```
+bash ../Production/Scripts/gen_Ensemble.sh --livetime 120 --run 1201 --dem_emin 75 --tmin 450 --BB 1BB --rmue 1e-13 --verbose 1 --tagg MSC1a
+```
+
+This will output a .tar file. This can be submitted to the grid as follows:
+
+```
+mu2ejobsub --jobdef cnf.sophie.ensemble.MDC2024a_sm4.0.tar --firstjob=0 --njobs=10  --predefined=sl7 --default-protocol ifdh --default-location tape
+```
+
+### POMs
+
+The above command can be run interactively for personal submissions. For large-scale production...
