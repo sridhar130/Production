@@ -86,9 +86,9 @@ rm filenames_CeMLL_${NJOBS}.txt
 #samweb list-file-locations --defname="dts.mu2e.CeMLeadingLog.${RELEASE}${VERSION}.art" >  filenames_CeMLL
 
 
-samweb list-files "dh.dataset=dts.mu2e.CosmicCORSIKASignalAll.MDC2020ae.art" | head -5 > filenames_CORSIKACosmic_${NJOBS}.txt
-samweb list-files "dh.dataset=dts.mu2e.DIOtailp${DEM_EMIN}MeVc.${RELEASE}${VERSION}.art"  | head -5 > filenames_DIO_${NJOBS}.txt
-samweb list-files "dh.dataset=dts.mu2e.CeMLeadingLog.${RELEASE}${VERSION}.art"  | head -5  >  filenames_CeMLL_${NJOBS}.txt
+samweb list-files "dh.dataset=dts.mu2e.CosmicCORSIKASignalAll.MDC2020ae.art" | head -${NJOBS} > filenames_CORSIKACosmic_${NJOBS}.txt
+samweb list-files "dh.dataset=dts.mu2e.DIOtailp${DEM_EMIN}MeVc.${RELEASE}${VERSION}.art"  | head -${NJOBS} > filenames_DIO_${NJOBS}.txt
+samweb list-files "dh.dataset=dts.mu2e.CeMLeadingLog.${RELEASE}${VERSION}.art"  | head -${NJOBS}  >  filenames_CeMLL_${NJOBS}.txt
 
 
 python /exp/mu2e/app/users/sophie/newOffline/Production/JobConfig/ensemble/python/make_template_fcl.py --stdpath=/exp/mu2e/app/users/sophie/newOffline/MDS-1/ --BB=${BB}  --tag=${TAGG} --verbose=${VERBOSE} --rue=${RMUE} --livetime=${LIVETIME} --run=${RUN} --dem_emin=${DEM_EMIN} --tmin=${TMIN} --samplingseed=${SAMPLINGSEED} --prc "CeMLL" "DIO" "CORSIKACosmic"
