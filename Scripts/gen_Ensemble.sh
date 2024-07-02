@@ -9,11 +9,11 @@ exit_abnormal() {
   usage
   exit 1
 }
-CAMPAIGN=MDC2024
+RELEASE=MDC2024
 VERSION=a_sm4
 PRC=""
 TAGG="" # MDS1a
-NJOBS="" #to help calculate the number of events per job
+NJOBS=5 #to help calculate the number of events per job
 LIVETIME=60 #seconds
 RUN=1201
 DEM_EMIN=75
@@ -77,20 +77,27 @@ while getopts ":-:" options; do
 done
 echo ${TAGG}
 
-python /exp/mu2e/app/users/sophie/newOffline/Production/JobConfig/ensemble/python/make_template_fcl.py --stdpath=/exp/mu2e/app/users/sophie/newOffline/MDS-1/ --BB=${BB}  --tag=${TAGG} --verbose=${VERBOSE} --rue=${RMUE} --livetime=${LIVETIME} --run=${RUN} --dem_emin=${DEM_EMIN} --tmin=${TMIN} --samplingseed=${SAMPLINGSEED} --prc "CeMLL" "DIO" "CORSIKACosmic"
+rm filenames_CORSIKACosmic_${NJOBS}.txt
+rm filenames_DIO_${NJOBS}.txt
+rm filenames_CeMLL_${NJOBS}.txt
 
-#echo ${TOTALEVENTS} ${NJOBS}
-#EVENTS=${TOTALEVENTS}/${NJOBS}
+#samweb list-file-locations --defname="dts.mu2e.CosmicCORSIKASignalAll.MDC2020ae.art" > filenames_CORSIKACosmic
+#samweb list-file-locations --defname="dts.mu2e.DIOtailp${DEM_EMIN}MeVc.${RELEASE}${VERSION}.art"  > filenames_DIO
+#samweb list-file-locations --defname="dts.mu2e.CeMLeadingLog.${RELEASE}${VERSION}.art" >  filenames_CeMLL
+
+
+samweb list-files "dh.dataset=dts.mu2e.CosmicCORSIKASignalAll.MDC2020ae.art" | head -5 > filenames_CORSIKACosmic_${NJOBS}.txt
+samweb list-files "dh.dataset=dts.mu2e.DIOtailp${DEM_EMIN}MeVc.${RELEASE}${VERSION}.art"  | head -5 > filenames_DIO_${NJOBS}.txt
+samweb list-files "dh.dataset=dts.mu2e.CeMLeadingLog.${RELEASE}${VERSION}.art"  | head -5  >  filenames_CeMLL_${NJOBS}.txt
+
+
+python /exp/mu2e/app/users/sophie/newOffline/Production/JobConfig/ensemble/python/make_template_fcl.py --stdpath=/exp/mu2e/app/users/sophie/newOffline/MDS-1/ --BB=${BB}  --tag=${TAGG} --verbose=${VERBOSE} --rue=${RMUE} --livetime=${LIVETIME} --run=${RUN} --dem_emin=${DEM_EMIN} --tmin=${TMIN} --samplingseed=${SAMPLINGSEED} --prc "CeMLL" "DIO" "CORSIKACosmic"
 
 echo "events per job" ${EVENTS}
 
-DSCONF=${CAMPAIGN}${VERSION}
+DSCONF=${RELEASE}${VERSION}
 SETUP=/cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/MDC2020af/setup.sh
 
-cmd="mu2ejobdef --desc=ensemble${TAG} --dsconf=${DSCONF} --run=${RUN} --setup ${SETUP} --sampling=1:CeMLL:filenames_CeMLL_10.txt --sampling=1:DIO:filenames_DIO_10.txt --sampling=1:CORSIKACosmic:filenames_CORSIKACosmic_10.txt --embed SamplingInput_sr0.fcl --verb "
+cmd="mu2ejobdef --desc=ensemble${TAG} --dsconf=${DSCONF} --run=${RUN} --setup ${SETUP} --sampling=1:CeMLL:filenames_CeMLL_${NJOBS}.txt --sampling=1:DIO:filenames_DIO_${NJOBS}.txt --sampling=1:CORSIKACosmic:filenames_CORSIKACosmic_${NJOBS}.txt --embed SamplingInput_sr0.fcl --verb "
 echo "Running: $cmd"
 $cmd
-
-#--events-per-job=${EVENTS}
-#mu2ejobsub --jobdef cnf.sophie.ensemble.MDC2024a_sm4.0.tar --firstjob=0 --njobs=10  --predefined=sl7 --default-protocol ifdh --default-location tape
-

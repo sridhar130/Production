@@ -51,20 +51,23 @@ while getopts ":-:" options; do
     esac
 done
 
-rm output.txt
+rm output_${DEM_EMIN}.txt
 
-echo -n "njobs : " >> output.txt
-wc -l ${COSMICS} | awk '{print $1}' >> output.txt
+echo -n "njobs : " >> output_${DEM_EMIN}.txt
+wc -l ${COSMICS} | awk '{print $1}' >> output_${DEM_EMIN}.txt
+
+echo "BB : " ${BB} >> output_${DEM_EMIN}.txt
+echo "rmue : " ${RMUE} >> output_${DEM_EMIN}.txt
+echo "dem_emin : " ${DEM_EMIN} >> output_${DEM_EMIN}.txt
+echo "input file : " ${COSMICS} >> output_${DEM_EMIN}.txt
 
 mu2e -c ../Offline/Print/fcl/printCosmicLivetime.fcl -S ${COSMICS} | grep 'Livetime:' | awk -F: '{print $NF}' > ${COSMICS}.livetime
 LIVETIME=$(awk '{sum += $1} END {print sum}' ${COSMICS}.livetime)
 
-echo "time" ${LIVETIME}
+echo "livetime : " ${LIVETIME} >> output_${DEM_EMIN}.txt
 
-python /exp/mu2e/app/users/sophie/newOffline/Production/JobConfig/ensemble/python/calculateEvents.py --livetime ${LIVETIME} --rue ${RMUE} --prc "CEMLL" --BB ${BB} >> output.txt
+python /exp/mu2e/app/users/sophie/newOffline/Production/JobConfig/ensemble/python/calculateEvents.py --livetime ${LIVETIME} --rue ${RMUE} --prc "CEMLL" --BB ${BB} >> output_${DEM_EMIN}.txt
 
-python /exp/mu2e/app/users/sophie/newOffline/Production/JobConfig/ensemble/python/calculateEvents.py --livetime ${LIVETIME}  --dem_emin ${DEM_EMIN} --prc "DIO" --BB ${BB} >> output.txt
+python /exp/mu2e/app/users/sophie/newOffline/Production/JobConfig/ensemble/python/calculateEvents.py --livetime ${LIVETIME}  --dem_emin ${DEM_EMIN} --prc "DIO" --BB ${BB} >> output_${DEM_EMIN}.txt
 
-python /exp/mu2e/app/users/sophie/newOffline/Production/JobConfig/ensemble/python/calculateEvents.py --livetime ${LIVETIME} --prc "CORSIKA" --BB ${BB} >> output.txt
-
-
+python /exp/mu2e/app/users/sophie/newOffline/Production/JobConfig/ensemble/python/calculateEvents.py --livetime ${LIVETIME} --prc "CORSIKA" --BB ${BB} >> output_${DEM_EMIN}.txt

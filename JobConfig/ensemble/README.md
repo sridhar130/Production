@@ -53,9 +53,17 @@ Calculates livetime for given set of cosmic files.
 
 We choose the Cosmic jobs to be the "standard" since we do not expect to remake them too frequently.
 
-The calculateJobs.py file takes input in the form of a set of cosmic files, calculates livetime and the number of expected other events for the same livetime, assuming a given BB mode.
+The calculateInputs.sh file takes input in the form of a set of cosmic files, calculates livetime and the number of expected other events for the same livetime, assuming a given BB mode.
 
-## Running on the Grid
+From the cosmics list, it assesses the livetime and then calculates how many other events would arrive in the same time for the chosen beam conditions.
+
+The output is a text file which lists, number of final jobs needed (of course you can have more than this, but you will need to Cat the files). The file also lists total events for each input.
+
+## To make the input processes
+
+You will need to run each process separately, using the number of jobs and events from the previous script.
+
+## Running on the Ensembling on the Grid
 
 To make the template fcl file, first run genEnsemble.sh. The arguments are as follows:
 
