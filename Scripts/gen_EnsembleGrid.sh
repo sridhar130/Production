@@ -79,6 +79,7 @@ while getopts ":-:" options; do
 done
 echo ${TAGG}
 
+rm cnf.sophie.ensemble.${RELEASE}${VERSION}.0.tar
 rm filenames_CORSIKACosmic_${NJOBS}.txt
 rm filenames_DIO_${NJOBS}.txt
 rm filenames_CeMLL_${NJOBS}.txt
@@ -89,6 +90,24 @@ samweb list-files "dh.dataset=dts.mu2e.CeMLeadingLog.${RELEASE}${VERSION}.art"  
 
 DSCONF=${RELEASE}${VERSION}
 
-cmd="mu2ejobdef --desc=ensemble${TAG} --dsconf=${DSCONF} --run=${RUN} --setup ${SETUP} --sampling=1:CeMLL:filenames_CeMLL_${NJOBS}.txt --sampling=1:DIO:filenames_DIO_${NJOBS}.txt --sampling=1:CORSIKACosmic:filenames_CORSIKACosmic_${NJOBS}.txt --embed SamplingInput_sr0.fcl --verb "
+cmd="mu2ejobdef --desc=ensemble${TAG} --dsconf=${DSCONF} --run=${RUN} --setup ${SETUP} --sampling=1:CeMLL:filenames_CeMLL_${NJOBS}.txt --sampling=1:DIO:filenames_DIO_${NJOBS}.txt --sampling=1:CORSIKACosmic:filenames_CORSIKACosmic_${NJOBS}.txt --embed Production/JobConfig/ensemble/fcl/SamplingInput_sr0.fcl --verb "
 echo "Running: $cmd"
 $cmd
+
+parfile=$(ls cnf.*.tar)
+# Remove cnf.
+index_dataset=${parfile:4}
+# Remove .0.tar
+index_dataset=${index_dataset::-6}
+
+idx=$(mu2ejobquery --njobs cnf.*.tar)
+idx_format=$(printf "%07d" $idx)
+echo $idx
+echo "Creating index definiton with size: $idx"
+samweb create-definition idx_${index_dataset} "dh.dataset etc.mu2e.index.000.txt and dh.sequencer < ${idx_format}"
+echo "Created definiton: idx_${index_dataset}"
+samweb describe-definition idx_${index_dataset}
+
+#cmd="mu2ejobsub --jobdef cnf.sophie.ensemble.${RELEASE}${VERSION}.0.tar --firstjob=0 --njobs=${NJOBS}  --predefined=sl7 --default-protocol ifdh --default-location tape"
+#echo "Running: $cmd"
+#$cmd
