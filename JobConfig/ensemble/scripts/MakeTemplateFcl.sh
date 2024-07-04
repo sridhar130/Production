@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 usage() { echo "Usage: $0
-  e.g.  bash ../Production/Scripts/gen_Ensemble.sh --livetime 60 --run 1201 --dem_emin 75 --tmin 450 --BB 1BB --rmue 1e-13 --verbose 1 --tagg MSC1a
+  e.g.  bash ../Production/Scripts/MakeTemplateFcl.sh --livetime 60 --run 1201 --dem_emin 75 --tmin 450 --BB 1BB --rmue 1e-13 --verbose 1 --tagg MSC1a
 "
 }
 
@@ -22,8 +22,6 @@ SAMPLINGSEED=1
 BB=1BB
 RMUE=1e-13
 VERBOSE=1
-SETUP=/cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/MDC2020af/setup.sh
-
 
 # Loop: Get the next option;
 while getopts ":-:" options; do
@@ -79,35 +77,17 @@ while getopts ":-:" options; do
 done
 echo ${TAGG}
 
-rm cnf.sophie.ensemble.${RELEASE}${VERSION}.0.tar
-rm filenames_CORSIKACosmic_${NJOBS}.txt
-rm filenames_DIO_${NJOBS}.txt
-rm filenames_CeMLL_${NJOBS}.txt
+rm filenames_CORSIKACosmic
+rm filenames_DIO
+rm filenames_CeMLL
 
-samweb list-files "dh.dataset=dts.mu2e.CosmicCORSIKASignalAll.MDC2020ae.art" | head -${NJOBS} > filenames_CORSIKACosmic_${NJOBS}.txt
-samweb list-files "dh.dataset=dts.mu2e.DIOtailp${DEM_EMIN}MeVc.${RELEASE}${VERSION}.art"  | head -${NJOBS} > filenames_DIO_${NJOBS}.txt
-samweb list-files "dh.dataset=dts.mu2e.CeMLeadingLog.${RELEASE}${VERSION}.art"  | head -${NJOBS}  >  filenames_CeMLL_${NJOBS}.txt
+#samweb list-file-locations --defname="dts.mu2e.CosmicCORSIKASignalAll.MDC2020ae.art" > filenames_CORSIKACosmic
+#samweb list-file-locations --defname="dts.mu2e.DIOtailp${DEM_EMIN}MeVc.${RELEASE}${VERSION}.art"  > filenames_DIO
+#samweb list-file-locations --defname="dts.mu2e.CeMLeadingLog.${RELEASE}${VERSION}.art" >  filenames_CeMLL
+ls /pnfs/mu2e/tape/phy-sim/dts/mu2e/CosmicCORSIKASignalAll/MDC2020ae/art/*/*/*.art > filenames_CORSIKACosmic
+ls /pnfs/mu2e/tape/phy-sim/dts/mu2e/DIOtailp${DEM_EMIN}MeVc/${RELEASE}${VERSION}/art/*/*/*.art > filenames_DIO
+ls /pnfs/mu2e/tape/phy-sim/dts/mu2e/CeMLeadingLog/${RELEASE}${VERSION}/art/*/*/*.art > filenames_CeMLL
 
-DSCONF=${RELEASE}${VERSION}
+STDPATH=$pwd # this should be the path where you are currently running
 
-cmd="mu2ejobdef --desc=ensemble${TAG} --dsconf=${DSCONF} --run=${RUN} --setup ${SETUP} --sampling=1:CeMLL:filenames_CeMLL_${NJOBS}.txt --sampling=1:DIO:filenames_DIO_${NJOBS}.txt --sampling=1:CORSIKACosmic:filenames_CORSIKACosmic_${NJOBS}.txt --embed Production/JobConfig/ensemble/fcl/SamplingInput_sr0.fcl --verb "
-echo "Running: $cmd"
-$cmd
-
-parfile=$(ls cnf.*.tar)
-# Remove cnf.
-index_dataset=${parfile:4}
-# Remove .0.tar
-index_dataset=${index_dataset::-6}
-
-idx=$(mu2ejobquery --njobs cnf.*.tar)
-idx_format=$(printf "%07d" $idx)
-echo $idx
-echo "Creating index definiton with size: $idx"
-samweb create-definition idx_${index_dataset} "dh.dataset etc.mu2e.index.000.txt and dh.sequencer < ${idx_format}"
-echo "Created definiton: idx_${index_dataset}"
-samweb describe-definition idx_${index_dataset}
-
-#cmd="mu2ejobsub --jobdef cnf.sophie.ensemble.${RELEASE}${VERSION}.0.tar --firstjob=0 --njobs=${NJOBS}  --predefined=sl7 --default-protocol ifdh --default-location tape"
-#echo "Running: $cmd"
-#$cmd
+python /exp/mu2e/app/users/sophie/newOffline/Production/JobConfig/ensemble/python/make_template_fcl.py --stdpath=${STDPATH} --BB=${BB}  --tag=${TAGG} --verbose=${VERBOSE} --rue=${RMUE} --livetime=${LIVETIME} --run=${RUN} --dem_emin=${DEM_EMIN} --tmin=${TMIN} --samplingseed=${SAMPLINGSEED} --prc "CeMLL" "DIO" "CORSIKACosmic"

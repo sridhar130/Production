@@ -12,7 +12,7 @@ exit_abnormal() {
 }
 COSMICS=""
 NJOBS=10
-LIVETIME=60 #seconds
+LIVETIME="" #seconds
 DEM_EMIN=95
 BB=1BB
 RMUE=1e-13
