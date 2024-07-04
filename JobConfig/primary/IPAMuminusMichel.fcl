@@ -13,7 +13,7 @@ physics.producers.generate: {
   SimParticleCollection: IPAMuminusStopResampler
   processCode: "mu2eMuonDecayAtRest"
   weighting: {
-    tool_type: AtomicVolumeSamplerTool
+    tool_type: BoundMuonDecayFractionSamplerTool
     material: "IPAPolyethylene"
   }
   elements: [
