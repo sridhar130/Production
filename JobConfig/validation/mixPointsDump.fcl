@@ -20,7 +20,7 @@ services: {
 
 physics: {
   producers: {
-    protonTimeMap :@local::CommonMC.producers.protonTimeMap
+    protonTimeMap :@local::CommonMC.protonTimeMap
     muonTimeMap : { module_type : GenerateMuonLife verbosityLevel : 1 }
   }
 
