@@ -20,7 +20,7 @@ BEGIN_PROLOG
 
 Digitize: {
   producers : {
-    @table::CommonMC.producers
+    @table::CommonMC.DigiProducers
     @table::TrackerMC.DigiProducers
     @table::CaloMC.producers
     @table::CrvDAQPackage.producers

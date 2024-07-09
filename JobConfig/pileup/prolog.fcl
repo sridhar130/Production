@@ -52,7 +52,7 @@ Pileup: {
       stoppingMaterial: "ST_Wires"
       verbosityLevel: 1
     }
-    
+
     TargetPionFinder: {
       module_type: "StoppedParticlesFinder"
       particleInput: "g4run"
@@ -107,7 +107,7 @@ Pileup: {
       particleInputs : [ "IPAStopFilter" ]
     }
 
-    protonTimeOffset : @local::CommonMC.producers.protonTimeOffset
+    protonTimeOffset : @local::CommonMC.protonTimeOffset
 
   }
   filters : {
