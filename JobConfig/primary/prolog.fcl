@@ -6,6 +6,7 @@
 #include "Offline/CRVResponse/fcl/prolog.fcl"
 #include "Offline/Filters/fcl/prolog.fcl"
 #include "Offline/Compression/fcl/prolog.fcl"
+#include "Offline/CommonMC/fcl/prolog.fcl"
 #
 BEGIN_PROLOG
 
@@ -17,11 +18,18 @@ Primary: {
       @table::CrvSteps
       stepPointsModuleLabels : ["g4run"]
     }
+    SurfaceSteps : {
+      @table::CommonMC.MakeSS
+      VDStepPointMCs : "g4run:virtualdetector"
+      IPAStepPointMCs : "g4run:protonabsorber"
+      TargetStepPointMCs : "g4run:stoppingtarget"
+    }
     compressDetStepMCs : {
       module_type : CompressDetStepMCs
       strawGasStepTag : "StrawGasStepMaker"
       caloShowerStepTag : "CaloShowerStepMaker"
       crvStepTag : "CrvSteps"
+      surfaceStepTag : "SurfaceSteps"
       simParticleTags : [ "g4run" ]
       mcTrajectoryTag : "g4run"
       debugLevel : 0
@@ -148,7 +156,8 @@ Primary: {
   DetStepSequence : [
     @sequence::TrackerMC.StepSim,
     @sequence::CaloMC.StepSim,
-    CrvSteps ]
+    CrvSteps,
+    SurfaceSteps ]
   # sequence to finalize the output
   FinalizeSequence : [  compressDetStepMCs, FindMCPrimary ]
 
@@ -156,6 +165,7 @@ Primary: {
     "keep mu2e::StrawGasSteps_compressDetStepMCs_*_*",
     "keep mu2e::CaloShowerSteps_compressDetStepMCs_*_*",
     "keep mu2e::CrvSteps_compressDetStepMCs_*_*",
+    "keep mu2e::SurfaceSteps_*_*_*",
     "keep mu2e::StepPointMCs_compressDetStepMCs_virtualdetector_*",
     "keep mu2e::StepPointMCs_compressDetStepMCs_protonabsorber_*",
     "keep mu2e::StepPointMCs_compressDetStepMCs_stoppingtarget_*",
