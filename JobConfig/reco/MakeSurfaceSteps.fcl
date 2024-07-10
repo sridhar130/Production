@@ -1,0 +1,11 @@
+#
+# This script is a patch to allow digitizing existing MDC2020 dts files, which do not have SurfaceSteps in them.
+# it should be sourced as epilog after digitization
+#
+physics.producers.MakeSS : {
+  @table::CommonMC.MakeSS
+}
+physics.producers.compressRecoMCs.surfaceStepTags : [ "MakeSS" ]
+physics.RecoPath : [ "MakeSS" , @sequence::physics.RecoPath ]
+
+
