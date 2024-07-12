@@ -12,7 +12,7 @@ BEGIN_PROLOG
 Pileup: {
   producers : {
     @table::TrackerMC.StepProducers
-    @table::CaloMC.StepProducers
+    @table::CaloMC.producers
     CrvSteps :{
       @table::CrvSteps
       stepPointsModuleLabels : ["g4run"]
@@ -22,6 +22,7 @@ Pileup: {
       module_type : CompressDetStepMCs
       strawGasStepTag : "StrawGasStepMaker"
       caloShowerStepTag : "CaloShowerStepMaker"
+      surfaceStepTag : ""
       crvStepTag : "CrvSteps"
       simParticleTags : [ "g4run" ]
       debugLevel : 0
@@ -52,7 +53,7 @@ Pileup: {
       stoppingMaterial: "ST_Wires"
       verbosityLevel: 1
     }
-    
+
     TargetPionFinder: {
       module_type: "StoppedParticlesFinder"
       particleInput: "g4run"
@@ -107,7 +108,7 @@ Pileup: {
       particleInputs : [ "IPAStopFilter" ]
     }
 
-    protonTimeOffset : @local::CommonMC.producers.protonTimeOffset
+    protonTimeOffset : @local::CommonMC.protonTimeOffset
 
   }
   filters : {
