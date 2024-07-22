@@ -76,7 +76,7 @@ Digitize: {
       prescaleOffset : 0
     }
     @table::TrigFilters.filters
-}
+  }
 
   analyzers: {
     digiCompressionCheck : @local::DigiCompression.Check
@@ -149,6 +149,7 @@ TrigRecoSequences.artFragmentsGen : [ @sequence::CommonMC.DigiSim, @sequence::Tr
 
 Digitize.TriggeredOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.GeneralProducts,
+  @sequence::Digitize.GeneralMCProducts,
   @sequence::Digitize.DigiProducts,
   @sequence::Digitize.TriggerProducts,
   @sequence::Digitize.MCDigiProducts
@@ -156,6 +157,7 @@ Digitize.TriggeredOutput.outputCommands : [ "drop *_*_*_*",
 
 Digitize.TriggerableOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.GeneralProducts,
+  @sequence::Digitize.GeneralMCProducts,
   @sequence::Digitize.DigiProducts,
   @sequence::Digitize.TriggerProducts,
   @sequence::Digitize.MCDigiProducts
