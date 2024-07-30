@@ -42,6 +42,7 @@ FIELD="Offline/Mu2eG4/geom/bfgeom_no_tsu_ps_v01.txt" #optional (for changing fie
 OUTDESC=""
 DSTEPS=""
 CAT=""
+NOSS=""
 
 # Loop: Get the next option;
 while getopts ":-:" options; do
@@ -86,6 +87,9 @@ while getopts ":-:" options; do
           ;;
         desc)
           OUTDESC=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+          ;;
+        nosurf)
+          NOSS=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         cat)
           CAT=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
@@ -155,6 +159,9 @@ fi
 echo \#include \"Production/JobConfig/digitize/${DIGITYPE}.fcl\" >> digitize.fcl
 if [[ "${PRIMARY}" == *"Cosmic"* && "${DIGITYPE}" != "Extracted" ]]; then
     echo \#include \"Production/JobConfig/digitize/cosmic_epilog.fcl\" >> digitize.fcl
+fi
+if [[ "${NOSS}" == "" ]]; then
+  echo \#include \"Production/JobConfig/digitize/MakeSurfaceSteps.fcl\" >> digitize.fcl
 fi
 
 echo outputs.TriggeredOutput.fileName: \"dig.owner.${DIGOUT}Triggered.version.sequencer.art\" >> digitize.fcl
