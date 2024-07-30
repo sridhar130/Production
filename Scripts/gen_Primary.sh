@@ -3,14 +3,14 @@
 # create fcl for producing primaries from stopped particles
 # this script requires mu2etools and dhtools be setup
 #
-# Usage: ./Production/Scripts/generate_Primary.sh --primary CeEndpoint --PCAMPAIGN MDC2020 --pver v --sver p --type Muminus --njobs 1000 --events 4000 --pdg 11 --start 0 --end 110 --field Offline/Mu2eG4/geom/bfgeom_reco_altDS11_helical_v01.txt
+# Usage: ./Production/Scripts/generate_Primary.sh --primary CeEndpoint --campaignMDC2020 --pver v --sver p --type Muminus --njobs 1000 --events 4000 --pdg 11 --start 0 --end 110 --field Offline/Mu2eG4/geom/bfgeom_reco_altDS11_helical_v01.txt
 #
 # Note: User can omit flat (pdg, startmom and enedmom) arguments without issue. Field argument also generally will not be used
 
-# The main input parameters needed for any PCAMPAIGN
+# The main input parameters needed for any CAMPAIGN
 PRIMARY="" # is the primary
-PCAMPAIGN="" # primary CAMPAIGN (MDC2020"
-SCAMPAIGN="" #stops CAMPAIGN
+CAMPAIGN="" # primary CAMPAIGN (MDC2020"
+SCAMPAIGN=${CAMPAIGN} #stops CAMPAIGN
 PVER="" # production version
 SVER="" # stops production version
 TYPE="" # the kind of input stops (Muminus, Muplus, IPAMuminus, IPAMuplus, Piminus, Piplus, or Cosmic)
@@ -32,10 +32,10 @@ TAG=""
 usage() {
   echo "Usage: $0
   [ --primary primary physics name ]
-  [ --pcampaign primary camapign name ]
+  [ --campaign primary camapign name ]
   [ --scampaign stops camapign name ]
-  [ --pver primary PCAMPAIGN version ]
-  [ --sver stops PCAMPAIGN version ]
+  [ --pver primary CAMPAIGN version ]
+  [ --sver stops CAMPAIGN version ]
   [ --type stopped particle type ]
   [ --njobs number of jobs ]
   [ --events events per job ]
@@ -48,7 +48,7 @@ usage() {
   [ --run (opt) default 1202 ]
   [ --cat(opt) default Cat ]
 
-  bash gen_Primary.sh --primary DIOtail --type MuMinus --pcampaign MDC2024  --scampaign MDC2020 -pver z_sm3 --sver p --njobs 100 --events 100 --start 75 --end 95
+  bash gen_Primary.sh --primary DIOtail --type MuMinus --campaign MDC2024  --scampaign MDC2020 -pver z_sm3 --sver p --njobs 100 --events 100 --start 75 --end 95
   " 1>&2
 }
 
@@ -67,8 +67,8 @@ while getopts ":-:" options; do
         primary)
           PRIMARY=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
-        pcampaign)
-          PCAMPAIGN=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+        campaign)
+          CAMPAIGN=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         scampaign)
           SCAMPAIGN=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
@@ -126,17 +126,17 @@ while getopts ":-:" options; do
   esac
 done
 
-PRIMARY_PCAMPAIGN=${PCAMPAIGN}${PVER}
+PRIMARY_CAMPAIGN=${CAMPAIGN}${PVER}
 STOPS_SCAMPAIGN=${SCAMPAIGN}${SVER}
 
 # basic tests
-if [[ ${PRIMARY_PCAMPAIGN} == ""  || ${PRIMARY} == "" || ${STOPS_SCAMPAIGN} == "" || ${TYPE} == "" || ${JOBS} == "" || ${EVENTS} == "" ]]; then
-  echo "Missing arguments ${PRIMARY_PCAMPAIGN} ${PRIMARY} ${STOPS_SCAMPAIGN} ${TYPE} ${JOBS} ${EVENTS} "
+if [[ ${PRIMARY_CAMPAIGN} == ""  || ${PRIMARY} == "" || ${STOPS_SCAMPAIGN} == "" || ${TYPE} == "" || ${JOBS} == "" || ${EVENTS} == "" ]]; then
+  echo "Missing arguments ${PRIMARY_CAMPAIGN} ${PRIMARY} ${STOPS_SCAMPAIGN} ${TYPE} ${JOBS} ${EVENTS} "
   exit_abnormal
 fi
 
-# Test: run a test to check the SimJob for this PCAMPAIGN verion exists TODO
-DIR=/cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${PRIMARY_PCAMPAIGN}
+# Test: run a test to check the SimJob for this CAMPAIGN verion exists TODO
+DIR=/cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${PRIMARY_CAMPAIGN}
 if [ -d "$DIR" ];
 then
   echo "$DIR directory exists."
@@ -196,7 +196,7 @@ fi
 # now generate the fcl
 #
 
-generate_fcl --dsconf=${PRIMARY_PCAMPAIGN} --dsowner=${OWNER} --run-number=${RUN} --description=${PRIMARY} --events-per-job=${EVENTS} --njobs=${JOBS} \
+generate_fcl --dsconf=${PRIMARY_CAMPAIGN} --dsowner=${OWNER} --run-number=${RUN} --description=${PRIMARY} --events-per-job=${EVENTS} --njobs=${JOBS} \
   --embed primary.fcl --auxinput=1:physics.filters.${resampler}.fileNames:Stops.txt
 for dirname in 000 001 002 003 004 005 006 007 008 009; do
   if test -d $dirname; then
