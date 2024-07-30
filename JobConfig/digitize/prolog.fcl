@@ -20,9 +20,9 @@ BEGIN_PROLOG
 
 Digitize: {
   producers : {
-    @table::CommonMC.producers
+    @table::CommonMC.DigiProducers
     @table::TrackerMC.DigiProducers
-    @table::CaloMC.DigiProducers
+    @table::CaloMC.producers
     @table::CrvDAQPackage.producers
     @table::TrigProducers.producers
     compressDigiMCs : {
@@ -35,6 +35,7 @@ Digitize: {
       caloShowerStepTags : @local::DigiCompressionTags.primaryCaloShowerStepTags
       caloShowerSimTag : @local::DigiCompressionTags.commonCaloShowerSimTag
       caloShowerROTag : @local::DigiCompressionTags.commonCaloShowerROTag
+      surfaceStepTags : [ "compressDetStepMCs" ]
       primaryParticleTag : "FindMCPrimary"
       keepAllGenParticles : true
       rekeySimParticleCollection : true

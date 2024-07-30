@@ -16,7 +16,7 @@ physics : {
   filters: { @table::Digitize.filters @table::Mixing.filters @table::Trig_physMenuPSConfig }
   analyzers: { @table::Digitize.analyzers }
   # define the digitization paths.  Trigger paths are added specific to digitization type
-  MixPath : [ @sequence::Mixing.MixSequence ]
+  DigitizePath : [ @sequence::Mixing.MixSequence ]
   TriggerablePath : [ @sequence::Mixing.MixSequence, @sequence::Digitize.TriggerableSequence ]
   # define the trigger sequences and paths
   @table::TrigRecoSequences
@@ -30,7 +30,7 @@ physics.end_paths : [ EndPath ]
 # set the event timing for OnSpill
 physics.producers.EWMProducer.SpillType : 1
 # add the trigger paths
-physics.trigger_paths : [ "0:MixPath", "1:TriggerablePath" , @sequence::Trig_physMenu.trigger_paths]
+physics.trigger_paths : [ "0:DigitizePath", "1:TriggerablePath" , @sequence::Trig_physMenu.trigger_paths]
 # configure 'Triggered' output to be signal
 outputs.TriggeredOutput.SelectEvents : @local::Digitize.SignalTriggers
 # Final configuration

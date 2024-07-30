@@ -14,7 +14,7 @@ physics :
 {
   producers : {
     @table::Reconstruction.producers
-    @table::CosmicTracking.producers
+    @table::CosmicReco.producers
   }
   filters :  {
   }

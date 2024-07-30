@@ -59,7 +59,7 @@ head -n ${nFiles} STMDatasetList.txt > STMDatasetListNoCount.txt
 
 # write the template fcl
 rm -f stmResampler.fcl
-echo '#include "Production/JobConfig/pileup/STMResampler.fcl"' >> stmResampler.fcl
+echo '#include "Production/JobConfig/pileup/STM/STMResampler.fcl"' >> stmResampler.fcl
 echo physics.filters.stmResampler.mu2e.MaxEventsToSkip: ${nSkip} >> stmResampler.fcl
 
 generate_fcl --dsconf=$1$3 --dsowner=plesniak --run-number=1404 --description=STMResampler --events-per-job=20000000000 --njobs=$4 \
