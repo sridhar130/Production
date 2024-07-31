@@ -37,17 +37,28 @@ run_si.py is then ran on the command line in the following way:
 python run_si.py --stdpath=/pnfs/mu2e/scratch/users/sophie/filelists/ --BB=1BB --verbose=1 --rue=1e-13 --livetime=60 --run=1201 --dem_emin=75 --tmin=450 --samplingseed=1  --prc "CE" "DIO"
 ```
 
-### make_si.py
+### make_template_fcl.py
 
 Similar to the run_si script but it does not run the SI, it just makes a template fcl. The user can input any livetime by choosing the appropriate input files carefully.
 
-### genEnsemble.sh
+### genEnsemblesGrid.sh
 
-Resides in the Production/Scripts directory. Runs make_si.py for given set of input files.
+Runs make_si.py for given set of input files.
 
 ### getLivetime.sh
 
 Calculates livetime for given set of cosmic files.
+
+### calcualteInputs.sh
+
+This script is to calculate how many of each process to generate. It uses the cosmics as the "standard". There is also a .txt. file output with the details of the chosen input parameters. This is not currently used for anything but could be passed into subsequent scripts to make things consistent.
+
+### Workflow
+
+1) Make the cosmic sample. S2 sample size is chosen to represent about 400s of live time.
+2) Run calculateInputs.sh to work out how much of each other process to create and the job parameters.
+3) Once the simulations are complete run MakeTemplateFcl.py to make the template.
+4) Run genEnsemblesGrid.sh to make the ensemble.
 
 ### Making the input files
 
@@ -68,7 +79,7 @@ You will need to run each process separately, using the number of jobs and event
 To make the template fcl file, first run genEnsemble.sh. The arguments are as follows:
 
 ```
-bash ../Production/Scripts/gen_Ensemble.sh --livetime 120 --run 1201 --dem_emin 75 --tmin 450 --BB 1BB --rmue 1e-13 --verbose 1 --tagg MSC1a
+bash ../Production/Scripts/gen_EnsembleGrid.sh --livetime 120 --run 1201 --dem_emin 75 --tmin 450 --BB 1BB --rmue 1e-13 --verbose 1 --tagg MSC1a
 ```
 
 This will output a .tar file. This can be submitted to the grid as follows:
@@ -76,6 +87,8 @@ This will output a .tar file. This can be submitted to the grid as follows:
 ```
 mu2ejobsub --jobdef cnf.sophie.ensemble.MDC2024a_sm4.0.tar --firstjob=0 --njobs=10  --predefined=sl7 --default-protocol ifdh --default-location tape
 ```
+
+This is done within the script.
 
 ### POMs
 
