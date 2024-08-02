@@ -41,30 +41,20 @@ python run_si.py --stdpath=/pnfs/mu2e/scratch/users/sophie/filelists/ --BB=1BB -
 
 Similar to the run_si script but it does not run the SI, it just makes a template fcl. The user can input any livetime by choosing the appropriate input files carefully.
 
-### genEnsemblesGrid.sh
+## Workflow:
 
-Runs make_si.py for given set of input files.
+The workflow proceeds in two stages:
 
-### getLivetime.sh
+1) Stage 1: Make the input files, to get the stats needed for the input files (DIO, CE, RPC etc.) run the Stage 1 script. Then build the input campaigns using POMS.
+2) Stage 2: Once all input samples are ready run Stage 2, pass as input the config.txt made by Stage 1.
 
-Calculates livetime for given set of cosmic files.
+### Stage 1: Make Inputs
 
-### calcualteInputs.sh
-
-This script is to calculate how many of each process to generate. It uses the cosmics as the "standard". There is also a .txt. file output with the details of the chosen input parameters. This is not currently used for anything but could be passed into subsequent scripts to make things consistent.
-
-### Workflow
-
-1) Make the cosmic sample. S2 sample size is chosen to represent about 400s of live time.
-2) Run calculateInputs.sh to work out how much of each other process to create and the job parameters.
-3) Once the simulations are complete run MakeTemplateFcl.py to make the template.
-4) Run genEnsemblesGrid.sh to make the ensemble.
-
-### Making the input files
+This script is to calculate how many of each process to generate. It uses the cosmics as the "standard". There is also a .txt. file output with the details of the chosen input parameters. 
 
 We choose the Cosmic jobs to be the "standard" since we do not expect to remake them too frequently.
 
-The calculateInputs.sh file takes input in the form of a set of cosmic files, calculates livetime and the number of expected other events for the same livetime, assuming a given BB mode.
+The Stage1 .sh takes input in the form of a set of cosmic files, calculates livetime and the number of expected other events for the same livetime, assuming a given BB mode.
 
 From the cosmics list, it assesses the livetime and then calculates how many other events would arrive in the same time for the chosen beam conditions.
 
@@ -74,7 +64,9 @@ The output is a text file which lists, number of final jobs needed (of course yo
 
 You will need to run each process separately, using the number of jobs and events from the previous script.
 
-## Running on the Ensembling on the Grid
+## Stage 2: Running on the Ensembling on the Grid
+
+Stage 2 takes the config made in S1 as input as well as a chosen tag for your data set. The script will submit the job to the grid.
 
 To make the template fcl file, first run genEnsemble.sh. The arguments are as follows:
 
