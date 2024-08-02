@@ -4,13 +4,13 @@ def main(args):
     Yield = 0
     if(args.prc == "CEMLL"):
       Yield = ce_normalization(float(args.livetime), float(args.rue), str(args.BB))
-      print("CEMLL :", Yield)
+      print("CEMLL=",Yield)
     if(args.prc == "DIO"):
       Yield = dio_normalization(float(args.livetime), float(args.dem_emin), str(args.BB))
-      print("DIO :", Yield)
+      print("DIO=",Yield)
     if(args.prc == "CORSIKA"):
       Yield = corsika_onspill_normalization(float(args.livetime), str(args.BB))
-      print("CORSIKA :", Yield)
+      print("CORSIKA=",Yield)
     return (Yield)
     
 # for testing only
