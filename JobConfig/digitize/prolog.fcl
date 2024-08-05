@@ -64,7 +64,7 @@ Digitize: {
     Triggerable : {
       module_type : StrawDigiMCFilter
       MinNDigis : 15
-      MinParticleMom : 70.0
+      MinParticleMom : 75.0
       MaxParticleMom : 300.0 # nominally particles that can form helices in the tracker
       StrawDigiMCCollection : compressDigiMCs
       particleTypes : [ 11,-11, 13, -13, 211, -211] # e+-, mu+-, pi+-
