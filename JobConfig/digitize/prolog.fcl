@@ -1,6 +1,7 @@
 #
 # Prolog for digitizing detector steps
 #
+#include "Production/JobConfig/primary/prolog.fcl"
 #include "Offline/fcl/TrkCaloDt.fcl"
 #include "Offline/fcl/standardServices.fcl"
 #include "Offline/TrackerMC/fcl/prolog.fcl"
@@ -75,7 +76,7 @@ Digitize: {
       prescaleOffset : 0
     }
     @table::TrigFilters.filters
-}
+  }
 
   analyzers: {
     digiCompressionCheck : @local::DigiCompression.Check
@@ -100,23 +101,24 @@ Digitize: {
   ]
 
   GeneralProducts : [
-    "keep mu2e::CosmicLivetime_*_*_*",
-    "keep mu2e::ProtonBunchIntensity*_*_*_*",
     "keep mu2e::EventWindowMarker_*_*_*",
-    "keep mu2e::ProtonBunchTimeMC_*_*_*",
-    "keep mu2e::ProtonBunchTime_*_*_*",
-    "keep mu2e::EventWeight_*_*_*",
-    "keep mu2e::StatusG4_*_*_*",
-    "keep *_genCounter_*_*"
+    "keep mu2e::ProtonBunchTime_*_*_*"
   ]
   DigiProducts : [
     "keep mu2e::StrawDigis_*_*_*",
     "keep mu2e::StrawDigiADCWaveforms_*_*_*",
     "keep mu2e::CaloDigis_*_*_*",
-    "keep mu2e::CrvDigis_*_*_*",
-    "keep *_compressDigiMCs_*_*",
-    "keep mu2e::StepPointMCs_CosmicResampler_crvStage1_*"
+    "keep mu2e::CrvDigis_*_*_*"
   ]
+  MCDigiProducts : [
+    "keep *_compressDigiMCs_*_*"
+  ]
+  GeneralMCProducts : [
+    "keep mu2e::ProtonBunchIntensity*_*_*_*",
+    "keep mu2e::ProtonBunchTimeMC_*_*_*",
+    @sequence::Primary.GeneralProducts
+  ]
+
   #
   # Output Stream for events passing relevant triggers
   #
@@ -147,13 +149,19 @@ TrigRecoSequences.artFragmentsGen : [ @sequence::CommonMC.DigiSim, @sequence::Tr
 
 Digitize.TriggeredOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.GeneralProducts,
+  @sequence::Digitize.GeneralMCProducts,
   @sequence::Digitize.DigiProducts,
-  @sequence::Digitize.TriggerProducts ]
+  @sequence::Digitize.TriggerProducts,
+  @sequence::Digitize.MCDigiProducts
+]
 
 Digitize.TriggerableOutput.outputCommands : [ "drop *_*_*_*",
   @sequence::Digitize.GeneralProducts,
+  @sequence::Digitize.GeneralMCProducts,
   @sequence::Digitize.DigiProducts,
-  @sequence::Digitize.TriggerProducts ]
+  @sequence::Digitize.TriggerProducts,
+  @sequence::Digitize.MCDigiProducts
+]
 
 Digitize.Outputs : {
   TriggeredOutput : @local::Digitize.TriggeredOutput
