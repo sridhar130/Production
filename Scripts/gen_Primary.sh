@@ -3,13 +3,14 @@
 # create fcl for producing primaries from stopped particles
 # this script requires mu2etools and dhtools be setup
 #
-# Usage: ./Production/Scripts/generate_Primary.sh --primary CeEndpoint --campaign MDC2020 --pver v --sver p --type Muminus --njobs 1000 --events 4000 --pdg 11 --start 0 --end 110 --field Offline/Mu2eG4/geom/bfgeom_reco_altDS11_helical_v01.txt
+# Usage: ./Production/Scripts/generate_Primary.sh --primary CeEndpoint --campaignMDC2020 --pver v --sver p --type Muminus --njobs 1000 --events 4000 --pdg 11 --start 0 --end 110 --field Offline/Mu2eG4/geom/bfgeom_reco_altDS11_helical_v01.txt
 #
 # Note: User can omit flat (pdg, startmom and enedmom) arguments without issue. Field argument also generally will not be used
 
-# The main input parameters needed for any campaign
+# The main input parameters needed for any CAMPAIGN
 PRIMARY="" # is the primary
-CAMPAIGN="" # Campaign (MDC2020"
+CAMPAIGN="" # primary CAMPAIGN (MDC2020"
+SCAMPAIGN=${CAMPAIGN} #stops CAMPAIGN
 PVER="" # production version
 SVER="" # stops production version
 TYPE="" # the kind of input stops (Muminus, Muplus, IPAMuminus, IPAMuplus, Piminus, Piplus, or Cosmic)
@@ -25,14 +26,16 @@ ENDMOM=110 # optional (for flat only)
 OWNER=mu2e
 RUN=1202
 CAT="Cat"
+TAG=""
 
 # Function: Print a help message.
 usage() {
   echo "Usage: $0
   [ --primary primary physics name ]
-  [ --campaign campaign name ]
-  [ --pver primary campaign version ]]
-  [ --sver stops campaign version ]
+  [ --campaign primary camapign name ]
+  [ --scampaign stops camapign name ]
+  [ --pver primary CAMPAIGN version ]
+  [ --sver stops CAMPAIGN version ]
   [ --type stopped particle type ]
   [ --njobs number of jobs ]
   [ --events events per job ]
@@ -45,7 +48,7 @@ usage() {
   [ --run (opt) default 1202 ]
   [ --cat(opt) default Cat ]
 
-  bash gen_Primary.sh --primary DIOTail --type MuMinus --campaign MDC2020 -pver z_sm3 --sver p --njobs 100 --events 100 --start 75 --end 95
+  bash gen_Primary.sh --primary DIOtail --type MuMinus --campaign MDC2024  --scampaign MDC2020 -pver z_sm3 --sver p --njobs 100 --events 100 --start 75 --end 95
   " 1>&2
 }
 
@@ -66,6 +69,9 @@ while getopts ":-:" options; do
           ;;
         campaign)
           CAMPAIGN=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+          ;;
+        scampaign)
+          SCAMPAIGN=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
         pver)
           PVER=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
@@ -106,6 +112,9 @@ while getopts ":-:" options; do
         cat)
           CAT=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
+        tag)
+          TAG=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+          ;;
       esac;;
     :)                                    # If expected argument omitted:
       echo "Error: -${OPTARG} requires an argument."
@@ -118,15 +127,15 @@ while getopts ":-:" options; do
 done
 
 PRIMARY_CAMPAIGN=${CAMPAIGN}${PVER}
-STOPS_CAMPAIGN=${CAMPAIGN}${SVER}
+STOPS_SCAMPAIGN=${SCAMPAIGN}${SVER}
 
 # basic tests
-if [[ ${PRIMARY_CAMPAIGN} == ""  || ${PRIMARY} == "" || ${STOPS_CAMPAIGN} == "" || ${TYPE} == "" || ${JOBS} == "" || ${EVENTS} == "" ]]; then
-  echo "Missing arguments ${PRIMARY_CAMPAIGN} ${PRIMARY} ${STOPS_CAMPAIGN} ${TYPE} ${JOBS} ${EVENTS} "
+if [[ ${PRIMARY_CAMPAIGN} == ""  || ${PRIMARY} == "" || ${STOPS_SCAMPAIGN} == "" || ${TYPE} == "" || ${JOBS} == "" || ${EVENTS} == "" ]]; then
+  echo "Missing arguments ${PRIMARY_CAMPAIGN} ${PRIMARY} ${STOPS_SCAMPAIGN} ${TYPE} ${JOBS} ${EVENTS} "
   exit_abnormal
 fi
 
-# Test: run a test to check the SimJob for this campaign verion exists TODO
+# Test: run a test to check the SimJob for this CAMPAIGN verion exists TODO
 DIR=/cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${PRIMARY_CAMPAIGN}
 if [ -d "$DIR" ];
 then
@@ -136,7 +145,7 @@ else
   exit 1
 fi
 
-dataset=sim.mu2e.${TYPE}Stops${CAT}.${STOPS_CAMPAIGN}.art
+dataset=sim.mu2e.${TYPE}Stops${CAT}.${STOPS_SCAMPAIGN}.art
 
 if [[ "${TYPE}" == "Muminus" ]] ||  [[ "${TYPE}" == "Muplus" ]]; then
   resampler=TargetStopResampler
@@ -160,6 +169,8 @@ rm -f primary.fcl
 
 if [[ "${TYPE}" == "Cosmic" ]]; then
   echo "#include \"Production/JobConfig/cosmic/S2Resampler${PRIMARY}.fcl\"" >> primary.fcl
+elif [[ "${TAG}" == "DIOtail" ]]; then
+  echo "#include \"Production/JobConfig/primary/DIOtail.fcl\"" >> primary.fcl
 else
   echo "#include \"Production/JobConfig/primary/${PRIMARY}.fcl\"" >> primary.fcl
 fi
@@ -167,9 +178,10 @@ fi
 echo physics.filters.${resampler}.mu2e.MaxEventsToSkip: ${nskip} >> primary.fcl
 echo "services.GeometryService.bFieldFile : \"${FIELD}\"" >> primary.fcl
 
-if [[ "${PRIMARY}" == "DIOtail" ]]; then
+if [[ "${TAG}" == "DIOtail" ]]; then
   echo physics.producers.generate.decayProducts.spectrum.ehi: ${ENDMOM}        >> primary.fcl
   echo physics.producers.generate.decayProducts.spectrum.elow: ${STARTMOM}    >> primary.fcl
+  echo outputs.PrimaryOutput.fileName: \"dts.owner.${PRIMARY}.version.sequencer.art\"  >> primary.fcl
   echo physics.filters.GenFilter.maxr_min : 320 >> primary.fcl
   echo physics.filters.GenFilter.maxr_max: 500 >> primary.fcl
 fi

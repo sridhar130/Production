@@ -25,4 +25,4 @@ physics.producers.generate : {
 }
 
 physics.producers.FindMCPrimary.PrimaryProcess : "mu2eMuonDecayAtRest"
-outputs.PrimaryOutput.fileName: "dts.owner.DIOtail.version.sequencer.art"
+
