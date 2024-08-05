@@ -64,7 +64,7 @@ Digitize: {
     Triggerable : {
       module_type : StrawDigiMCFilter
       MinNDigis : 15
-      MinParticleMom : 70.0
+      MinParticleMom : 75.0
       MaxParticleMom : 300.0 # nominally particles that can form helices in the tracker
       StrawDigiMCCollection : compressDigiMCs
       particleTypes : [ 11,-11, 13, -13, 211, -211] # e+-, mu+-, pi+-
@@ -137,7 +137,7 @@ Digitize: {
   #
   # trigger selections that can be used to finalize the triggerOutput selection, depending on digitization mode and source
   #
-  SignalTriggers : [ "tprDe_highP_*", "cprDe_highP_*" ]  # events with 'high' momentum tracks with good KinKal fits
+  SignalTriggers : [ "tprDe_highP_stopTarg*", "cprDe_highP_stopTarg*" ]  # events with 'high' momentum tracks with good KinKal fits
   TrkTriggers : [ "*_lowP_*","*_ipa_*", "cst*" ] # events useful only for tracker calibration
   CaloTriggers : [ "calo*" ] # events useful only for calo calibration
   DiagTriggers : [ "minBias_*" , "*Helix*M", "*Helix*P"] # events useful for trigger diagnostics
