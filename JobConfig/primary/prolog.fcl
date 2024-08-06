@@ -18,7 +18,7 @@ Primary: {
       @table::CrvSteps
       stepPointsModuleLabels : ["g4run"]
     }
-    SurfaceSteps : {
+    MakeSS : {
       @table::CommonMC.MakeSS
       VDStepPointMCs : "g4run:virtualdetector"
       IPAStepPointMCs : "g4run:protonabsorber"
@@ -29,7 +29,7 @@ Primary: {
       strawGasStepTag : "StrawGasStepMaker"
       caloShowerStepTag : "CaloShowerStepMaker"
       crvStepTag : "CrvSteps"
-      surfaceStepTag : "SurfaceSteps"
+      surfaceStepTag : "MakeSS"
       simParticleTags : [ "g4run" ]
       mcTrajectoryTag : "g4run"
       debugLevel : 0
@@ -157,7 +157,7 @@ Primary: {
     @sequence::TrackerMC.StepSim,
     @sequence::CaloMC.StepSim,
     CrvSteps,
-    SurfaceSteps ]
+    MakeSS ]
   # sequence to finalize the output
   FinalizeSequence : [  compressDetStepMCs, FindMCPrimary ]
 
