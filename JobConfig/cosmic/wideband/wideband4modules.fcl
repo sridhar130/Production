@@ -2,6 +2,7 @@
 #include "Production/JobConfig/common/prolog.fcl"
 #include "Production/JobConfig/primary/prolog.fcl"
 #include "Production/JobConfig/cosmic/prolog.fcl"
+#include "Production/JobConfig/common/MT.fcl"
 
 process_name : CrvWideband4ModulesSim
 
@@ -86,6 +87,7 @@ physics.producers.cosmicTimeOffset.cosmicModuleLabel : "generate"
 physics.producers.g4run.TrajectoryControl: @local::mu2eg4DefaultTrajectories
 physics.producers.g4run.inputs.primaryTag : cosmicTimeOffset
 #physics.producers.g4run.Mu2eG4CommonCut: @local::Cosmic.Mu2eG4CommonCutCosmicNoField
+physics.producers.g4run.physics.minRangeCut : 1.
 physics.producers.g4run.Mu2eG4CommonCut:
                  {
                    type: inVolume
@@ -173,3 +175,4 @@ services.TFileService.fileName : "nts.owner.CRV_wideband_cosmics-mc.configuratio
 services.TimeTracker.printSummary: true
 services.scheduler.wantSummary: true
 services.message.destinations.log.outputStatistics : true
+source.module_type: EmptyEvent
