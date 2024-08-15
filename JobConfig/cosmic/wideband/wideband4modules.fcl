@@ -81,7 +81,7 @@ outputs:
 
 
 physics.producers.generate : @local::Cosmic.generateCRY
-physics.producers.generate.inputFile : "Offline/CRVResponse/test/wideband/widebandCRYconfig_v2.txt"
+physics.producers.generate.inputFile : "Production/JobConfig/cosmic/wideband/widebandCRYconfig_v2.txt"
 physics.producers.cosmicTimeOffset.intervalEnd : 99000
 physics.producers.cosmicTimeOffset.cosmicModuleLabel : "generate"
 physics.producers.g4run.TrajectoryControl: @local::mu2eg4DefaultTrajectories
