@@ -64,7 +64,9 @@ def main():
     FCL = os.path.basename(TARF)[:-6] + f".{IND}.fcl"
 
     run_command(f"httokendecode -H")
-    run_command(f"voms-proxy-info -all")
+    run_command(f"LV=$(which voms-proxy-init); echo $LV; ldd $LV; rpm -q -a | egrep 'voms|ssl'; printenv PATH; printenv LD_LIBRARY_PATH")
+#    run_command(f"voms-proxy-info -all")
+
 
     if copy_input_mdh:
         run_command(f"mu2ejobfcl --jobdef {TARF} --index {IND} --default-proto file --default-loc dir:{os.getcwd()}/indir > {FCL}")
