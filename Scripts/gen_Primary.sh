@@ -24,6 +24,7 @@ STARTMOM=0 # optional (for flat only)
 ENDMOM=110 # optional (for flat only)
 OWNER=mu2e
 RUN=1202
+#PROD=false
 CAT="Cat"
 
 # Function: Print a help message.
@@ -45,6 +46,7 @@ usage() {
   [ --run (opt) default 1202 ]
   [ --cat(opt) default Cat ]
   [ --setup (opt) expllicit simjob setup ]
+  [ --prod (opt) create index definition to be used on the next stage ]
 
   bash gen_Primary.sh --primary DIOTail --type MuMinus --campaign MDC2020 -pver z_sm3 --sver p --njobs 100 --events 100 --start 75 --end 95 --setup /cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/MDC2020ag/setup.sh
   " 1>&2
@@ -104,9 +106,12 @@ while getopts ":-:" options; do
         run)
           RUN=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
-          setup)
+        setup)
           SETUP=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
+#        prod)
+#          PROD=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
+#          ;;
         cat)
           CAT=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
@@ -160,12 +165,13 @@ let nskip=nevts/nfiles
 # write the template
 rm -f primary.fcl
 
-echo "#include \"Production/JobConfig/primary/${PRIMARY}.fcl\"" >> primary.fcl
+FCLNAME="${PRIMARY%%_*}"
+echo "#include \"Production/JobConfig/primary/${FCLNAME}.fcl\"" >> primary.fcl
 echo physics.filters.${resampler}.mu2e.MaxEventsToSkip: ${nskip} >> primary.fcl
 echo "services.GeometryService.bFieldFile : \"${FIELD}\"" >> primary.fcl
 echo outputs.PrimaryOutput.fileName: \"dts.owner.${PRIMARY}.version.sequencer.art\"  >> primary.fcl
 
-if [[ "${PRIMARY}" == "DIOtail" ]]; then
+if [[ "${PRIMARY}" == "DIOtail"* ]]; then
   echo physics.producers.generate.decayProducts.spectrum.ehi: ${ENDMOM}        >> primary.fcl
   echo physics.producers.generate.decayProducts.spectrum.elow: ${STARTMOM}    >> primary.fcl
   echo physics.filters.GenFilter.maxr_min : 320 >> primary.fcl
@@ -184,6 +190,10 @@ else
   SETUP=/cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/${PRIMARY_CAMPAIGN}/setup.sh
 fi
 
+if [[ "$PROD" = true ]]; then
+    rm cnf.*.tar
+fi
+
 cmd="mu2ejobdef --embed primary.fcl --setup ${SETUP} --run-number=${RUN} --events-per-job=${EVENTS} --desc ${PRIMARY} --dsconf ${PRIMARY_CAMPAIGN} --auxinput=1:physics.filters.${resampler}.fileNames:Stops.txt"
 
 echo "Running: $cmd"
@@ -194,10 +204,8 @@ parfile=$(ls cnf.*.tar)
 index_dataset=${parfile:4}
 # Remove .0.tar
 index_dataset=${index_dataset::-6}
-
 idx_format=$(printf "%07d" ${JOBS})
-echo $idx
-echo "Creating index definiton with size: $idx"
-samweb create-definition idx_${index_dataset} "dh.dataset etc.mu2e.index.000.txt and dh.sequencer < ${idx_format}"
-echo "Created definiton: idx_${index_dataset}"
-samweb describe-definition idx_${index_dataset}
+
+if [[ "$PROD" = true ]]; then
+    source gen_IndexDef.sh
+fi
