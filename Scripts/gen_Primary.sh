@@ -24,7 +24,6 @@ STARTMOM=0 # optional (for flat only)
 ENDMOM=110 # optional (for flat only)
 OWNER=mu2e
 RUN=1202
-#PROD=false
 CAT="Cat"
 
 # Function: Print a help message.
@@ -46,7 +45,6 @@ usage() {
   [ --run (opt) default 1202 ]
   [ --cat(opt) default Cat ]
   [ --setup (opt) expllicit simjob setup ]
-  [ --prod (opt) create index definition to be used on the next stage ]
 
   bash gen_Primary.sh --primary DIOTail --type MuMinus --campaign MDC2020 -pver z_sm3 --sver p --njobs 100 --events 100 --start 75 --end 95 --setup /cvmfs/mu2e.opensciencegrid.org/Musings/SimJob/MDC2020ag/setup.sh
   " 1>&2
@@ -109,9 +107,6 @@ while getopts ":-:" options; do
         setup)
           SETUP=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
-#        prod)
-#          PROD=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
-#          ;;
         cat)
           CAT=${!OPTIND} OPTIND=$(( $OPTIND + 1 ))
           ;;
